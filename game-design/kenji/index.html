@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prime Smash: a prime factorisation arcade game, by Kenji Watanabe</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="game.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Kenji Watanabe is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<h1>Prime Smash</h1>
+<p class="lede">Numbers fall from the sky. You split each one into primes before it lands. I made it for Sec 1 maths: primes and prime factorisation.</p>
+<p>I'm Kenji. I make games for a living and teach game design part-time. This is my end project for the Game Design Principles module. It has four parts:</p>
+<ul class="toc">
+  <li><a href="#play">Play the game</a></li>
+  <li><a href="#rules">Rule sheet</a></li>
+  <li><a href="#playtests">Playtest notes</a></li>
+  <li><a href="unit.html">3-lesson unit plan</a></li>
+  <li><a href="sheet.html">Playtest feedback sheet</a></li>
+</ul>
+
+<h2 id="play">Play it</h2>
+<p>Each version matches a playtest round. Play version 1, then the final one. Feel what changed.</p>
+<nav class="versions" aria-label="Game versions">
+  <a href="index.html?v=1#play" data-version="1">Version 1</a>
+  <a href="index.html?v=2#play" data-version="2">Version 2</a>
+  <a href="index.html#play" data-version="3">Version 3 (final)</a>
+</nav>
+<div class="game">
+  <p class="small" id="version-name">Version 3 (final)</p>
+  <div class="hud" aria-hidden="true"><span id="score">Score 0</span><span id="level">Level 1</span><span id="hearts">Hearts 3 of 3</span></div>
+  <div class="stage">
+    <canvas id="screen" width="360" height="420" tabindex="0" aria-label="Game screen. Numbers fall. The marked block is your target."></canvas>
+    <div class="overlay" id="overlay">
+      <h3 id="over-title">Prime Smash</h3>
+      <p id="over-text">Tap a prime to split the marked number. Split it all the way down before it lands.</p>
+      <ul id="over-list" hidden></ul>
+      <button type="button" class="primary" id="start">Start</button>
+    </div>
+  </div>
+  <div class="pad" id="pad" role="group" aria-label="Primes"></div>
+  <div class="controls">
+    <button type="button" id="pause">Pause</button>
+    <button type="button" id="sound" aria-pressed="true">Sound: on</button>
+    <label for="speed">Speed</label>
+    <select id="speed">
+      <option value="0.6">Slow</option>
+      <option value="1" selected>Normal</option>
+      <option value="1.3">Fast</option>
+    </select>
+  </div>
+  <p class="live" id="live" aria-live="polite"></p>
+</div>
+<p class="small">On a keyboard: keys 2, 3, 5 and 7, and 1 for 11. Left and right arrows change the target. P pauses.</p>
+
+<h2 id="rules">Rule sheet</h2>
+<div class="card">
+<h3>Goal</h3>
+<p>Score as many points as you can before you lose 3 hearts.</p>
+<h3>Rules</h3>
+<ol class="steps">
+  <li>Numbers fall in blocks. The block with the yellow outline and arrow is your target.</li>
+  <li>Tap a prime. If it divides the number, the block shrinks to what is left. 84 split by 2 leaves 42.</li>
+  <li>Keep splitting until nothing is left but 1. The block then pops.</li>
+  <li>A prime that does not divide the number costs a heart. So does a block that reaches the ground.</li>
+  <li>Tap another block to make it your target. Big numbers take longer, but score more.</li>
+  <li>A popped block scores 10 points for each prime in it. 84 = 2 × 2 × 3 × 7 scores 40.</li>
+  <li>Every 5 pops, the level goes up. Numbers get bigger and fall a little faster.</li>
+</ol>
+<h3>Feedback</h3>
+<ul class="tight">
+  <li>A right prime: a pop sound, sparks, and the block squashes.</li>
+  <li>The split so far shows under the block, like 84 = 2×2×…</li>
+  <li>A wrong prime: a buzz, a shake, and "84 ÷ 5 ✗" at the top.</li>
+  <li>Every sound also has a message in words under the game.</li>
+  <li>The end screen lists each number you split. It uses index form, like 84 = 2² × 3 × 7.</li>
+</ul>
+<h3>Core loop</h3>
+<p>Look at the number, pick a prime, see it shrink, pick again.</p>
+</div>
+
+<h2 id="content">Why winning needs the maths</h2>
+<p>A quiz with a timer only rewards fast fingers. I wanted the maths to decide who wins.</p>
+<ul class="tight">
+  <li>Every wrong prime costs a heart. Guessing loses fast.</li>
+  <li>Points come from the number of primes. You need to see that 96 hides six of them.</li>
+  <li>You choose your target. Spotting that 77 needs only two splits is a real choice.</li>
+  <li>Some blocks are already prime, like 11. You must know it is prime to clear it in one tap.</li>
+</ul>
+<p>In version 1, wrong primes cost nothing. One student mashed every button and won. You can try it: that is the point of keeping version 1.</p>
+
+<h2 id="playtests">Playtest notes from 2 rounds</h2>
+<p class="note">The students and their words below are made up, like me. The numbers come from the game's settings in each version.</p>
+
+<h3>Round 1: version 1, four Sec 1 students</h3>
+<p>I ran it at the end of an enrichment lesson. I stayed silent and wrote what I saw.</p>
+<ul class="tight">
+  <li>Note 1. Student A pressed 2, 3, 5, 7 over and over. He got the top score. He said, "I don't even look at the numbers."</li>
+  <li>Note 2. Blocks took about 9 seconds to land. Student B said 84 was gone before she could think.</li>
+  <li>Note 3. Student C cheered every time a block popped. The pop sound worked.</li>
+  <li>Note 4. Nobody used 11, because it was not there. Numbers like 77 never fell.</li>
+</ul>
+<div class="card">
+<p><strong>Changes for version 2</strong></p>
+<ul class="tight">
+  <li>From note 1: a wrong prime now costs a heart. Mashing no longer wins.</li>
+  <li>From note 2: blocks fall at half the speed, so they take about 19 seconds.</li>
+  <li>From note 4: I added the 11 button.</li>
+  <li>From note 3: I kept the pop, and added sparks and a squash.</li>
+</ul>
+</div>
+
+<h3>Round 2: version 2, four other Sec 1 students</h3>
+<ul class="tight">
+  <li>Note 1. Students D and E lost all 3 hearts in under 40 seconds. Their first numbers were 126 and 150.</li>
+  <li>Note 2. Student F is red-green colour blind. He could not tell which block was his target.</li>
+  <li>Note 3. After the game I asked for one number they split. Nobody could tell me.</li>
+  <li>Note 4. The bell rang mid-game. Student G asked for a pause button.</li>
+  <li>Note 5. Student D pressed 2 on 150 and smiled when it shrank to 75. He was reading the numbers now.</li>
+</ul>
+<div class="card">
+<p><strong>Changes for version 3, the final game</strong></p>
+<ul class="tight">
+  <li>From note 1: level 1 uses only 2, 3 and 5. Numbers stay at 30 or under. Numbers grow every 5 pops. The first blocks take about 30 seconds to land. D and E were anxious, so I lowered the challenge.</li>
+  <li>From note 2: the target gets a thick yellow outline and an arrow. Colour is no longer the only clue.</li>
+  <li>From note 3: the split so far shows under each block. The end screen lists each number in index form.</li>
+  <li>From note 4: a Pause button, and the P key. The game also pauses if you switch tabs.</li>
+  <li>From note 5: nothing. That is the moment I wanted.</li>
+</ul>
+</div>
+
+<h2 id="access">Accessibility check</h2>
+<p>I checked version 3 against 8 of the <a href="https://gameaccessibilityguidelines.com/basic/">Basic guidelines from the Game Accessibility Guidelines</a>.</p>
+<ul class="tight">
+  <li>"Include an option to adjust the game speed." Met in version 3: slow, normal or fast.</li>
+  <li>"Ensure no essential information is conveyed by a fixed colour alone." Fixed: outline and arrow.</li>
+  <li>"Ensure no essential information is conveyed by sounds alone." Met: every sound has words too.</li>
+  <li>"Ensure interactive elements / virtual controls are large and well spaced." Met: 54 px buttons with gaps.</li>
+  <li>"Ensure controls are as simple as possible, or provide a simpler alternative." Met: one tap per prime. The game picks the target.</li>
+  <li>"Provide high contrast between text/UI and background." Met: dark numbers on pale blocks.</li>
+  <li>"Use an easily readable default font size." Met: numbers are 24 px.</li>
+  <li>"Allow controls to be remapped / reconfigured." Not met. The keys are fixed.</li>
+</ul>
+
+<h2 id="makecode">Build your own in MakeCode Arcade</h2>
+<p>My students build their games in <a href="https://arcade.makecode.com/">MakeCode Arcade</a>. Its <a href="https://arcade.makecode.com/reference/controller">controller</a> has direction buttons and an A button, not six prime keys. So their version works like this:</p>
+<ol class="steps">
+  <li>Make a block sprite that falls slowly. Store its number in a variable.</li>
+  <li>Make a variable for the chosen prime. Up and down change it through 2, 3, 5, 7 and 11.</li>
+  <li>When A is pressed, check whether the number divided by the prime leaves no remainder.</li>
+  <li>If so, divide the number and play a sound. Add the prime to a list.</li>
+  <li>If it does not, take away a life and shake the sprite.</li>
+  <li>When the number reaches 1, add points, show the list and make a new block.</li>
+</ol>
+<p>The <a href="unit.html">unit plan</a> walks students through this in 3 lessons.</p>
+
+<h2 id="change">What I would change</h2>
+<p>The game checks the maths, but not the method. A student can test 2, then 3, then 5 in order. With 3 hearts, that slow guessing still clears small numbers. A rule that scores more for no mistakes would help. Also, the keys can't be remapped yet. One student asked for the arrow keys on the left hand.</p>
+
+<h2 id="sources">Sources</h2>
+<ul class="tight small">
+  <li>Sec 1 "primes and prime factorisation": <a href="https://www.moe.gov.sg/media/files/secondary/fsbb/syllabus/d415c25d-cf29-4b05-83da-9713f38edd14.pdf">MOE 2020 G2 and G3 Mathematics Syllabuses</a>. See <a href="https://www.moe.gov.sg/secondary/schools-offering-full-sbb/syllabus">MOE's Full SBB syllabus page</a>.</li>
+  <li>Accessibility checks: <a href="https://gameaccessibilityguidelines.com/basic/">Game Accessibility Guidelines, Basic</a>.</li>
+  <li>Bored and anxious players: <a href="https://www.jenovachen.com/flowingames/flowtheory.htm">Jenova Chen, Flow in Games</a>.</li>
+  <li>MakeCode Arcade controls: <a href="https://arcade.makecode.com/reference/controller">Controller reference</a>.</li>
+  <li>MakeCode Arcade sharing and saving: <a href="https://arcade.makecode.com/share">Sharing projects</a> and <a href="https://arcade.makecode.com/save">Saving projects</a>.</li>
+</ul>
+</main>
+</body>
+</html>
