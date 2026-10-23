@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Make One: a fraction card game for upper primary, by Mei Ling Tan</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="deck.js" defer></script>
+<script src="game.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Mei Ling Tan is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<h1>Make One</h1>
+<p class="lede">A card game for 2 to 4 players. Take turns adding fraction cards to a cup. Make exactly 1 whole and the cup is yours.</p>
+<p>I'm Mei Ling. I run an after-school coding club for upper primary pupils. My P5s still trip over fractions with different denominators. That is a P4 skill, so this game is revision for them. It works on paper, so it still runs when the laptops won't log in.</p>
+<ul class="toc">
+  <li><a href="#play">Play it here</a></li>
+  <li><a href="#rules">Rule sheet</a></li>
+  <li><a href="cards.html">Print the cards</a></li>
+  <li><a href="#playtests">Playtest notes</a></li>
+  <li><a href="unit.html">3-session unit plan</a></li>
+  <li><a href="sheet.html">Playtest feedback sheet</a></li>
+</ul>
+
+<h2 id="play">Play it here, against the Bot</h2>
+<p>This uses the final paper rules. You play one card a turn. Then you say what the cup holds now.</p>
+<div class="table" id="table">
+  <div class="scores"><span id="you-score">You: 0</span><span id="deck-left">Deck: 40</span><span id="bot-score">Bot: 0</span></div>
+  <p class="small" id="bot-hand">Bot has 4 cards</p>
+  <div class="cup">
+    <div class="cup-bar" id="cup-bar" role="img" aria-label="The cup, drawn as one whole cut into twelfths"></div>
+    <div class="ticks" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+    <p class="cup-text" id="cup-text">The cup is empty.</p>
+  </div>
+  <div class="ask" id="ask" hidden>
+    <p id="ask-q"></p>
+    <div class="opts" id="ask-opts"></div>
+  </div>
+  <p class="live" id="live" aria-live="polite"></p>
+  <p><strong>Your cards</strong></p>
+  <div class="hand" id="hand"></div>
+  <div class="row">
+    <button type="button" id="draw">Draw a card and pass</button>
+    <button type="button" id="new">New game</button>
+    <label><input type="checkbox" id="starter"> Starter deck: halves and quarters only</label>
+  </div>
+  <ul class="log" id="log" aria-label="Earlier moves"></ul>
+</div>
+<p class="small">Try this: can you leave a gap that no single card can fill?</p>
+
+<h2 id="rules">Rule sheet</h2>
+<div class="card">
+<h3>You need</h3>
+<p>The 40 cards and the fraction strip mat from the <a href="cards.html">print page</a>. 2 to 4 players. About 15 minutes.</p>
+<h3>Goal</h3>
+<p>Win the most cards. You win cards by filling the cup to exactly 1 whole.</p>
+<h3>Set up</h3>
+<p>Shuffle. Give everyone 4 cards. Put the rest face down. The cup is the middle of the table. It starts empty.</p>
+<h3>On your turn</h3>
+<ol class="steps">
+  <li>Play 1 card into the cup. Say what the cup holds now, like "seven twelfths".</li>
+  <li>The player on your left checks with the strip mat. If you are wrong, take your card back. Your turn ends.</li>
+  <li>You can't take the cup over 1. If your card would, take it back. Your turn ends.</li>
+  <li>Can't play, or don't want to? Draw 1 card and pass.</li>
+  <li>After you play, draw back up to 4 cards.</li>
+</ol>
+<h3>Win a cup</h3>
+<p>Make exactly 1 whole and you win the cup. Keep all its cards face down. Each card is 1 point.</p>
+<h3>Challenges</h3>
+<p>Think someone said the wrong total? Say "check". If you are right, they take the card back. If you are wrong, you miss your next turn.</p>
+<h3>Stuck</h3>
+<p>If nobody can play for a whole round, clear the cup. Nobody scores it.</p>
+<h3>End</h3>
+<p>When the pile is gone and nobody can play, count your cards. Most cards wins.</p>
+</div>
+<p>The feedback is on the table. The strip mat shows each total. A cup that hits 1 whole gets a cheer and a pile of cards.</p>
+
+<h2 id="content">Why you need fractions to win</h2>
+<ul class="tight">
+  <li>You must say each total. A wrong total costs your turn.</li>
+  <li>Going over 1 costs your turn too. So you must add before you play.</li>
+  <li>A big cup is worth more points. Do you add a small card to grow it? The next player might finish it.</li>
+  <li>Knowing the gap wins cups. If the cup holds 2/3, you need 1/3, or 1/6 and 1/6 over two turns.</li>
+</ul>
+<p>Luck still decides what you draw. But a pupil who adds well wins more cups. In my old fraction bingo, the pupils who knew most did not win more.</p>
+
+<h2 id="playtests">Playtest notes from 2 rounds</h2>
+<p class="note">My club and pupils are made up, like me. The card counts and fractions are real.</p>
+
+<h3>Round 1: four P5 pupils, version 1</h3>
+<p>Version 1 had eighths too. Going over 1 just spilled the cup, with no cost. A won cup was 1 point, however many cards it held. I watched and said nothing.</p>
+<ul class="tight">
+  <li>Note 1. Pupils slammed down their biggest card every turn. Going over cost nothing.</li>
+  <li>Note 2. Nobody said the totals. Two pupils argued: does 1/2 and 3/8 make 1?</li>
+  <li>Note 3. 1/3 and 1/8 stopped the game for 2 minutes. The answer is 11/24.</li>
+  <li>Note 4. The game took 24 minutes. I planned 15.</li>
+  <li>Note 5. A cup of 1 card scored the same as a cup of 6.</li>
+</ul>
+<div class="card">
+<p><strong>Changes for version 2</strong></p>
+<ul class="tight">
+  <li>From note 1: you can't go over 1. If you try, the card comes back and your turn ends.</li>
+  <li>From note 2: the "say it" rule, and the strip mat to check.</li>
+  <li>From notes 3 and 4: no more eighths. Every card is in halves, thirds, quarters, sixths or twelfths. All of them fit into twelfths.</li>
+  <li>From note 5: each card in a won cup is 1 point.</li>
+</ul>
+</div>
+
+<h3>Round 2: four other P5 pupils, version 2</h3>
+<ul class="tight">
+  <li>Note 1. The game took 16 minutes. Close enough.</li>
+  <li>Note 2. Pupil J sat across the table. She could not read 5/12 upside down. The numbers were small.</li>
+  <li>Note 3. Pupil K is quiet. She never checked a total. Later she told me she saw a wrong one.</li>
+  <li>Note 4. Pupil L said "check" on every turn, to slow the others down.</li>
+  <li>Note 5. Pupil M found a trick. Leave a gap of 7/12, and no single card can fill it.</li>
+</ul>
+<div class="card">
+<p><strong>Changes for version 3, the final game</strong></p>
+<ul class="tight">
+  <li>From note 2: big numbers at both ends of each card. Words and a strip too.</li>
+  <li>From note 3: the player on your left always checks. Everyone gets a turn to check.</li>
+  <li>From note 4: a wrong challenge means you miss your next turn.</li>
+  <li>From note 5: nothing. That is a real choice, and I want pupils to find it.</li>
+</ul>
+</div>
+
+<h2 id="access">Accessibility check</h2>
+<p>I checked the cards and online game against 8 <a href="https://gameaccessibilityguidelines.com/basic/">Basic Game Accessibility Guidelines</a>.</p>
+<ul class="tight">
+  <li>"Use an easily readable default font size." Fixed: big numbers at both ends.</li>
+  <li>"Ensure no essential information is conveyed by a fixed colour alone." Fixed: number, word and strip.</li>
+  <li>"Use simple clear language." Met: the rule sheet uses short lines.</li>
+  <li>"Provide high contrast between text/UI and background." Met: black print on white card.</li>
+  <li>"Allow players to progress through text prompts at their own pace." Met: no timer.</li>
+  <li>"Ensure no essential information is conveyed by sounds alone." Met: no sound.</li>
+  <li>"Ensure interactive elements / virtual controls are large and well spaced." Met: cards 72 px or wider.</li>
+  <li>"Offer a wide choice of difficulty levels." Partly met. There is a starter deck of halves and quarters, and the full deck. Two levels is not a wide choice.</li>
+</ul>
+
+<h2 id="change">What I would change</h2>
+<p>Luck still matters a lot in a 2-player game. A hand full of 2/3 and 3/4 cards can stall you for three turns. With 4 players it evens out. I would also like a middle deck with thirds and sixths. And the game only practises adding. Taking away never comes up.</p>
+
+<h2 id="sources">Sources</h2>
+<ul class="tight small">
+  <li>Adding fractions with denominators up to 12 is a Primary Four skill. See <a href="https://www.moe.gov.sg/primary/curriculum/syllabus">MOE's 2021 Mathematics Syllabus (Primary 1 to 6)</a> on MOE's primary syllabus page.</li>
+  <li>Accessibility checks: <a href="https://gameaccessibilityguidelines.com/basic/">Game Accessibility Guidelines, Basic</a>.</li>
+</ul>
+</main>
+</body>
+</html>

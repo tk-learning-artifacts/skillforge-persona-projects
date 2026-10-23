@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Make One: print the cards, rules and strip mat, by Mei Ling Tan</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="deck.js" defer></script>
+<script src="cards.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Mei Ling Tan is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<div class="noprint">
+<p><a href="index.html">Back to Make One</a></p>
+<p>Print this page on A4. You get the rule sheet, the strip mat, then 40 cards. Print the cards on card. One set is for one group of 2 to 4.</p>
+<p>Cutting: I cut card stock with the guillotine myself before the club. Pupils use round-tip scissors only.</p>
+<p><button type="button" id="print">Print</button></p>
+</div>
+
+<section class="page rules">
+<h1>Make One: rule sheet</h1>
+<h3>You need</h3>
+<p>The 40 cards and the fraction strip mat from the print page. 2 to 4 players. About 15 minutes.</p>
+<h3>Goal</h3>
+<p>Win the most cards. You win cards by filling the cup to exactly 1 whole.</p>
+<h3>Set up</h3>
+<p>Shuffle. Give everyone 4 cards. Put the rest face down. The cup is the middle of the table. It starts empty.</p>
+<h3>On your turn</h3>
+<ol class="steps">
+  <li>Play 1 card into the cup. Say what the cup holds now, like "seven twelfths".</li>
+  <li>The player on your left checks with the strip mat. If you are wrong, take your card back. Your turn ends.</li>
+  <li>You can't take the cup over 1. If your card would, take it back. Your turn ends.</li>
+  <li>Can't play, or don't want to? Draw 1 card and pass.</li>
+  <li>After you play, draw back up to 4 cards.</li>
+</ol>
+<h3>Win a cup</h3>
+<p>Make exactly 1 whole and you win the cup. Keep all its cards face down. Each card is 1 point.</p>
+<h3>Challenges</h3>
+<p>Think someone said the wrong total? Say "check". If you are right, they take the card back. If you are wrong, you miss your next turn.</p>
+<h3>Stuck</h3>
+<p>If nobody can play for a whole round, clear the cup. Nobody scores it.</p>
+<h3>End</h3>
+<p>When the pile is gone and nobody can play, count your cards. Most cards wins.</p>
+</section>
+
+<section class="page">
+<h2>Make One: strip mat</h2>
+<p>Each strip is 1 whole. Line up your fractions to check a total.</p>
+<div class="mat" id="mat"></div>
+<p class="small">The 40 cards: four 1/2, six 1/3, three 2/3, six 1/4, three 3/4. Then six 1/6, two 5/6, six 1/12 and four 5/12.</p>
+</section>
+
+<section>
+<h2>Make One: cards</h2>
+<div class="deck" id="deck"></div>
+</section>
+</main>
+</body>
+</html>
