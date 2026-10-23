@@ -1,6 +1,6 @@
 // Checks the project pages. Usage:
 //   node tools/check.mjs [module ...] [--skillforge <path to skillforge repo>]
-// Every index.html under <module>/<persona>/ and tasks/<module>/<task>/<persona>/ must:
+// Every .html page under <module>/<persona>/ and tasks/<module>/<task>/<persona>/ must:
 // - start its body with the AI note naming one of the personas,
 // - load nothing from other sites (scripts, styles, images, fonts, frames),
 // - stay under 2 MB with its folder's assets,
@@ -59,16 +59,16 @@ for (const module of modules) {
     const files = walk(dir);
     const bytes = files.reduce((n, f) => n + fs.statSync(f).size, 0);
     if (bytes > MAX_BYTES) fail(dir, `${Math.round(bytes / 1024)} KB, over 2 MB`);
-    pages.push(...files.filter((f) => path.basename(f) === 'index.html'));
+    pages.push(...files.filter((f) => f.endsWith('.html')));
   }
 }
 
 // Task pages: tasks/<module>/<task>/<persona>/index.html.
 const TASKS = path.join(ROOT, 'tasks');
 if (fs.existsSync(TASKS)) {
-  for (const file of walk(TASKS).filter((f) => path.basename(f) === 'index.html')) {
+  for (const file of walk(TASKS).filter((f) => f.endsWith('.html'))) {
     const parts = path.relative(TASKS, file).split(path.sep);
-    if (parts.length !== 4) { fail(file, 'task pages go in tasks/<module>/<task>/<persona>/index.html'); continue; }
+    if (parts.length !== 4) { fail(file, 'task pages go in tasks/<module>/<task>/<persona>/'); continue; }
     if (only.length && !only.includes(parts[0])) continue;
     const bytes = walk(path.dirname(file)).reduce((n, f) => n + fs.statSync(f).size, 0);
     if (bytes > MAX_BYTES) fail(file, `${Math.round(bytes / 1024)} KB, over 2 MB`);

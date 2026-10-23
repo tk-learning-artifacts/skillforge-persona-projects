@@ -14,6 +14,8 @@ The site is published at https://tk-learning-artifacts.github.io/skillforge-pers
 
 ## Rules for every page
 
+These apply to every `.html` file, not only `index.html`.
+
 - It carries the AI note as the first thing in `<body>`, with the persona's name filled in:
 
 ```html
