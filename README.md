@@ -8,7 +8,7 @@ The site is published at https://tk-learning-artifacts.github.io/skillforge-pers
 
 - `<module id>/<persona key>/index.html`: one project, the page SkillForge links to as the project. Assets sit beside it. Module ids match `data/modules/<id>.json` in SkillForge, and persona keys match `data/community/personas.json`.
 - `<module id>/<persona key>/meta.json`: `{ "module", "persona", "title", "summary" }`, used by the index page.
-- `<module id>/<persona key>/tasks/<task item_key>/index.html`: optional pages that a persona's task answers link to.
+- `tasks/<module id>/<task item_key>/<persona key>/index.html`: optional pages that a persona's task answer links to, such as a worked example or a small prototype.
 - `kit/note.css`: styles for the AI note. `kit/base.css`: an optional plain stylesheet.
 - `index.html`: the list of projects, rebuilt by `node tools/build-index.mjs`.
 
@@ -23,7 +23,7 @@ The site is published at https://tk-learning-artifacts.github.io/skillforge-pers
 <p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> NAME is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
 ```
 
-  Task pages one folder deeper use `../../../../kit/note.css`.
+  Task pages, two folders deeper, use `../../../../kit/note.css`, and end the note with "AI wrote this page as an example for teachers."
 - It is self-contained: no scripts, styles, fonts or images loaded from other sites. Links to other sites are fine.
 - It works on a phone (about 360 px wide) and in light and dark mode.
 - It shows nothing as a photo of a real object, class or person. Physical builds are shown as diagrams, simulations, code and written steps.

@@ -1,6 +1,6 @@
 // Checks the project pages. Usage:
 //   node tools/check.mjs [module ...] [--skillforge <path to skillforge repo>]
-// Every index.html under <module>/<persona>/ (and its tasks/ pages) must:
+// Every index.html under <module>/<persona>/ and tasks/<module>/<task>/<persona>/ must:
 // - start its body with the AI note naming one of the personas,
 // - load nothing from other sites (scripts, styles, images, fonts, frames),
 // - stay under 2 MB with its folder's assets,
@@ -19,7 +19,7 @@ const skillforge = sfAt >= 0 ? path.resolve(args[sfAt + 1]) : null;
 const only = args.filter((a, i) => !a.startsWith('--') && (sfAt < 0 || i !== sfAt + 1));
 const CHROME = process.env.CHROME_PATH || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 const MAX_BYTES = 2 * 1024 * 1024;
-const SKIP = new Set(['kit', 'tools', 'node_modules', '.git']);
+const SKIP = new Set(['kit', 'tools', 'tasks', 'node_modules', '.git']);
 
 const problems = [];
 const fail = (where, what) => problems.push(`${path.relative(ROOT, where)}: ${what}`);
@@ -60,6 +60,19 @@ for (const module of modules) {
     const bytes = files.reduce((n, f) => n + fs.statSync(f).size, 0);
     if (bytes > MAX_BYTES) fail(dir, `${Math.round(bytes / 1024)} KB, over 2 MB`);
     pages.push(...files.filter((f) => path.basename(f) === 'index.html'));
+  }
+}
+
+// Task pages: tasks/<module>/<task>/<persona>/index.html.
+const TASKS = path.join(ROOT, 'tasks');
+if (fs.existsSync(TASKS)) {
+  for (const file of walk(TASKS).filter((f) => path.basename(f) === 'index.html')) {
+    const parts = path.relative(TASKS, file).split(path.sep);
+    if (parts.length !== 4) { fail(file, 'task pages go in tasks/<module>/<task>/<persona>/index.html'); continue; }
+    if (only.length && !only.includes(parts[0])) continue;
+    const bytes = walk(path.dirname(file)).reduce((n, f) => n + fs.statSync(f).size, 0);
+    if (bytes > MAX_BYTES) fail(file, `${Math.round(bytes / 1024)} KB, over 2 MB`);
+    pages.push(file);
   }
 }
 
