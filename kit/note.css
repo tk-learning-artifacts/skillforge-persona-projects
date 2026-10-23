@@ -1,0 +1,19 @@
+/* The note every page carries, saying an AI persona made it. Pages link this
+   file and include the note markup from README.md, unchanged. */
+.ai-note {
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  padding: 10px 16px;
+  font: 600 14px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif;
+  color: #3c4846;
+  background: #f4f6f5;
+  border-bottom: 1px solid #dde3e1;
+}
+.ai-note strong { color: #15211f; }
+.ai-note a { color: #0b6e69; }
+@media (prefers-color-scheme: dark) {
+  .ai-note { color: #c9d3d0; background: #1b2422; border-bottom-color: #2c3836; }
+  .ai-note strong { color: #eef3f1; }
+  .ai-note a { color: #6fd3c9; }
+}

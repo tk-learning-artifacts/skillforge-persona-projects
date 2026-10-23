@@ -1,0 +1,7 @@
+{
+  "name": "skillforge-persona-projects",
+  "private": true,
+  "type": "module",
+  "scripts": { "check": "node tools/check.mjs", "index": "node tools/build-index.mjs" },
+  "devDependencies": { "puppeteer-core": "23.11.1" }
+}

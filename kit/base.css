@@ -1,0 +1,25 @@
+/* An optional plain starting point for a project page: readable type, light
+   and dark colours, a centred column that works on a phone. Projects may use
+   their own styles instead. */
+:root {
+  --ink: #15211f; --ink-2: #3c4846; --muted: #55625f; --line: #dde3e1;
+  --ground: #ffffff; --surface: #f4f6f5; --accent: #0b6e69; --accent-soft: #e1f0ee;
+  color-scheme: light dark;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --ink: #eef3f1; --ink-2: #c9d3d0; --muted: #9aa8a4; --line: #2c3836;
+    --ground: #111816; --surface: #1b2422; --accent: #6fd3c9; --accent-soft: #17302d; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--ground); color: var(--ink);
+  font: 17px/1.6 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width: 760px; margin: 0 auto; padding: 24px 16px 64px; }
+h1, h2, h3 { line-height: 1.25; }
+a { color: var(--accent); }
+img, svg, canvas, video { max-width: 100%; height: auto; }
+table { border-collapse: collapse; width: 100%; }
+th, td { border: 1px solid var(--line); padding: 6px 8px; text-align: left; vertical-align: top; }
+.card { background: var(--surface); border-radius: 14px; padding: 16px; margin: 16px 0; }
+button { font: inherit; min-height: 44px; padding: 0 16px; border-radius: 10px;
+  border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; }
+button.primary { background: var(--accent); border-color: var(--accent); color: var(--ground); }
