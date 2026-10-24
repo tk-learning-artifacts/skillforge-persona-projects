@@ -111,7 +111,7 @@ const APP_WORDS = [
   "word": "Route",
   "week": 5,
   "meaning": "The name of a screen that you navigate to. It can carry data, such as an id.",
-  "inOurApp": "WordScreen(id = 13) is the route for this word."
+  "inOurApp": "WordScreen(id = 15) is the route for this word."
  },
  {
   "id": 16,

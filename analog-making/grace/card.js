@@ -118,7 +118,7 @@
     { title: 'Lay the + track', text: 'Run the top line in one piece. Fold down the right side, across the fold line and onto the corner flap. End with a small square of tape near the tip of the flap.',
       tip: 'Tracks must never touch. I ask: "Can you fit your pencil between the + and the −?"' },
     { title: 'Place the coin cell', text: 'Put the cell on the round end of the − track, + side up. Tape just its edge so it stays put. The + side must stay bare.',
-      tip: 'Cells come from the numbered egg tray on my desk, one each, only at this step. I count them out and count them back.' },
+      tip: 'Cells come from the numbered egg trays on my desk, one each, only at this step. I count them out and count them back.' },
     { title: 'Add the two LEDs', text: 'Bend the legs flat, apart. The long leg goes on the + track, the short leg on the − track. Tape each leg down with a small square of clear tape.',
       tip: 'Before they tape: "Show me your long leg." Thirty-six hands up is quicker than thirty-six dark cards.' },
     { title: 'Fold and press', text: 'Fold the corner flap over the cell and press. The copper square on the flap touches the + side and both lanterns glow. The flap is the switch.',

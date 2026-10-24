@@ -98,3 +98,4 @@ button:focus-visible, a:focus-visible { outline: 3px solid var(--copper); outlin
   .tpl { border: none; padding: 0; }
   @page { size: A4; margin: 11mm; }
 }
+[hidden] { display: none !important; }

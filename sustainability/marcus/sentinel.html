@@ -62,7 +62,7 @@
 <p>The hood points the LED screen up at the light fitting. Daylight from the side mostly hits cardboard. The micro:bit reads light with some of its LEDs, so the screen must stay dark while it logs.</p>
 
 <h2>The code (MakeCode, JavaScript view)</h2>
-<p>Add the <code>datalogger</code> extension first. The micro:bit has no clock, so the log counts minutes from when the captain presses A, as the last one out.</p>
+<p>Add the <code>datalogger</code> extension first. The micro:bit has no clock. So the log counts minutes from when the last one out presses A.</p>
 <pre><code>// Power Down Cup sentinel, version 3
 let threshold = 45     // set from your calibration day
 let silent = true      // true in baseline weeks, false in cup weeks
@@ -108,7 +108,7 @@ loops.everyInterval(60000, function () {
 <p>Next morning, a CCA member plugs the micro:bit into a laptop. The <code>MY_DATA</code> file on the MICROBIT drive opens in a browser and exports the table. They add up the <code>lightsOn</code> column, then press reset for the next day. Flashing new code hides the old log, so copy the data first.</p>
 
 <h2>Calibrate it: find the threshold</h2>
-<p>This is the test we ran in session 2, as a simulation. One afternoon, 2 pm to 6 pm. The green bands are when the lights were really on: 70 minutes after class, and 15 minutes when the cleaner came. That is 85 minutes. Move the threshold. Orange marks show minutes the sentinel gets wrong.</p>
+<p>This is the test we ran in session 2, as a simulation. One afternoon, 2 pm to 6 pm. The green bands show when the lights were really on. That was 70 minutes after class, and 15 minutes when the cleaner came. That is 85 minutes. Move the threshold. Orange marks show minutes the sentinel gets wrong.</p>
 <div class="seg" role="group" aria-label="Weather">
   <button type="button" data-day="sunny" aria-pressed="true">Sunny day</button>
   <button type="button" data-day="cloudy" aria-pressed="false">Cloudy day</button>

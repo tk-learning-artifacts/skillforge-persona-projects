@@ -15,7 +15,7 @@
       why: 'Rub all of your hands with soap for 20 seconds. Rinsing with water is not enough.' },
     { q: 'Germs in food grow fastest between which temperatures?',
       opts: ['5°C and 60°C', '0°C and 5°C', '60°C and 100°C'], a: 0,
-      why: 'SFA calls 5°C to 60°C the danger zone. Room temperature in Singapore is right in the middle of it.' },
+      why: 'SFA calls 5°C to 60°C the danger zone. Room temperature in Singapore is inside it.' },
     { q: 'Why does the yoghurt stay in the cooler box until your group is ready?',
       opts: ['So it tastes sweeter', 'To keep it out of the danger zone', 'So nobody takes it'], a: 1,
       why: 'Cold food stays below 5°C, where germs grow slowly. That is the C for control temperature.' },

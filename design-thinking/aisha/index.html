@@ -14,14 +14,14 @@
 <p class="kicker">Design thinking case study · Sec 1 makerspace</p>
 <h1>The Cool-Down Dock</h1>
 <p class="lede">A cardboard stand with a micro:bit in it. You park a glue gun after you unplug it. The display drains while the gun cools, then shows a tick. If you lift the gun too early, it beeps.</p>
-<p>I'm Aisha. I teach design and making in a school makerspace. My Sec 1 classes use hot glue guns every week, and pack-up is where things go wrong. I took one problem through one full loop: empathise, define, ideate, prototype and test. Then I built version 2.</p>
+<p>I'm Aisha. I teach design and making in a school makerspace. My Sec 1 classes use hot glue guns every week. Pack-up is where things go wrong. I took one problem through one full loop: empathise, define, ideate, prototype and test. Then I built version 2.</p>
 
 <div class="panel">
 <p><strong>What's here</strong></p>
 <ul class="tight">
   <li>The 1-page case study: <a href="case-study.pdf">download the PDF</a> or <a href="case-study.html">read it as a web page</a>.</li>
   <li>The prototype, both versions: <a href="#try">run them in the simulator</a> below. The code is the real MakeCode code.</li>
-  <li>Drawings of the build instead of photos: <a href="build.html">cutting net, wiring, parts, steps and a test storyboard</a>.</li>
+  <li>Drawings instead of photos: <a href="build.html">cutting net, wiring, parts, steps and a test storyboard</a>.</li>
 </ul>
 <p class="small">SkillForge projects never show photos of real objects or people. My drawings show more than a photo would anyway: you can see under the gun.</p>
 </div>
@@ -49,7 +49,7 @@
 <p>The technician was right about cool-melt guns. Bostik's own figures put its Craft Cool Melt gun at 125 to 135°C. Its hot-melt guns run at 175 to 200°C. Swapping guns would not fix this.</p>
 <div class="said-need">
   <div><h4>What they said they wanted</h4><p>"More time to pack up." "Guns with a light on them."</p></div>
-  <div><h4>What they needed</h4><p>A way to see that a gun is still hot, without touching it, in the last 5 minutes of a lesson.</p></div>
+  <div><h4>What they needed</h4><p>A way to see that a gun is still hot, without touching it. They need it in the last 5 minutes of a lesson.</p></div>
 </div>
 <p>The guns were unplugged. My hunch was wrong. The real problem is that a hot gun and a cold gun look the same.</p>
 
@@ -90,17 +90,17 @@
     <li><span>20</span>A robot arm that packs the guns</li>
   </ol></div>
 </div>
-<p>We picked two. Idea 1 costs nothing, so it starts next week anyway. Idea 11 is the one I could prototype in one lesson. It tests something I did not know: will students wait if they can see the time left?</p>
+<p>We picked two. Idea 1 costs nothing, so it starts next week anyway. Idea 11 is the one I could prototype in one lesson. It tests something I did not know. Will students wait if they can see the time left?</p>
 <p>Idea 14 died fast. The micro:bit's temperature sensor sits inside its processor. It gives roughly the air temperature, not the tip's. So we time the cooling instead of measuring it.</p>
 <div class="plain">
 <p><strong>The one assumption the prototype tests</strong></p>
-<p>If students can see how much cooling time is left, they will leave the gun in the dock until it is done.</p>
+<p>If students can see the cooling time left, they will leave the gun in the dock until it is done.</p>
 </div>
 
 <h2 id="prototype"><span class="step">Step 4</span> Prototype</h2>
-<p>Version 1 took 90 minutes: corrugated card, masking tape, one micro:bit V2, a battery pack and a ceramic tile. The gun lies in a cardboard cradle. Its nozzle rests on the tile, never on card.</p>
+<p>Version 1 took 90 minutes. I used corrugated card, masking tape, a micro:bit V2, a battery pack and a ceramic tile. The gun lies in a cardboard cradle. Its nozzle rests on the tile, never on card.</p>
 <h3>Version 1: the light sensor</h3>
-<p>The micro:bit lies face up under a hole in the cradle floor. The micro:bit can sense light with its LED display. When the gun covers the hole, the reading drops and a 10-minute countdown starts. Our technician chose 10 minutes for our guns. Your guns may need a different time, so it's a setting at the top of the code.</p>
+<p>The micro:bit lies face up under a hole in the cradle floor. The micro:bit can sense light with its LED display. When the gun covers the hole, the reading drops and a 10-minute countdown starts. Our technician chose 10 minutes for our guns. Your guns may need a different time. It's a setting at the top of the code.</p>
 <details>
 <summary>Version 1 code (MakeCode JavaScript)</summary>
 <pre><span class="c">// Cool-Down Dock, version 1. A dark reading means a gun is parked.</span>
@@ -126,7 +126,7 @@ basic.forever(function () {
 <p>Try it in the <a href="#try">simulator</a> and you'll spot the big problem in about ten seconds. I didn't. My testers did.</p>
 
 <h2 id="test"><span class="step">Step 5</span> Test</h2>
-<p>I tested version 1 with three people: student A, whom I had interviewed, the technician, and student C from another class. I said one line, "Use it like it's the end of a lesson," and then I only watched and wrote.</p>
+<p>I tested version 1 with three people. They were student A, whom I had interviewed, the technician, and student C from another class. I said one line: "Use it like it's the end of a lesson." Then I only watched and wrote.</p>
 <ul class="tests">
   <li><b>Note 1.</b> Student C laid the gun in and asked, "Where's the timer?" The gun was lying on top of the display.</li>
   <li><b>Note 2.</b> Student A lifted the gun after 3 minutes to see the number. The screen went blank. Nothing warned her.</li>
@@ -148,7 +148,7 @@ basic.forever(function () {
   <li><span class="tag">Note 1</span><span>The micro:bit moved to the front wall, tilted up. You can see it with the gun in.</span></li>
   <li><span class="tag">What if</span><span>The display drains like a battery: 25 lights, one goes out every 24 seconds. No numbers to read.</span></li>
   <li><span class="tag">Note 2</span><span>Lift it early and you get a cross and two low beeps. Put it back and the count starts again from full. Starting over is the safe mistake.</span></li>
-  <li><span class="tag">I wish</span><span>A tick and a high beep when it's done. Every sound also shows on the display, so a student who can't hear it still sees it.</span></li>
+  <li><span class="tag">I wish</span><span>A tick and a high beep when it's done. Every sound also shows on the display. A student who can't hear it still sees it.</span></li>
   <li><span class="tag">Note 6</span><span>Not fixed. See <a href="#change">what I'd change</a>.</span></li>
 </ul>
 <details>
@@ -200,7 +200,7 @@ basic.forever(function () {
     }
 })</pre>
 </details>
-<p>I tested version 2 with the same three people. All three left the gun in until the tick. Student C watched the lights go out and said, "It's like a loading bar backwards." The technician could read it from 2 metres, but not from the door.</p>
+<p>I tested version 2 with the same three people. All three left the gun in until the tick. Student C watched the lights go out and said, "It's like a loading bar backwards." The technician could read it from 2 metres. She couldn't read it from the door.</p>
 
 <h2 id="try">Try both versions</h2>
 <p>This runs the same logic as the code above. Time is sped up, so 10 minutes takes 20 seconds. Try the hand and the lights on version 1, then on version 2.</p>
@@ -276,9 +276,9 @@ basic.forever(function () {
 <p class="small">The simulator plays the beeps through your speaker and also writes them in words. On a real micro:bit V2 they come from its built-in speaker.</p>
 
 <h2 id="change">What I'd change</h2>
-<p>The technician's wish is still open. One dock tells you about one gun, standing next to it. She wants to know from the door. A class set of 10 docks also needs 10 micro:bits, and that's most of my kit.</p>
+<p>The technician's wish is still open. One dock tells you about one gun, standing next to it. She wants to know from the door. A class set of 10 docks also needs 10 micro:bits. That's most of my kit.</p>
 <p>Next loop I'd test a "What if" from the critique. Each dock sends its state by radio to one micro:bit by the door. It shows how many guns are still cooling. I'd also test idea 1, the early unplug, on its own first. If it works, the dock may only be needed for the last few guns.</p>
-<p>One more doubt: three testers in my own room, who knew me. Version 2 needs a test in a real pack-up, with the bell going and 20 students.</p>
+<p>One more doubt: three testers in my own room, who knew me. Version 2 needs a test in a real pack-up, with 20 students and the bell going.</p>
 
 <h2 id="safety">Safety</h2>
 <div class="safety">

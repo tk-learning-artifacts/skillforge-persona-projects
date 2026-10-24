@@ -5,7 +5,7 @@ const GAME_WORDS = [
   "term": "Goal",
   "level": 1,
   "meaning": "What the player is trying to do.",
-  "example": "In Super Mario Bros., you run right to reach the flagpole at the end of each level."
+  "example": "In Super Mario Bros., you run right to reach the flagpole at the end of most levels."
  },
  {
   "id": 2,

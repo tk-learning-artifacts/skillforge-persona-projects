@@ -54,7 +54,7 @@
     </div>
   </div>
 </div>
-<p class="small">This page runs a browser copy of the Scratch project. Same numbers, same order of steps. Scratch checks "touching" pixel by pixel. This copy uses boxes, so a landing on the very edge of the pad can differ by a pixel or two. The trace table and slow motion are extras for class. Scratch has neither.</p>
+<p class="small">This page runs a browser copy of the Scratch project. Same numbers, same order of steps. Scratch checks "touching" pixel by pixel. This copy uses boxes. So a landing on the very edge of the pad can differ slightly. The trace table and slow motion are extras for class. Scratch has neither.</p>
 
 <h2 id="frame">One frame, step by step</h2>
 <p>Scratch runs a loop like this about 30 times a second. Each trip is one frame. Here is the order inside the lander's loop:</p>
@@ -96,7 +96,7 @@
 <table>
   <tr><th>Test</th><th>Expected</th><th>Result</th></tr>
   <tr><td>Green flag, no keys</td><td>Free fall, crash near -5</td><td>Crashed at speed -4.95. Bubble said -5. Pad stayed yellow.</td></tr>
-  <tr><td>Burn when speed y is below -1.2, steer to the pad</td><td>Landing</td><td>Landed twice, with 29 and 28 fuel left. Pad lights went green.</td></tr>
+  <tr><td>Burn whenever speed y is below -1.5, steer to the pad</td><td>Landing</td><td>Landed twice, with 29 and 28 fuel left. Pad lights went green.</td></tr>
   <tr><td>best after those two landings</td><td>Higher fuel kept</td><td>best = 29</td></tr>
   <tr><td>Exhaust clones while burning</td><td>Each one deleted</td><td>Never more than 8 at once. 0 after landing.</td></tr>
   <tr><td>Green flag again</td><td>Full reset, except best</td><td>speed y 0, fuel 80, new pad position. best kept.</td></tr>

@@ -63,7 +63,7 @@ val appWords = listOf(
         "Tap a word to go to its screen. Back takes you to the list."),
     AppWord(15, "Route", 5,
         "The name of a screen that you navigate to. It can carry data, such as an id.",
-        "WordScreen(id = 13) is the route for this word."),
+        "WordScreen(id = 15) is the route for this word."),
     AppWord(16, "Emulator", 6,
         "A pretend Android phone that runs on your computer.",
         "It needs more memory, so some school laptops use a real phone instead."),
