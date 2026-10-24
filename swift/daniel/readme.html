@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Team Points README, by Daniel Ong</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Daniel Ong is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<ul class="tabs">
+  <li><a href="index.html">Project</a></li>
+  <li><a href="readme.html" aria-current="page">README</a></li>
+  <li><a href="code.html">The code</a></li>
+</ul>
+<h1>README: Team Points</h1>
+<p class="lede">A scoreboard for class quiz games, for iPad and iPhone. This page is the README from the Playgrounds file, with screenshots. You can also get it as plain text: <a href="README.md">README.md</a>.</p>
+
+<div class="shots">
+  <figure><img src="shots/list-light.png" width="420" height="773" alt="Screen 1, the team list. Kopi 12, Teh 9, Milo 15 with a crown, Bandung 7. A Reset button sits at the top right."><figcaption>Screen 1: the teams. Milo leads, so Milo has the crown.</figcaption></figure>
+  <figure><img src="shots/team-light.png" width="420" height="773" alt="Screen 2 for Milo. A green square, the score 15 in large numbers, buttons for minus 1, plus 1 and plus 3, and a box with the team name."><figcaption>Screen 2: one team. Tap a button to change the score.</figcaption></figure>
+  <figure><img src="shots/list-dark.png" width="420" height="773" alt="Screen 1 in dark mode, with white text on dark rows."><figcaption>Screen 1 in dark mode.</figcaption></figure>
+  <figure><img src="shots/team-dark.png" width="420" height="773" alt="Screen 2 for Milo in dark mode."><figcaption>Screen 2 in dark mode.</figcaption></figure>
+</div>
+<p class="small">These screenshots come from the Swift code in the Playgrounds file. It was built and run as a Mac app, at a phone-sized window, with made-up scores.</p>
+
+<h2>What it does</h2>
+<ul class="tight">
+  <li>Screen 1 lists four teams and their scores. The leading team gets a crown.</li>
+  <li>Tap a team to open screen 2. Give +1, +3 or take away 1 point.</li>
+  <li>The big number rolls to the new score and pops a little.</li>
+  <li>Rename a team on screen 2. The list updates too.</li>
+  <li>Reset sets every score back to 0. It asks first.</li>
+</ul>
+
+<h2>What you need</h2>
+<ul class="tight">
+  <li>An iPad or Mac with <a href="https://developer.apple.com/swift-playground/">Swift Playgrounds</a>.</li>
+  <li>iPadOS 17 or later, because the app uses <code>.numericText(value:)</code>.</li>
+</ul>
+
+<h2>How to open it</h2>
+<ol class="tight">
+  <li>Download <a href="TeamPoints.swiftpm.zip" download>TeamPoints.swiftpm.zip</a>.</li>
+  <li>Unzip it in the Files app. You get <code>Team Points.swiftpm</code>.</li>
+  <li>Tap it. It opens in Swift Playgrounds.</li>
+  <li>Tap the play button to run the app.</li>
+</ol>
+
+<h2>How to use it in a lesson</h2>
+<ol class="tight">
+  <li>Mirror the iPad to the projector before the quiz starts.</li>
+  <li>Rename the teams if you like. Tap a team, then type in the name box.</li>
+  <li>After each question, tap the winning team and give points. Tap Back to show the list.</li>
+  <li>At the end, the crown shows the winner. Press Reset for the next class.</li>
+</ol>
+
+<h2>The files</h2>
+<ul class="tight">
+  <li><code>TeamPointsApp.swift</code>: where the app starts.</li>
+  <li><code>Team.swift</code>: one team, and the four starter teams.</li>
+  <li><code>TeamsView.swift</code>: screen 1. The scores live here, in <code>@State</code>.</li>
+  <li><code>TeamView.swift</code>: screen 2. It gets the team as a <code>@Binding</code>.</li>
+  <li><code>Package.swift</code>: made by Swift Playgrounds. Do not edit it by hand.</li>
+</ul>
+
+<h2>Accessibility</h2>
+<ul class="tight">
+  <li>Each team has a colour and a shape: circle, triangle, square, star.</li>
+  <li>VoiceOver reads each row as one line, like "Milo, 15 points, in the lead".</li>
+  <li>The point buttons say "Add 1 point", not "plus one".</li>
+  <li>Buttons are 80 by 64 points. Apple's default control size is 44 by 44.</li>
+  <li>Text uses system text styles, so it grows with the text size setting.</li>
+  <li>With Reduce Motion on, the score changes with no animation.</li>
+</ul>
+
+<h2>Known problems</h2>
+<ul class="tight">
+  <li>Scores are lost when the app is closed fully. They only live in memory.</li>
+  <li>In dark mode the team shapes are hard to see on the dark rows.</li>
+  <li>The big score is a fixed 120 points. It does not grow with text size.</li>
+</ul>
+</main>
+</body>
+</html>

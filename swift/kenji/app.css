@@ -1,0 +1,64 @@
+/* The web copy of Pig Out. It copies the look of the SwiftUI app. */
+.po {
+  --po-bg: #ffffff; --po-ink: #000000; --po-ink-2: #6c6c70; --po-panel: #f2f2f4; --po-card: #f2f2f4;
+  --po-pink: #bf2966; --po-pink-soft: #f5dde7; --po-pink-text: #bf2966; --po-track: #dcdce0;
+  position: relative; width: 100%; max-width: 340px; height: 640px; margin: 0 auto;
+  border: 8px solid #2b2b2e; border-radius: 40px; overflow: hidden;
+  background: var(--po-bg); color: var(--po-ink);
+  font: 17px/1.3 -apple-system, system-ui, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  .po { --po-bg: #000000; --po-ink: #ffffff; --po-ink-2: #98989f; --po-panel: #1c1c1e; --po-card: #1c1c1e;
+    --po-pink-soft: #3a1626; --po-pink-text: #e0608f; --po-track: #3a3a3c; border-color: #48484a; }
+}
+.po * { box-sizing: border-box; }
+.po button { font: inherit; color: inherit; border: 0; background: none; cursor: pointer; }
+.po button:focus-visible { outline: 3px solid #0a84ff; outline-offset: 2px; }
+.po-screen { position: absolute; inset: 0; overflow-y: auto; padding: 18px 16px 24px; background: var(--po-bg); transition: transform .35s ease; }
+.po-screen[data-off="right"] { transform: translateX(100%); }
+.po-screen[data-off="left"] { transform: translateX(-30%); }
+.po-title { text-align: center; }
+.po-title h3 { font: 900 46px/1.1 ui-rounded, -apple-system, system-ui, sans-serif; color: var(--po-pink); margin: 10px 0 16px; }
+.po-rules { text-align: left; background: var(--po-panel); border-radius: 18px; padding: 12px 14px; margin: 0 0 16px; }
+.po-rules strong { display: block; margin-bottom: 6px; }
+.po-rules ul { margin: 0; padding: 0; list-style: none; font-size: 15px; }
+.po-rules li { display: flex; gap: 8px; margin: 6px 0; }
+.po-rules li span:first-child { flex: none; width: 18px; text-align: center; }
+.po-seg { display: flex; background: var(--po-panel); border-radius: 10px; padding: 3px; margin-bottom: 12px; }
+.po-seg button { flex: 1; min-height: 44px; border-radius: 8px; font-size: 14px; font-weight: 600; }
+.po-seg button[aria-pressed="true"] { background: var(--po-bg); box-shadow: 0 1px 3px rgba(0,0,0,.2); }
+@media (prefers-color-scheme: dark) { .po-seg button[aria-pressed="true"] { background: #636366; } }
+.po-step { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+.po-step div { display: flex; background: var(--po-panel); border-radius: 10px; }
+.po-step button { width: 48px; min-height: 44px; font-size: 22px; }
+.po-step button:disabled { opacity: .35; cursor: default; }
+.po-big-btn { width: 100%; min-height: 56px; border-radius: 28px; background: var(--po-pink) !important; color: #fff !important; font-size: 22px; font-weight: 700; }
+.po-bar { display: flex; align-items: center; min-height: 44px; margin: -6px 0 10px; }
+.po-back { min-height: 44px; padding: 0 6px; color: var(--po-pink-text) !important; font-size: 16px; }
+.po-bar span { flex: 1; text-align: center; font-weight: 600; margin-right: 70px; }
+.po-cards { display: flex; gap: 10px; }
+.po-card { flex: 1; border-radius: 16px; padding: 10px; text-align: center; background: var(--po-card); border: 3px solid transparent; }
+.po-card.active { background: var(--po-pink-soft); border-color: var(--po-pink); }
+.po-card b { display: block; font-size: 15px; }
+.po-card .n { display: block; font: 800 32px/1.2 ui-rounded, -apple-system, system-ui, sans-serif; }
+.po-track { height: 4px; border-radius: 2px; background: var(--po-track); overflow: hidden; margin-top: 4px; }
+.po-track i { display: block; height: 100%; background: var(--po-pink); width: 0; transition: width .3s; }
+.po-die-wrap { display: flex; justify-content: center; margin: 16px 0 10px; }
+.po-die { display: block; }
+.po-die.faded { opacity: .35; }
+.po-die.spin { animation: po-spin .35s ease-out; }
+.po-die.shake { animation: po-shake .4s linear; }
+@keyframes po-spin { from { transform: rotate(-360deg); } to { transform: none; } }
+@keyframes po-shake { 0%,100% { transform: none; } 17% { transform: translateX(12px); } 33% { transform: translateX(-12px); } 50% { transform: translateX(12px); } 67% { transform: translateX(-12px); } 83% { transform: translateX(12px); } }
+.po-turn { text-align: center; font: 900 32px/1.2 ui-rounded, -apple-system, system-ui, sans-serif; margin: 0; }
+.po-msg { text-align: center; min-height: 66px; font-size: 17px; margin: 8px 0; display: flex; align-items: center; justify-content: center; }
+.po-btns { display: flex; gap: 12px; }
+.po-btns button { flex: 1; min-height: 56px; border-radius: 28px; font-size: 21px; font-weight: 700; }
+.po-roll { background: var(--po-pink) !important; color: #fff !important; }
+.po-hold { background: var(--po-pink-soft) !important; color: var(--po-pink-text) !important; }
+.po-btns button:disabled { opacity: .4; cursor: default; }
+.po .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+@media (prefers-reduced-motion: reduce) {
+  .po-screen { transition: none; }
+  .po-die.spin, .po-die.shake { animation: none; }
+}

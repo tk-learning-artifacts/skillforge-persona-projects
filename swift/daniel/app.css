@@ -1,0 +1,64 @@
+/* The web copy of Team Points. It copies the look of the SwiftUI app. */
+.tp {
+  --tp-bg: #f2f2f7; --tp-card: #ffffff; --tp-ink: #000000; --tp-ink-2: #6c6c70;
+  --tp-sep: #d1d1d6; --tp-field: #ffffff; --tp-grey: #8e8e93;
+  position: relative; width: 100%; max-width: 340px; height: 600px; margin: 0 auto;
+  border: 8px solid #2b2b2e; border-radius: 40px; overflow: hidden;
+  background: var(--tp-bg); color: var(--tp-ink);
+  font: 17px/1.3 -apple-system, system-ui, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  .tp { --tp-bg: #000000; --tp-card: #1c1c1e; --tp-ink: #ffffff; --tp-ink-2: #98989f;
+    --tp-sep: #38383a; --tp-field: #1c1c1e; --tp-grey: #8e8e93; border-color: #48484a; }
+}
+.tp * { box-sizing: border-box; }
+.tp button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+.tp button:focus-visible, .tp input:focus-visible { outline: 3px solid #0a84ff; outline-offset: 2px; }
+.tp-screen { position: absolute; inset: 0; overflow-y: auto; background: var(--tp-bg);
+  transition: transform .35s ease; padding: 14px 16px 24px; }
+.tp-screen[data-off="right"] { transform: translateX(100%); }
+.tp-screen[data-off="left"] { transform: translateX(-30%); }
+.tp-bar { display: flex; align-items: center; justify-content: space-between; min-height: 44px; gap: 8px; }
+.tp-bar-btn { min-height: 44px; min-width: 44px; padding: 0 12px; border-radius: 22px;
+  background: var(--tp-card) !important; font-weight: 500; }
+.tp-bar-btn:disabled { opacity: .4; cursor: default; }
+.tp-bar-title { font-weight: 600; text-align: center; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tp-large { font-size: 32px; font-weight: 700; margin: 6px 0 12px; letter-spacing: .2px; }
+.tp-list { list-style: none; margin: 0; padding: 0 0 0 16px; background: var(--tp-card); border-radius: 22px; }
+.tp-row { display: flex; align-items: center; gap: 12px; width: 100%; min-height: 64px; padding: 6px 16px 6px 0;
+  border-bottom: 1px solid var(--tp-sep); text-align: left; }
+.tp-list li:last-child .tp-row { border-bottom: 0; }
+.tp-row svg { flex: none; }
+.tp-row-name { font-size: 20px; font-weight: 600; }
+.tp-row-score { margin-left: auto; font-size: 28px; font-weight: 700; font-variant-numeric: tabular-nums;
+  font-family: ui-rounded, -apple-system, system-ui, sans-serif; }
+.tp-chev { color: var(--tp-grey); font-size: 20px; margin-left: 4px; }
+.tp-foot { color: var(--tp-ink-2); font-size: 13px; margin: 8px 16px 0; }
+.tp-team { display: flex; flex-direction: column; align-items: center; gap: 24px; padding-top: 24px; }
+.tp-big { font-size: 110px; line-height: 1; font-weight: 900; font-variant-numeric: tabular-nums;
+  font-family: ui-rounded, -apple-system, system-ui, sans-serif; transition: transform .15s ease; }
+.tp-big.bump { transform: scale(1.15); }
+.tp-big span { display: inline-block; }
+.tp-big .roll-up { animation: tp-up .3s ease; }
+.tp-big .roll-down { animation: tp-down .3s ease; }
+@keyframes tp-up { from { transform: translateY(40%); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes tp-down { from { transform: translateY(-40%); opacity: 0; } to { transform: none; opacity: 1; } }
+.tp-btns { display: flex; gap: 14px; }
+.tp-pt { width: 80px; height: 64px; border-radius: 16px; color: #fff !important; font-size: 28px; font-weight: 700;
+  font-family: ui-rounded, -apple-system, system-ui, sans-serif; }
+.tp-pt:disabled { opacity: .45; cursor: default; }
+.tp-name { width: 100%; max-width: 260px; font: inherit; font-size: 20px; text-align: center; padding: 6px 8px;
+  border: 1px solid var(--tp-sep); border-radius: 6px; background: var(--tp-field); color: var(--tp-ink); }
+.tp-sheet-bg { position: absolute; inset: 0; background: rgba(0,0,0,.35); display: flex; align-items: flex-end; padding: 10px; }
+.tp-sheet { width: 100%; display: grid; gap: 8px; }
+.tp-sheet-box { background: var(--tp-card); border-radius: 14px; overflow: hidden; text-align: center; }
+.tp-sheet-box p { margin: 0; padding: 14px; font-size: 13px; color: var(--tp-ink-2); border-bottom: 1px solid var(--tp-sep); }
+.tp-sheet-box button { width: 100%; min-height: 56px; font-size: 19px; }
+.tp-danger { color: #d70015 !important; }
+@media (prefers-color-scheme: dark) { .tp-danger { color: #ff6961 !important; } }
+.tp-cancel { font-weight: 600; }
+@media (prefers-reduced-motion: reduce) {
+  .tp-screen, .tp-big { transition: none; }
+  .tp-big .roll-up, .tp-big .roll-down { animation: none; }
+  .tp-big.bump { transform: none; }
+}

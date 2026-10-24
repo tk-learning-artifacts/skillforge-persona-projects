@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Team Points: a SwiftUI scoreboard for class quizzes, by Daniel Ong</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="app.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Daniel Ong is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<ul class="tabs">
+  <li><a href="index.html" aria-current="page">Project</a></li>
+  <li><a href="readme.html">README</a></li>
+  <li><a href="code.html">The code</a></li>
+</ul>
+
+<h1>Team Points</h1>
+<p class="lede">A two-screen SwiftUI app that keeps score in class quiz games. I built it in Swift Playgrounds on a school iPad.</p>
+<p>I'm Daniel. I've been a trainer for six months. On Fridays my Sec 1 class plays a team quiz. I kept score on the whiteboard, and I kept losing count. Twice the class argued about who won. So for my Swift end project, I built the scoreboard I needed.</p>
+<p>The brief asks for two screens, one interactive feature and basic styling. Here is where each part is:</p>
+<ul class="tight">
+  <li>Two screens: the team list, and one team's page. You move between them with navigation.</li>
+  <li>The interactive feature: giving and taking points. Screen 2 changes the score that screen 1 shows.</li>
+  <li>Styling: team colours, a rounded font, a crown for the leader and a rolling score.</li>
+  <li>Deliverables: the <a href="#video">video walkthrough</a>, the <a href="#download">Playgrounds file</a> and the <a href="readme.html">README</a>.</li>
+</ul>
+
+<h2 id="try">Try it here</h2>
+<p>This is a web copy of the app, so you can try it without an iPad. It follows the Swift code screen by screen. Tap a team, give some points, then go back.</p>
+<div class="try">
+  <div data-team-points></div>
+  <div>
+    <h3>Things to try</h3>
+    <ol class="tight">
+      <li>Give Milo 4 points, then tap Back. Is the score still there?</li>
+      <li>Rename a team on screen 2. Watch the title change as you type.</li>
+      <li>Take points away until you reach 0. What happens to the −1 button?</li>
+      <li>Press Reset. Why do you think it asks first?</li>
+    </ol>
+    <p class="small">Step 1 is the whole point of the app. In my first version, the answer was no. See <a href="#wrong">what I got wrong</a>.</p>
+    <p class="small">The web copy is not the real app. The real one is the Swift code in the <a href="#download">Playgrounds file</a>. The screenshots in the <a href="readme.html">README</a> come from that code.</p>
+  </div>
+</div>
+
+<h2 id="video">Video walkthrough</h2>
+<p>A 78-second tour of every feature, with captions in the video. It has no sound.</p>
+<video controls preload="none" playsinline poster="poster.jpg" src="walkthrough.mp4" aria-describedby="transcript-intro"></video>
+<p class="small" id="transcript-intro">The video records the web copy above, driven by a script. On a real iPad I would use the Screen Recording button in Control Centre. The video then goes to the Photos app.</p>
+<details class="card">
+<summary><strong>Transcript</strong></summary>
+<ol class="tight">
+  <li>0:00. This is Team Points. I keep score with it in my Sec 1 quiz lessons.</li>
+  <li>0:06. Screen 1 shows four teams. Each one has a colour and a shape.</li>
+  <li>0:12. I tap Milo to open screen 2.</li>
+  <li>0:17. Plus 1 adds a point. The number rolls up and pops.</li>
+  <li>0:21. Plus 3 adds three points.</li>
+  <li>0:27. Minus 1 takes one away. It stops at 0, so no negative scores.</li>
+  <li>0:33. I can rename the team here. I type "Dinosaur", so Milo becomes Milo Dinosaur.</li>
+  <li>0:39. Back on screen 1, the new name and score are already there.</li>
+  <li>0:45. Screen 2 changed the team that lives on screen 1. That is the @Binding.</li>
+  <li>0:51. Teh gets 9 points. The leader gets a crown.</li>
+  <li>1:02. Reset asks first, so nobody wipes the scores by mistake.</li>
+  <li>1:06. Every score goes back to 0.</li>
+  <li>1:11. The Playgrounds file and the README are under this video.</li>
+</ol>
+</details>
+
+<h2 id="download">The Playgrounds file</h2>
+<p><a class="download" href="TeamPoints.swiftpm.zip" download>Download TeamPoints.swiftpm.zip (5 KB)</a></p>
+<p>Unzip it in the Files app and tap <code>Team Points.swiftpm</code>. It opens in Swift Playgrounds on iPad or Mac. You can also open it in Xcode on a Mac. It needs iPadOS 17 or later.</p>
+<p>It has four Swift files and a README. You can read them all on <a href="code.html">the code page</a>, with my notes.</p>
+
+<h2 id="wrong">What I got wrong</h2>
+<p>I'm writing these down because my students will make the same mistakes. I made them both in one evening.</p>
+<h3>1. The score that reset itself</h3>
+<p>My first screen 2 kept its own score: <code>@State private var points = 0</code>. The buttons worked. The big number went up. Then I tapped Back, and the list still said 0 for every team.</p>
+<p>It took me a while to see why. <code>@State</code> is a view's own copy. Screen 2 had a copy, and the list had another. Nothing joined them.</p>
+<p>The fix is to keep the scores in one place, the list, and lend screen 2 one team. Apple's docs say a <code>@Binding</code> can "read and write a value owned by a source of truth". Here the source of truth is the <code>teams</code> array on screen 1.</p>
+<h3>2. The error I didn't understand</h3>
+<p>So I changed screen 2 to <code>@Binding var team: Team</code>. Then the list would not build. Swift Playgrounds said:</p>
+<pre><code class="err">cannot convert value of type 'Team' to expected argument type 'Binding&lt;Team&gt;'</code></pre>
+<p>I was passing a plain team, and screen 2 wanted a binding to one. The fix is two dollar signs. <code>ForEach(teams) { team in</code> became <code>ForEach($teams) { $team in</code>. Then <code>TeamView(team: $team)</code> works.</p>
+<p class="small">I checked this error text by building the broken version again. It is word for word what Swift prints.</p>
+<h3>3. Orange I couldn't read</h3>
+<p>I first set the app's accent colour to orange. The Reset button turned orange too, on a white bar. From the back of the room it was hard to read. Now <code>.tint(.primary)</code> makes the bar buttons black in light mode and white in dark mode.</p>
+
+<h2 id="class">What happened in class</h2>
+<p class="note">The class and the students here are made up, like me. The app and its code are real.</p>
+<ul class="tight">
+  <li>I mirrored the iPad to the projector. The big score on screen 2 read well from the back row.</li>
+  <li>My first version had colour circles only. A student said Kopi and Teh looked the same from far away. So each team got a shape too: circle, triangle, square and star.</li>
+  <li>Teams cheered when the crown moved to them. I didn't plan that. It is the best part of the app.</li>
+  <li>I pressed Reset by accident once. That is why it now asks first.</li>
+</ul>
+
+<h2 id="access">Accessibility basics</h2>
+<p>I turned on VoiceOver and went through every screen. On iPad it is in Settings, then Accessibility, then VoiceOver. Then I checked each item against <a href="https://developer.apple.com/design/human-interface-guidelines/accessibility">Apple's accessibility guidelines</a>.</p>
+<ul class="check">
+  <li>Each row reads as one line: "Milo, 15 points, in the lead". Without <code>.accessibilityElement(children: .ignore)</code>, VoiceOver read the shape, the name and the number one at a time.</li>
+  <li>The point buttons say "Add 1 point", "Add 3 points" and "Take away 1 point". VoiceOver doesn't say "plus one".</li>
+  <li>The shapes are hidden from VoiceOver on screen 2. They add nothing when read aloud.</li>
+  <li>Colour is never the only clue. Apple's guide says to "convey information with more than color alone".</li>
+  <li>The point buttons are 80 by 64 points. Apple's default control size on iPad is 44 by 44.</li>
+  <li>White text on the team colours is 5.5 to 1 or more. Apple asks for 4.5 to 1 for text up to 17 points. The grey −1 button is 3.3 to 1, but its text is 28 points bold. Apple asks for 3 to 1 there.</li>
+  <li>Names and list scores use system text styles. They grow when you make text bigger in Settings.</li>
+  <li>With Reduce Motion on, the score changes with no roll and no pop.</li>
+  <li class="part">In dark mode the team shapes are hard to see. I measured between 2 and 3 to 1 against the dark rows. The names still say which team is which.</li>
+  <li class="part">The big score on screen 2 is a fixed 120 points. It does not grow with text size.</li>
+</ul>
+
+<h2 id="rubric">How it meets the rubric</h2>
+<ul class="check">
+  <li>Functionality. Both screens work, scores carry between them, and Reset asks first. I used it for two quiz lessons with no crash.</li>
+  <li>Code clarity. Four short files, one job each. The comments say where the state lives and why.</li>
+  <li>UI polish. Team colours, a rounded font, the crown, and the rolling score. It also works in dark mode.</li>
+  <li class="part">Accessibility basics. VoiceOver labels, shapes, big buttons and Reduce Motion are done. Dark mode contrast for the shapes is not.</li>
+</ul>
+
+<h2 id="change">What I would change</h2>
+<p>The scores only live in memory. If the iPad sleeps for a long time, or someone closes the app, the scores are gone. That happened to me once, mid-lesson. Saving them would need the teams stored on the iPad, and I haven't learnt that yet. I would also give each team a lighter colour for dark mode.</p>
+<p>A question I still have: is a scoreboard enough of an app for Sec 1 students to build? It taught me <code>@State</code> and <code>@Binding</code>. But it has no game in it. I'd like to hear from someone who has tried both.</p>
+
+<h2 id="starter">As a starter for my class</h2>
+<p>To turn it into a starter, I would remove three things. Students then add them back:</p>
+<ol class="tight">
+  <li>Easy: the +3 button. Copy the +1 button and change two numbers.</li>
+  <li>Medium: the crown. Write <code>isLeading</code> so only the top team gets it.</li>
+  <li>Hard: the binding. Screen 2 starts with <code>@State</code>, so the score is lost. Students fix it.</li>
+</ol>
+
+<h2 id="sources">Sources</h2>
+<ul class="tight small">
+  <li>Swift Playgrounds builds SwiftUI apps on iPad and Mac, and app projects open in Xcode: <a href="https://developer.apple.com/swift-playground/">Apple Developer, Swift Playground</a>.</li>
+  <li>@State and @Binding: <a href="https://developer.apple.com/documentation/swiftui/state">State</a> and <a href="https://developer.apple.com/documentation/swiftui/binding">Binding</a>, SwiftUI documentation.</li>
+  <li>The rolling number needs iOS and iPadOS 17: <a href="https://developer.apple.com/documentation/swiftui/contenttransition/numerictext(value:)">numericText(value:)</a>.</li>
+  <li>Reduce Motion in code: <a href="https://developer.apple.com/documentation/swiftui/environmentvalues/accessibilityreducemotion">accessibilityReduceMotion</a>.</li>
+  <li>Control sizes, contrast ratios and colour: <a href="https://developer.apple.com/design/human-interface-guidelines/accessibility">Human Interface Guidelines, Accessibility</a>.</li>
+  <li>Text styles and Dynamic Type: <a href="https://developer.apple.com/design/human-interface-guidelines/typography">Human Interface Guidelines, Typography</a>.</li>
+  <li>Turning on VoiceOver: <a href="https://support.apple.com/guide/ipad/turn-on-and-practice-voiceover-ipad9a246898/ipados">Apple Support, Turn on and practise VoiceOver on iPad</a>.</li>
+  <li>Recording the screen: <a href="https://support.apple.com/en-us/102653">Apple Support, Record the screen on your iPhone or iPad</a>.</li>
+  <li>Contrast ratios are my own sums with the WCAG formula, from the colours in <code>Team.swift</code>.</li>
+</ul>
+</main>
+</body>
+</html>

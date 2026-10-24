@@ -1,0 +1,483 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pig Out: the Swift code and tests, by Kenji Watanabe</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Kenji Watanabe is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<ul class="menu">
+  <li><a href="index.html">Devlog</a></li>
+  <li><a href="readme.html">README</a></li>
+  <li><a href="code.html" aria-current="page">Code and tests</a></li>
+</ul>
+<h1>Code and tests</h1>
+<p class="lede">Every Swift file in <a href="PigOut.swiftpm.zip" download>PigOut.swiftpm.zip</a>, then the tests.</p>
+<div class="panel">
+<p><strong>Rules apart from screens</strong></p>
+<p><code>PigGame</code> is a plain <code>struct</code>. It knows the rules and nothing about SwiftUI. <code>roll</code> and <code>hold</code> change the game and return an event, like <code>.pigOut</code>. <code>GameView</code> keeps one <code>PigGame</code> in <code>@State</code> and turns each event into words and motion. Because the rules stand alone, <code>main.swift</code> can test them on a Mac with no screen at all.</p>
+<p>Read in this order: <a href="#PigGame-swift">PigGame.swift</a>, <a href="#GameView-swift">GameView.swift</a>, then the rest.</p>
+</div>
+<p class="small">Every file builds against Apple's iOS SDK with Swift 6.3, and all ten tests pass. <code>Package.swift</code> is left out here. Swift Playgrounds writes it for you.</p>
+<h2 class="plain" id="test-output">What the tests print</h2>
+<pre><code>PASS two rolls add up: 4 + 6 = 10
+PASS hold banks 10 for player 1
+PASS hold passes the die and clears the turn
+PASS a 1 wipes the turn total
+PASS a 1 passes the die and banks nothing
+PASS reaching the target wins
+PASS no more rolls after a win
+PASS bot holds at 20
+PASS bot rolls at 19
+PASS bot holds when holding wins
+Hold at 20: average 8.19466 points a turn over 100000 turns
+All tests passed.</code></pre>
+<h2 class="plain" id="PigGame-swift">PigGame.swift</h2>
+<p>The rules. Look at <code>roll</code>: a 1 clears the turn and passes the die. Look at <code>botWantsToRoll</code> and its comment. That is the <a href="index.html#maths">hold at 20 maths</a> in four lines.</p>
+<p class="small">68 lines.</p>
+<pre><code>// The rules of Pig, with no SwiftUI in sight.
+// Keeping the rules apart from the screens means I can test them on their own.
+
+enum Player: Int {
+    case one = 0, two = 1
+    var other: Player { self == .one ? .two : .one }
+}
+
+// What just happened. The screen turns each event into words, a sound and a wiggle.
+enum PigEvent: Equatable {
+    case rolled(Int)
+    case pigOut          // rolled a 1: turn points lost
+    case held(Int)       // banked this many points
+    case won(Player)
+}
+
+struct PigGame {
+    let target: Int
+    private(set) var scores = [0, 0]
+    private(set) var turnTotal = 0
+    private(set) var current = Player.one
+    private(set) var lastRoll: Int? = nil
+    private(set) var winner: Player? = nil
+
+    init(target: Int = 50) {
+        self.target = target
+    }
+
+    func score(of player: Player) -&gt; Int {
+        scores[player.rawValue]
+    }
+
+    // Roll the die. Pass in the value so tests can choose it.
+    mutating func roll(_ value: Int = Int.random(in: 1...6)) -&gt; PigEvent {
+        guard winner == nil else { return .won(winner!) }
+        lastRoll = value
+        if value == 1 {
+            turnTotal = 0
+            current = current.other
+            return .pigOut
+        }
+        turnTotal += value
+        return .rolled(value)
+    }
+
+    // Bank the turn total and pass the die.
+    mutating func hold() -&gt; PigEvent {
+        guard winner == nil else { return .won(winner!) }
+        let banked = turnTotal
+        scores[current.rawValue] += banked
+        turnTotal = 0
+        if scores[current.rawValue] &gt;= target {
+            winner = current
+            return .won(current)
+        }
+        current = current.other
+        return .held(banked)
+    }
+}
+
+// Porkchop, the bot, holds at 20, or as soon as holding would win.
+// Why 20? One more roll gains about 4 points five times in six,
+// and loses the whole turn total one time in six.
+// Those balance when the turn total is 20.
+func botWantsToRoll(turnTotal: Int, score: Int, target: Int) -&gt; Bool {
+    if score + turnTotal &gt;= target { return false }
+    return turnTotal &lt; 20
+}</code></pre>
+
+<h2 class="plain" id="GameView-swift">GameView.swift</h2>
+<p>Screen 2. Look at <code>report(_:by:)</code>. Every event goes through it once, for words, motion and a VoiceOver announcement. <code>playBot</code> waits 1.2 seconds between Porkchop's moves, so you can follow them.</p>
+<p class="small">194 lines.</p>
+<pre><code>import SwiftUI
+
+// Screen 2: the game.
+struct GameView: View {
+    let versusBot: Bool
+    @State private var game: PigGame
+    @State private var message: String
+    @State private var spin = 0.0        // degrees the die has turned
+    @State private var pigOuts = 0       // goes up by 1 on every pig out, to shake the die
+    @State private var rolls = 0         // goes up by 1 on every roll, for the haptic tap
+    @State private var botBusy = false
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    init(versusBot: Bool, target: Int) {
+        self.versusBot = versusBot
+        _game = State(initialValue: PigGame(target: target))
+        _message = State(initialValue: versusBot ? &quot;Your turn. Roll the die.&quot; : &quot;Player 1&#x27;s turn. Roll the die.&quot;)
+    }
+
+    var body: some View {
+        VStack(spacing: 20) {
+            HStack(spacing: 12) {
+                ScoreCard(name: name(.one), score: game.score(of: .one),
+                          target: game.target, active: game.current == .one)
+                ScoreCard(name: name(.two), score: game.score(of: .two),
+                          target: game.target, active: game.current == .two)
+            }
+
+            DieView(value: game.lastRoll ?? 6, size: 140)
+                .rotationEffect(.degrees(spin))
+                .modifier(Shake(times: pigOuts))
+                .opacity(game.lastRoll == nil ? 0.35 : 1)
+
+            Text(&quot;Turn: \(game.turnTotal)&quot;)
+                .font(.system(.largeTitle, design: .rounded, weight: .heavy))
+                .contentTransition(.numericText(value: Double(game.turnTotal)))
+
+            // Every event is said in words, not only by sound or motion.
+            Text(message)
+                .font(.title3)
+                .multilineTextAlignment(.center)
+                .frame(minHeight: 60)
+
+            if game.winner != nil {
+                Button(&quot;Play again&quot;) {
+                    game = PigGame(target: game.target)
+                    message = &quot;\(turnOf(.one)) Roll the die.&quot;
+                }
+                .buttonStyle(.borderedProminent)
+                .font(.title2.weight(.bold))
+            } else {
+                HStack(spacing: 16) {
+                    Button { roll() } label: {
+                        Label(&quot;Roll&quot;, systemImage: &quot;die.face.5&quot;)
+                            .frame(maxWidth: .infinity, minHeight: 56)
+                    }
+                    .buttonStyle(.borderedProminent)
+
+                    Button { hold() } label: {
+                        Label(&quot;Hold&quot;, systemImage: &quot;tray.and.arrow.down&quot;)
+                            .frame(maxWidth: .infinity, minHeight: 56)
+                    }
+                    .buttonStyle(.bordered)
+                    .disabled(game.turnTotal == 0)
+                }
+                .font(.title2.weight(.bold))
+                .disabled(botsTurn || botBusy)
+            }
+            Spacer()
+        }
+        .padding()
+        .navigationTitle(&quot;First to \(game.target)&quot;)
+        .navigationBarTitleDisplayMode(.inline)
+        .sensoryFeedback(.impact, trigger: rolls)
+        .sensoryFeedback(.error, trigger: pigOuts)
+    }
+
+    private var botsTurn: Bool { versusBot &amp;&amp; game.current == .two }
+
+    private func name(_ player: Player) -&gt; String {
+        if player == .one { return versusBot ? &quot;You&quot; : &quot;Player 1&quot; }
+        return versusBot ? &quot;Porkchop&quot; : &quot;Player 2&quot;
+    }
+
+    // &quot;Your turn.&quot; or &quot;Porkchop&#x27;s turn.&quot;
+    private func turnOf(_ player: Player) -&gt; String {
+        name(player) == &quot;You&quot; ? &quot;Your turn.&quot; : &quot;\(name(player))&#x27;s turn.&quot;
+    }
+
+    private func roll() {
+        let player = game.current
+        report(game.roll(), by: player)
+        if botsTurn { playBot() }
+    }
+
+    private func hold() {
+        let player = game.current
+        report(game.hold(), by: player)
+        if botsTurn { playBot() }
+    }
+
+    // Turn an event into words, motion, a haptic and a VoiceOver announcement.
+    private func report(_ event: PigEvent, by player: Player) {
+        let who = name(player)
+        switch event {
+        case .rolled(let value):
+            rolls += 1
+            animate(.easeOut(duration: 0.35)) { spin += 360 }
+            message = &quot;\(who) rolled \(value). Turn total \(game.turnTotal).&quot;
+        case .pigOut:
+            rolls += 1
+            animate(.linear(duration: 0.4)) { pigOuts += 1 }
+            message = &quot;Pig out! \(who) rolled a 1 and lost the turn. \(turnOf(game.current))&quot;
+        case .held(let banked):
+            message = &quot;\(who) banked \(banked). \(turnOf(game.current))&quot;
+        case .won(let winner):
+            let verb = name(winner) == &quot;You&quot; ? &quot;win&quot; : &quot;wins&quot;
+            message = &quot;\(name(winner)) \(verb), \(game.score(of: winner)) to \(game.score(of: winner.other))!&quot;
+        }
+        AccessibilityNotification.Announcement(message).post()
+    }
+
+    // With Reduce Motion on, change the value with no animation.
+    private func animate(_ animation: Animation, _ change: () -&gt; Void) {
+        if reduceMotion {
+            change()
+        } else {
+            withAnimation(animation, change)
+        }
+    }
+
+    // Porkchop plays slowly, so you can watch every roll.
+    private func playBot() {
+        guard !botBusy else { return }
+        botBusy = true
+        Task {
+            while botsTurn &amp;&amp; game.winner == nil {
+                try? await Task.sleep(for: .seconds(1.2))
+                let wantsToRoll = botWantsToRoll(turnTotal: game.turnTotal,
+                                                 score: game.score(of: .two),
+                                                 target: game.target)
+                report(wantsToRoll ? game.roll() : game.hold(), by: .two)
+            }
+            botBusy = false
+        }
+    }
+}
+
+// One player&#x27;s score, with a bar that fills towards the target.
+struct ScoreCard: View {
+    let name: String
+    let score: Int
+    let target: Int
+    let active: Bool
+
+    var body: some View {
+        VStack(spacing: 6) {
+            Text(active ? &quot;▶ \(name)&quot; : name)
+                .font(.headline)
+            Text(&quot;\(score)&quot;)
+                .font(.system(.largeTitle, design: .rounded, weight: .bold))
+                .contentTransition(.numericText(value: Double(score)))
+            ProgressView(value: Double(min(score, target)), total: Double(target))
+        }
+        .padding()
+        .frame(maxWidth: .infinity)
+        .background(active ? Color.pigPink.opacity(0.15) : Color.gray.opacity(0.1),
+                    in: RoundedRectangle(cornerRadius: 16))
+        .overlay(RoundedRectangle(cornerRadius: 16)
+            .stroke(active ? Color.pigPink : .clear, lineWidth: 3))
+        // The arrow and the outline show whose turn it is, so colour is not the only clue.
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(&quot;\(name), \(score) of \(target)\(active ? &quot;, playing now&quot; : &quot;&quot;)&quot;)
+    }
+}
+
+// Shakes a view side to side, three times, whenever `times` goes up by 1.
+struct Shake: GeometryEffect {
+    var animatableData: CGFloat
+
+    init(times: Int) {
+        animatableData = CGFloat(times)
+    }
+
+    func effectValue(size: CGSize) -&gt; ProjectionTransform {
+        ProjectionTransform(CGAffineTransform(translationX: 12 * sin(animatableData * .pi * 6), y: 0))
+    }
+}
+
+#Preview {
+    NavigationStack {
+        GameView(versusBot: true, target: 50)
+    }
+}</code></pre>
+
+<h2 class="plain" id="TitleView-swift">TitleView.swift</h2>
+<p>Screen 1. The <code>NavigationLink</code> opens the game with the opponent and target you picked. The <code>.tint</code> at the end colours every button in the app.</p>
+<p class="small">63 lines.</p>
+<pre><code>import SwiftUI
+
+// Screen 1: the title, the rules, and who you play against.
+struct TitleView: View {
+    @State private var versusBot = true
+    @State private var target = 50
+
+    var body: some View {
+        NavigationStack {
+            ScrollView {
+                VStack(spacing: 24) {
+                    DieView(value: 5, size: 96)
+                        .accessibilityHidden(true)
+                    Text(&quot;Pig Out&quot;)
+                        .font(.system(size: 56, weight: .black, design: .rounded))
+                        .foregroundStyle(Color.pigPink)
+
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text(&quot;How to play&quot;).font(.headline)
+                        Label(&quot;Roll as often as you like. Each roll adds to your turn.&quot;, systemImage: &quot;die.face.3&quot;)
+                        Label(&quot;Roll a 1 and you lose the whole turn. Pig out!&quot;, systemImage: &quot;exclamationmark.triangle&quot;)
+                        Label(&quot;Hold to bank your turn and pass the die.&quot;, systemImage: &quot;tray.and.arrow.down&quot;)
+                        Label(&quot;First to \(target) wins.&quot;, systemImage: &quot;flag.checkered&quot;)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding()
+                    .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 20))
+
+                    Picker(&quot;Play against&quot;, selection: $versusBot) {
+                        Text(&quot;Porkchop the bot&quot;).tag(true)
+                        Text(&quot;A friend&quot;).tag(false)
+                    }
+                    .pickerStyle(.segmented)
+
+                    Stepper(&quot;First to \(target)&quot;, value: $target, in: 20...100, step: 10)
+
+                    NavigationLink {
+                        GameView(versusBot: versusBot, target: target)
+                    } label: {
+                        Text(&quot;Play&quot;)
+                            .font(.title2.weight(.bold))
+                            .frame(maxWidth: .infinity, minHeight: 56)
+                    }
+                    .buttonStyle(.borderedProminent)
+                }
+                .padding()
+            }
+            .navigationTitle(&quot;Pig Out&quot;)
+            .toolbar(.hidden, for: .navigationBar)
+        }
+        // Every button, bar and back arrow in the app uses the same pink.
+        .tint(Color.pigPink)
+    }
+}
+
+extension Color {
+    // White text on this pink has a contrast of about 5.6 to 1.
+    static let pigPink = Color(red: 0.75, green: 0.16, blue: 0.40)
+}
+
+#Preview {
+    TitleView()
+}</code></pre>
+
+<h2 class="plain" id="DieView-swift">DieView.swift</h2>
+<p>A die face from nine circles on a grid. The pips that are not used are see-through. A 1 has a pink pip, so a pig out stands out.</p>
+<p class="small">47 lines.</p>
+<pre><code>import SwiftUI
+
+// A die face drawn with circles, so it needs no images.
+struct DieView: View {
+    let value: Int
+    var size: CGFloat = 120
+
+    // Where the pips go on a 3 by 3 grid, counted 0 to 8.
+    private var pips: [Int] {
+        switch value {
+        case 1: [4]
+        case 2: [0, 8]
+        case 3: [0, 4, 8]
+        case 4: [0, 2, 6, 8]
+        case 5: [0, 2, 4, 6, 8]
+        default: [0, 2, 3, 5, 6, 8]
+        }
+    }
+
+    var body: some View {
+        let pip = size / 6
+        RoundedRectangle(cornerRadius: size / 5)
+            .fill(.white)
+            .stroke(Color.black.opacity(0.8), lineWidth: 3)
+            .frame(width: size, height: size)
+            .overlay {
+                Grid(horizontalSpacing: pip / 2, verticalSpacing: pip / 2) {
+                    ForEach(0..&lt;3, id: \.self) { row in
+                        GridRow {
+                            ForEach(0..&lt;3, id: \.self) { col in
+                                Circle()
+                                    .fill(value == 1 ? Color.pigPink : .black)
+                                    .frame(width: pip, height: pip)
+                                    .opacity(pips.contains(row * 3 + col) ? 1 : 0)
+                            }
+                        }
+                    }
+                }
+            }
+            .accessibilityElement()
+            .accessibilityLabel(&quot;Die showing \(value)&quot;)
+    }
+}
+
+#Preview {
+    HStack { ForEach(1...6, id: \.self) { DieView(value: $0, size: 48) } }
+}</code></pre>
+
+<h2 class="plain" id="PigOutApp-swift">PigOutApp.swift</h2>
+<p>Where the app starts.</p>
+<p class="small">10 lines.</p>
+<pre><code>import SwiftUI
+
+@main
+struct PigOutApp: App {
+    var body: some Scene {
+        WindowGroup {
+            TitleView()
+        }
+    }
+}</code></pre>
+
+<h2 class="plain" id="main-swift">main.swift (the tests)</h2>
+<p>The tests. Each <code>check</code> sets up a game, makes moves and checks the result. The last part plays 100,000 Porkchop turns and prints the average.</p>
+<p class="small">36 lines.</p>
+<pre><code>// Tests for the Pig rules. Run them on a Mac with:
+// swiftc PigGame.swift main.swift -o pigtests &amp;&amp; ./pigtests
+var failures = 0
+func check(_ ok: Bool, _ what: String) {
+    print(ok ? &quot;PASS&quot; : &quot;FAIL&quot;, what)
+    if !ok { failures += 1 }
+}
+
+var g = PigGame(target: 50)
+_ = g.roll(4); _ = g.roll(6)
+check(g.turnTotal == 10, &quot;two rolls add up: 4 + 6 = 10&quot;)
+check(g.hold() == .held(10) &amp;&amp; g.score(of: .one) == 10, &quot;hold banks 10 for player 1&quot;)
+check(g.current == .two &amp;&amp; g.turnTotal == 0, &quot;hold passes the die and clears the turn&quot;)
+_ = g.roll(5)
+check(g.roll(1) == .pigOut &amp;&amp; g.turnTotal == 0, &quot;a 1 wipes the turn total&quot;)
+check(g.current == .one &amp;&amp; g.score(of: .two) == 0, &quot;a 1 passes the die and banks nothing&quot;)
+var w = PigGame(target: 20)
+_ = w.roll(6); _ = w.roll(6); _ = w.roll(6); _ = w.roll(2)
+check(w.hold() == .won(.one) &amp;&amp; w.winner == .one, &quot;reaching the target wins&quot;)
+check(w.roll(3) == .won(.one) &amp;&amp; w.turnTotal == 0, &quot;no more rolls after a win&quot;)
+check(!botWantsToRoll(turnTotal: 20, score: 0, target: 50), &quot;bot holds at 20&quot;)
+check(botWantsToRoll(turnTotal: 19, score: 0, target: 50), &quot;bot rolls at 19&quot;)
+check(!botWantsToRoll(turnTotal: 6, score: 45, target: 50), &quot;bot holds when holding wins&quot;)
+
+// Play 100,000 bot turns and average the points banked per turn.
+var total = 0
+let turns = 100_000
+for _ in 0..&lt;turns {
+    var turn = PigGame(target: 1_000)
+    while botWantsToRoll(turnTotal: turn.turnTotal, score: 0, target: 1_000) {
+        if turn.roll() == .pigOut { break }
+    }
+    if turn.current == .one { total += turn.turnTotal }
+}
+print(&quot;Hold at 20: average&quot;, Double(total) / Double(turns), &quot;points a turn over&quot;, turns, &quot;turns&quot;)
+print(failures == 0 ? &quot;All tests passed.&quot; : &quot;\(failures) failed.&quot;)</code></pre>
+
+</main>
+</body>
+</html>
