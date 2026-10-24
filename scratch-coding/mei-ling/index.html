@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blue Bin Catch: a Scratch recycling game for a P5 coding club, by Mei Ling Tan</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="game.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Mei Ling Tan is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<h1>Blue Bin Catch</h1>
+<p class="lede">A Scratch catch game for my P5 coding club. Rubbish falls from the sky. Catch what goes in the blue recycling bin. Let the rest fall.</p>
+<p>I'm Mei Ling. I run an after-school coding club for upper primary pupils. In eco week, I watched my pupils throw tissues into the blue bin. They meant well. So I made a game about it. It has 4 parts:</p>
+<ul class="toc">
+  <li><a href="#play">Play the game</a></li>
+  <li><a href="#share">Get the project</a></li>
+  <li><a href="#code">See the code</a></li>
+  <li><a href="starter.html">Starter project and task card</a></li>
+  <li><a href="lesson.html">Club lesson plan and sharing rules</a></li>
+</ul>
+
+<h2 id="play">Play it</h2>
+<p>Press Start. Move the bin with your mouse or finger. On a keyboard, click the game, then use the arrow keys.</p>
+<div class="game">
+  <canvas id="stage" width="480" height="360" tabindex="0" aria-label="Game stage. Items fall from the top. The blue bin is at the bottom." aria-describedby="live"></canvas>
+  <div class="row">
+    <button type="button" class="primary" id="start">Start</button>
+    <button type="button" id="sound" aria-pressed="true">Sound: on</button>
+  </div>
+  <p class="live" id="live" aria-live="polite">Press Start to play. You have 30 seconds.</p>
+</div>
+<p class="small">This page plays a browser copy of my Scratch project. It uses the same pictures, speeds and rules. One extra: the line under the game says why each item goes where it goes. The Scratch version just pops or buzzes.</p>
+
+<h3>What goes where</h3>
+<div class="sort">
+  <div class="yes">
+    <h3>Blue bin: plus 1 point</h3>
+    <ul class="chips">
+      <li><img src="assets/paper.svg" alt="">Paper</li>
+      <li><img src="assets/bottle.svg" alt="">Plastic bottle</li>
+      <li><img src="assets/jar.svg" alt="">Glass jar</li>
+      <li><img src="assets/can.svg" alt="">Metal can</li>
+    </ul>
+  </div>
+  <div class="no">
+    <h3>General bin: minus 1 point</h3>
+    <ul class="chips">
+      <li><img src="assets/tissue.svg" alt="">Tissue</li>
+      <li><img src="assets/foam.svg" alt="">Styrofoam box</li>
+      <li><img src="assets/pizza.svg" alt="">Oily pizza box</li>
+    </ul>
+  </div>
+</div>
+<p>Blue bins take paper, plastic, glass and metal. Tissue paper can't be recycled, clean or dirty. Styrofoam boxes and food-stained pizza boxes don't go in either. Clean &amp; Green Singapore says 40% of items in recycling bins can't be recycled. Food, drink, tissues and trash spoil them. Links are in the sources.</p>
+
+<h2 id="share">Get the project</h2>
+<div class="card">
+<p><strong>The share link.</strong> On Scratch, a shared project has a link like scratch.mit.edu/projects/ and then a number. I'm an AI persona, so I have no Scratch account and no live link. Here are the real project files instead.</p>
+<div class="row">
+  <a class="btn primary" href="blue-bin-catch.sb3" download>Download Blue Bin Catch (.sb3)</a>
+  <a class="btn" href="blue-bin-catch-starter.sb3" download>Download the starter (.sb3)</a>
+</div>
+<ol class="steps">
+  <li>Open <a href="https://scratch.mit.edu/">scratch.mit.edu</a> and click Create.</li>
+  <li>Choose File, then Load from your computer. Pick the .sb3 file.</li>
+  <li>Press the green flag, then click Start.</li>
+</ol>
+</div>
+<h3>Make your own share link</h3>
+<ol class="steps">
+  <li>Sign in, then load the file as above.</li>
+  <li>Click Share. Fill in Instructions, and Notes and Credits.</li>
+  <li>On the project page, click Copy Link. That is your share link.</li>
+</ol>
+<p class="tip">Shared means public. Anyone on Scratch can see it, even from a class account. The <a href="lesson.html#rules">club sharing rules</a> say what to check first.</p>
+
+<h3>I tested it from start to end</h3>
+<p>I ran both files in Scratch 3's engine and played them. Here is what I checked.</p>
+<ol class="steps">
+  <li>Green flag: the title backdrop shows. Score is 0. Time left is 30.</li>
+  <li>Start: the button hides and rubbish starts to fall. Two or three items are on screen at once.</li>
+  <li>Catch a can: pop, and score goes up 1. Catch a tissue: buzz, and score goes down 1.</li>
+  <li>Miss an item: it disappears at the bottom. No clones pile up.</li>
+  <li>After 30 seconds: "Time's up" shows and all falling items vanish. The bin says the score.</li>
+  <li>3 seconds later, Start comes back. A second game starts at score 0, not at the last score.</li>
+</ol>
+
+<h2 id="code">See the code</h2>
+<p>There are 4 sprites and the stage. These are the real scripts from the .sb3 file.</p>
+
+<p class="sprite-name">Stage</p>
+<div class="scripts"><div class="sb-script"><div class="sb-block sb-hat sb-events">when <span class="sb-flag" aria-label="green flag">⚑</span> clicked</div><div class="sb-block sb-stack sb-looks">switch backdrop to <span class="sb-menu">title</span></div><div class="sb-block sb-stack sb-variables">set <span class="sb-menu sb-var">score</span> to <span class="sb-text">0</span></div><div class="sb-block sb-stack sb-variables">set <span class="sb-menu sb-var">time left</span> to <span class="sb-text">30</span></div></div>
+<div class="sb-script"><div class="sb-block sb-hat sb-events">when I receive <span class="sb-menu">start game</span></div><div class="sb-block sb-stack sb-looks">switch backdrop to <span class="sb-menu">play</span></div><div class="sb-block sb-stack sb-variables">set <span class="sb-menu sb-var">score</span> to <span class="sb-text">0</span></div><div class="sb-block sb-stack sb-variables">set <span class="sb-menu sb-var">time left</span> to <span class="sb-text">30</span></div><div class="sb-cblock sb-control"><div class="sb-line">repeat until <span class="sb-bool sb-operators"><span class="sb-rep sb-variables">time left</span> = <span class="sb-text">0</span></span></div><div class="sb-mouth"><div class="sb-block sb-stack sb-control">wait <span class="sb-num">1</span> seconds</div><div class="sb-block sb-stack sb-variables">change <span class="sb-menu sb-var">time left</span> by <span class="sb-num">-1</span></div></div><div class="sb-foot"></div></div><div class="sb-block sb-stack sb-events">broadcast <span class="sb-menu">game over</span></div><div class="sb-block sb-stack sb-looks">switch backdrop to <span class="sb-menu">end</span></div></div></div>
+<p>The stage keeps time. It counts down from 30, one second at a time. At 0 it broadcasts "game over". Every sprite hears it.</p>
+
+<p class="sprite-name"><img src="assets/start.svg" alt="">Start</p>
+<div class="scripts"><div class="sb-script"><div class="sb-block sb-hat sb-events">when <span class="sb-flag" aria-label="green flag">⚑</span> clicked</div><div class="sb-block sb-stack sb-motion">go to x: <span class="sb-num">0</span> y: <span class="sb-num">-40</span></div><div class="sb-block sb-stack sb-looks">show</div></div>
+<div class="sb-script"><div class="sb-block sb-hat sb-events">when this sprite clicked</div><div class="sb-block sb-stack sb-looks">hide</div><div class="sb-block sb-stack sb-events">broadcast <span class="sb-menu">start game</span></div></div>
+<div class="sb-script"><div class="sb-block sb-hat sb-events">when I receive <span class="sb-menu">game over</span></div><div class="sb-block sb-stack sb-control">wait <span class="sb-num">3</span> seconds</div><div class="sb-block sb-stack sb-looks">show</div></div></div>
+<p>A button sprite, not a key. Half my club uses iPads, and they have no space bar.</p>
+
+<p class="sprite-name"><img src="assets/bin.svg" alt="">Bin</p>
+<div class="scripts"><div class="sb-script"><div class="sb-block sb-hat sb-events">when <span class="sb-flag" aria-label="green flag">⚑</span> clicked</div><div class="sb-block sb-stack sb-motion">go to x: <span class="sb-num">0</span> y: <span class="sb-num">-125</span></div><div class="sb-block sb-stack sb-looks">go to <span class="sb-menu">front</span> layer</div><div class="sb-cblock sb-control"><div class="sb-line">forever</div><div class="sb-mouth"><div class="sb-block sb-stack sb-motion">set x to <span class="sb-rep sb-sensing">mouse x</span></div></div><div class="sb-foot"></div></div></div>
+<div class="sb-script"><div class="sb-block sb-hat sb-events">when I receive <span class="sb-menu">game over</span></div><div class="sb-block sb-stack sb-looks">say <span class="sb-rep sb-operators">join <span class="sb-text">You scored </span> <span class="sb-rep sb-variables">score</span></span> for <span class="sb-num">3</span> seconds</div></div></div>
+<p>"Set x to mouse x" works with a finger on a tablet too.</p>
+
+<p class="sprite-name"><img src="assets/can.svg" alt="">Item</p>
+<div class="scripts"><div class="sb-script"><div class="sb-block sb-hat sb-events">when <span class="sb-flag" aria-label="green flag">⚑</span> clicked</div><div class="sb-block sb-stack sb-looks">hide</div></div>
+<div class="sb-script"><div class="sb-block sb-hat sb-events">when I receive <span class="sb-menu">start game</span></div><div class="sb-cblock sb-control"><div class="sb-line">forever</div><div class="sb-mouth"><div class="sb-block sb-stack sb-control">create clone of <span class="sb-menu">myself</span></div><div class="sb-block sb-stack sb-control">wait <span class="sb-rep sb-operators">pick random <span class="sb-num">0.5</span> to <span class="sb-num">1.2</span></span> seconds</div></div><div class="sb-foot"></div></div></div>
+<div class="sb-script"><div class="sb-block sb-hat sb-control">when I start as a clone</div><div class="sb-block sb-stack sb-looks">switch costume to <span class="sb-rep sb-operators">pick random <span class="sb-num">1</span> to <span class="sb-num">7</span></span></div><div class="sb-block sb-stack sb-motion">go to x: <span class="sb-rep sb-operators">pick random <span class="sb-num">-210</span> to <span class="sb-num">210</span></span> y: <span class="sb-num">170</span></div><div class="sb-block sb-stack sb-looks">show</div><div class="sb-cblock sb-control"><div class="sb-line">repeat until <span class="sb-bool sb-operators"><span class="sb-rep sb-motion">y position</span> < <span class="sb-text">-170</span></span></div><div class="sb-mouth"><div class="sb-block sb-stack sb-motion">change y by <span class="sb-num">-4</span></div><div class="sb-cblock sb-control"><div class="sb-line">if <span class="sb-bool sb-sensing">touching <span class="sb-menu">Bin</span> ?</span> then</div><div class="sb-mouth"><div class="sb-cblock sb-control"><div class="sb-line">if <span class="sb-bool sb-operators"><span class="sb-rep sb-looks">costume <span class="sb-menu">number</span></span> < <span class="sb-text">5</span></span> then</div><div class="sb-mouth"><div class="sb-block sb-stack sb-variables">change <span class="sb-menu sb-var">score</span> by <span class="sb-num">1</span></div><div class="sb-block sb-stack sb-sound">start sound <span class="sb-menu">pop</span></div></div><div class="sb-line">else</div><div class="sb-mouth"><div class="sb-block sb-stack sb-variables">change <span class="sb-menu sb-var">score</span> by <span class="sb-num">-1</span></div><div class="sb-block sb-stack sb-sound">start sound <span class="sb-menu">buzz</span></div></div><div class="sb-foot"></div></div><div class="sb-block sb-cap sb-control">delete this clone</div></div><div class="sb-foot"></div></div></div><div class="sb-foot"></div></div><div class="sb-block sb-cap sb-control">delete this clone</div></div>
+<div class="sb-script"><div class="sb-block sb-hat sb-events">when I receive <span class="sb-menu">game over</span></div><div class="sb-block sb-stack sb-control">stop <span class="sb-menu">other scripts in sprite</span></div><div class="sb-block sb-cap sb-control">delete this clone</div></div></div>
+<p>The Item sprite stays hidden. It makes clones of itself. Each clone picks a costume, falls and checks for the bin. Costumes 1 to 4 are recyclable. Costumes 5 to 7 are not. So "costume number &lt; 5" means "goes in the blue bin".</p>
+<p>The last script fixed my worst bug. At first, items kept falling after "Time's up". The forever loop was still making clones. "Stop other scripts in sprite" ends that loop. Then each clone deletes itself.</p>
+
+<h3>The 4 core concepts, and 2 more</h3>
+<div class="scroll">
+<table>
+  <tr><th>Concept</th><th>Where it is</th></tr>
+  <tr><td>Events</td><td>When green flag clicked. When this sprite clicked. When I receive.</td></tr>
+  <tr><td>Loops</td><td>Forever makes clones and moves the bin. Repeat until makes items fall and counts down the time.</td></tr>
+  <tr><td>Conditionals</td><td>If touching Bin. If-else on costume number for plus or minus 1.</td></tr>
+  <tr><td>Variables</td><td>score and time left. Both show on the stage.</td></tr>
+  <tr><td>Clones</td><td>Every falling item is a clone. Each one deletes itself.</td></tr>
+  <tr><td>Broadcasts</td><td>"start game" and "game over" link the sprites.</td></tr>
+</table>
+</div>
+
+<h2 id="brief">How it meets the brief</h2>
+<ul class="tight">
+  <li><strong>Works from start to end.</strong> Title, play, time's up, play again. See my test list above.</li>
+  <li><strong>At least 4 core concepts.</strong> It uses 6. See the table.</li>
+  <li><strong>Tasks fit my pupils.</strong> The <a href="starter.html">starter</a> has 3 tasks for P5 pairs. Task 1's blocks are already in the project, loose. They only snap them in.</li>
+  <li><strong>The plan covers safe sharing.</strong> The <a href="lesson.html">lesson plan</a> ends with 5 sharing rules in pupil words. It also covers class accounts.</li>
+</ul>
+
+<h2 id="change">What I would change</h2>
+<p>I made recycling simpler than it is. The real rule is to check, clean, then recycle. A rinsed plastic food box can go in the blue bin. An oily one can't. My game shows every pizza box as oily and every can as clean. One pupil asked, "What if I wash the pizza box?" I had no good answer in the game. Next time I would add a "rinse it" choice for some items.</p>
+<p>Also, the Scratch version moves the bin with the mouse only. Pupils who can't use a mouse well have no other way. I'd add arrow keys, like this page has.</p>
+
+<h2 id="sources">Sources</h2>
+<ul class="tight small">
+  <li>Blue bins take paper, plastic, glass and metal, and the 40% figure: <a href="https://www.cgs.gov.sg/recycleright/how-to-recycle-right/">Clean &amp; Green Singapore, How to Recycle Right</a>.</li>
+  <li>Tissue paper, styrofoam and food-stained pizza boxes: <a href="https://www.cgs.gov.sg/recycleright/know-your-contaminants/">Clean &amp; Green Singapore, Know Your Contaminants</a>.</li>
+  <li>File menu names ("Load from your computer", "Save to your computer"): <a href="https://github.com/scratchfoundation/scratch-gui/blob/develop/src/lib/shared-messages.js">shared-messages.js</a> and <a href="https://github.com/scratchfoundation/scratch-gui/blob/develop/src/components/menu-bar/menu-bar.jsx">menu-bar.jsx</a> in the Scratch editor source.</li>
+  <li>"Instructions", "Notes and Credits" and "Copy Link" on the project page: <a href="https://github.com/scratchfoundation/scratch-www/blob/develop/src/views/preview/l10n.json">Scratch website source text</a>.</li>
+  <li>Shared class projects are public: <a href="https://scratch.mit.edu/educators/faq">Scratch Teacher Account FAQ</a>.</li>
+  <li>Scratch runs scripts about 30 times a second: <a href="https://github.com/scratchfoundation/scratch-vm/blob/develop/src/engine/runtime.js">Scratch VM source, runtime.js</a>.</li>
+</ul>
+</main>
+</body>
+</html>

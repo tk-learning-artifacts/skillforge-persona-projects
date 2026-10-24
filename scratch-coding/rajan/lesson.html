@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Soft Landing: a 60-minute Sec 2 lesson plan with sharing rules, by Rajan Pillai</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Rajan Pillai is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<p><a href="index.html">Back to Soft Landing</a></p>
+<p class="label">Lesson plan, 60 minutes</p>
+<h1>Variables that change variables</h1>
+<p class="lede">Sec 2 students finish the Soft Landing starter. They learn how a frame loop updates speed and position. Then they share it, or choose not to.</p>
+
+<div class="sheet">
+<ul class="tight">
+  <li>Class: 36 Sec 2 students. Most did one Scratch unit in Sec 1.</li>
+  <li>Time: one 60-minute double period in the computer lab.</li>
+  <li>Devices: one lab PC each, with a keyboard. Scratch in the browser. The Scratch app is installed as a backup.</li>
+  <li>Accounts: student accounts from my Scratch teacher account, in one class. The starter is shared in the class studio.</li>
+  <li>Printouts: 36 <a href="starter.html">task cards</a>. The sharing rules on one slide.</li>
+  <li>On the projector: <a href="index.html#fly">Soft Landing on this page</a>, for its slow motion and frame trace.</li>
+</ul>
+</div>
+
+<h2>Learning outcomes</h2>
+<ul class="tight">
+  <li>Explain how a loop updates speed, then position, once per frame.</li>
+  <li>Use a condition with "and" to guard a variable, so fuel can't go below 0.</li>
+  <li>Place a decision after a loop, and explain why it is not inside.</li>
+  <li>Share a remix with credit and no personal details, or hand in a file instead.</li>
+</ul>
+
+<h2>Success criteria</h2>
+<ol class="steps">
+  <li>With no keys pressed, my lander speeds up as it falls.</li>
+  <li>Holding up slows it, and fuel stops at 0.</li>
+  <li>Landing slower than -2 on the pad chimes. Anything else crashes.</li>
+  <li>My Notes and Credits name the starter and say what I changed.</li>
+</ol>
+
+<h2>The lesson</h2>
+<ol class="steps">
+  <li>0 to 5 min. Settle. Log in with class accounts. Open the class studio and remix the starter.</li>
+  <li>5 to 12 min. Hook. One student flies Soft Landing on the projector, in slow motion. The class watches the trace table. Question: speed y is -0.5 now. What is it 30 frames later, with the engine off? (Answer: -2.)</li>
+  <li>12 to 17 min. I build task 1 live. Two blocks, one question: what does each one change? I don't build task 2.</li>
+  <li>17 to 40 min. Tasks 1 to 3 on their own. After each task, show your neighbour it working, then move on. Finished early: the stretch.</li>
+  <li>40 to 48 min. Sharing. Go through the 5 rules below. Everyone writes Notes and Credits. Then each student picks a route: Share to the class studio, or File, then Save to your computer, and upload the file to our class folder.</li>
+  <li>48 to 55 min. Play 2 classmates' games in the studio. Leave 1 comment each, in the format below.</li>
+  <li>55 to 60 min. Exit ticket on paper: gravity becomes -0.1. With no engine, is the crash faster, slower or the same? Why? Log out.</li>
+</ol>
+<p class="small">Check: 5 + 7 + 5 + 23 + 8 + 7 + 5 = 60 minutes.</p>
+<p>Discussion question if time allows: does it matter if "change speed y by gravity" comes after "change y by speed y"? It does, slightly. The new speed takes effect one frame later. The lander still falls, so most students won't notice until they look at the trace.</p>
+
+<h2 id="rules">Sharing rules</h2>
+<div class="sheet">
+<ol class="steps">
+  <li>Shared means public. Anyone on the internet can see your project and comments. A class account does not change that.</li>
+  <li>No personal details anywhere: not your real full name, school, class, phone, address, or social media and chat usernames. That includes titles, notes, sprite names and costumes.</li>
+  <li>Remix with credit. Make a meaningful change, and name the original in Notes and Credits. Scratch adds a "Thanks to" line, but say what you changed.</li>
+  <li>Comments: one specific thing that works, and one suggestion. Be kind, not critical. No spam or chain messages.</li>
+  <li>Report, don't reply. If something is mean or inappropriate, click Report and tell me.</li>
+</ol>
+</div>
+<p>All 5 rules come from the <a href="https://scratch.mit.edu/community_guidelines">Scratch Community Guidelines</a>. Rule 2 follows the guidelines' own list of what to keep private.</p>
+<h3>The comment format</h3>
+<p>"Your [thing] works because [reason]. Could you try [idea]?" Example: "Your exhaust fades nicely because of the ghost effect. Could you try a fuel warning at 10?"</p>
+<h3>Why there is a no-share route</h3>
+<p>The <a href="https://scratch.mit.edu/educators/faq">teacher account FAQ</a> is clear on three points:</p>
+<ul class="tight">
+  <li>There is no private class. Anything shared within a class is open to the Scratch community.</li>
+  <li>A teacher account can only see shared student projects.</li>
+  <li>Comments can't be switched off for the whole site. The FAQ points to the offline Scratch app, which has no online community.</li>
+</ul>
+<p>So sharing is the easy way for me to mark, but it is public. A student who doesn't want that saves the .sb3 file and hands it in. Both routes are marked the same way.</p>
+
+<h2>Beginners and fast finishers</h2>
+<h3>Students new to coding</h3>
+<ul class="tight">
+  <li>The live demo of task 1 is for them. I keep it on the projector during work time.</li>
+  <li>The task card shows every block they need. If they are stuck, I ask them to read the speed y monitor aloud while it runs. That usually shows which block is missing.</li>
+</ul>
+<h3>Fast finishers</h3>
+<ul class="tight">
+  <li>Stretch 1: exhaust clones. Then: how many Puff clones can exist at once? (8.)</li>
+  <li>Stretch 2: a "Missed the pad" message, with one more if-else.</li>
+  <li>Stretch 3: write the loop as 3 lines of Python-style text on the back of the card. For example: speed_y = speed_y + gravity.</li>
+</ul>
+
+<h2>How I mark it</h2>
+<p>I fly every project once, with no keys pressed. Then once more, burning early. That checks criteria 1 to 3 in under a minute each. Criterion 4 is in Notes and Credits, or in the file I'm handed. Each criterion gets "met", "nearly" or "not yet". The exit tickets tell me whether to reteach frame order next lesson.</p>
+
+<h2>Sources</h2>
+<ul class="tight small">
+  <li>Private classes, seeing shared projects, comments and the offline app: <a href="https://scratch.mit.edu/educators/faq">Scratch Teacher Account FAQ</a>.</li>
+  <li>Personal information, remix credit, feedback, and Report: <a href="https://scratch.mit.edu/community_guidelines">Scratch Community Guidelines</a>.</li>
+  <li>"Save to your computer": <a href="https://github.com/scratchfoundation/scratch-gui/blob/develop/src/components/menu-bar/menu-bar.jsx">menu-bar.jsx in the Scratch editor source</a>. The "Thanks to" credit line: <a href="https://github.com/scratchfoundation/scratch-www/blob/develop/src/views/preview/l10n.json">Scratch website source text</a>.</li>
+</ul>
+</main>
+</body>
+</html>
