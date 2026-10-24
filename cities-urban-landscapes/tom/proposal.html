@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Redesign proposal: three phases for the walk to the bus stop, by Tom Brennan</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="section.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Tom Brennan is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<p class="kicker">Gate to Stop · redesign proposal</p>
+<h1>Three phases, from free to fundraised</h1>
+<p class="lede">Our class can change the timing next month. The town council can change the space next year. A roof needs LTA or community improvement funding, and may take years. So the plan has three phases, each with its own owner, cost and test.</p>
+
+<ol class="route" aria-label="Pages in this project">
+  <li><a href="index.html">Site analysis</a></li>
+  <li><a href="data.html">Open data: how students travel</a></li>
+  <li><a href="feedback.html">Community feedback report</a></li>
+  <li><a href="proposal.html" aria-current="page">Redesign and funding</a></li>
+</ol>
+
+<div class="card">
+<p><strong>Design goal</strong></p>
+<p>By the end of next year, a resident with a walking frame can use the walk at 2 pm. They won't have to step aside. A student can wait for the bus without standing on the kerb.</p>
+</div>
+
+<h2>The design: a cross-section at the pinch point</h2>
+<p>This is the slice of street at the 70 m mark, where it is tightest. Switch between today and each phase. On a phone, swipe the drawing sideways.</p>
+<div class="toggles" role="group" aria-label="Which section">
+  <button type="button" data-sec="0" aria-pressed="true">Today</button>
+  <button type="button" data-sec="1" aria-pressed="false">Phase 1</button>
+  <button type="button" data-sec="2" aria-pressed="false">Phase 2</button>
+  <button type="button" data-sec="3" aria-pressed="false">Phase 3</button>
+</div>
+<div class="map-wrap"><svg class="map" id="section" viewBox="0 0 480 260" role="img" aria-labelledby="sec-title sec-desc">
+  <title id="sec-title">Cross-section of the footpath at the pinch point</title>
+  <desc id="sec-desc">Shows, from left to right, the grass by Block 2, the footpath, the verge and the road. The caption below the drawing describes what each phase changes.</desc>
+  <rect x="0" y="200" width="480" height="60" class="block"/>
+  <rect x="0" y="190" width="90" height="10" class="grass"/>
+  <text class="lbl-s" x="8" y="230">grass, Block 2 side</text>
+  <rect x="90" y="190" width="180" height="10" class="path" stroke-width="1"/>
+  <text class="lbl-s" x="140" y="230">footpath 1.8 m</text>
+  <rect x="270" y="190" width="70" height="10" class="grass"/>
+  <text class="lbl-s" x="276" y="230">verge</text>
+  <rect x="340" y="194" width="140" height="6" class="road"/>
+  <text class="lbl-s" x="380" y="230">road</text>
+  <!-- today: racks on path -->
+  <g data-show="0 1">
+    <rect x="180" y="150" width="90" height="40" fill="none" stroke="var(--warn)" stroke-width="3"/>
+    <text class="lbl-s" x="186" y="144" style="fill:var(--warn)">bicycle racks</text>
+    <line x1="92" y1="120" x2="178" y2="120" stroke="var(--warn)" stroke-width="2"/>
+    <text class="lbl-s" x="104" y="112" style="fill:var(--warn)">1.1 m clear</text>
+  </g>
+  <rect x="262" y="60" width="5" height="130" fill="var(--ink-2)"/>
+  <text class="lbl-s" x="226" y="54">lamp post</text>
+  <!-- people -->
+  <g fill="var(--ink-2)">
+    <circle cx="120" cy="146" r="7"/><rect x="114" y="154" width="12" height="36" rx="5"/>
+    <circle cx="150" cy="146" r="7"/><rect x="144" y="154" width="12" height="36" rx="5"/>
+  </g>
+  <g data-show="0">
+    <circle cx="300" cy="146" r="7" fill="var(--warn)"/><rect x="294" y="154" width="12" height="36" rx="5" fill="var(--warn)"/>
+    <text class="lbl-s" x="286" y="128" style="fill:var(--warn)">stepped off</text>
+  </g>
+  <g data-show="1 2 3">
+    <text class="lbl-s" x="96" y="88" style="fill:var(--route);font-weight:700">half the crowd: 2 exit times</text>
+  </g>
+  <g data-show="2 3">
+    <rect x="276" y="160" width="58" height="30" fill="none" stroke="var(--route)" stroke-width="3"/>
+    <text class="lbl-s" x="276" y="154" style="fill:var(--route)">racks on verge</text>
+    <line x1="92" y1="120" x2="258" y2="120" stroke="var(--route)" stroke-width="2"/>
+    <text class="lbl-s" x="132" y="112" style="fill:var(--route)">1.8 m clear</text>
+  </g>
+  <g data-show="3">
+    <rect x="84" y="28" width="196" height="8" fill="var(--route)"/>
+    <rect x="84" y="28" width="5" height="162" fill="var(--route)"/>
+    <text class="lbl-s" x="96" y="22" style="fill:var(--route);font-weight:700">covered walkway roof</text>
+  </g>
+</svg></div>
+<p class="live" id="sec-note" aria-live="polite"></p>
+
+<h2>Phase 1: change the timing (school, next 4 weeks)</h2>
+<div class="card phase">
+<ul class="tight">
+  <li>What: two exit times at dismissal, 10 minutes apart. Lower secondary first, upper secondary second. Six Sec 3 volunteers act as marshals at the stop, on a rota, for two weeks.</li>
+  <li>Why: 7 of 11 residents avoid 1.30 to 2.30 pm. The path breaks because 226 people pass in 20 minutes, not because of its width alone.</li>
+  <li>Who approves: the principal and the year heads. Parents get a letter a week before.</li>
+  <li>Cost: about $20 for printing and vests the school already owns. Student and teacher time.</li>
+  <li>Test: a two-week trial, then count again at 1.40 pm on a Tuesday and a Thursday.</li>
+</ul>
+</div>
+
+<h2>Phase 2: change the space (town council, 6 to 12 months)</h2>
+<div class="card phase p2">
+<ul class="tight">
+  <li>What: move the 6 bicycle racks onto the verge. Add a rest stop with 2 benches at the 90 m mark.</li>
+  <li>Why: the pinch point is 1.1 m clear. BCA's 2025 accessibility code asks for 1.5 m on main routes in school buildings. We used that as a yardstick. It also asks for a resting place with seats on routes of 50 m or more. Our walk is 180 m with none. Those rules are for buildings, not public footpaths, but the reasons are the same.</li>
+  <li>Who approves: the town council. Residents must agree to the racks moving, so the round 2 poster counts as a start.</li>
+  <li>Funding: MND's Community Improvement Projects Committee (CIPC) funds basic facilities and shared amenities in HDB estates. We would ask the town council to put our request forward.</li>
+  <li>Cost: I could not find public prices. I'd ask the town council for a quote. My class's guess, labelled as a guess, is a few thousand dollars.</li>
+  <li>Test: count stepping-off at 1.40 pm and 9.30 am. Watch whether anyone uses the benches, and who.</li>
+</ul>
+</div>
+
+<h2>Phase 3: a roof (LTA or community funding, 1 to 3 years)</h2>
+<div class="card phase p3">
+<ul class="tight">
+  <li>What: a covered walkway along the 138 m with no shade, joining the trees at each end.</li>
+  <li>Some context: in 2017, the Transport Minister spoke about covered links. About 80% of schools already had one to a nearby MRT, LRT or bus stop. Our main gate has one. Our side gate does not.</li>
+  <li>Route 1, LTA's Walk2Ride programme. It builds sheltered walkways near transport. That includes 200 m around LRT stations, bus interchanges and selected busy bus stops. Our stop is 180 m from the gate. Whether it counts as high volume is LTA's call. Our peak count of 64 people is the evidence we would send.</li>
+  <li>Route 2, the CIPC again, through the town council.</li>
+  <li>Route 3, LTA's Friendly Streets. Tampines was one of the five pilot towns. LTA plans Friendly Streets in all towns by 2030, and says it engages residents on each site. Our counts and survey are what that engagement asks for.</li>
+  <li>Cost: unknown to us. This is the phase we control least.</li>
+  <li>Test: shaded metres at 1.30 pm, from 42 m to 180 m. Students waiting in the sun, asked the same way as round 1.</li>
+</ul>
+</div>
+
+<h2>Measurable benefits</h2>
+<p>Each target uses the same method as the baseline. Same point, same 20 minutes, same weekdays. Not in exam weeks, and we note the weather.</p>
+<div class="scroll">
+<table>
+  <thead><tr><th>Measure</th><th class="num">Baseline</th><th class="num">Target</th><th>Phase</th></tr></thead>
+  <tbody>
+    <tr><td>People stepping off at the pinch point, 1.40 pm, 20 min</td><td class="num">41</td><td class="num">under 10</td><td>1 and 2</td></tr>
+    <tr><td>Most people waiting at the stop at once</td><td class="num">64</td><td class="num">under 40</td><td>1</td></tr>
+    <tr><td>Clear width at the pinch point</td><td class="num">1.1 m</td><td class="num">1.8 m</td><td>2</td></tr>
+    <tr><td>Seats along the walk</td><td class="num">0</td><td class="num">2</td><td>2</td></tr>
+    <tr><td>Residents who avoid 1.30 to 2.30 pm (re-interview)</td><td class="num">7 of 11</td><td class="num">3 or fewer</td><td>1 and 2</td></tr>
+    <tr><td>Shaded metres at 1.30 pm</td><td class="num">42 of 180</td><td class="num">180 of 180</td><td>3</td></tr>
+  </tbody>
+</table>
+</div>
+<p class="small">Baselines are from our made-up counts. Targets are the class's choice.</p>
+
+<h2>Timeline</h2>
+<ol class="tight">
+  <li>Term 3, weeks 7 and 8: phase 1 letter to parents, then the two-week trial.</li>
+  <li>Term 3, week 9: count again. Post the results on the noticeboard.</li>
+  <li>Term 4, week 1: send the town council our counts, survey and vote. Ask for phase 2.</li>
+  <li>Next year: follow up on phase 2. Write to LTA about phase 3, with a copy to the town council.</li>
+</ol>
+
+<h2>How this fits the bigger plan</h2>
+<p>LTA's Land Transport Master Plan 2040 aims for 20-minute towns. Trips to the nearest neighbourhood centre should take under 20 minutes. That means by public, active and shared transport. A walk that people avoid for an hour a day works against that.</p>
+
+<h2>What I would change</h2>
+<p>Phase 3 is the one students voted for, and it is the one we can least deliver. The class learnt that a plan is a list of asks to other people. I'd make that clearer from lesson 1, so the roof is not the only win they count. Also, our costs for phases 2 and 3 are guesses. A real proposal needs a quote before anyone votes.</p>
+
+<h2>Sources</h2>
+<ul class="tight small">
+  <li>Walk2Ride radii: <a href="https://www.lta.gov.sg/content/ltagov/en/getting_around/active_mobility/walking_cycling_infrastructure/walking.html">LTA, Made for walking</a>.</li>
+  <li>Covered links from schools: <a href="https://www.mot.gov.sg/news-resources/newsroom/written-reply-by-minister-for-transport-khaw-boon-wan-to-parliamentary-question-on-sheltered-walkways-from-schools-to-bus-stops-and-mrt-stations/">MOT written reply on sheltered walkways from schools, 8 May 2017</a>.</li>
+  <li>What the CIPC funds: <a href="https://www.sgdi.gov.sg/ministries/mnd/committees/cipc">Singapore Government Directory, Community Improvement Projects Committee</a>.</li>
+  <li>Friendly Streets pilots: <a href="https://lta.gov.sg/content/ltagov/en/upcoming_projects/road_commuter_facilities/friendly-streets.html">LTA, Friendly Streets</a>. All towns by 2030: <a href="https://www.lta.gov.sg/content/ltagov/en/newsroom/2025/3/news-releases/friendlier_and_safer_walk_cycle_ride_journeys.html">LTA and MHA news release, 5 March 2025</a>.</li>
+  <li>Route widths and resting areas: <a href="https://file.go.gov.sg/bca-coa2025.pdf">BCA, Code on Accessibility in the Built Environment 2025</a>, clauses 4.2.1 and 4.2.4.</li>
+  <li>20-minute towns: <a href="https://www.lta.gov.sg/content/dam/ltagov/who_we_are/our_work/land_transport_master_plan_2040/pdf/LTA%20LTMP%202040%20Infographic%201.pdf">LTA, Land Transport Master Plan 2040 infographic</a>, from the <a href="https://www.lta.gov.sg/content/ltagov/en/who_we_are/our_work/land_transport_master_plan_2040.html">LTMP 2040 page</a>.</li>
+</ul>
+</main>
+</body>
+</html>
