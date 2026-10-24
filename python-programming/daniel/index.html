@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lost in the Lab: a binary text adventure in Python, by Daniel Ong</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="minipy.js" defer></script>
+<script src="editor.js" defer></script>
+<script src="code.js" defer></script>
+<script src="play.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Daniel Ong is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<h1>Lost in the Lab</h1>
+<p class="lede">A Python text adventure about binary. You stayed late and the school is locked. Every door has a keypad that shows a binary number. Type it in denary to get out.</p>
+<p>I'm Daniel. I've been a trainer for six months. I teach a Sec 2 coding enrichment class on Wednesday afternoons, and I'm learning Python alongside them. Last month we did binary with paper cards. So I built a game where binary opens every door.</p>
+<p>This is my end project for the Python module. It has the game, a PRIMM worksheet and a lesson plan. It also has the bugs I hit, because there were a lot of them.</p>
+<ul class="toc">
+  <li><a href="#play">Play the game</a></li>
+  <li><a href="#how">How the code works</a></li>
+  <li><a href="#share">My share link</a></li>
+  <li><a href="#bugs">Bug diary</a></li>
+  <li><a href="worksheet.html">PRIMM starter and worksheet</a></li>
+  <li><a href="lesson.html">60-minute lesson plan</a></li>
+  <li><a href="#tests">Testing it on people</a></li>
+  <li><a href="#rubric">Rubric check</a></li>
+</ul>
+
+<h2 id="play">Play it</h2>
+<p>Press Run. Type your answers in the green box under the screen. Stuck on a code? Somewhere in the school there is a card that helps.</p>
+<div class="bench" data-files="adventure.py,starter.py" data-hello="Press Run to start Lost in the Lab.&#10;Pick starter.py to try the worksheet program instead.&#10;">
+  <div class="bar">
+    <label for="pick">Program</label>
+    <select id="pick"><option value="adventure.py">adventure.py, the game</option><option value="starter.py">starter.py, one door</option></select>
+    <button type="button" class="run primary">Run</button>
+    <button type="button" class="stop" disabled>Stop</button>
+  </div>
+  <div class="console-host"></div>
+  <details>
+    <summary>Read and change the code (<span class="filename">adventure.py</span>)</summary>
+    <div class="editor-host"></div>
+    <div class="bar">
+      <button type="button" class="reset">Undo my changes</button>
+      <button type="button" class="copy">Copy code</button>
+      <button type="button" class="download">Download .py</button>
+    </div>
+  </details>
+</div>
+<p class="small">This page runs the code with MiniPy, a small Python written in JavaScript, so nothing needs installing. It covers what these programs use. I ran the same answers through Python 3.13 and got the same output, line for line. Change the code and press Run to try your own version.</p>
+
+<h2 id="how">How the code works</h2>
+<p>The whole game is 102 lines. Open "Read and change the code" above to follow along.</p>
+<ul class="tight">
+  <li>Four rooms, four functions. <code>corridor()</code>, <code>store()</code>, <code>lab()</code> and <code>server()</code> each print the room, then return the name of the next room.</li>
+  <li>The main loop is at the bottom: <code>while room != "outside":</code>. Each time round it calls the right room and adds 1 to <code>moves</code>.</li>
+  <li>A list for the items. <code>items</code> starts empty. The store adds <code>"torch"</code>. The lab adds <code>"card"</code>. The server room checks <code>"torch" in items</code>.</li>
+  <li>A dictionary for the doors. <code>codes</code> links each door to its binary code. <code>keypad("lab")</code> looks up <code>codes["lab"]</code>, which is <code>"0110"</code>.</li>
+  <li>A for loop for the binary. <code>to_denary("1101")</code> gives 13. <code>place</code> starts at the value of the left bit, 8 here. It halves on every pass. Each <code>"1"</code> adds its place to the total.</li>
+  <li>A while loop for typos. <code>ask()</code> keeps asking until the player types a real exit. It also answers <code>items</code> and <code>card</code>. So a typo never crashes the game.</li>
+</ul>
+<p>The doors use 4 bits, then 4 bits, then 8 bits. The last one is the hard one, and the card is there for it.</p>
+
+<h2 id="share">My share link</h2>
+<p>The brief asks for a share link to the working program. This part took me longest, so here is what I found.</p>
+<ul class="tight">
+  <li>I looked for a Share button in the <a href="https://editor.raspberrypi.org/en/">Raspberry Pi Code Editor</a>. There isn't one for your own projects. In July 2023 the Raspberry Pi Foundation <a href="https://www.raspberrypi.org/blog/code-editor-open-source/">decided not to add code sharing</a>. It said that without moderation, sharing is a safeguarding risk.</li>
+  <li>You can use the Code Editor without an account. The same post says your changes last for the session, even if you refresh or close the tab. To save your code properly, you log in.</li>
+  <li>Under 13, a parent or guardian sets up the account with their email. From 13, you can sign up alone (<a href="https://codeclub.org/en/resources/accounts-for-children">Code Club</a>). My Sec 2s are 13 or 14, but my school prefers no student accounts, so we don't log in.</li>
+  <li>The school version is now called <a href="https://www.raspberrypi.org/teach">Code Classroom</a>. There, a teacher can <a href="https://help.editor.raspberrypi.org/hc/en-us/articles/41052886370068-How-to-share-a-direct-link-to-a-project-or-class">copy a direct link</a> to a class or project. Students then sign in with a school code, username and password. My school hasn't set it up yet.</li>
+</ul>
+<p>So my share link is this page. Anyone can open it and play. To run the game in the real Code Editor:</p>
+<ol class="steps">
+  <li>Pick adventure.py above, open "Read and change the code" and press Copy code. Or press Download .py.</li>
+  <li>Open the <a href="https://editor.raspberrypi.org/en/">Code Editor</a> and start a new Python project.</li>
+  <li>Delete what is there, paste the game in and press Run.</li>
+</ol>
+<p>For programs like this one, the Code Editor runs standard Python in the browser, called Pyodide (<a href="https://github.com/RaspberryPiFoundation/editor-ui/blob/main/src/components/Editor/Runners/PythonRunner/PythonRunner.jsx">its source code</a>). So the error messages look like the ones in my bug diary below.</p>
+
+<h2 id="bugs">Bug diary: what broke while I wrote it</h2>
+<p>I kept a note of every error. These six cost me the most time. The messages are exactly what Python 3.13 printed. Older versions word some of them differently.</p>
+
+<div class="bug">
+  <span class="msg">TypeError: can only concatenate str (not "int") to str</span>
+  <p>I wrote <code>print("You escaped in " + moves + " moves.")</code>. <code>moves</code> is a number, and <code>+</code> can't join text to a number.</p>
+  <p>Fix: commas. <code>print("You escaped in", moves, "moves.")</code> adds the spaces for me too.</p>
+  <p class="hint">Hint for students: "str" means text and "int" means a whole number. Which one is the number?</p>
+</div>
+<div class="bug">
+  <span class="msg">NameError: name 'item' is not defined. Did you mean: 'items'?</span>
+  <p>I typed <code>item.append("torch")</code>. The list is called <code>items</code>.</p>
+  <p class="hint">Hint for students: Python is guessing for you. Check the spelling where you made the variable.</p>
+</div>
+<div class="bug">
+  <span class="msg">UnboundLocalError: cannot access local variable 'moves' where it is not associated with a value</span>
+  <p>I put <code>moves = moves + 1</code> inside <code>corridor()</code>. Inside a function, giving a name a value makes a new local variable. This one had no value yet. The <a href="https://docs.python.org/3/faq/programming.html#why-am-i-getting-an-unboundlocalerror-when-the-variable-has-a-value">Python FAQ</a> explains why.</p>
+  <p>Fix: I count moves in the main loop instead. <code>global moves</code> would also work. I'd rather my class didn't need it yet.</p>
+  <p class="hint">Hint for students: count things in the main loop, not inside the room functions.</p>
+</div>
+<div class="bug">
+  <span class="msg">SyntaxError: expected ':'</span>
+  <p>I wrote <code>if choice == "lab"</code> and forgot the colon.</p>
+  <p class="hint">Hint for students: lines starting with if, elif, else, while, for and def all end in a colon.</p>
+</div>
+<div class="bug">
+  <span class="msg">IndentationError: expected an indented block after 'if' statement on line 59</span>
+  <p>In <code>store()</code>, I forgot to move <code>items.append("torch")</code> in under the <code>if</code>.</p>
+  <p class="hint">Hint for students: after a colon, the next line moves in 4 spaces. The error points at the line after the problem.</p>
+</div>
+<div class="bug">
+  <span class="msg">(no error at all)</span>
+  <p>The worst bug had no message. The keypad asked again and again, even when I typed the right number. I had written <code>while guess != answer:</code>. Then I added <code>print(type(guess), type(answer))</code>. It printed <code>&lt;class 'str'&gt; &lt;class 'int'&gt;</code>. <code>input()</code> always gives back text, <a href="https://docs.python.org/3/library/functions.html#input">says the Python docs</a>. So <code>"6"</code> never equals <code>6</code>.</p>
+  <p>Fix: compare text with text: <code>str(answer)</code>. This bug became question I2 on my worksheet.</p>
+  <p class="hint">Hint for students: if nothing errors but nothing works, print the type of each value.</p>
+</div>
+
+<h2 id="worksheet">PRIMM starter and worksheet</h2>
+<p>The starter is a 22-line slice of the game: one door, one keypad. It keeps <code>to_denary()</code>, a <code>while</code> loop and a list of wrong guesses. The <a href="worksheet.html">worksheet</a> has 3 Predict, 3 Investigate, 2 Modify and 1 Make question. It prints on one A4 page. My answers for teachers are on the same page, under the sheet.</p>
+<p>I only learned about PRIMM in this module. It stands for Predict, Run, Investigate, Modify, Make. It was developed by Sue Sentance and colleagues (<a href="https://www.raspberrypi.org/blog/primm-talk-in-programming-lessons-research-seminar/">Raspberry Pi Foundation</a>). The first three stages are all about reading code. I used to start lessons with a blank screen.</p>
+
+<h2 id="lesson">The lesson plan</h2>
+<p>The <a href="lesson.html">lesson plan</a> is one 60-minute lesson for my 28 Sec 2 students, in pairs, on their school Chromebooks. It has timings that add up, a plan for slow typists and typos, and how I check that every student codes.</p>
+
+<h2 id="tests">Testing it on people</h2>
+<p class="sticky">The colleague, the students and their words are made up, like me. The bugs and outputs are real. I ran every one.</p>
+<h3>Round 1: a colleague who has never coded</h3>
+<p>Ms Lim teaches maths. She did the whole worksheet while I watched.</p>
+<ul class="tight">
+  <li>Note 1. For P1 she wrote <code>It shows "0110"</code>, with quote marks. I'd made the same guess when I started.</li>
+  <li>Note 2. Predict took her 9 minutes. I had planned 5.</li>
+  <li>Note 3. She found a bug in my answer to M2. My version gave the player 4 tries, not 3.</li>
+  <li>Note 4. She asked what "denary" means. My class knows. A new student might not.</li>
+</ul>
+<div class="card">
+<p><strong>What I changed</strong></p>
+<ul class="tight">
+  <li>From note 2: Predict now gets 8 minutes in the lesson.</li>
+  <li>From note 3: I fixed my M2 answer and added a warning about it for teachers.</li>
+  <li>From note 4: the sheet now says "denary means the normal numbers we count with".</li>
+  <li>From note 1: nothing. That surprise is the point of P1.</li>
+</ul>
+</div>
+<h3>Round 2: my Wednesday class, first try</h3>
+<ul class="tight">
+  <li>Note 1. Three pairs typed the starter by hand. It took them 12 minutes, and two had typos.</li>
+  <li>Note 2. Two pairs ran the code before they predicted. Then their predictions were all right.</li>
+  <li>Note 3. One student typed <code>&nbsp;6</code> with a space in front. The door stayed shut. She was sure Python was broken.</li>
+  <li>Note 4. In some pairs, one student did all the typing for 30 minutes.</li>
+</ul>
+<div class="card">
+<p><strong>What I changed</strong></p>
+<ul class="tight">
+  <li>From note 1: the worksheet page has a Copy code button. I put its link on the board.</li>
+  <li>From note 2: predictions go on paper with laptop lids down. Lids open at minute 18.</li>
+  <li>From note 3: it became question I3. The full game uses <code>.strip()</code> on line 23 to fix it.</li>
+  <li>From note 4: drivers swap when the timer on the screen rings, every 10 to 15 minutes.</li>
+</ul>
+</div>
+
+<h2 id="rubric">Rubric check</h2>
+<ul class="tight">
+  <li><span class="ok">Program runs without errors.</span> I played four routes through the game in Python 3.13 and on this page. Each one ends with "You are outside". A typo can't crash it, because <code>ask()</code> just asks again. A wrong code only beeps.</li>
+  <li><span class="ok">Uses functions, loops and a list or dictionary.</span> Seven functions. A <code>while</code> loop in the main program and in <code>ask()</code>. A <code>for</code> loop in <code>to_denary()</code>. A list, <code>items</code>, and a dictionary, <code>codes</code>.</li>
+  <li><span class="ok">Worksheet questions make students read code.</span> All three Predict questions come before anyone runs it. I1 is a trace table of <code>to_denary()</code>. I2 asks what breaks before they try it.</li>
+  <li><span class="nearly">Plan fits your students and devices: nearly.</span> It fits 60 minutes, 28 students in pairs and their Chromebooks, with no logins. But school devices run device management apps, and some sites get blocked. I must test the Code Editor on a student Chromebook before the lesson. This page is my backup.</li>
+</ul>
+
+<h2 id="change">What I would change</h2>
+<ul class="tight">
+  <li>The server door asks for 1101 every time, even when the room is dark. Players hated typing it twice. A list of opened doors would fix that.</li>
+  <li><code>to_denary()</code> trusts its input. A code like <code>"1201"</code> would count the 2 as a 0. A stronger student could add a check.</li>
+  <li>There is no saving. Close the tab and you start again.</li>
+  <li>I stopped at "the Code Editor has no share link". I haven't tried Code Classroom yet. That's my next step, and I'll ask our ICT team about school accounts first.</li>
+</ul>
+
+<h2 id="sources">Sources</h2>
+<ul class="tight small">
+  <li>No sharing, and saving without an account: <a href="https://www.raspberrypi.org/blog/code-editor-open-source/">Raspberry Pi Foundation, "The Code Editor is now open source", 11 July 2023</a>.</li>
+  <li>Account age rules: <a href="https://codeclub.org/en/resources/accounts-for-children">Code Club, accounts for children</a>.</li>
+  <li>Code Classroom: <a href="https://www.raspberrypi.org/teach">Raspberry Pi Foundation, Teach</a> and <a href="https://help.editor.raspberrypi.org/hc/en-us/articles/41052886370068-How-to-share-a-direct-link-to-a-project-or-class">How to share a direct link to a project or class</a>.</li>
+  <li>The Code Editor's Python engine: <a href="https://github.com/RaspberryPiFoundation/editor-ui/blob/main/src/components/Editor/Runners/PythonRunner/PythonRunner.jsx">editor-ui source, PythonRunner</a>.</li>
+  <li>PRIMM: <a href="https://www.raspberrypi.org/blog/primm-talk-in-programming-lessons-research-seminar/">Raspberry Pi Foundation research seminar post</a> and the <a href="https://static.raspberrypi.org/files/curriculum/quickreads/11-Pedagogy_Summary_PRIMM_V4_2023.pdf">PRIMM Quick Read</a>.</li>
+  <li>School devices: <a href="https://www.moe.gov.sg/news/press-releases/20201229-blended-learning-to-enhance-schooling-experience-and-further-develop-students-into-self-directed-learners">MOE press release, 29 December 2020</a>, on PLDs for all secondary students by end-2021, with device management apps.</li>
+  <li>Python: <a href="https://docs.python.org/3/library/functions.html#input">input()</a> and <a href="https://docs.python.org/3/faq/programming.html#why-am-i-getting-an-unboundlocalerror-when-the-variable-has-a-value">UnboundLocalError</a> in the Python docs. Error messages from running each bug in Python 3.13.</li>
+</ul>
+</main>
+</body>
+</html>

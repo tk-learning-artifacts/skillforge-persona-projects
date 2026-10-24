@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PRIMM worksheet: one locked door, by Daniel Ong</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="minipy.js" defer></script>
+<script src="editor.js" defer></script>
+<script src="code.js" defer></script>
+<script src="play.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Daniel Ong is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<div class="noprint">
+<p><a href="index.html">Back to Lost in the Lab</a></p>
+<p>This is the worksheet for my <a href="lesson.html">60-minute lesson</a>. It prints on one A4 page. Each student gets their own copy, even though they code in pairs. The program, the answers for teachers and a place to run the code are below the sheet. They don't print.</p>
+<p><button type="button" class="primary" data-print>Print the worksheet</button></p>
+</div>
+
+<div class="sheet">
+<h1>Lost in the Lab: one locked door</h1>
+<p>Name: ______________________ &nbsp; Partner: ______________________</p>
+<p><em>Denary means the normal numbers we count with: 0, 1, 2, 3 and so on.</em></p>
+<pre class="listing" aria-label="starter.py with line numbers"><code><span class="ln">1</span># Starter: one locked door
+<span class="ln">2</span>def to_denary(bits):
+<span class="ln">3</span>    total = 0
+<span class="ln">4</span>    place = 2 ** (len(bits) - 1)
+<span class="ln">5</span>    for bit in bits:
+<span class="ln">6</span>        if bit == &quot;1&quot;:
+<span class="ln">7</span>            total = total + place
+<span class="ln">8</span>        place = place // 2
+<span class="ln">9</span>    return total
+<span class="ln">10</span>
+<span class="ln">11</span>
+<span class="ln">12</span>code = &quot;0110&quot;
+<span class="ln">13</span>answer = to_denary(code)
+<span class="ln">14</span>wrong = []
+<span class="ln">15</span>print(&quot;The lab door has a keypad. It shows&quot;, code)
+<span class="ln">16</span>guess = input(&quot;Type the number in denary: &quot;)
+<span class="ln">17</span>while guess != str(answer):
+<span class="ln">18</span>    wrong.append(guess)
+<span class="ln">19</span>    print(&quot;Beep. Try again.&quot;)
+<span class="ln">20</span>    guess = input(&quot;Type the number in denary: &quot;)
+<span class="ln">21</span>print(&quot;Click. The door opens.&quot;)
+<span class="ln">22</span>print(&quot;Wrong guesses:&quot;, wrong)</code></pre>
+<div class="cols">
+<div>
+<h3>Predict (pen only, laptop lid down)</h3>
+<p class="q">P1. Line 15 runs first. Write exactly what it prints.</p>
+<div class="write"></div>
+<p class="q">P2. You type <code>6</code>. Write the next two lines it prints.</p>
+<div class="write"></div><div class="write"></div>
+<p class="q">P3. You type <code>4</code>, then <code>6</code>. What will line 22 print?</p>
+<div class="write"></div>
+<h3>Run</h3>
+<p class="q">Paste the code into the Code Editor. Run it for P1, P2 and P3. Tick each prediction you got right.</p>
+<h3>Investigate</h3>
+<p class="q">I1. Trace <code>to_denary("0110")</code>, one row per pass of the loop.</p>
+<table>
+<tr><th>bit</th><th>place at the start</th><th>total at the end</th></tr>
+<tr><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td></tr>
+</table>
+</div>
+<div>
+<p class="q">I2. Line 17 says <code>str(answer)</code>. Change it to <code>answer</code>. First predict, then run it. What happens, and why?</p>
+<div class="write"></div><div class="write"></div>
+<p class="q">I3. Type <code>&nbsp;6</code> with a space in front. What happens? Which line decides?</p>
+<div class="write"></div>
+<h3>Modify</h3>
+<p class="q">M1. Make the door show <code>00101101</code>. Which line do you change? Which number opens it now?</p>
+<div class="write"></div>
+<p class="q">M2. Give the player 3 tries only. After 3 wrong tries, print <code>The keypad locks.</code> Hint: <code>len(wrong)</code> counts the wrong guesses.</p>
+<div class="write"></div><div class="write"></div>
+<h3>Make</h3>
+<p class="q">Make a keypad that works the other way. It shows a denary number from 0 to 15. The player must type it as 4 bits. Write a function <code>to_binary(number)</code>.</p>
+<div class="write"></div>
+</div>
+</div>
+</div>
+
+<div class="noprint">
+<h2>Run the starter here</h2>
+<p>For students whose Code Editor won't load. It is the same 22 lines.</p>
+<div class="bench" data-files="starter.py" data-hello="Press Run to start the starter program.&#10;">
+  <div class="bar">
+    <span class="filename mono">starter.py</span>
+    <button type="button" class="run primary">Run</button>
+    <button type="button" class="stop" disabled>Stop</button>
+  </div>
+  <div class="console-host"></div>
+  <details open>
+    <summary>Read and change the code</summary>
+    <div class="editor-host"></div>
+    <div class="bar">
+      <button type="button" class="reset">Undo my changes</button>
+      <button type="button" class="copy">Copy code</button>
+      <button type="button" class="download">Download .py</button>
+    </div>
+  </details>
+</div>
+
+<h2>Answers for teachers</h2>
+<p>I checked every answer by running it in Python 3.13.</p>
+<dl class="answers">
+  <dt>P1</dt>
+  <dd><code>The lab door has a keypad. It shows 0110</code>. The comma in <code>print</code> adds one space. There are no quote marks. Many students write them in.</dd>
+  <dt>P2</dt>
+  <dd><code>Click. The door opens.</code> then <code>Wrong guesses: []</code>. The list is empty, so Python prints two square brackets.</dd>
+  <dt>P3</dt>
+  <dd><code>Wrong guesses: ['4']</code>. The quote marks show that <code>'4'</code> is text. That leads straight into I2.</dd>
+  <dt>I1</dt>
+  <dd>Row 1: bit 0, place 8, total 0. Row 2: bit 1, place 4, total 4. Row 3: bit 1, place 2, total 6. Row 4: bit 0, place 1, total 6. It returns 6.</dd>
+  <dt>I2</dt>
+  <dd>The door never opens, and there is no error. <code>input()</code> gives text, so <code>guess</code> is <code>"6"</code>. <code>answer</code> is the number 6. Text never equals a number, so the loop asks forever. Press Stop. This was my worst bug.</dd>
+  <dt>I3</dt>
+  <dd>It beeps. <code>" 6"</code> is not the same text as <code>"6"</code>. Line 17 decides. In the full game, <code>guess.strip()</code> on line 23 removes the spaces.</dd>
+  <dt>M1</dt>
+  <dd>Only line 12: <code>code = "00101101"</code>. The answer is 45. Nothing else changes, because <code>place</code> starts at <code>2 ** (len(bits) - 1)</code>. That works for any length.</dd>
+  <dt>M2</dt>
+  <dd>
+    <p>One answer, lines 17 to 26. Watch out: my first answer used <code>len(wrong) &lt; 3</code> and gave 4 tries. Ms Lim caught it.</p>
+<pre class="listing"><code>while guess != str(answer) and len(wrong) &lt; 2:
+    wrong.append(guess)
+    print("Beep. Try again.")
+    guess = input("Type the number in denary: ")
+if guess == str(answer):
+    print("Click. The door opens.")
+else:
+    wrong.append(guess)
+    print("The keypad locks.")
+print("Wrong guesses:", wrong)</code></pre>
+  </dd>
+  <dt>Make</dt>
+  <dd>
+    <p>One answer. It uses the same idea as <code>to_denary()</code>, but takes each place away.</p>
+<pre class="listing"><code>def to_binary(number):
+    bits = ""
+    place = 8
+    while place &gt;= 1:
+        if number &gt;= place:
+            bits = bits + "1"
+            number = number - place
+        else:
+            bits = bits + "0"
+        place = place // 2
+    return bits
+
+
+number = 11
+print("The keypad shows", number)
+guess = input("Type it as 4 bits: ")
+while guess != to_binary(number):
+    print("Beep. Try again.")
+    guess = input("Type it as 4 bits: ")
+print("Click. The door opens.")</code></pre>
+  </dd>
+</dl>
+</div>
+</main>
+</body>
+</html>
