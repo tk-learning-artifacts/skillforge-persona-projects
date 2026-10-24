@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How will I get to secondary school? A Census 2020 data project for P6, by Nadia Hussain</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Nadia Hussain is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<div class="tools" role="group" aria-label="Reading tools">
+  <span class="group">Text size
+    <button type="button" data-size="0" aria-pressed="true" aria-label="Normal text">A</button>
+    <button type="button" data-size="1" aria-pressed="false" aria-label="Bigger text">A+</button>
+    <button type="button" data-size="2" aria-pressed="false" aria-label="Biggest text">A++</button>
+  </span>
+  <button type="button" id="short-toggle" aria-pressed="false">Short version</button>
+</div>
+
+<h1>How will I get to secondary school?</h1>
+<p class="lede">A data project with Census 2020 numbers, made for my P6 class after PSLE.</p>
+<div class="short">
+  <p>I asked how primary pupils in Singapore get to school, and what changes in secondary school.</p>
+  <p>About 4 in 10 primary pupils needed no transport. In secondary school, about 7 in 10 took a public bus or the MRT.</p>
+</div>
+<div class="long">
+<p>I'm Nadia. I teach learners with a wide range of needs. After PSLE, my P6 pupils start to worry about Sec 1. One worry comes up every year: "How will I get there?"</p>
+<p>So I asked the data first. Then I planned a project where my class asks the same question about themselves. I built every chart so a pupil can read it as a chart, a table or plain sentences.</p>
+</div>
+<ul class="toc">
+  <li><a href="#question">The question<span>What I asked</span></a></li>
+  <li><a href="#chart-one">Chart 1<span>Primary pupils</span></a></li>
+  <li><a href="#chart-two">Chart 2<span>Primary and secondary</span></a></li>
+  <li><a href="#answer">My answer<span>And what I can't claim</span></a></li>
+  <li><a href="data.html">Cleaned data<span>With 8 change notes</span></a></li>
+  <li><a href="sheet.html">The spreadsheet<span>Formulas and checks</span></a></li>
+  <li><a href="unit.html">4-lesson plan<span>With a privacy check</span></a></li>
+  <li><a href="slip.html">Survey slips<span>Print for the class</span></a></li>
+</ul>
+
+<h2 id="question">The question</h2>
+<div class="short"><p>How do primary pupils in Singapore get to school, and what changes in secondary school?</p></div>
+<div class="long">
+<p>This question works for data because:</p>
+<ul class="tight">
+  <li>The census asked how each student usually travels to school. It sorts the answers by level, so primary and secondary sit side by side.</li>
+  <li>It is one year, 2020, and one group: resident students, meaning citizens and permanent residents.</li>
+  <li>The answer is a count, so it turns into a percent and a bar chart. My P6 pupils know both. Bar graphs start in P3. Percent comes in P5.</li>
+</ul>
+<p>The numbers come from the <a href="https://data.gov.sg/datasets/d_fc70357c97a64358829c22df30bdd423/view">Census of Population 2020 table on data.gov.sg</a>. The census got its transport answers from a sample of about 150,000 households. So each number is an estimate for the whole country, not a head count.</p>
+<p>One label needs care. The census says "No Transport Required". It does not say how those pupils get to school. The census report links it to schools being close to home. It does not say whether these pupils walk, so I call the group "No transport needed".</p>
+</div>
+
+<h2 id="chart-one">Chart 1: how primary pupils got to school</h2>
+<div class="figure" data-views>
+  <h3>How primary pupils in Singapore usually got to school, 2020</h3>
+  <p class="sub">Percent of 245,456 resident primary pupils. Source: Census of Population 2020.</p>
+  <div class="views" role="group" aria-label="Show chart 1 as">
+    <button type="button" data-view="chart" aria-pressed="true">Chart</button>
+    <button type="button" data-view="table" aria-pressed="false">Table</button>
+    <button type="button" data-view="words" aria-pressed="false">In words</button>
+  </div>
+  <div class="panel" data-panel="chart">
+    <div class="chart" id="chart-primary" data-label="Bar chart. No transport needed 41.3%. Car, taxi or private-hire car 21.8%. Public bus 15.7%. School bus or van 13.8%. MRT or LRT 5.6%. Other ways 1.8%."></div>
+  </div>
+  <div class="panel" data-panel="table" hidden>
+    <div class="scroll"><table>
+      <thead><tr><th>How they travel</th><th class="num">Pupils</th><th class="num">Percent</th></tr></thead>
+      <tbody>
+        <tr><td>No transport needed</td><td class="num">101,356</td><td class="num">41.3%</td></tr>
+        <tr><td>Car, taxi or private-hire car</td><td class="num">53,506</td><td class="num">21.8%</td></tr>
+        <tr><td>Public bus</td><td class="num">38,560</td><td class="num">15.7%</td></tr>
+        <tr><td>School bus or van</td><td class="num">33,842</td><td class="num">13.8%</td></tr>
+        <tr><td>MRT or LRT, with or without a bus</td><td class="num">13,811</td><td class="num">5.6%</td></tr>
+        <tr><td>Other ways</td><td class="num">4,381</td><td class="num">1.8%</td></tr>
+        <tr><th>All primary pupils</th><th class="num">245,456</th><th class="num">100%</th></tr>
+      </tbody>
+    </table></div>
+  </div>
+  <div class="panel" data-panel="words" hidden>
+    <ul class="words">
+      <li>About 4 in 10 primary pupils needed no transport.</li>
+      <li>About 1 in 5 went by car, taxi or private-hire car.</li>
+      <li>About 1 in 6 took a public bus. About 1 in 7 took a school bus or van.</li>
+      <li>Very few took the MRT or LRT.</li>
+    </ul>
+  </div>
+  <p class="caption">Caption: Most primary pupils needed no transport or went by car. Few took the MRT or LRT.</p>
+</div>
+
+<h2 id="chart-two">Chart 2: what changes in secondary school</h2>
+<div class="figure" data-views>
+  <h3>Primary and secondary pupils: how they usually got to school, 2020</h3>
+  <p class="sub">Percent of each level. 245,456 primary and 173,710 secondary resident pupils. Source: Census of Population 2020.</p>
+  <div class="views" role="group" aria-label="Show chart 2 as">
+    <button type="button" data-view="chart" aria-pressed="true">Chart</button>
+    <button type="button" data-view="table" aria-pressed="false">Table</button>
+    <button type="button" data-view="words" aria-pressed="false">In words</button>
+  </div>
+  <div class="panel" data-panel="chart">
+    <div class="legend"><span><i class="sw pri"></i> Primary (solid)</span><span><i class="sw sec"></i> Secondary (striped)</span></div>
+    <div class="chart" id="chart-compare" data-label="Paired bar chart. No transport needed: primary 41.3%, secondary 14.4%. Car: 21.8% and 13.0%. Public bus: 15.7% and 36.9%. School bus: 13.8% and 2.3%. MRT or LRT: 5.6% and 32.6%. Other: 1.8% and 0.8%."></div>
+  </div>
+  <div class="panel" data-panel="table" hidden>
+    <div class="scroll"><table>
+      <thead><tr><th>How they travel</th><th class="num">Primary</th><th class="num">Secondary</th></tr></thead>
+      <tbody>
+        <tr><td>No transport needed</td><td class="num">41.3%</td><td class="num">14.4%</td></tr>
+        <tr><td>Car, taxi or private-hire car</td><td class="num">21.8%</td><td class="num">13.0%</td></tr>
+        <tr><td>Public bus</td><td class="num">15.7%</td><td class="num">36.9%</td></tr>
+        <tr><td>School bus or van</td><td class="num">13.8%</td><td class="num">2.3%</td></tr>
+        <tr><td>MRT or LRT, with or without a bus</td><td class="num">5.6%</td><td class="num">32.6%</td></tr>
+        <tr><td>Other ways</td><td class="num">1.8%</td><td class="num">0.8%</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+  <div class="panel" data-panel="words" hidden>
+    <ul class="words">
+      <li>In secondary school, the public bus is the biggest group: about 37 in 100.</li>
+      <li>MRT or LRT jumps from about 6 in 100 to about 33 in 100.</li>
+      <li>"No transport needed" falls from about 41 in 100 to about 14 in 100.</li>
+      <li>School buses almost disappear: from about 14 in 100 to about 2 in 100.</li>
+    </ul>
+  </div>
+  <p class="caption">Caption: In secondary school, public transport takes over. About 7 in 10 took a public bus or the MRT or LRT. Far fewer could get to school without transport.</p>
+</div>
+
+<h2 id="answer">My answer</h2>
+<div class="short">
+  <p>In 2020, about 4 in 10 primary pupils needed no transport. In secondary school, that fell to about 1 in 7. About 7 in 10 took public transport.</p>
+</div>
+<div class="long">
+<p>The evidence:</p>
+<ul class="tight">
+  <li>41.3% of primary pupils needed no transport. For secondary pupils it was 14.4%.</li>
+  <li>36.9% of secondary pupils took a public bus only. 32.6% took the MRT or LRT, with or without a bus. Together that is 69.5%.</li>
+  <li>The census report gives the middle travel time, the median. It was 15 minutes for pre-primary and primary pupils, and 30 minutes for secondary pupils.</li>
+</ul>
+<p>So for many of my pupils, Sec 1 will likely mean a longer trip. Many will take a bus or train. That is a useful thing to know before the school year starts. Some pupils will want to practise the route.</p>
+<h3>What I can't claim</h3>
+<ul class="tight">
+  <li>That my class will be the same. This is all of Singapore. My class is about 30 pupils from one area.</li>
+  <li>That it is still true in 2026. The census was taken in 2020.</li>
+  <li>That "No transport needed" means walking. The census does not say.</li>
+  <li>Why families choose a way of travel. The data counts choices. It does not explain them.</li>
+</ul>
+</div>
+
+<h2 id="access">Choices I made for access</h2>
+<div class="short"><p>Fewer groups, labels on the bars, stripes as well as colour, and three ways to read each chart.</p></div>
+<div class="long">
+<ul class="tight">
+  <li>I merged 11 census groups into 6. Tiny bars under 1% add reading load and tell a 12-year-old nothing.</li>
+  <li>Each group's name sits above its bar, in full. No legend to match up for chart 1.</li>
+  <li>In chart 2, secondary bars are striped as well as orange. Colour is never the only clue. That follows the WCAG rule on <a href="https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html">use of colour</a>.</li>
+  <li>Every chart also comes as a table and as sentences. A pupil who can't read the chart yet can still join the talk.</li>
+  <li>I wrote "about 4 in 10" next to "41.3%". Both are true. Some pupils hold on to one more easily than the other.</li>
+  <li>The text size buttons and the short version are for pupils, and for tired teachers.</li>
+</ul>
+</div>
+
+<h2 id="cleaning">How I cleaned the data</h2>
+<div class="short"><p>I kept the raw file, merged the groups, and checked my numbers against the census report. All 8 change notes are on the <a href="data.html">data page</a>.</p></div>
+<div class="long">
+<p>The census table was neat, but not ready. It had 25 columns, split by boys and girls and by seven levels. One label had a comma inside quote marks. That breaks the file if you split it by hand. My sums matched two numbers in the census report exactly, and missed a third by 0.1 points. I wrote that down instead of hiding it.</p>
+<p>The <a href="sheet.html">spreadsheet page</a> shows every formula. You can download the Google Sheets file and open it yourself.</p>
+</div>
+
+<h2 id="unit">The class project</h2>
+<div class="short"><p>Four 60-minute lessons. Pupils survey their own class on paper slips, with no names, then compare with the census.</p></div>
+<div class="long">
+<p>My pupils are 12, so they don't get online accounts for this. They answer two questions on a paper slip with pictures. I type the slips into the sheet and shred them. Small groups are merged before anyone sees the results. The <a href="unit.html">lesson plan</a> has the privacy check, a chart checklist and a 4-point rubric. Pupils choose how to show what they learned: a poster, a talk with me, or a chart with sentence starters.</p>
+</div>
+
+<h2 id="rubric">How I think it does against the rubric</h2>
+<ul class="tight">
+  <li><strong>Question is clear and answerable.</strong> Met. One country, one year, two levels, one census question.</li>
+  <li><strong>Charts are fair and labelled.</strong> Met. Bars start at zero and every bar is labelled. The source is named. Each chart has a table and a sentence view.</li>
+  <li><strong>Claims match the evidence.</strong> Mostly met. I say "likely" about my own pupils, and I list what I can't claim. The 0.1-point gap is written down.</li>
+  <li><strong>Students' data is kept private.</strong> Met in the plan: no names, no accounts, slips shredded, small groups merged, data deleted after lesson 4.</li>
+</ul>
+
+<h2 id="change">What I would change</h2>
+<p>The census is from 2020, six years ago. Travel may look different now, and I can't check that with this data. I would also like travel time split by level. The census table on data.gov.sg mixes all levels together. So I had to use the report's medians.</p>
+<p class="long">One worry about my own plan: some pupils hate being asked about home at all. A paper slip with "prefer not to say" helps. But a pupil who lives far away may still feel watched. I keep the slips anonymous and I never ask who wrote what.</p>
+
+<h2 id="sources">Sources</h2>
+<ul class="tight small">
+  <li>Singapore Department of Statistics, <a href="https://data.gov.sg/datasets/d_fc70357c97a64358829c22df30bdd423/view">Resident Students Aged 5 Years and Over by Usual Mode of Transport to School, Level of Education Attending and Sex (Census of Population 2020)</a>, data.gov.sg. Accessed 24 October 2026.</li>
+  <li>Singapore Department of Statistics, <a href="https://www.singstat.gov.sg/publication-resources/singapore-census-of-population-2020-statistical-release-2-households-geographic-distribution-transport-and-difficulty-in-basic-activities">Census of Population 2020, Statistical Release 2</a>: the 43.0% and 22.0% figures, the median travel times, the sample of about 150,000 households, and the 30 June 2020 reference date.</li>
+  <li>Travel-time table: <a href="https://data.gov.sg/datasets/d_e5a69e75ba24d05efac0f8e367d7b6ff/view">Resident Students by Usual Mode of Transport to School, Travelling Time to School and Sex (Census 2020)</a>, with its footnote on students studying from home.</li>
+  <li>Bar graphs in P3, percent in P5 and average in P6: <a href="https://www.moe.gov.sg/primary/curriculum/syllabus">MOE 2021 Mathematics Syllabus, Primary 1 to 6</a>.</li>
+  <li>Colour: <a href="https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html">W3C, Understanding Success Criterion 1.4.1: Use of Color</a>.</li>
+  <li>Contains information from the two census tables above, accessed on 24 October 2026 from data.gov.sg, which is made available under the terms of the <a href="https://data.gov.sg/open-data-licence">Singapore Open Data Licence version 1.0</a>.</li>
+</ul>
+</main>
+</body>
+</html>

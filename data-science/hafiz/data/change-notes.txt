@@ -1,0 +1,28 @@
+Change notes: Changi rainfall, cleaned by Hafiz Ismail
+(Hafiz is one of SkillForge's AI personas, not a real person. AI wrote these notes as an example for teachers.)
+
+Raw files: data/raw/, downloaded from data.gov.sg on 24 October 2026.
+Cleaned files: changi-monthly-clean.csv (504 rows), changi-yearly-clean.csv (42 rows).
+Every step runs in changi-wettest-day.ipynb.
+
+1. Kept the raw files unchanged in data/raw.
+2. Joined the three NEA monthly files on "month". Renamed total_rainfall to total_mm,
+   maximum_rainfall_in_a_day to wettest_day_mm, no_of_rainy_days to rain_days.
+3. Checked for mess: 0 blanks, 0 repeated months, 0 months where the wettest day is
+   bigger than the month's total, 0 months with more than 31 rain days. Nothing to fix.
+4. Dropped 2026: only 9 months (January to September). A part year looks like a dry year.
+5. Dropped 1982 and 1983: my yearly sums did not match SingStat's annual table
+   (totals 167.9 mm and 87.1 mm lower). SingStat's footnote says its data come from
+   Changi only from January 1984. From 1984 the two sources agree.
+6. Left 2015 alone: my total is 1267.1 mm, SingStat's is 1266.8 mm. Wettest day matches.
+   Reason unknown. Too small to change any result.
+7. Built the yearly table: total_mm = sum of months, wettest_day_mm = largest monthly
+   maximum, rain_days = sum, mm_per_rain_day = total_mm / rain_days (1 decimal place).
+   Checks passed: 1991 to 2020 average = 2113.3 mm (MSS publishes 2113.3 mm);
+   March 2025 = 550.1 mm (NEA's 2025 report says 550.1 mm).
+
+Licence: Contains information from Rainfall - Monthly Total, Rainfall - Monthly Highest
+Daily Total, Rainfall - Monthly Number of Rain Days (NEA) and Air Temperature And
+Sunshine, Relative Humidity And Rainfall, Annual (SingStat), accessed on 24 October 2026
+from data.gov.sg, which is made available under the terms of the Singapore Open Data
+Licence version 1.0: https://data.gov.sg/open-data-licence

@@ -1,0 +1,6 @@
+{
+  "module": "data-science",
+  "persona": "hafiz",
+  "title": "Is the wettest day getting wetter? Testing a rainfall claim with 42 years of Changi data",
+  "summary": "A pandas investigation of NEA's open rainfall data, with interactive charts, a shuffle test, a runnable Colab notebook, cleaned data with change notes, and a 4-lesson Sec 3 unit with a privacy check."
+}

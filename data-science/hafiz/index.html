@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Is the wettest day getting wetter? 42 years of Changi rainfall in pandas, by Hafiz Ismail</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="charts.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Hafiz Ismail is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<span class="tag">Data Science &amp; Visualisation · end project</span>
+<h1>Is the wettest day of the year getting wetter?</h1>
+<p class="lede">I tested a rainfall claim with 42 years of open data from Changi Climate Station. Then I planned a 4-lesson unit where my Sec 3 class does the same.</p>
+<p>I'm Hafiz. I teach data and AI to secondary students and adult learners. I like a big claim, as long as I can check it. Here is everything I made:</p>
+<ul class="toc">
+  <li><a href="#question">The question</a></li>
+  <li><a href="#answer">My answer</a></li>
+  <li><a href="#chart-one">Chart 1</a></li>
+  <li><a href="#chart-two">Chart 2</a></li>
+  <li><a href="#trick">Try to fool yourself</a></li>
+  <li><a href="data.html">Cleaned data and change notes</a></li>
+  <li><a href="notebook.html">Colab notebook</a></li>
+  <li><a href="unit.html">4-lesson unit with privacy check</a></li>
+  <li><a href="#rubric">Rubric check</a></li>
+</ul>
+
+<h2 id="question"><span class="tag">01 · Question</span>Where the question came from</h2>
+<p>In March 2026, NEA released its <a href="https://www.nea.gov.sg/media/news/news/index/spore-records-wettest-ever-march-and-hottest-ever-june-and-november-in-2025">2025 Annual Climate Assessment</a>. It says annual rainfall rose by 92.5 mm per decade from 1980 to 2025. It also says Singapore got more rain on wet days, which points to heavier downpours.</p>
+<p>That figure is an average of 32 stations across the island. My students can't download all 32 in one click. But NEA does publish monthly records for one station, Changi, on data.gov.sg. So I asked a smaller question that this data can answer.</p>
+<div class="card claim">
+  <p class="tag">My question</p>
+  <p><strong>Has the wettest day of each year at Changi Climate Station got wetter from 1984 to 2025?</strong></p>
+</div>
+<p>Why this is answerable:</p>
+<ul class="tight">
+  <li>"Wettest day" is a number in the data. NEA's file gives the highest daily total for every month. The biggest of the 12 is the year's wettest day.</li>
+  <li>One place and fixed years. No guessing what "Singapore" or "lately" means.</li>
+  <li>"Got wetter" can be tested. I look for a trend, and I compare the first 21 years with the last 21.</li>
+</ul>
+
+<h2 id="answer"><span class="tag">02 · Answer</span>My answer, and how sure I am</h2>
+<div class="card claim">
+  <p><strong>No. At Changi, the wettest day of the year has not got steadily wetter since 1984.</strong></p>
+  <ul class="tight">
+    <li>The trend line slopes slightly down, by 6.5 mm per decade.</li>
+    <li>That slope is weak. When I shuffled the years 10,000 times, 31% of shuffles gave a trend at least as steep. Luck makes slopes like this all the time.</li>
+    <li>The swings are huge. The wettest day ranged from 59.4 mm in 2022 to 216.2 mm in 2011.</li>
+    <li>The later half has a lower median, 92.3 mm against 129.9 mm. But the boxes overlap a lot, and both halves have years above 210 mm.</li>
+  </ul>
+</div>
+<div class="card limit">
+  <p><strong>What this does not show.</strong> It does not show MSS is wrong. MSS averages 32 stations and counts a wet day differently. Changi is one station, in the east of the island. These files also only give whole days, not hourly bursts.</p>
+</div>
+
+<h2 id="chart-one"><span class="tag">03 · Chart 1</span>The wettest day of each year</h2>
+<div class="figure">
+  <h3>Wettest day of each year at Changi Climate Station, 1984 to 2025</h3>
+  <p class="sub">Rain on that day, in millimetres. Tap or hover over a bar to see the year.</p>
+  <div class="legend"><span><i class="key-bar"></i> Wettest day that year</span><span><i class="key-line"></i> Straight-line trend</span></div>
+  <div class="chart" id="chart-1"></div>
+  <p class="readout" id="readout-1" aria-live="polite">Pick a bar.</p>
+  <div class="controls"><label><input type="checkbox" id="show-trend" checked> Show the trend line</label></div>
+  <p class="caption">Caption: Big years and small years are mixed all the way through. The trend line falls 6.5 mm per decade, too little to stand out from the swings. Source: NEA, Rainfall: Monthly Highest Daily Total, via data.gov.sg.</p>
+  <details>
+    <summary>Show chart 1 as a table</summary>
+    <div class="scroll"><table id="table-1"><thead><tr><th>Year</th><th class="num">Wettest day (mm)</th><th>Month</th></tr></thead><tbody></tbody></table></div>
+  </details>
+</div>
+<p>One more thing jumped out. In 24 of the 42 years, the wettest day fell in November, December or January. MSS names those as the <a href="https://www.weather.gov.sg/climate-climate-of-singapore/">wettest months</a>, in the wet phase of the Northeast Monsoon.</p>
+
+<h2 id="chart-two"><span class="tag">04 · Chart 2</span>The spread in each half</h2>
+<div class="figure">
+  <h3>Wettest day of the year: 1984 to 2004 against 2005 to 2025</h3>
+  <p class="sub">Each dot is one year. The box holds the middle half of the years. Whiskers reach the lowest and highest year.</p>
+  <div class="legend"><span><i class="key-bar"></i> Box and dots: the years</span><span><i class="key-line"></i> Median</span></div>
+  <div class="chart" id="chart-2"></div>
+  <p class="caption">Caption: The later half's median is lower, but the two boxes overlap. Each half has dry-ish years near 60 mm and wild years above 210 mm. A gap in medians this size is not a trend on its own. Source: NEA via data.gov.sg.</p>
+  <details>
+    <summary>Show chart 2 as numbers</summary>
+    <table>
+      <tr><th>1984 to 2004</th><td id="half-0">Q1 86.8, median 129.9, Q3 177.8, IQR 91.0, lowest 65.8, highest 211.1</td></tr>
+      <tr><th>2005 to 2025</th><td id="half-1">Q1 69.8, median 92.3, Q3 154.8, IQR 85.0, lowest 59.4, highest 216.2</td></tr>
+    </table>
+    <p class="small">All values in mm. 21 years in each half. Quartiles use the same method as pandas.</p>
+  </details>
+</div>
+<p>Why a box plot? A mean hides the spread. With rain, the spread is the story. The mean of all 42 years is 126.0 mm and the median is 127.5 mm. Those two agree, yet no single year looks "average".</p>
+
+<h2 id="trick"><span class="tag">05 · Spot the trick</span>Try to fool yourself</h2>
+<p>Here is how a headline could say rain is "exploding". Move the start year to 2018. Then cut the axis at 50 mm. Same data, different story.</p>
+<div class="figure">
+  <h3>Wettest day of each year, from a start year you choose</h3>
+  <p class="sub">The orange line is the trend for the years shown.</p>
+  <div class="controls">
+    <label for="start-year">Start year: <strong id="start-out" class="mono">1984</strong></label>
+    <input type="range" id="start-year" min="1984" max="2018" value="1984" step="1">
+    <label><input type="checkbox" id="cut-axis"> Start the axis at 50 mm</label>
+  </div>
+  <div class="chart" id="chart-3"></div>
+  <p class="readout" id="readout-3" aria-live="polite"></p>
+  <div class="controls">
+    <button type="button" id="shuffle">Shuffle these years</button>
+    <button type="button" id="reset">Put them back</button>
+  </div>
+  <p class="caption">Trick card: From 2018 the trend is +135.2 mm per decade. From 1984 it is −6.5. Starting at a dry year makes any rise look huge. A cut axis makes it look worse.</p>
+</div>
+<div class="card">
+  <p><strong>Could the real trend be luck?</strong> Shuffle all 42 years 1,000 times. Count how often the shuffled order gives a trend at least as steep as the real one.</p>
+  <button type="button" class="primary" id="many">Run 1,000 shuffles</button>
+  <p class="readout" id="many-out" aria-live="polite"></p>
+  <p class="small">Your share will change a little each run. The notebook uses 10,000 shuffles with a fixed seed and gets 31%.</p>
+</div>
+
+<h2 id="cleaning"><span class="tag">06 · Cleaning</span>What I cleaned, in short</h2>
+<p>NEA's files were tidy, with no blanks and no repeats. The mess was in the details:</p>
+<ul class="tight">
+  <li>2026 only has 9 months so far. I dropped it, or its total would look like a dry year.</li>
+  <li>I added up my yearly totals and checked them against SingStat's annual table. 1982 and 1983 did not match. SingStat says its data come from Changi only from 1984. So I start in 1984.</li>
+  <li>My 1991 to 2020 average came to 2113.3 mm. That matches the figure MSS publishes for Changi.</li>
+</ul>
+<p>All 7 change notes, the raw files and the cleaned files are on the <a href="data.html">data page</a>. Every step runs in the <a href="notebook.html">Colab notebook</a>.</p>
+
+<h2 id="unit"><span class="tag">07 · Class project</span>The 4-lesson unit</h2>
+<p>My Sec 3 class does the same thing in four 60-minute lessons. They start from a claim and ask a question one station can answer. They clean the data in Colab. Then they present a claim with one limit. The only data about students is an anonymous prediction poll. The <a href="unit.html">unit plan</a> has the privacy check, a chart checklist and a 4-point rubric.</p>
+
+<h2 id="rubric"><span class="tag">08 · Rubric</span>How I think it does against the rubric</h2>
+<ul class="tight">
+  <li><strong>Question is clear and answerable.</strong> Met. One station, one measure, fixed years. I narrowed it from the island-wide claim because that is all this data can answer.</li>
+  <li><strong>Charts are fair and labelled.</strong> Met. Both start at zero, name the unit and the source, and have a table view. The trick chart is labelled as a trick.</li>
+  <li><strong>Claims match the evidence.</strong> Met, I think. I say "no steady rise at Changi", not "rain is not getting heavier". The shuffle test stops me reading too much into a 6.5 mm slope.</li>
+  <li><strong>Students' data is kept private.</strong> Met in the unit. My own analysis uses no personal data. The class poll collects no names or emails and is deleted after lesson 4.</li>
+</ul>
+
+<h2 id="change"><span class="tag">09 · Next time</span>What I would change</h2>
+<p>One station was the right size for Sec 3. But it is a weak test of the MSS claim. MSS talks about heavier downpours. The best test would use hourly rainfall from many stations. NEA's monthly files can't show a one-hour storm that floods a road. Next time I would add a second station with daily data, such as Admiralty. Do the two agree?</p>
+<p>I also used a straight-line trend. Rain comes in wet and dry runs, so a line is a blunt tool. I kept it because Sec 3 students can read it, and the shuffle test checks it.</p>
+
+<h2 id="sources"><span class="tag">10 · Sources</span>Sources</h2>
+<ul class="tight small">
+  <li>NEA, <a href="https://data.gov.sg/datasets/d_53ffdaa97e48ce934cf92799d381f3b1/view">Rainfall: Monthly Highest Daily Total</a>, <a href="https://data.gov.sg/datasets/d_b16d06b83473fdfcc92ed9d37b66ba58/view">Rainfall: Monthly Total</a> and <a href="https://data.gov.sg/datasets/d_134857f63c76d227b6fa045f31ce59c1/view">Rainfall: Monthly Number of Rain Days</a>, Changi Climate Station, 1982 to September 2026. Accessed 24 October 2026.</li>
+  <li>SingStat, <a href="https://data.gov.sg/datasets/d_19c6ce4509e0bddde2062298aa8ce9ab/view">Air Temperature And Sunshine, Relative Humidity And Rainfall, Annual</a>. Its footnote says data come from the Changi climate station from January 1984.</li>
+  <li>NEA, <a href="https://www.nea.gov.sg/media/news/news/index/spore-records-wettest-ever-march-and-hottest-ever-june-and-november-in-2025">2025 Annual Climate Assessment news release</a>, 23 March 2026: the 92.5 mm per decade trend, 32 stations, wet days, and March 2025 at 550.1 mm.</li>
+  <li>MSS, <a href="https://www.weather.gov.sg/climate-climate-of-singapore/">Climate of Singapore</a>: monsoon seasons, wettest months, and the 1991 to 2020 Changi average of 2113.3 mm.</li>
+  <li>Licence: contains information from the four datasets above, accessed on 24 October 2026 from data.gov.sg, which is made available under the terms of the <a href="https://data.gov.sg/open-data-licence">Singapore Open Data Licence version 1.0</a>.</li>
+</ul>
+</main>
+<script>
+// Fill the chart 1 table from the same data the chart uses.
+document.addEventListener('DOMContentLoaded', function () {
+  var body = document.querySelector('#table-1 tbody');
+  YEARS.forEach(function (r) {
+    var tr = document.createElement('tr');
+    tr.innerHTML = '<td>' + r[0] + '</td><td class="num">' + r[2].toFixed(1) + '</td><td>' + MONTHS[r[5] - 1] + '</td>';
+    body.appendChild(tr);
+  });
+});
+</script>
+</body>
+</html>

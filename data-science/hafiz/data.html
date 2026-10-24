@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cleaned Changi rainfall data and change notes, by Hafiz Ismail</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Hafiz Ismail is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<p><a href="index.html">Back to the project</a></p>
+<span class="tag">Deliverable · cleaned dataset with change notes</span>
+<h1>Cleaned data and change notes</h1>
+<p class="lede">Raw files as I downloaded them, the cleaned files I analysed, and every change I made in between.</p>
+
+<h2><span class="tag">Files</span>Download</h2>
+<h3>Raw, unchanged from data.gov.sg</h3>
+<ul class="tight">
+  <li><a href="data/raw/RainfallMonthlyTotal.csv" download>RainfallMonthlyTotal.csv</a>: total rain each month, in mm. 537 rows, January 1982 to September 2026.</li>
+  <li><a href="data/raw/RainfallMonthlyHighestDailyTotal.csv" download>RainfallMonthlyHighestDailyTotal.csv</a>: the wettest day in each month, in mm. 537 rows.</li>
+  <li><a href="data/raw/RainfallMonthlyNumberofRainDays.csv" download>RainfallMonthlyNumberofRainDays.csv</a>: days with 0.2 mm of rain or more, each month. 537 rows.</li>
+  <li><a href="data/raw/AirTemperatureAndSunshineRelativeHumidityAndRainfallAnnual.csv" download>AirTemperatureAndSunshineRelativeHumidityAndRainfallAnnual.csv</a>: SingStat's yearly climate table, 1960 to 2025. I used it only to check my sums.</li>
+</ul>
+<h3>Cleaned by me</h3>
+<ul class="tight">
+  <li><a href="data/changi-monthly-clean.csv" download>changi-monthly-clean.csv</a>: 504 rows, one per month, January 1984 to December 2025.</li>
+  <li><a href="data/changi-yearly-clean.csv" download>changi-yearly-clean.csv</a>: 42 rows, one per year.</li>
+  <li><a href="data/change-notes.txt" download>change-notes.txt</a>: the notes below, as plain text.</li>
+</ul>
+
+<h2><span class="tag">Change notes</span>What I changed, and why</h2>
+<p>I write a change note whenever I touch the data. Then anyone can check my work, or undo a choice they disagree with.</p>
+<ol class="tight">
+  <li><strong>Kept the raw files.</strong> I downloaded the four files on 24 October 2026. They sit in data/raw unchanged.</li>
+  <li><strong>Joined and renamed.</strong> I joined the three NEA files on the month column. I renamed total_rainfall to total_mm, maximum_rainfall_in_a_day to wettest_day_mm, and no_of_rainy_days to rain_days. Short names with units make the code easier to read.</li>
+  <li><strong>Checked for mess.</strong> No blanks. No repeated months. No month whose wettest day beats its own total. No month with more than 31 rain days. Nothing to fix, but now I know.</li>
+  <li><strong>Dropped 2026.</strong> It has only 9 months so far. A part year would look like a very dry year.</li>
+  <li><strong>Dropped 1982 and 1983.</strong> My yearly sums did not match SingStat for these two years. Totals were 167.9 mm and 87.1 mm lower than SingStat's. SingStat's footnote says its data come from Changi only from January 1984. I can't tell which station SingStat used before that. From 1984 on, both sources agree, so I start there.</li>
+  <li><strong>Left 2015 alone.</strong> My 2015 total is 1267.1 mm. SingStat says 1266.8 mm. The wettest day matches. I could not find the reason for a 0.3 mm gap. It is too small to change any result, so I kept NEA's monthly figures.</li>
+  <li><strong>Built the yearly table.</strong> For each year, total_mm is the sum of the months. wettest_day_mm is the biggest monthly maximum. rain_days is the sum. mm_per_rain_day is the total divided by rain days. Two checks passed. My 1991 to 2020 average is 2113.3 mm, the same as MSS publishes. March 2025 is 550.1 mm, the same as NEA's 2025 report.</li>
+</ol>
+
+<h2><span class="tag">Columns</span>What each column means</h2>
+<div class="scroll"><table>
+  <thead><tr><th>Column</th><th>Meaning</th><th>Unit</th></tr></thead>
+  <tbody>
+    <tr><td><code>month</code></td><td>Year and month, like 1984-02</td><td>YYYY-MM</td></tr>
+    <tr><td><code>year</code>, <code>month_num</code></td><td>The same date, split for grouping</td><td>number</td></tr>
+    <tr><td><code>total_mm</code></td><td>All the rain in that month or year</td><td>mm</td></tr>
+    <tr><td><code>wettest_day_mm</code></td><td>Rain on the single wettest day</td><td>mm</td></tr>
+    <tr><td><code>rain_days</code></td><td>Days with 0.2 mm of rain or more, NEA's rule</td><td>days</td></tr>
+    <tr><td><code>mm_per_rain_day</code></td><td>Total divided by rain days (yearly file only)</td><td>mm per day</td></tr>
+  </tbody>
+</table></div>
+<p class="small">NEA counts a rain day at 0.2 mm or more at one station. MSS's report counts a wet day at 1 mm or more, averaged across stations. Same words, different rules. Check the definition before you compare two numbers.</p>
+
+<h2><span class="tag">Preview</span>The cleaned yearly table</h2>
+<details open>
+<summary>Show or hide all 42 years</summary>
+<div class="scroll"><table>
+  <thead><tr><th>Year</th><th class="num">Total (mm)</th><th class="num">Wettest day (mm)</th><th class="num">Rain days</th><th class="num">mm per rain day</th></tr></thead>
+  <tbody>
+<tr><td>1984</td><td class="num">2686.7</td><td class="num">154.4</td><td class="num">191</td><td class="num">14.1</td></tr>
+<tr><td>1985</td><td class="num">1483.9</td><td class="num">86.8</td><td class="num">181</td><td class="num">8.2</td></tr>
+<tr><td>1986</td><td class="num">2536.1</td><td class="num">131.7</td><td class="num">174</td><td class="num">14.6</td></tr>
+<tr><td>1987</td><td class="num">2102.8</td><td class="num">127.4</td><td class="num">151</td><td class="num">13.9</td></tr>
+<tr><td>1988</td><td class="num">2598.6</td><td class="num">187.3</td><td class="num">173</td><td class="num">15.0</td></tr>
+<tr><td>1989</td><td class="num">2463.2</td><td class="num">148.6</td><td class="num">173</td><td class="num">14.2</td></tr>
+<tr><td>1990</td><td class="num">1523.8</td><td class="num">153.7</td><td class="num">142</td><td class="num">10.7</td></tr>
+<tr><td>1991</td><td class="num">1877.0</td><td class="num">129.9</td><td class="num">146</td><td class="num">12.9</td></tr>
+<tr><td>1992</td><td class="num">2260.8</td><td class="num">120.6</td><td class="num">163</td><td class="num">13.9</td></tr>
+<tr><td>1993</td><td class="num">2168.7</td><td class="num">67.6</td><td class="num">163</td><td class="num">13.3</td></tr>
+<tr><td>1994</td><td class="num">1941.8</td><td class="num">178.3</td><td class="num">160</td><td class="num">12.1</td></tr>
+<tr><td>1995</td><td class="num">2332.6</td><td class="num">198.6</td><td class="num">179</td><td class="num">13.0</td></tr>
+<tr><td>1996</td><td class="num">2418.0</td><td class="num">94.3</td><td class="num">170</td><td class="num">14.2</td></tr>
+<tr><td>1997</td><td class="num">1118.9</td><td class="num">65.8</td><td class="num">116</td><td class="num">9.6</td></tr>
+<tr><td>1998</td><td class="num">2623.1</td><td class="num">84.4</td><td class="num">177</td><td class="num">14.8</td></tr>
+<tr><td>1999</td><td class="num">2134.0</td><td class="num">76.9</td><td class="num">177</td><td class="num">12.1</td></tr>
+<tr><td>2000</td><td class="num">2370.5</td><td class="num">127.6</td><td class="num">188</td><td class="num">12.6</td></tr>
+<tr><td>2001</td><td class="num">2783.1</td><td class="num">211.1</td><td class="num">184</td><td class="num">15.1</td></tr>
+<tr><td>2002</td><td class="num">1748.9</td><td class="num">84.0</td><td class="num">139</td><td class="num">12.6</td></tr>
+<tr><td>2003</td><td class="num">2391.2</td><td class="num">194.4</td><td class="num">186</td><td class="num">12.9</td></tr>
+<tr><td>2004</td><td class="num">2136.4</td><td class="num">177.8</td><td class="num">147</td><td class="num">14.5</td></tr>
+<tr><td>2005</td><td class="num">1930.7</td><td class="num">133.8</td><td class="num">175</td><td class="num">11.0</td></tr>
+<tr><td>2006</td><td class="num">2753.2</td><td class="num">198.0</td><td class="num">174</td><td class="num">15.8</td></tr>
+<tr><td>2007</td><td class="num">2886.2</td><td class="num">159.0</td><td class="num">195</td><td class="num">14.8</td></tr>
+<tr><td>2008</td><td class="num">2325.1</td><td class="num">133.9</td><td class="num">182</td><td class="num">12.8</td></tr>
+<tr><td>2009</td><td class="num">1920.9</td><td class="num">86.6</td><td class="num">166</td><td class="num">11.6</td></tr>
+<tr><td>2010</td><td class="num">2075.1</td><td class="num">121.1</td><td class="num">178</td><td class="num">11.7</td></tr>
+<tr><td>2011</td><td class="num">2524.2</td><td class="num">216.2</td><td class="num">188</td><td class="num">13.4</td></tr>
+<tr><td>2012</td><td class="num">2159.9</td><td class="num">92.3</td><td class="num">191</td><td class="num">11.3</td></tr>
+<tr><td>2013</td><td class="num">2748.4</td><td class="num">139.8</td><td class="num">206</td><td class="num">13.3</td></tr>
+<tr><td>2014</td><td class="num">1538.4</td><td class="num">64.4</td><td class="num">152</td><td class="num">10.1</td></tr>
+<tr><td>2015</td><td class="num">1267.1</td><td class="num">63.2</td><td class="num">125</td><td class="num">10.1</td></tr>
+<tr><td>2016</td><td class="num">1955.7</td><td class="num">75.4</td><td class="num">179</td><td class="num">10.9</td></tr>
+<tr><td>2017</td><td class="num">2045.6</td><td class="num">69.8</td><td class="num">204</td><td class="num">10.0</td></tr>
+<tr><td>2018</td><td class="num">1708.2</td><td class="num">60.6</td><td class="num">188</td><td class="num">9.1</td></tr>
+<tr><td>2019</td><td class="num">1367.5</td><td class="num">92.2</td><td class="num">120</td><td class="num">11.4</td></tr>
+<tr><td>2020</td><td class="num">1886.6</td><td class="num">64.2</td><td class="num">178</td><td class="num">10.6</td></tr>
+<tr><td>2021</td><td class="num">2809.6</td><td class="num">210.6</td><td class="num">182</td><td class="num">15.4</td></tr>
+<tr><td>2022</td><td class="num">2207.2</td><td class="num">59.4</td><td class="num">210</td><td class="num">10.5</td></tr>
+<tr><td>2023</td><td class="num">2411.2</td><td class="num">154.8</td><td class="num">180</td><td class="num">13.4</td></tr>
+<tr><td>2024</td><td class="num">2432.0</td><td class="num">85.4</td><td class="num">202</td><td class="num">12.0</td></tr>
+<tr><td>2025</td><td class="num">2833.5</td><td class="num">210.5</td><td class="num">174</td><td class="num">16.3</td></tr>
+  </tbody>
+</table></div>
+</details>
+<p>Notice the totals too. My trend for yearly totals at Changi is +0.9 mm per decade. NEA's island-wide figure is +92.5 mm per decade from 1980. One station and 32 stations can tell different stories. That is a good question to give a class.</p>
+
+<h2><span class="tag">Sources</span>Sources and licence</h2>
+<ul class="tight small">
+  <li>NEA datasets on data.gov.sg: <a href="https://data.gov.sg/datasets/d_b16d06b83473fdfcc92ed9d37b66ba58/view">Monthly Total</a>, <a href="https://data.gov.sg/datasets/d_53ffdaa97e48ce934cf92799d381f3b1/view">Monthly Highest Daily Total</a>, <a href="https://data.gov.sg/datasets/d_134857f63c76d227b6fa045f31ce59c1/view">Monthly Number of Rain Days</a>. Each page names Changi Climate Station. The rain days page gives the 0.2 mm rule.</li>
+  <li>SingStat, <a href="https://data.gov.sg/datasets/d_19c6ce4509e0bddde2062298aa8ce9ab/view">Air Temperature And Sunshine, Relative Humidity And Rainfall, Annual</a>, with the 1984 footnote.</li>
+  <li>MSS, <a href="https://www.weather.gov.sg/climate-climate-of-singapore/">Climate of Singapore</a>, for the 1991 to 2020 average.</li>
+  <li>NEA, <a href="https://www.nea.gov.sg/media/news/news/index/spore-records-wettest-ever-march-and-hottest-ever-june-and-november-in-2025">2025 Annual Climate Assessment news release</a>, for March 2025, the 32 stations and the 1 mm wet-day rule.</li>
+  <li>Contains information from the four datasets above, accessed on 24 October 2026 from data.gov.sg, which is made available under the terms of the <a href="https://data.gov.sg/open-data-licence">Singapore Open Data Licence version 1.0</a>.</li>
+</ul>
+</main>
+</body>
+</html>
