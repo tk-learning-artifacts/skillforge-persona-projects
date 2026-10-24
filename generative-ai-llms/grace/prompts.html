@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Seven tested Claude prompts for planning P5 Scratch lessons, by Grace Chua</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="copy.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Grace Chua is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<p class="back"><a href="index.html">Back to Claude stays on my desk</a></p>
+<p class="eyebrow">Deliverable 2</p>
+<h1>Seven prompts, with my red pen</h1>
+<p class="lede">Each prompt ran twice in Claude Sonnet 5.5 on 24 October 2026, in a fresh session. I read every answer as I would a new trainer's lesson plan.</p>
+<p>The lines in italics are Claude's own words, copied from the runs. My notes are in red. Every prompt is about one lesson: loops in Scratch with the repeat block, for 30 Primary 5 pupils.</p>
+<p class="sr-status small" id="copy-status" aria-live="polite"></p>
+
+<article class="pcard" id="p1">
+<h2>1. A ladder of questions</h2>
+<p class="why">For the trainer who asks "any questions?" and hears silence.</p>
+<div class="ptext" id="t1">I teach a coding enrichment class of 30 Primary 5 pupils in Singapore, aged 11. Today's lesson is about loops in Scratch, using the "repeat" block. Write 6 questions I can ask during the lesson. Go from easy recall to "why" and "what if" questions. For each, add one likely wrong answer a pupil might give, and how I could respond kindly.</div>
+<button type="button" class="copy" data-copy="t1">Copy prompt</button>
+<div class="runs">
+  <div class="run"><h3>Run 1 <span class="badge c">Changed</span></h3>
+    <p>Good ladder. The kind responses sound like a real teacher. One question asked whether a "play sound" block goes inside or after the loop.</p>
+    <p class="redpen">Name the exact block. Scratch has two. With [start sound], the loop does not wait for the sound to finish. I wrote [play sound until done].</p></div>
+  <div class="run"><h3>Run 2 <span class="badge c">Changed</span></h3>
+    <p class="claude">Likely wrong answer: "Repeat 4, turn 90 degrees." (Missing the move block, or using repeat 360.)</p>
+    <p class="redpen">That pupil is nearly right. Calling it wrong would sting. I changed the response: praise the half that works, then ask what the cat still needs to do.</p></div>
+</div>
+</article>
+
+<article class="pcard" id="p2">
+<h2>2. Misconceptions, with a quick check</h2>
+<p class="why">So the trainer knows what to look for before it happens.</p>
+<div class="ptext" id="t2">List 5 common mistakes or misconceptions that 11-year-olds have when they first use the "repeat" block in Scratch. For each, give a 1-minute check I can do on the projector to find out who has it.</div>
+<button type="button" class="copy" data-copy="t2">Copy prompt</button>
+<div class="runs">
+  <div class="run"><h3>Run 1 <span class="badge c">Changed</span></h3>
+    <p class="claude">They put repeat 10 [move 10 steps] with no wait, and are confused when the sprite just jumps.</p>
+    <p class="redpen">Not quite. Each pass of a loop waits for the next frame, so it shows as a very quick slide. Run it and see.</p>
+    <p>Another item said a [go to x: 0 y: 0] inside the loop means "nothing visibly builds up".</p>
+    <p class="redpen">With the pen down, it draws a plus sign: four lines out from the centre. I ran it. Pupils will see that.</p></div>
+  <div class="run"><h3>Run 2 <span class="badge c">Changed</span></h3>
+    <p class="claude">Without a wait block, repeat 10 [move 10 steps] looks like one jump.</p>
+    <p class="redpen">The same slip as run 1. Two runs agreeing does not make it right. The other four checks were good, and I kept them.</p></div>
+</div>
+</article>
+
+<article class="pcard" id="p3">
+<h2>3. Instructions for weaker readers</h2>
+<p class="why">For the pupils who stop at the second long sentence.</p>
+<div class="ptext" id="t3">Rewrite these instructions for 11-year-olds who find reading hard. Use short sentences, one step per line, and words a 9-year-old knows. Keep every step and do not add new ones.
+
+Instructions: [paste your instructions here]</div>
+<button type="button" class="copy" data-copy="t3">Copy prompt</button>
+<p class="small">I tested it with my own instructions for a walking cat: green flag, repeat 10, move 10 steps, wait 0.5 seconds.</p>
+<div class="runs">
+  <div class="run"><h3>Run 1 <span class="badge k">Kept</span></h3>
+    <p class="claude">Drag the move 10 steps block. Put it inside the repeat 10 block.</p>
+    <p>10 short lines. Every step kept, none added.</p></div>
+  <div class="run"><h3>Run 2 <span class="badge k">Kept</span></h3>
+    <p>12 shorter lines. Every step kept, none added.</p>
+    <p class="redpen">Neither version says which group the move block is in. Mine didn't either. Claude kept my gap. I added "It is in Motion."</p></div>
+</div>
+</article>
+
+<article class="pcard" id="p4">
+<h2>4. An exit ticket with an answer key</h2>
+<p class="why">Five minutes at the end, so you know who to help next week.</p>
+<div class="ptext" id="t4">Write a 3-question exit ticket on the Scratch "repeat" block for Primary 5 pupils. Question 1: predict what a short script does. Question 2: spot the bug in a short script. Question 3: one sentence on when to use a loop. Write each script in words, with block names in square brackets. Give the answer key separately, after all three questions.</div>
+<button type="button" class="copy" data-copy="t4">Copy prompt</button>
+<div class="runs">
+  <div class="run"><h3>Run 1 <span class="badge x">Not used</span></h3>
+    <p class="claude">She runs it, but the cat says "Hello!" only once and says "Goodbye!" before the other two "Hello!" messages. Wait, that is not what happens.</p>
+    <p class="redpen">Question 2 argues with itself. Claude noticed, and said so at the end. A pupil would be lost. I didn't use it.</p></div>
+  <div class="run"><h3>Run 2 <span class="badge c">Changed</span></h3>
+    <p>A clear ticket: a square to predict, a jumping cat to fix, a sentence to finish. The fix puts the down block inside the loop.</p>
+    <p class="claude">Adding a [wait (0.2) seconds] between the up and down blocks would make the jump easier to see <del>(a bonus idea, not required)</del>.</p>
+    <p class="redpen">Required. Up and down in one pass happen within one frame. The cat never seems to move.</p></div>
+</div>
+</article>
+
+<article class="pcard" id="p5">
+<h2>5. Kind feedback on a pupil's reflection</h2>
+<p class="why">For the trainer with 30 reflections and a long bus ride home.</p>
+<div class="ptext" id="t5">Here is a made-up reflection from a Primary 5 pupil, with no name. Write feedback with 2 specific strengths and 1 next step. Use warm, plain words an 11-year-old understands. Keep it under 80 words.
+
+Reflection: [paste the reflection, with the name removed]</div>
+<button type="button" class="copy" data-copy="t5">Copy prompt</button>
+<p class="small">I tested it with a reflection I wrote myself, about a cat that drew a square and a pupil who wants to draw a star.</p>
+<div class="runs">
+  <div class="run"><h3>Run 1 <span class="badge c">Changed</span></h3>
+    <p>Warm and specific. But it ran to 100 words. I asked for under 80.</p>
+    <p class="redpen">Count the words. I cut the opening line and one sentence of praise.</p></div>
+  <div class="run"><h3>Run 2 <span class="badge k">Kept</span></h3>
+    <p class="claude">I also like that you explained why loops save time: you don't need to copy blocks. That's clear thinking! Next step: for your star, try testing different turn angles.</p>
+    <p>72 words. It names what the pupil did, and leaves the star for them to find.</p></div>
+</div>
+</article>
+
+<article class="pcard" id="p6">
+<h2>6. Rehearse your questioning</h2>
+<p class="why">For new trainers who fix the code for the pupil. Practise asking, not telling.</p>
+<div class="ptext" id="t6">Pretend you are a Primary 5 pupil who is stuck because your Scratch sprite only moves once when you click the green flag. I am the teacher. Answer my questions the way a real 11-year-old might, in short sentences. Do not work out the problem until I ask a question that helps you see it. Start by telling me what is wrong, in one or two sentences.</div>
+<button type="button" class="copy" data-copy="t6">Copy prompt</button>
+<div class="runs">
+  <div class="run"><h3>Run 1 <span class="badge k">Kept</span></h3>
+    <p class="claude">Teacher, my cat only moves one time when I click the green flag. I wanted it to keep walking across the screen. But it just jumps a little bit and then stops. I don't know why!</p></div>
+  <div class="run"><h3>Run 2 <span class="badge k">Kept</span></h3>
+    <p>Almost the same words. It sounds like a pupil, and it waits for the teacher.</p>
+    <p class="redpen">I tested the first reply only. Try a whole conversation yourself before you hand it to a trainee.</p></div>
+</div>
+</article>
+
+<article class="pcard" id="p7">
+<h2>7. An explanation for the projector</h2>
+<p class="why">Used after pupils predict, never before. The video demo shows it.</p>
+<div class="ptext" id="t7">Explain to a Primary 5 class what this Scratch script does: [when green flag clicked], [repeat 4] containing [move 100 steps] and [turn right 90 degrees]. Then explain what changes if the repeat number is changed to 3. Keep it short and simple.</div>
+<button type="button" class="copy" data-copy="t7">Copy prompt</button>
+<div class="runs">
+  <div class="run"><h3>Run 1 <span class="badge c">Changed</span></h3>
+    <p>Correct. It ended with an emoji and a hint: turn 120 degrees to make a triangle.</p>
+    <p class="redpen">That hint is the next challenge. Don't give it away on the screen. I cut the last lines.</p></div>
+  <div class="run"><h3>Run 2 <span class="badge k">Kept</span></h3>
+    <p class="claude">You'd see three sides of a square, like a "U" shape that's open on one side (the shape is missing its last side).</p>
+    <p>Correct. I ran it in Scratch to be sure. This is the one I use.</p></div>
+</div>
+</article>
+
+<h2>What the seven taught me</h2>
+<ul class="tight">
+  <li>Claude was right about Scratch more often than not. Its slips were about timing and what shows on screen, the things you only see by running it.</li>
+  <li>A word limit is a request, not a promise. Count.</li>
+  <li>Claude follows your words closely. A gap in your instructions stays a gap.</li>
+  <li>The best use was rehearsal. A nervous trainer can practise questions before facing 30 pupils.</li>
+</ul>
+
+<footer class="src">
+<h2>Sources</h2>
+<ul class="small">
+  <li><a href="https://en.scratch-wiki.info/wiki/Repeat_()_(block)">Scratch Wiki, Repeat block</a>: "The loop will wait until the next frame after each iteration."</li>
+  <li><a href="https://en.scratch-wiki.info/wiki/Turbo_Mode">Scratch Wiki, Turbo Mode</a>: at normal speed, each pass of a loop takes one frame.</li>
+  <li><a href="https://scratch.mit.edu/download">Scratch app (offline editor)</a>, which I used to run every script.</li>
+</ul>
+</footer>
+</main>
+</body>
+</html>

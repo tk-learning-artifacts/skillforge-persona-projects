@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Claude stays on my desk: a guide for new trainers teaching P5 coding, by Grace Chua</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Grace Chua is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<p class="eyebrow">A guide for new trainers, on one AI tool</p>
+<h1>Claude stays on my desk</h1>
+<p class="lede">How a new trainer can use Claude to plan Primary 5 Scratch lessons, and why the pupils never touch it.</p>
+<p>I'm Grace. I taught for twenty years. Now I mentor new trainers. Many of them teach coding enrichment in primary schools, in Scratch, to classes of about 30. This year they keep asking me the same thing. Should I use AI? I was cautious. So before I answered, I tested Claude on the jobs they actually do. This guide is what I found.</p>
+
+<div class="rule">
+<p>Claude is for the trainer. Pupils never type into it.</p>
+<p>Anthropic's terms say users must be at least 18. My pupils are 11. When Claude's words go on the projector, they are words I have already read and checked.</p>
+</div>
+
+<ul class="contents">
+  <li><a href="guide.html"><b>1</b> The 2-page guide <span>Print it, or download the PDF.</span></a></li>
+  <li><a href="prompts.html"><b>2</b> Seven tested prompts <span>Each run twice, with my red pen on every answer.</span></a></li>
+  <li><a href="demo.html"><b>3</b> Video demo <span>Predict, then check: Claude on the projector in a 60-minute lesson.</span></a></li>
+</ul>
+
+<h2>My routine: ask, check, change, then use</h2>
+<p>New trainers like a routine. So do I. Here is the one I ask them to follow, every time.</p>
+<ol class="routine">
+  <li><b>Ask</b><p>Say who the class is, what you want and how long. "For 30 P5 pupils. 6 questions. Under 80 words."</p></li>
+  <li><b>Check</b><p>Run every script in Scratch yourself. Read every line aloud, as if to the child.</p></li>
+  <li><b>Change</b><p>Fix it with a pen, on paper or on screen. Keep a note of what you changed.</p></li>
+  <li><b>Then use</b><p>Only checked words reach a pupil. If you could not check it, leave it out.</p></li>
+</ol>
+
+<h2>What my red pen found</h2>
+<p>I ran 7 prompts, twice each, in Claude Sonnet 5.5 on 24 October 2026. That gave me 14 answers to read. Here is what happened to them.</p>
+<div class="tally">
+  <div class="k"><b>6</b><span>used as they were</span></div>
+  <div class="c"><b>7</b><span>used after I changed them</span></div>
+  <div class="x"><b>1</b><span>not used</span></div>
+</div>
+<p>Most of the changes were small. But they were the kind a pupil would notice. Three examples:</p>
+<ul class="tight">
+  <li>In both runs of one prompt, Claude said a loop with no wait block makes the sprite jump once. In Scratch, each pass of a loop waits for the next frame. So ten moves show as a very quick slide.</li>
+  <li>An exit ticket fixed a jumping cat by putting the up and down blocks in one loop. It called a wait block "a bonus idea, not required". It is required. Without it, the cat goes up and down within one frame, and never seems to move.</li>
+  <li>One exit ticket question argued with itself halfway through. Claude spotted it and said so at the end. I did not use that one.</li>
+</ul>
+<p>So Claude saved my trainers time. It did not save them from checking. A new trainer who runs every script will catch all of these. One who doesn't will teach them.</p>
+
+<h2>How it meets the brief</h2>
+<ul class="tight">
+  <li><strong>Accurate about what AI can do today.</strong> I say what Claude did well and where it slipped, with the answers to show it. I don't claim it can see your class or run Scratch. It cannot.</li>
+  <li><strong>Prompts tested and classroom-ready.</strong> Each prompt was run twice. Every answer was read, checked in Scratch where it had code, and marked kept, changed or not used.</li>
+  <li><strong>Covers risks and how to reduce them.</strong> Page 2 of the guide covers age limits, pupil data, wrong details, tone, and trainers leaning on it.</li>
+  <li><strong>Clear without a technical background.</strong> No code beyond Scratch block names. Many of my new trainers came from other jobs, and I wrote it for them.</li>
+</ul>
+
+<h2>What I would change</h2>
+<p>Two runs a prompt is not many. I tested one topic, the repeat block. A trainer teaching broadcasts or variables should test their own prompts the same way. I tested only the first reply of the role-play prompt, not a whole conversation.</p>
+<p>And I have not seen it work for a whole term. Testing prompts is one thing. Watching a nervous new trainer use it at 11pm, the night before a lesson, is another. I would like to sit with two of them next term and see what they actually keep.</p>
+
+<p class="made-up">My trainers, my pupils and the class in the video are made up, like me. The Claude answers quoted here are real. They are copied from my test runs.</p>
+
+<footer class="src">
+<h2>Sources</h2>
+<ul class="small">
+  <li>Minimum age of 18: <a href="https://www.anthropic.com/legal/consumer-terms">Anthropic Consumer Terms of Service</a>, effective 8 October 2025.</li>
+  <li>How loops show on screen: <a href="https://en.scratch-wiki.info/wiki/Repeat_()_(block)">Scratch Wiki, Repeat block</a>: "The loop will wait until the next frame after each iteration."</li>
+  <li>More sources are on <a href="guide.html#sources">the guide page</a>.</li>
+</ul>
+</footer>
+</main>
+</body>
+</html>

@@ -1,0 +1,49 @@
+/* The 2-page guide. On screen: two paper sheets. In print: two A4 pages. */
+.guide-main { max-width: 900px; }
+.bar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; margin: 6px 0 16px; }
+.bar-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.btn { display: inline-flex; align-items: center; min-height: 44px; padding: 0 16px; border-radius: 8px; cursor: pointer;
+  font: 600 0.95rem/1 system-ui, sans-serif; border: 1px solid var(--accent); background: var(--accent);
+  color: var(--accent-ink); text-decoration: none; }
+.btn:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.sheet { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 22px 20px; margin: 0 0 22px;
+  box-shadow: 0 1px 0 var(--line); }
+.sheet-head { border-bottom: 3px solid var(--accent); padding-bottom: 8px; margin-bottom: 8px; }
+.sheet-head h1, .h1like { font-size: 1.7rem; margin: 2px 0; line-height: 1.2; }
+.sheet-head h1::before, .h1like::before { content: none; }
+.sub { margin: 0; color: var(--muted); }
+.sheet h2 { font-size: 1.05rem; margin: 18px 0 4px; color: var(--accent); }
+.sheet h2::before { content: none; }
+.sheet .h1like { font-size: 1.7rem; color: var(--ink); margin: 2px 0; }
+.sheet p, .sheet li, .sheet dd { font-size: 0.97rem; }
+.sheet ol, .sheet ul { padding-left: 22px; margin: 4px 0; }
+.sheet li { margin-bottom: 3px; }
+.cols { display: grid; grid-template-columns: 1fr; gap: 0 28px; }
+@media (min-width: 760px) { .cols { grid-template-columns: 1fr 1fr; } }
+.stat { border-left: 4px solid var(--pass); background: var(--pass-soft); padding: 6px 10px; border-radius: 4px; margin: 6px 0; font-size: 0.95rem; }
+.stat.warn { border-left-color: var(--warn); background: var(--warn-soft); }
+.stat b { font-family: var(--mono); }
+.checks b, .plist b { color: var(--accent); }
+dl.risks dt { font-weight: 700; margin-top: 10px; }
+dl.risks dd { margin: 2px 0 0; }
+.small-print { font-size: 0.88rem; color: var(--muted); margin: 0 0 4px; }
+.foot { font-size: 0.82rem; color: var(--muted); border-top: 1px solid var(--line); padding-top: 6px; margin: 16px 0 0; }
+.after { margin-top: 28px; }
+
+@media print {
+  .ai-note, .noprint { display: none !important; }
+  :root { --ink: #141a2a; --ink-2: #3a4256; --muted: #4f586c; --line: #c9cfdc; --surface: #fff; --ground: #fff;
+    --accent: #3644b8; --pass: #1d6b3a; --pass-soft: #e3f3e8; --warn: #865000; --warn-soft: #fbf0dc; }
+  @page { size: A4; margin: 12mm 13mm; }
+  body { background: #fff; color: #141a2a; font-size: 10.6pt; line-height: 1.4; }
+  main.guide-main { max-width: none; padding: 0; margin: 0; }
+  .sheet { border: 0; box-shadow: none; border-radius: 0; padding: 0; margin: 0; break-after: page; height: 271mm; position: relative; }
+  .sheet:last-of-type { break-after: auto; }
+  .cols { grid-template-columns: 1fr 1fr; gap: 0 7mm; }
+  .sheet-head h1, .sheet .h1like { font-size: 20pt; }
+  .sheet h2 { font-size: 12pt; margin: 10px 0 2px; }
+  .sheet p, .sheet li, .sheet dd, .stat { font-size: 10.6pt; }
+  .sheet p { margin: 3px 0; }
+  .foot { position: absolute; bottom: 0; left: 0; right: 0; font-size: 7.8pt; }
+  .stat, .sheet-head { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
