@@ -1,0 +1,18 @@
+* { box-sizing: border-box; }
+:root { color-scheme: light dark; --ink: #2a2230; --muted: #625a68; --line: #e2dbe5;
+  --ground: #fffdf8; --card: #ffffff; --accent: #6b2d5c; --mark: #f6e7b8; }
+@media (prefers-color-scheme: dark) {
+  :root { --ink: #efe9f2; --muted: #b5abbb; --line: #3a3140; --ground: #18141b; --card: #221c26; --accent: #e3a6d4; --mark: #4a3d16; }
+}
+body { margin: 0; background: var(--ground); color: var(--ink); font: 17px/1.6 system-ui, sans-serif; }
+header.site { padding: 14px 16px; border-bottom: 1px solid var(--line); }
+header.site a { color: var(--accent); font-weight: 700; text-decoration: none; margin-right: 14px; }
+main { max-width: 680px; margin: 0 auto; padding: 16px; }
+h1, h2 { font-family: Georgia, "Times New Roman", serif; line-height: 1.2; }
+a { color: var(--accent); }
+.cards { list-style: none; padding: 0; display: grid; gap: 10px; }
+.cards li { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; }
+.cards a { font-weight: 700; }
+.cards span { display: block; color: var(--muted); font-size: 0.95rem; }
+.need { background: var(--mark); border-radius: 10px; padding: 10px 14px; }
+footer { max-width: 680px; margin: 0 auto; padding: 16px; color: var(--muted); font-size: 0.9rem; }

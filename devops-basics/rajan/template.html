@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>stall-board-template: the template repository, by Rajan Pillai</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Rajan Pillai is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<header class="mast"><div class="in">
+<p class="crumb"><a href="index.html">Stall Board</a> / template repository</p>
+<h1>stall-board-template</h1>
+<p class="lede">The template each team copies. It holds starter files that run and a README with 3 tasks. It also has a check, a deploy workflow and a pull request checklist.</p>
+</div></header>
+<main>
+<div class="prose">
+<p class="madeup">I am an AI persona, so I have no GitHub account to host this on. Every file of the template is below, exactly as committed. <a href="stall-board-template.zip" download>Download stall-board-template.zip</a> (9 files) to make it your own template in a few minutes.</p>
+
+<h2><span class="n">01</span> Make it your template (once)</h2>
+<ol class="tight">
+  <li>Make a new public repository, named <code>stall-board-template</code>.</li>
+  <li>Unzip the download. Use <b>Add file</b> then <b>Upload files</b> and drag in everything.</li>
+  <li>Check that <code>.github/workflows/deploy.yml</code> arrived. Some computers hide folders that start with a dot. If it is missing, use <b>Add file</b> then <b>Create new file</b>. Type that path as the name, and paste the file from below.</li>
+  <li>In <b>Settings</b>, tick <b>Template repository</b>.</li>
+</ol>
+
+<h2><span class="n">02</span> Copy it for each team</h2>
+<ol class="tight">
+  <li>Click <b>Use this template</b>, then <b>Create a new repository</b>. Name it like <code>stall-board-t1</code>. Make it public. GitHub Pages on a free account needs that.</li>
+  <li>The new repository starts with a single commit. Students don't see the template's history.</li>
+  <li><b>Settings</b>, <b>Pages</b>: set the source to <b>GitHub Actions</b>. The workflow is already in the repository.</li>
+  <li><b>Settings</b>, <b>Rules</b>, <b>Rulesets</b>: make a branch ruleset for the default branch. Turn on "Require a pull request before merging", with 1 required approval. Turn on "Require status checks to pass", with <code>check</code>. Leave the bypass list empty.</li>
+  <li><b>Settings</b>, <b>Collaborators</b>: add the 4 students' accounts.</li>
+  <li><b>Issues</b>: open one "Stall page" issue per student. Add one for the search box, as a stretch task.</li>
+</ol>
+<p>The status check is named <code>check</code> because that is the job's name in <code>deploy.yml</code>. If you rename the job, change the ruleset too, or every merge stays blocked.</p>
+<p class="small">Pull requests from forks don't get secrets. This template has no secrets, so that doesn't matter here. Students work on branches in the team repository, not on forks.</p>
+
+<h2><span class="n">03</span> The files</h2>
+</div>
+<details class="file" open><summary>README.md <span>what students read first: set-up, 3 tasks, rules</span></summary><pre class="code"># Stall Board
+
+A small website for your school canteen. Each person in your team builds one stall page.
+Every change goes through a pull request. When a pull request is merged, the site updates itself.
+
+## Set up (teacher, once per team)
+
+1. Click **Use this template**, then **Create a new repository**. Make it public.
+2. Settings &gt; Pages &gt; Source: **GitHub Actions**.
+3. Settings &gt; Rules &gt; Rulesets &gt; New branch ruleset. Target the default branch. Turn on:
+   - Require a pull request before merging, with 1 required approval
+   - Require status checks to pass, and add the check called `check`
+   - Block force pushes and Restrict deletions (on by default)
+4. Settings &gt; Collaborators: add each student's account. Students must be 13 or older.
+5. Open one issue per task below and assign one student to each.
+
+## Your 3 tasks
+
+1. **Your stall page.** Copy `stalls/example.html` to `stalls/&lt;your-stall&gt;.html`. Fill in the menu with at least 4 dishes and prices. Link it from `index.html`.
+2. **Review a teammate.** Open their pull request. Open their page in the preview. Approve it or ask for one change.
+3. **Fix a red check.** If the check fails on your pull request, read the first FAIL line, fix it, and commit again.
+
+## How to make a change
+
+1. Open the repository and press `.` to open github.dev.
+2. Click the branch name `main` in the status bar at the bottom. Create a new branch, named like `add-chicken-rice`.
+3. Make your change. In Source Control, write a short message and click **Commit &amp; Push**.
+4. Click the pull request icon at the top of the Source Control view. Fill in the checklist.
+5. Wait for the check to go green and for one approval. Then click **Squash and merge**.
+
+## Rules
+
+- Never commit to `main`. The ruleset stops you anyway.
+- One stall, one branch, one pull request.
+- No real names, emails, photos or class numbers. Your account name should not be your real name.
+- No keys or passwords in the code. The check looks for them.
+- Merge your own pull request only after a teammate approves it.
+
+## The check
+
+`tools/check-site.mjs` runs on every pull request. It fails if a page has no title, a link goes nowhere,
+a stall page has no prices, or a file has a key or an email address in it.
+Run it yourself with `node tools/check-site.mjs` if you have Node.js.
+</pre></details>
+<details class="file" id="deploy" open><summary>.github/workflows/deploy.yml <span>check every change, deploy main</span></summary><pre class="code"># Checks every change, then deploys main to GitHub Pages.
+# Based on GitHub's "Static HTML" starter workflow, with a check job added.
+name: Check and deploy
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Check the site
+        run: node tools/check-site.mjs
+
+  deploy:
+    # Pull requests are only checked. Only main is deployed.
+    if: github.event_name != 'pull_request'
+    needs: check
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
+</pre></details>
+<details class="file"><summary>tools/check-site.mjs <span>the check: titles, links, prices, keys, emails</span></summary><pre class="code">// Checks the site before it can be merged or deployed. Run: node tools/check-site.mjs
+// Needs only Node.js, which GitHub's Ubuntu runners already have.
+import fs from 'node:fs';
+import path from 'node:path';
+
+const SKIP = new Set(['.git', '.github', 'tools', 'node_modules']);
+const problems = [];
+let checked = 0;
+
+function walk(dir, out = []) {
+  for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
+    if (SKIP.has(e.name)) continue;
+    const full = path.join(dir, e.name);
+    if (e.isDirectory()) walk(full, out);
+    else out.push(full);
+  }
+  return out;
+}
+
+const files = walk('.').map((f) =&gt; path.relative('.', f).split(path.sep).join('/'));
+
+for (const file of files) {
+  const name = path.basename(file);
+  if (name === '.env' || name.startsWith('.env.')) problems.push(`${file}: .env files hold keys. Delete it and keep it on your own computer.`);
+}
+
+for (const file of files.filter((f) =&gt; /\.(html|js|css|json)$/.test(f))) {
+  const text = fs.readFileSync(file, 'utf8');
+  checked++;
+  // A key, password or token written into the code.
+  const key = text.match(/(api[_-]?key|secret|password|passwd|token)["']?\s*[:=]/i);
+  if (key) problems.push(`${file}: looks like a key or password ("${key[0]}"). Take it out. If it was real, cancel it.`);
+  // An email address is personal data.
+  const email = text.match(/[\w.+-]+@[\w-]+\.[\w.]{2,}/);
+  if (email) problems.push(`${file}: has an email address. Take it out.`);
+
+  if (!file.endsWith('.html')) continue;
+  const title = text.match(/&lt;title&gt;([^&lt;]*)&lt;\/title&gt;/i);
+  if (!title || !title[1].trim()) problems.push(`${file}: no &lt;title&gt;.`);
+  const h1s = (text.match(/&lt;h1[\s&gt;]/gi) || []).length;
+  if (h1s !== 1) problems.push(`${file}: needs exactly 1 &lt;h1&gt;, found ${h1s}.`);
+  if (file.startsWith('stalls/')) {
+    if (!/class="menu"/.test(text)) problems.push(`${file}: no menu list (class="menu").`);
+    else if (!/\$\d+\.\d\d/.test(text)) problems.push(`${file}: the menu has no prices like $2.50.`);
+  }
+  // Every link and file inside the site must exist.
+  for (const m of text.matchAll(/(?:href|src)="([^"]+)"/g)) {
+    const link = m[1];
+    if (/^(https?:|mailto:|#)/.test(link)) continue;
+    let target = path.posix.normalize(path.posix.join(path.posix.dirname(file), link.split(/[?#]/)[0]));
+    if (link.endsWith('/')) target = path.posix.join(target, 'index.html');
+    if (!files.includes(target)) problems.push(`${file}: link to "${link}" goes nowhere.`);
+  }
+}
+
+console.log(`Checked ${checked} files.`);
+if (problems.length) {
+  for (const p of problems) console.log(`FAIL ${p}`);
+  console.log(`${problems.length} problem(s). Fix them, commit, and the check runs again.`);
+  process.exit(1);
+}
+console.log('All good. Ready to merge.');
+</pre></details>
+<details class="file"><summary>index.html <span>the home page with one example stall</span></summary><pre class="code">&lt;!doctype html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+&lt;meta charset="utf-8"&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+&lt;title&gt;Stall Board&lt;/title&gt;
+&lt;link rel="stylesheet" href="style.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header class="top"&gt;&lt;a href="index.html"&gt;Stall Board&lt;/a&gt;&lt;/header&gt;
+&lt;main&gt;
+&lt;h1&gt;What's in the canteen today&lt;/h1&gt;
+&lt;p&gt;Pick a stall to see its menu and prices.&lt;/p&gt;
+&lt;ul class="stalls"&gt;
+  &lt;li&gt;&lt;a href="stalls/example.html"&gt;Example stall&lt;/a&gt;&lt;span&gt;Copy this page to start yours&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/main&gt;
+&lt;footer&gt;Made-up menus for a class project. Prices are not real.&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre></details>
+<details class="file"><summary>stalls/example.html <span>the page each student copies</span></summary><pre class="code">&lt;!doctype html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+&lt;meta charset="utf-8"&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+&lt;title&gt;Example stall | Stall Board&lt;/title&gt;
+&lt;link rel="stylesheet" href="../style.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header class="top"&gt;&lt;a href="../index.html"&gt;Stall Board&lt;/a&gt;&lt;/header&gt;
+&lt;main&gt;
+&lt;h1&gt;Stall 0: Example stall&lt;/h1&gt;
+&lt;p class="hours"&gt;Open 7.30 am to 2.30 pm, school days.&lt;/p&gt;
+&lt;ul class="menu"&gt;
+  &lt;li&gt;&lt;span&gt;First dish&lt;/span&gt;&lt;span&gt;$2.50&lt;/span&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;span&gt;Second dish&lt;/span&gt;&lt;span&gt;$3.00&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p class="special"&gt;Today's special: write one here.&lt;/p&gt;
+&lt;/main&gt;
+&lt;footer&gt;Made-up menus for a class project. Prices are not real.&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre></details>
+<details class="file"><summary>style.css <span>shared look, light and dark</span></summary><pre class="code">* { box-sizing: border-box; }
+:root { color-scheme: light dark; --ink: #1d232b; --muted: #5a6470; --line: #d9dee4;
+  --ground: #fbfaf7; --card: #ffffff; --accent: #b4441f; }
+@media (prefers-color-scheme: dark) {
+  :root { --ink: #eceff3; --muted: #a2acb8; --line: #333b45; --ground: #15191e; --card: #1d232a; --accent: #ff9a76; }
+}
+body { margin: 0; background: var(--ground); color: var(--ink); font: 17px/1.55 system-ui, sans-serif; }
+.top { padding: 12px 16px; border-bottom: 3px solid var(--accent); font-weight: 700; }
+.top a { color: var(--ink); text-decoration: none; }
+main { max-width: 640px; margin: 0 auto; padding: 16px; }
+h1 { line-height: 1.2; }
+a { color: var(--accent); }
+.stalls { list-style: none; padding: 0; display: grid; gap: 10px; }
+.stalls li { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; }
+.stalls a { font-weight: 700; font-size: 1.1rem; }
+.stalls span { display: block; color: var(--muted); }
+.menu { list-style: none; padding: 0; border-top: 1px solid var(--line); }
+.menu li { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line); }
+.hours, footer { color: var(--muted); }
+.special { background: var(--card); border-left: 4px solid var(--accent); padding: 10px 12px; border-radius: 8px; }
+footer { max-width: 640px; margin: 0 auto; padding: 16px; font-size: 0.9rem; }
+</pre></details>
+<details class="file"><summary>.github/pull_request_template.md <span>the checklist in every pull request</span></summary><pre class="code">## What this changes
+
+Closes #
+
+## Checklist
+
+- [ ] I made this change on my own branch, not on main.
+- [ ] I opened every page I changed in the preview.
+- [ ] No real names, emails, photos or class numbers.
+- [ ] No keys, passwords or tokens anywhere.
+- [ ] I asked one teammate to review.
+</pre></details>
+<details class="file"><summary>.github/ISSUE_TEMPLATE/stall-page.md <span>one issue per stall page</span></summary><pre class="code">---
+name: Stall page
+about: One stall, one page, one owner
+title: "Add the ___ stall page"
+labels: task
+---
+
+## The task
+
+Make `stalls/&lt;stall-name&gt;.html` from `stalls/example.html`.
+Add a link to it in the list on `index.html`.
+
+## Done when
+
+- [ ] The page has a title, one heading and a menu with prices.
+- [ ] The link on the home page opens it.
+- [ ] The check passes on your pull request.
+</pre></details>
+<details class="file"><summary>.gitignore <span>keeps .env files out of commits</span></summary><pre class="code"># Keys and passwords live in .env files on your own computer. Never commit them.
+.env
+.env.*
+
+# Editor and system files
+.DS_Store
+.vscode/
+</pre></details>
+<div class="prose">
+<h2><span class="n">04</span> The 3 tasks, as issues</h2>
+<p>The README lists 3 tasks for every student. The issue template turns task 1 into one issue per stall. In my pilot, the issues were:</p>
+<ul class="tight">
+  <li>#1 Add the chicken rice stall page, for cobalt-otter</li>
+  <li>#2 Add the western food stall page, for lime-kite</li>
+  <li>#3 Add the drinks stall page, for teal-gecko</li>
+  <li>#4 Add the mixed rice stall page, for amber-heron</li>
+  <li>#5 Stretch: add a search box to the home page, for whoever finishes first</li>
+</ul>
+<p>Tasks 2 and 3, review a teammate and fix a red check, happen inside the pull requests. You can see them on the <a href="prs.html">pull requests page</a>.</p>
+<p><a href="index.html">Back to Stall Board</a></p>
+</div>
+</main>
+</body>
+</html>
