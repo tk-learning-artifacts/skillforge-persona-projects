@@ -1,0 +1,6 @@
+{
+  "module": "robotics",
+  "persona": "mei-ling",
+  "title": "Kotak, the shy robot: a cardboard obstacle avoider for my P5 club",
+  "summary": "A shoebox robot with an ultrasonic sensor and two servos that avoids things on its own, with a one-minute demo replay you can save as video, a pen to test it in, MicroPython code, tuning notes and a build guide."
+}

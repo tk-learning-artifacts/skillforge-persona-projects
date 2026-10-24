@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kotak tuning notes: servo trim and three versions, by Mei Ling Tan</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Mei Ling Tan is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<a class="back" href="index.html">Back to Kotak</a>
+<div class="hero">
+  <p class="kicker">Deliverable · tuning notes</p>
+  <h1>How we tuned Kotak</h1>
+  <p>First the wheels, then the sensor, then the numbers. Every result here is one you can repeat on the main page.</p>
+</div>
+
+<p class="note">My club is made up. The test results come from the simulator on the <a href="index.html#try">main page</a>, set up like our robot. The servo creep speeds come from the simulator too.</p>
+
+<h2>Our test</h2>
+<ul class="tight">
+  <li>The pen: 160 by 120 cm, walled with books lying on their sides.</li>
+  <li>Inside: a shoebox, a school bag leaning on one wall, and a ring file standing slanted across a corner.</li>
+  <li>One test is 20 runs of 2 minutes. Each run starts from a different spot.</li>
+  <li>We count bumps, and "stops for nothing": a stop with nothing within 30 cm in front.</li>
+  <li>We also note the longest time Kotak stayed stuck against something.</li>
+</ul>
+<p>Pupils love the counting job. One counts bumps, one counts stops, and they must agree.</p>
+
+<h2>Step 1: trim the wheels</h2>
+<p>A continuous servo should stand still with a 1.5 ms pulse. With a 20 ms period, that is <code>write_analog(77)</code>. But each servo is a little different. Ours crept even at 77.</p>
+<p>So we held Kotak up, sent one number to both servos, and watched each wheel for 10 seconds.</p>
+<div class="scroll">
+<table>
+  <thead><tr><th>Number sent</th><th class="n">Left wheel creeps</th><th class="n">Right wheel creeps</th></tr></thead>
+  <tbody>
+    <tr><td>74</td><td class="n">−2.8 cm/s</td><td class="n">−1.0 cm/s</td></tr>
+    <tr><td>75</td><td class="n">−2.1 cm/s</td><td class="n good">still</td></tr>
+    <tr><td>76</td><td class="n">−1.4 cm/s</td><td class="n">0.4 cm/s</td></tr>
+    <tr><td>77</td><td class="n">−0.7 cm/s</td><td class="n">1.1 cm/s</td></tr>
+    <tr><td>78</td><td class="n good">still</td><td class="n">1.8 cm/s</td></tr>
+    <tr><td>79</td><td class="n">0.7 cm/s</td><td class="n">2.5 cm/s</td></tr>
+  </tbody>
+</table>
+</div>
+<p>So <code>LEFT_STOP = 78</code> and <code>RIGHT_STOP = 75</code>. Every speed in the code is added to or taken from these, so both wheels now match.</p>
+<p>Adafruit's guide says you can also turn a tiny screw inside the servo until it stops. We tried it. It was fiddly for P5 fingers and easy to knock out later. A number in the code doesn't get knocked.</p>
+
+<h2>Step 2: three versions</h2>
+<div class="scroll">
+<table>
+  <thead><tr><th>Version</th><th class="n">Bumps per run</th><th class="n">Stops for nothing</th><th class="n">Driven</th><th class="n">Longest stuck</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td class="n good">0.75</td><td class="n bad">39.0</td><td class="n">6.6 m</td><td class="n">3.0 s</td></tr>
+    <tr><td>2</td><td class="n meh">1.55</td><td class="n bad">24.9</td><td class="n">8.0 m</td><td class="n">3.8 s</td></tr>
+    <tr><td>3 (final)</td><td class="n meh">1.55</td><td class="n good">2.6</td><td class="n">9.1 m</td><td class="n">3.0 s</td></tr>
+    <tr><td>3, with a chair</td><td class="n bad">5.10</td><td class="n good">2.5</td><td class="n">7.4 m</td><td class="n bad">48.2 s</td></tr>
+  </tbody>
+</table>
+</div>
+<p class="small">Averages over 20 runs of 2 minutes each.</p>
+
+<h3>Version 1: scaredy-bot</h3>
+<ul class="tight">
+  <li>One ping per loop. Stop at 10 cm. Turn right for 0.5 s. No backing away.</li>
+  <li>Servo values 77 and 77, before the trim test.</li>
+  <li>The bug: when no echo comes back, <code>time_pulse_us</code> gives a negative number. Our code divided it by 58 and got a small negative distance. That is less than 10, so Kotak turned.</li>
+</ul>
+<p>What we saw: few bumps, because Kotak turned whenever it heard nothing. But 39 stops for nothing in 2 minutes. Now and then a ping also gives a wild, too-small number. One ping per loop means one wild number stops the robot. And when it stood still, it crept backwards.</p>
+<p><strong>Changes for version 2:</strong> no echo means "far" (400 cm). The trimmed stop values. Stop at 15 cm. Back away for 0.3 s before turning.</p>
+<p>That is four changes at once. A competition coach would tell me off. With 10-year-olds and one 90-minute session, I fix everything we found, then test. The cost is that I can't say which change did what.</p>
+
+<h3>Version 2: braver, but jumpy</h3>
+<p>Stops for nothing fell from 39 to 25. Bumps went up from 0.75 to 1.55, mostly the shoebox. Fixing the bug made Kotak brave enough to brush past things. The other 25 stops for nothing came from wild readings.</p>
+<p><strong>Change for version 3:</strong> shout three times, 60 ms apart. Ignore the shouts with no echo. Take the middle of the rest. And turn a random way, so Kotak doesn't do the same loop forever.</p>
+
+<h3>Version 3: final</h3>
+<p>Stops for nothing fell from 25 to 2.6. Bumps stayed at 1.55. Kotak drove further, 9.1 m in 2 minutes, because it wasted less time turning.</p>
+<p>Waiting 60 ms between shouts matters. The HC-SR04 manual asks for more than 60 ms between pings. Otherwise an old echo can come back late and be read as a new one.</p>
+
+<h2>Step 3: the stop distance</h2>
+<p>With version 3, we tried four values of <code>STOP_CM</code>. Same test each time.</p>
+<div class="scroll">
+<table>
+  <thead><tr><th>STOP_CM</th><th class="n">Bumps per run</th><th class="n">Stops for nothing</th><th class="n">Longest stuck</th></tr></thead>
+  <tbody>
+    <tr><td>10</td><td class="n bad">3.15</td><td class="n">2.5</td><td class="n">8.2 s</td></tr>
+    <tr><td>15</td><td class="n good">1.55</td><td class="n">2.6</td><td class="n">3.0 s</td></tr>
+    <tr><td>20</td><td class="n meh">2.25</td><td class="n">2.4</td><td class="n">8.4 s</td></tr>
+    <tr><td>25</td><td class="n meh">2.10</td><td class="n">1.8</td><td class="n">9.5 s</td></tr>
+  </tbody>
+</table>
+</div>
+<p>At 10 cm, bumps doubled. Kotak got too close before it reacted. Going further than 15 did not help in our pen, and Kotak got stuck for longer. We kept 15.</p>
+<p>We also tried no backing away (BACK_MS 0): 2.3 bumps, and once stuck for 18.6 s. And full speed (SPEED 25): 3.05 bumps, and once stuck for 50.9 s. Slow and steady wins in a pen.</p>
+
+<h2>Step 4: the chair</h2>
+<p>Then a pupil pushed a chair into the pen. Bumps went from 1.55 to 5.1 per run, and most were the chair legs. Once Kotak stayed stuck for 48 seconds. A chair leg is thin and round. Most of the sound misses it or bounces away. We have not fixed this. See the main page for what I would try.</p>
+
+<h2>Our club tuning card</h2>
+<p>Pupils fill one line per test, in pencil.</p>
+<div class="scroll">
+<table>
+  <thead><tr><th>Test</th><th>I changed</th><th>From → to</th><th>Bumps</th><th>Stops for nothing</th><th>Keep it?</th></tr></thead>
+  <tbody><tr><td>1</td><td></td><td></td><td></td><td></td><td>Yes / No</td></tr><tr><td>2</td><td></td><td></td><td></td><td></td><td>Yes / No</td></tr></tbody>
+</table>
+</div>
+
+<h2>Sources</h2>
+<ul class="tight small">
+  <li><a href="https://www.adafruit.com/product/2442">Adafruit: FS90R continuous rotation servo</a>: a 1.5 ms pulse stops it, and how to trim it.</li>
+  <li><a href="https://microbit-micropython.readthedocs.io/en/v2-docs/machine.html">micro:bit MicroPython: machine</a>: <code>time_pulse_us</code> returns -1 or -2 on a timeout.</li>
+  <li><a href="https://microbit-micropython.readthedocs.io/en/v2-docs/pin.html">micro:bit MicroPython: pins</a>: <code>write_analog</code> takes 0 to 1023, and <code>set_analog_period</code> sets the period in ms.</li>
+  <li><a href="https://www-users.york.ac.uk/~mjf5/roach/Datasheets/HCSR04_Manual.pdf">HC-SR04 user manual</a>: more than 60 ms between pings.</li>
+</ul>
+</main>
+</body>
+</html>

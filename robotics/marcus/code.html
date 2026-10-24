@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tape Runner code: the final line follower in MicroPython, by Marcus Lee</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Marcus Lee is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<a class="back" href="index.html">Back to Tape Runner</a>
+<header class="cover">
+  <p class="tag">Deliverable · code</p>
+  <h1>The code, line by line</h1>
+  <p class="lede">Version 4, the final program. MicroPython for the micro:bit V2. 89 lines, and the simulator on the main page runs the same rules.</p>
+</header>
+<div class="row">
+  <a class="btnlink" href="linefollow.py" download>Download linefollow.py</a>
+  <span class="small">Open it in the <a href="https://python.microbit.org/">micro:bit Python Editor</a> and flash it.</span>
+</div>
+
+<h2><span class="num">01</span>The whole program</h2>
+<pre><code># Two-sensor line follower, version 4 (final).
+# Marcus Lee&#x27;s robotics CCA, for the micro:bit V2 in MicroPython.
+#
+# Sensors: two TCRT5000 reflectance boards, analog out. Black tape reads LOW.
+# Motors: a DRV8833 dual H-bridge, powered by its own 4 x AA pack.
+# Press A to calibrate and go. Press B at any time to stop.
+
+from microbit import *
+
+# ---- Numbers we tune. Change one per test run, and log it. ----
+BASE = 900       # straight-line speed, 0 to 1023
+TURN = 700       # how much the inside wheel slows on a turn
+LOOP_MS = 30     # pause between readings
+SPIN = 400       # wheel speed for the calibration sweep
+MIN_GAP = 150    # tape and floor must differ by this much
+
+# ---- Pins. Match these to your wiring diagram. ----
+LEFT_EYE = pin1
+RIGHT_EYE = pin2
+LEFT_PWM, LEFT_DIR = pin8, pin13     # DRV8833 AIN1, AIN2
+RIGHT_PWM, RIGHT_DIR = pin16, pin14  # DRV8833 BIN1, BIN2
+
+
+def set_motor(pwm_pin, dir_pin, speed):
+    # speed runs from -1023 (full reverse) to 1023 (full forward).
+    # Only one pin of each pair gets PWM, so we never use more than 2 PWM pins.
+    speed = max(-1023, min(1023, speed))
+    if speed &gt;= 0:
+        dir_pin.write_digital(0)
+        pwm_pin.write_analog(speed)
+    else:
+        pwm_pin.write_digital(0)
+        dir_pin.write_analog(-speed)
+
+
+def drive(left, right):
+    set_motor(LEFT_PWM, LEFT_DIR, left)
+    set_motor(RIGHT_PWM, RIGHT_DIR, right)
+
+
+def calibrate():
+    # Sweep both sensors across the tape: left, right, then back to the middle.
+    # Returns the midpoint of the darkest and lightest readings, or None.
+    low, high = 1023, 0
+    for left, right, ms in ((-SPIN, SPIN, 400), (SPIN, -SPIN, 800), (-SPIN, SPIN, 400)):
+        drive(left, right)
+        start = running_time()
+        while running_time() - start &lt; ms:
+            for value in (LEFT_EYE.read_analog(), RIGHT_EYE.read_analog()):
+                low = min(low, value)
+                high = max(high, value)
+            sleep(LOOP_MS)
+    drive(0, 0)
+    if high - low &lt; MIN_GAP:
+        return None
+    return (low + high) // 2
+
+
+def follow(threshold):
+    # Sense, decide, act, until B is pressed.
+    while not button_b.was_pressed():
+        left_dark = LEFT_EYE.read_analog() &lt; threshold
+        right_dark = RIGHT_EYE.read_analog() &lt; threshold
+        if left_dark and not right_dark:
+            drive(BASE - TURN, BASE)    # tape under the left sensor: steer left
+        elif right_dark and not left_dark:
+            drive(BASE, BASE - TURN)    # tape under the right sensor: steer right
+        elif not left_dark and not right_dark:
+            drive(BASE, BASE)           # tape between the sensors: straight on
+        # Both dark: a sharp corner. Keep doing the last thing.
+        sleep(LOOP_MS)
+    drive(0, 0)
+
+
+# ---- Main program ----
+drive(0, 0)
+while True:
+    display.show(&quot;A&quot;)
+    while not button_a.was_pressed():
+        sleep(20)
+    threshold = calibrate()
+    if threshold is None:
+        display.show(Image.NO)      # not over the tape: move it and press A again
+        sleep(1000)
+        continue
+    display.show(Image.YES)
+    sleep(600)
+    follow(threshold)
+    display.scroll(threshold)       # write this number in the run log</code></pre>
+
+<h2><span class="num">02</span>How it is laid out</h2>
+<p>A judge, or a new team member, should find any part in ten seconds. So the file has four blocks, always in this order.</p>
+<h3>1. Numbers we tune</h3>
+<p>Every number we ever changed during testing sits at the top, in capitals, with a comment. Nobody digs through the loop to change the speed. In a run log, a student writes "BASE 900 to 950" and everyone knows what moved.</p>
+<h3>2. Pins</h3>
+<p>The pins get names: <code>LEFT_EYE</code>, <code>RIGHT_PWM</code>. If a wire moves, you change one line. The names match the labels on our <a href="build.html">wiring diagram</a>.</p>
+<h3>3. Functions, one job each</h3>
+<ul class="tight">
+  <li><code>set_motor</code> turns one signed number into signals for one motor. Plus is forward, minus is reverse.</li>
+  <li><code>drive</code> sets both wheels at once. The rest of the code only ever calls this.</li>
+  <li><code>calibrate</code> sweeps the sensors over the tape and finds the threshold.</li>
+  <li><code>follow</code> is the sense, decide, act loop.</li>
+</ul>
+<h3>4. Main program</h3>
+<p>Wait for A. Calibrate. Show a tick or a cross. Follow until B. Scroll the threshold so we can log it. Then go back to waiting, so we can run again without a reset.</p>
+
+<h2><span class="num">03</span>The parts students get wrong</h2>
+<h3>Why only two PWM pins</h3>
+<p>The DRV8833 needs two inputs per motor, so four in all. But the micro:bit can run PWM on only 3 pins at once. A fourth one switches another off. So <code>set_motor</code> sends PWM to one pin of each pair and holds the other at 0. To reverse, it swaps them. We never use more than two PWM pins.</p>
+<h3>Why "below the threshold" means tape</h3>
+<p>Our sensor boards give a low number over black tape and a high number over the light floor. Some boards work the other way round. Show the raw numbers on the screen before you trust this line.</p>
+<h3>Why the threshold is not a fixed number</h3>
+<p>The tape read about 180 in our CCA room and about 560 by the hall windows. No single number works in both. <code>calibrate</code> takes the darkest and lightest readings it sees during the sweep, and uses the halfway point. If the two are less than 150 apart, it isn't over the tape. It shows a cross and waits.</p>
+<h3>Why nothing happens when both sensors see black</h3>
+<p>On a sharp corner, both sensors can sit on the tape for a moment. Both "steer" rules would fight. So the code keeps doing whatever it did last, which is usually the turn it was already making.</p>
+<h3>Why button B is checked every loop</h3>
+<p>B is the stop button. <code>was_pressed</code> remembers a press, so a quick tap is never missed. The battery switch is the second stop, and the one we teach first.</p>
+
+<h2><span class="num">04</span>What changed from version 1</h2>
+<p>Version 1 was 35 lines. It had a fixed <code>THRESHOLD = 500</code> and no <code>calibrate</code>. BASE and TURN were both 700, so the inside wheel stopped dead on every turn. The <a href="tuning.html">tuning notes</a> show each change and the test that drove it.</p>
+
+<h2><span class="num">05</span>Sources</h2>
+<ul class="tight small">
+  <li><a href="https://microbit-micropython.readthedocs.io/en/v2-docs/pin.html">micro:bit MicroPython: input and output pins</a>, for <code>read_analog</code>, <code>write_analog</code> and <code>write_digital</code>.</li>
+  <li><a href="https://tech.microbit.org/hardware/edgeconnector/">micro:bit edge connector</a>: "PWM can only be active on 3 pins simultaneously."</li>
+  <li><a href="https://www.ti.com/product/DRV8833">Texas Instruments DRV8833</a>: two H-bridges, PWM control.</li>
+</ul>
+</main>
+</body>
+</html>

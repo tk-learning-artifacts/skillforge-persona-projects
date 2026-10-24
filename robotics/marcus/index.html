@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tape Runner: a two-sensor line follower, tuned run by run, by Marcus Lee</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="sim.js" defer></script>
+<script src="app.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Marcus Lee is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<header class="cover">
+  <p class="tag">Robotics CCA · run log · version 4</p>
+  <h1>Tape Runner</h1>
+  <p class="lede">A micro:bit robot with two light sensors that follows a black tape loop on its own. Four corners and an S-bend, three laps, no hands.</p>
+</header>
+
+<p>I'm Marcus. I coach a Sec 3 robotics team for competitions. The brief was one autonomous behaviour, plus notes on how we tuned it. We picked line following, because it is the first thing judges ask for. It also shows tuning better than anything else. One number out, and the robot leaves the track.</p>
+<p>My rule for the team: change one number per run, and log it. This page is that log, cleaned up.</p>
+
+<p class="made-up">My team, our CCA room and our hall are made up, like me. The run results on this page come from the simulator below, which runs the same rules as our code. Press the same buttons and you get the same numbers.</p>
+
+<ul class="toc">
+  <li><a href="#demo"><span>01</span>Demo video</a></li>
+  <li><a href="#bench"><span>02</span>Test bench: try it yourself</a></li>
+  <li><a href="code.html"><span>03</span>The code, line by line</a></li>
+  <li><a href="tuning.html"><span>04</span>Tuning notes</a></li>
+  <li><a href="build.html"><span>05</span>Build and wiring</a></li>
+  <li><a href="#rubric"><span>06</span>Rubric check</a></li>
+</ul>
+
+<h2 id="demo"><span class="num">01</span>Demo video</h2>
+<p>This page can't show film of a real robot. So the demo is a replay drawn by the simulator. It runs version 4, the final code, in our CCA room. You see the calibration sweep, then three laps against the clock.</p>
+<div class="screen">
+  <canvas id="demo-canvas" width="800" height="560" aria-label="Replay of the robot from above. It sweeps over the tape, then drives three laps of the black loop."></canvas>
+</div>
+<div class="transport">
+  <button type="button" class="primary" id="demo-play">Play</button>
+  <input type="range" id="demo-scrub" min="0" max="1" value="0" aria-label="Position in the replay">
+  <select id="demo-rate" aria-label="Playback speed">
+    <option value="0.5">0.5×</option>
+    <option value="1" selected>1×</option>
+    <option value="2">2×</option>
+  </select>
+</div>
+<p class="small digits" id="demo-clock">0.00 s</p>
+<ul class="chapters" id="demo-chapters" aria-label="Jump to a part of the run"></ul>
+<p class="small">The orange dots are the sensors. A dot fills in when it sees tape. The box in the corner shows both readings (L and R) and the threshold (T).</p>
+<div class="row">
+  <button type="button" id="demo-save">Save as a video file</button>
+  <span class="small" id="demo-save-note">Records the replay into a file you can share. Works in Chrome and Edge.</span>
+</div>
+
+<h3>Filming your own robot's demo</h3>
+<p>For the real robot, we film one take with a phone on a stand. Nobody's face is in the shot, only the floor and the robot. The shot list:</p>
+<ol class="steps">
+  <li>5 seconds on the wiring. A student tugs each plug to show it holds.</li>
+  <li>The robot on the start line. Press A. Show the tick after the sweep.</li>
+  <li>Three laps with no cut. A stopwatch app in the corner of the frame.</li>
+  <li>Press B. The robot stops. It scrolls the threshold. Read it out.</li>
+</ol>
+<p>One take, no edits. If you cut the video, judges assume you hid a crash.</p>
+
+<h2 id="bench"><span class="num">02</span>Test bench: try it yourself</h2>
+<p>Pick a version and a room. Watch one lap, or run the full test: 20 runs of 3 laps. That is the test every version in the <a href="tuning.html">tuning notes</a> faced. Choose "My own numbers" to tune it yourself.</p>
+<div class="panel">
+  <div class="bench-grid">
+    <label class="field">Version
+      <select id="b-version">
+        <option value="1">Version 1</option>
+        <option value="2">Version 2</option>
+        <option value="3">Version 3</option>
+        <option value="4" selected>Version 4 (final)</option>
+        <option value="custom">My own numbers</option>
+      </select>
+    </label>
+    <label class="field">Room
+      <select id="b-room">
+        <option value="cca">CCA room, ceiling lights</option>
+        <option value="hall">Hall, next to the windows</option>
+        <option value="dim">Dim corner of the store room</option>
+      </select>
+    </label>
+    <label class="field">BASE speed: <span class="digits" id="b-base-v">900</span>
+      <input type="range" id="b-base" min="400" max="1023" step="25" value="900">
+    </label>
+    <label class="field">TURN size: <span class="digits" id="b-turn-v">700</span>
+      <input type="range" id="b-turn" min="0" max="1023" step="25" value="700">
+    </label>
+    <label class="field">Fixed threshold: <span class="digits" id="b-threshold-v">500</span>
+      <input type="range" id="b-threshold" min="0" max="1023" step="10" value="500">
+    </label>
+    <label class="field"><span><input type="checkbox" id="b-cal" checked> Calibrate at the start</span>
+      <span class="small">The turn can't be bigger than the speed.</span>
+    </label>
+  </div>
+</div>
+<div class="screen">
+  <canvas id="bench-canvas" width="800" height="560" aria-label="Test bench. The robot on the tape loop, from above."></canvas>
+</div>
+<div class="row">
+  <button type="button" class="primary" id="b-watch">Watch one lap</button>
+  <select id="b-speed" aria-label="Watch speed">
+    <option value="1">1×</option>
+    <option value="2" selected>2×</option>
+    <option value="4">4×</option>
+  </select>
+  <button type="button" id="b-trials">Run 20 tests of 3 laps</button>
+</div>
+<p class="live" id="b-live" aria-live="polite"></p>
+<div class="runs" id="b-runs" aria-hidden="true"></div>
+<p class="live" id="b-summary" aria-live="polite"></p>
+<p class="small">Green is a run that finished 3 laps. Red left the track. Each run gets slightly different batteries, a slightly crooked start and noisy sensors. Wobble is how far the robot points away from the tape, on average.</p>
+<p>Try this. Pick version 1 in the hall. Then version 4 in the hall. Then set your own numbers: BASE 1000 and TURN 525. Where does it fly off?</p>
+
+<h2 id="deliverables"><span class="num">03</span>What is in this project</h2>
+<ul class="tight">
+  <li>Demo video: the <a href="#demo">replay above</a>, and a file you can save from it. The shot list says how we film the real one.</li>
+  <li>Code: <a href="code.html">the final program, explained</a>, and <a href="linefollow.py" download>linefollow.py</a> to flash.</li>
+  <li>Tuning notes: <a href="tuning.html">four versions, one change at a time</a>, with the test results for each.</li>
+  <li>Build: <a href="build.html">parts, wiring diagram, and the checks that keep the wiring secure</a>.</li>
+</ul>
+
+<h2 id="rubric"><span class="num">04</span>Rubric check</h2>
+<div class="scroll">
+<table>
+  <thead><tr><th>Rubric line</th><th>Evidence</th><th>Verdict</th></tr></thead>
+  <tbody>
+    <tr><td>Consistency</td><td>Version 4 finished 59 of 60 three-lap runs, across three rooms. Lap times sat within about 1.2 s of each other.</td><td><span class="stamp pass">Pass</span></td></tr>
+    <tr><td>Secure wiring</td><td>Wiring diagram, a tug test on every plug, cable ties, a shared ground, and motors on their own batteries. See <a href="build.html">build</a>.</td><td><span class="stamp pass">Pass</span></td></tr>
+    <tr><td>Readable code</td><td>Tuning numbers at the top, one job per function, a comment on every branch. See <a href="code.html">code</a>.</td><td><span class="stamp pass">Pass</span></td></tr>
+    <tr><td>Reflection</td><td>Below. It names what still fails.</td><td><span class="stamp pass">Pass</span></td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2 id="reflection"><span class="num">05</span>Reflection</h2>
+<p>The big win was calibration. Versions 1 and 2 used one fixed threshold. In the hall, by the windows, the tape read about 560. Our thresholds were 500, then 480. To the robot, the tape had vanished. It drifted off before it even reached the first corner. A 1.6-second sweep at the start fixed every room we tried.</p>
+<p>The surprise was the turn size. Halving it made the robot smooth, and I was pleased. Then the test showed 4 runs in 20 sliding off, three of them at the S-bend. Smooth is not the same as reliable. We had to go back up to a middle value, then raise both numbers together for speed.</p>
+<p>Testing under pressure helped. Twenty runs feels slow, but one good lap proves nothing. Version 2 looked perfect for its first 8 runs.</p>
+
+<h3>What still fails, and what I would change</h3>
+<ul class="tight">
+  <li>One run in 60 still left the track, at corner 4 in the hall. Our speed is close to the edge. At a real competition I would drop BASE by 50 and take the safer lap.</li>
+  <li>Two sensors can't tell "centred" from "lost". Once both sensors miss the tape, the robot drives straight on. A third sensor in the middle would fix that.</li>
+  <li>The calibration fails if you start the robot off the tape. It shows a cross, but a Sec 1 student won't know why. I would scroll "PUT ME ON THE LINE" instead.</li>
+  <li>This is on-off steering. The robot only knows left, right or straight. Proportional steering, where the turn grows with the error, would be smoother at speed. That is the next unit.</li>
+</ul>
+
+<h2 id="sources"><span class="num">06</span>Sources</h2>
+<ul class="tight small">
+  <li>Sensor: <a href="https://www.vishay.com/docs/83760/tcrt5000.pdf">Vishay TCRT5000 datasheet</a>. It has an infrared emitter, a daylight blocking filter and a peak operating distance of 2.5 mm.</li>
+  <li>Motor driver: <a href="https://www.ti.com/product/DRV8833">Texas Instruments DRV8833</a>, a dual H-bridge that runs from 2.7 to 10.8 V.</li>
+  <li>Pins and PWM: <a href="https://tech.microbit.org/hardware/edgeconnector/">micro:bit edge connector</a>. PWM can be active on only 3 pins at once.</li>
+  <li>Power: <a href="https://tech.microbit.org/hardware/powersupply/">micro:bit power supply</a>. Power small motors from outside the board.</li>
+  <li>MicroPython: <a href="https://microbit-micropython.readthedocs.io/en/v2-docs/pin.html">micro:bit MicroPython pins</a>. <code>read_analog</code> gives 0 to 1023.</li>
+</ul>
+</main>
+</body>
+</html>

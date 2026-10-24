@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kotak, the shy robot: a cardboard obstacle avoider for a P5 club, by Mei Ling Tan</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="sim.js" defer></script>
+<script src="app.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Mei Ling Tan is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<div class="hero">
+  <p class="kicker">P5 coding club · end project</p>
+  <h1>Kotak, the shy robot</h1>
+  <p>A shoebox robot that wanders around a pen. When something is close, it stops, backs away, turns and carries on. Nobody steers it.</p>
+</div>
+
+<p>I'm Mei Ling. I run an after-school coding club for upper primary pupils. "Kotak" means box in Malay, and that is what Kotak is: a shoebox on two wheels, with a micro:bit for a brain.</p>
+<p>The brief was one autonomous behaviour, with notes on how we tuned it. I picked obstacle avoidance over line following. It needs one sensor and one rule: "Is it close? Then turn." A 10-year-old can act that rule out with a partner before they code it. A line follower needs two sensors and a threshold, which is a lot for a 90-minute club.</p>
+
+<p class="note">My club and pupils are made up, like me. The test numbers on this page come from the simulator below, which runs the same steps as Kotak's code. Press the same buttons and you get the same numbers.</p>
+
+<ul class="toc">
+  <li><a href="#demo">Demo video</a></li>
+  <li><a href="#try">Try it yourself</a></li>
+  <li><a href="code.html">The code</a></li>
+  <li><a href="tuning.html">Tuning notes</a></li>
+  <li><a href="build.html">Build and wiring</a></li>
+  <li><a href="#rubric">Rubric check</a></li>
+</ul>
+
+<h2 id="demo">Demo video</h2>
+<p>This page can't show film of a real robot, so here is a replay drawn by the simulator. It is one minute of the final version in our club pen. The green fan is the sound from the sensor. It is as long as the distance Kotak heard.</p>
+<div class="stage">
+  <canvas id="demo-canvas" width="800" height="600" aria-label="Replay from above. A cardboard robot drives around a pen with a shoebox, a school bag and a slanted file, stopping and turning when things are close."></canvas>
+</div>
+<div class="transport">
+  <button type="button" class="primary" id="demo-play">Play</button>
+  <input type="range" id="demo-scrub" min="0" max="1" value="0" aria-label="Position in the replay">
+  <select id="demo-rate" aria-label="Playback speed">
+    <option value="1" selected>1×</option>
+    <option value="2">2×</option>
+    <option value="4">4×</option>
+  </select>
+</div>
+<p class="small" id="demo-time">0:00</p>
+<p><strong>Jump to a moment</strong></p>
+<ul class="events" id="demo-events" aria-label="Moments in the replay"></ul>
+<div class="row">
+  <button type="button" id="demo-save">Save as a video file</button>
+  <span class="small" id="demo-save-note">Records the replay into a file you can share. Works in Chrome and Edge.</span>
+</div>
+
+<h3>How we film the real one in club</h3>
+<ul class="tight">
+  <li>I film on the club iPad, not the pupils. The camera points down at the pen. No faces, no names.</li>
+  <li>One minute, no cuts. A pupil holds up a card with the version number at the start.</li>
+  <li>A second pupil calls out each stop: "Box!", "Wall!" or "Nothing!" That gives us a count to check against.</li>
+</ul>
+
+<h2 id="try">Try it yourself</h2>
+<p>Watch one minute, or run the full test: 20 runs of 2 minutes, each from a different spot. Choose "My own numbers" to change the same four numbers my pupils change. Then try adding the chair.</p>
+<div class="card">
+  <div class="controls">
+    <label class="field">Version
+      <select id="p-version">
+        <option value="1">Version 1</option>
+        <option value="2">Version 2</option>
+        <option value="3" selected>Version 3 (final)</option>
+        <option value="custom">My own numbers</option>
+      </select>
+    </label>
+    <label class="check"><input type="checkbox" id="p-chair"> Put a chair in the pen</label>
+    <label class="field">STOP_CM: <span id="p-stop-v">15 cm</span>
+      <input type="range" id="p-stop" min="5" max="40" step="1" value="15">
+    </label>
+    <label class="field">SPEED: <span id="p-speed-v">15</span>
+      <input type="range" id="p-speed" min="5" max="25" step="1" value="15">
+    </label>
+    <label class="field">BACK_MS: <span id="p-back-v">300 ms</span>
+      <input type="range" id="p-back" min="0" max="1000" step="50" value="300">
+    </label>
+    <label class="field">TURN_MS: <span id="p-turn-v">500 ms</span>
+      <input type="range" id="p-turn" min="100" max="1500" step="50" value="500">
+    </label>
+    <label class="check"><input type="checkbox" id="p-shouts" checked> Shout three times, ignore missing echoes</label>
+    <label class="check"><input type="checkbox" id="p-random" checked> Turn a random way</label>
+  </div>
+</div>
+<div class="stage">
+  <canvas id="pen-canvas" width="800" height="600" aria-label="The pen from above, with the robot you are testing."></canvas>
+</div>
+<div class="row">
+  <button type="button" class="primary" id="p-watch">Watch for one minute</button>
+  <select id="p-speed-x" aria-label="Watch speed">
+    <option value="1">1×</option>
+    <option value="2">2×</option>
+    <option value="4" selected>4×</option>
+  </select>
+  <button type="button" id="p-test">Run 20 tests of 2 minutes</button>
+</div>
+<p class="live" id="p-live" aria-live="polite"></p>
+<div class="runs" id="p-runs" aria-hidden="true"></div>
+<p class="live" id="p-summary" aria-live="polite"></p>
+<p class="small">Each box is one run, showing its bumps. Green: none. Yellow: 1 or 2. Red: 3 or more. A "stop for nothing" means Kotak stopped with nothing within 30 cm in front of it.</p>
+
+<h2 id="what">What is in this project</h2>
+<ul class="tight">
+  <li>Demo video: the <a href="#demo">replay above</a>, and a file you can save from it.</li>
+  <li>Code: <a href="code.html">Kotak's program, explained for teachers</a>, and <a href="kotak.py" download>kotak.py</a> to flash.</li>
+  <li>Tuning notes: <a href="tuning.html">the servo trim test and three versions</a>, with test results.</li>
+  <li>Build: <a href="build.html">the cardboard build, a wiring diagram and the wiring checks</a>.</li>
+</ul>
+
+<h2 id="rubric">Rubric check</h2>
+<div class="scroll">
+<table>
+  <thead><tr><th>Rubric line</th><th>How Kotak does</th></tr></thead>
+  <tbody>
+    <tr><td>Consistency</td><td class="good">In 20 two-minute runs, Kotak kept going every time. It was never stuck against anything for longer than about 3 seconds. It brushed something about 1.5 times per run, and stopped for nothing about 2.6 times. Without a chair in the pen, that is.</td></tr>
+    <tr><td>Secure wiring</td><td class="good">Every wire is plugged, tied and glued down, and checked with a tug and a shake. Servos have their own batteries. See <a href="build.html">build</a>.</td></tr>
+    <tr><td>Readable code</td><td class="good">The four numbers pupils change sit at the top. The two teacher numbers sit below. Short functions, each with a comment in plain words. See <a href="code.html">code</a>.</td></tr>
+    <tr><td>Reflection</td><td class="good">Below, including what still goes wrong.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2 id="reflection">Reflection</h2>
+<p>The biggest surprise was version 1. It had a bug, and the bug made it look safe. When no echo came back, it got a negative number. Negative is less than 10, so it turned. It hardly ever bumped anything. But it stopped for nothing 39 times in 2 minutes. My pupils called it "scaredy-bot".</p>
+<p>Fixing the bug made the bumps go up. That upset two of my pupils, who wanted to put the bug back. It was a good argument to have. We settled on this: a robot that stops for nothing is broken too, just more politely.</p>
+<p>Shouting three times was the real fix. One wild number can't stop Kotak now. Stops for nothing fell from about 25 to under 3 per run.</p>
+<p>The trim test was the best 15 minutes of the whole project. Pupils typed in 76, 77, 78 and watched a wheel creep, stop, then creep the other way. They understood "calibrate" after that.</p>
+
+<h3>What still goes wrong, and what I would change</h3>
+<ul class="tight">
+  <li>Chairs. Put the chair in and Kotak bumps the legs again and again. Once it stayed stuck for 48 seconds. The legs are too thin to echo well. In club, I just keep chairs out of the pen. That is me simplifying again. A real classroom has chairs.</li>
+  <li>The fix I would try: a "bored" timer. If Kotak drives forward for 4 seconds with nothing changing, it backs away and turns anyway.</li>
+  <li>The sound beam is narrower than the robot. Kotak can brush a box with its side and never see it. A second sensor, angled out, would help, but that is a lot more wiring for P5.</li>
+  <li>Soft things soak up sound. The school bag rarely echoes back. I told pupils "Kotak can't hear soft things." That is true, but it is not the whole story. Slanted things bounce the sound away too.</li>
+</ul>
+
+<h2 id="sources">Sources</h2>
+<ul class="tight small">
+  <li>Sensor: <a href="https://www.adafruit.com/product/4007">Adafruit: RCWL-1601 ultrasonic distance sensor</a>. Runs on 3 V to 5.5 V, and its logic level matches its power.</li>
+  <li>Sensor timing: <a href="https://www-users.york.ac.uk/~mjf5/roach/Datasheets/HCSR04_Manual.pdf">HC-SR04 user manual</a>. The RCWL-1601 is built to be compatible with it. It gives a 15 degree angle, microseconds ÷ 58 = cm, and over 60 ms between pings.</li>
+  <li>Servos: <a href="https://www.adafruit.com/product/2442">Adafruit: FS90R continuous rotation servo</a>. A 1.5 ms pulse stops it, and it may need trimming.</li>
+  <li>Timing an echo: <a href="https://microbit-micropython.readthedocs.io/en/v2-docs/machine.html">micro:bit MicroPython: machine</a>. <code>time_pulse_us</code> returns a negative number on a timeout.</li>
+  <li>Servo signals: <a href="https://microbit-micropython.readthedocs.io/en/v2-docs/pin.html">micro:bit MicroPython: pins</a>, for <code>set_analog_period</code> and <code>write_analog</code>.</li>
+</ul>
+</main>
+</body>
+</html>
