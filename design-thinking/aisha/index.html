@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cool-Down Dock: a micro:bit glue gun stand, a design thinking case study by Aisha Rahman</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="sim.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Aisha Rahman is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<p class="kicker">Design thinking case study · Sec 1 makerspace</p>
+<h1>The Cool-Down Dock</h1>
+<p class="lede">A cardboard stand with a micro:bit in it. You park a glue gun after you unplug it. The display drains while the gun cools, then shows a tick. If you lift the gun too early, it beeps.</p>
+<p>I'm Aisha. I teach design and making in a school makerspace. My Sec 1 classes use hot glue guns every week, and pack-up is where things go wrong. I took one problem through one full loop: empathise, define, ideate, prototype and test. Then I built version 2.</p>
+
+<div class="panel">
+<p><strong>What's here</strong></p>
+<ul class="tight">
+  <li>The 1-page case study: <a href="case-study.pdf">download the PDF</a> or <a href="case-study.html">read it as a web page</a>.</li>
+  <li>The prototype, both versions: <a href="#try">run them in the simulator</a> below. The code is the real MakeCode code.</li>
+  <li>Drawings of the build instead of photos: <a href="build.html">cutting net, wiring, parts, steps and a test storyboard</a>.</li>
+</ul>
+<p class="small">SkillForge projects never show photos of real objects or people. My drawings show more than a photo would anyway: you can see under the gun.</p>
+</div>
+
+<ul class="toc">
+  <li><a href="#empathise">1 Empathise</a></li>
+  <li><a href="#define">2 Define</a></li>
+  <li><a href="#ideate">3 Ideate</a></li>
+  <li><a href="#prototype">4 Prototype</a></li>
+  <li><a href="#test">5 Test</a></li>
+  <li><a href="#try">Try both versions</a></li>
+  <li><a href="#change">What I'd change</a></li>
+</ul>
+
+<p class="made-up">My students, my technician and their words are made up, like me. The facts about glue guns and micro:bits are real and linked at the bottom.</p>
+
+<h2 id="empathise"><span class="step">Step 1</span> Empathise</h2>
+<p>I started with a hunch: students leave glue guns on. I was wrong about that. I interviewed three people for 10 minutes each. I asked about the last time, never "would you use…".</p>
+<ul class="notes">
+  <li><b>Our lab technician</b>"After most lessons I find two or three guns still hot in the tool tray. The tray has melt marks."</li>
+  <li><b>Sec 1 student A</b>"I unplug it when the bell goes. Then I hold my hand near the tip to feel if it's cold. It's hard to tell."</li>
+  <li><b>Sec 1 student B</b>"Nobody wants to be last out. We just put everything in the tray."</li>
+  <li><b>Technician, again</b>"The cool-melt ones are still hot. They're just less hot."</li>
+</ul>
+<p>The technician was right about cool-melt guns. Bostik's own figures put its Craft Cool Melt gun at 125 to 135°C. Its hot-melt guns run at 175 to 200°C. Swapping guns would not fix this.</p>
+<div class="said-need">
+  <div><h4>What they said they wanted</h4><p>"More time to pack up." "Guns with a light on them."</p></div>
+  <div><h4>What they needed</h4><p>A way to see that a gun is still hot, without touching it, in the last 5 minutes of a lesson.</p></div>
+</div>
+<p>The guns were unplugged. My hunch was wrong. The real problem is that a hot gun and a cold gun look the same.</p>
+
+<h2 id="define"><span class="step">Step 2</span> Define</h2>
+<p class="statement">Sec 1 makers packing up need to see when a glue gun is safe to put away, because a hot gun looks the same as a cold one.</p>
+<p>My first draft was "Students need a timer for their glue guns." That hides a solution. A timer is one answer. So is a rule, a colour sticker or a rack.</p>
+<p class="statement">How might we make a glue gun's heat visible at pack-up?</p>
+
+<h2 id="ideate"><span class="step">Step 3</span> Ideate</h2>
+<p>My Sec 1s and I wrote exactly 20 ideas on sticky notes in 15 minutes. No judging. Then we sorted them into four themes. The two picked ideas are outlined.</p>
+<div class="themes">
+  <div class="theme"><h4>Routines</h4><ol>
+    <li class="pick"><span>1</span>Unplug guns 10 minutes before the bell</li>
+    <li><span>2</span>A glue gun captain for each table</li>
+    <li><span>3</span>Guns stay on the bench until the next class</li>
+    <li><span>4</span>A pack-up song that lasts the cooling time</li>
+    <li><span>5</span>Teacher checks every gun at the door</li>
+  </ol></div>
+  <div class="theme"><h4>Materials</h4><ol>
+    <li><span>6</span>A sticker that changes colour with heat</li>
+    <li><span>7</span>A metal cooling rack</li>
+    <li><span>8</span>A heat-proof tray instead of plastic</li>
+    <li><span>9</span>A silicone cap for the tip</li>
+    <li><span>10</span>Only use cool-melt guns</li>
+  </ol></div>
+  <div class="theme"><h4>Signals</h4><ol>
+    <li class="pick"><span>11</span>A dock that counts down the cooling time</li>
+    <li><span>12</span>A light that stays on until the gun is cold</li>
+    <li><span>13</span>A buzzer if a gun goes in the tray hot</li>
+    <li><span>14</span>Measure the tip with a sensor</li>
+    <li><span>15</span>A sign on the wall: "Unplugged at…"</li>
+  </ol></div>
+  <div class="theme"><h4>Wild ones</h4><ol>
+    <li><span>16</span>A fan that cools guns faster</li>
+    <li><span>17</span>Guns that switch off on their own</li>
+    <li><span>18</span>Glue with no heat at all</li>
+    <li><span>19</span>Glue time only in the first half</li>
+    <li><span>20</span>A robot arm that packs the guns</li>
+  </ol></div>
+</div>
+<p>We picked two. Idea 1 costs nothing, so it starts next week anyway. Idea 11 is the one I could prototype in one lesson. It tests something I did not know: will students wait if they can see the time left?</p>
+<p>Idea 14 died fast. The micro:bit's temperature sensor sits inside its processor. It gives roughly the air temperature, not the tip's. So we time the cooling instead of measuring it.</p>
+<div class="plain">
+<p><strong>The one assumption the prototype tests</strong></p>
+<p>If students can see how much cooling time is left, they will leave the gun in the dock until it is done.</p>
+</div>
+
+<h2 id="prototype"><span class="step">Step 4</span> Prototype</h2>
+<p>Version 1 took 90 minutes: corrugated card, masking tape, one micro:bit V2, a battery pack and a ceramic tile. The gun lies in a cardboard cradle. Its nozzle rests on the tile, never on card.</p>
+<h3>Version 1: the light sensor</h3>
+<p>The micro:bit lies face up under a hole in the cradle floor. The micro:bit can sense light with its LED display. When the gun covers the hole, the reading drops and a 10-minute countdown starts. Our technician chose 10 minutes for our guns. Your guns may need a different time, so it's a setting at the top of the code.</p>
+<details>
+<summary>Version 1 code (MakeCode JavaScript)</summary>
+<pre><span class="c">// Cool-Down Dock, version 1. A dark reading means a gun is parked.</span>
+let COOL_MINUTES = 10
+let parkedAt = -1
+basic.forever(function () {
+    if (input.lightLevel() &lt; 40) {
+        if (parkedAt &lt; 0) {
+            parkedAt = input.runningTime()
+        }
+        let left = Math.ceil((COOL_MINUTES * 60000 - (input.runningTime() - parkedAt)) / 60000)
+        if (left &gt; 0) {
+            basic.showNumber(left)
+        } else {
+            basic.showIcon(IconNames.Yes)
+        }
+    } else {
+        parkedAt = -1
+        basic.clearScreen()
+    }
+})</pre>
+</details>
+<p>Try it in the <a href="#try">simulator</a> and you'll spot the big problem in about ten seconds. I didn't. My testers did.</p>
+
+<h2 id="test"><span class="step">Step 5</span> Test</h2>
+<p>I tested version 1 with three people: student A, whom I had interviewed, the technician, and student C from another class. I said one line, "Use it like it's the end of a lesson," and then I only watched and wrote.</p>
+<ul class="tests">
+  <li><b>Note 1.</b> Student C laid the gun in and asked, "Where's the timer?" The gun was lying on top of the display.</li>
+  <li><b>Note 2.</b> Student A lifted the gun after 3 minutes to see the number. The screen went blank. Nothing warned her.</li>
+  <li><b>Note 3.</b> The technician waved a hand over the empty dock. A countdown started.</li>
+  <li><b>Note 4.</b> When someone switched off the lights for the projector, the empty dock started counting.</li>
+  <li><b>Note 5.</b> At switch-on it flashed a 10 every time. The micro:bit's first light reading is always 0, so it thought a gun was parked.</li>
+  <li><b>Note 6.</b> The technician: "I need to see from the door if any gun is still hot."</li>
+</ul>
+<p>Then the class critiqued it with "I like, I wish, What if". These are the notes that changed something.</p>
+<div class="ilw">
+  <div><h4>I like</h4><p>"The tile. The tip isn't touching anything." "It's one stand per gun, so you know which one."</p></div>
+  <div><h4>I wish</h4><p>"I wish I could see it with the gun in." "I wish it told you off if you lift it early."</p></div>
+  <div><h4>What if</h4><p>"What if the gun's weight starts it, not the dark?" "What if the lights go down like a phone battery?"</p></div>
+</div>
+
+<h3>Version 2: what changed and why</h3>
+<ul class="change">
+  <li><span class="tag">Notes 3 to 5</span><span>The light sensor is gone. Two foil pads sit under a foam pad with a hole in it. The gun's weight presses them together, which joins pin 0 to GND. A hand or the room lights can't do that.</span></li>
+  <li><span class="tag">Note 1</span><span>The micro:bit moved to the front wall, tilted up. You can see it with the gun in.</span></li>
+  <li><span class="tag">What if</span><span>The display drains like a battery: 25 lights, one goes out every 24 seconds. No numbers to read.</span></li>
+  <li><span class="tag">Note 2</span><span>Lift it early and you get a cross and two low beeps. Put it back and the count starts again from full. Starting over is the safe mistake.</span></li>
+  <li><span class="tag">I wish</span><span>A tick and a high beep when it's done. Every sound also shows on the display, so a student who can't hear it still sees it.</span></li>
+  <li><span class="tag">Note 6</span><span>Not fixed. See <a href="#change">what I'd change</a>.</span></li>
+</ul>
+<details>
+<summary>Version 2 code (MakeCode JavaScript)</summary>
+<pre><span class="c">// Cool-Down Dock, version 2. Foil pads on P0 and GND.
+// The gun's weight presses them together.</span>
+const COOL_MINUTES = 10
+const TOTAL = COOL_MINUTES * 60000
+let parkedAt = -1
+let done = false
+
+<span class="c">// Light the last "count" of the 25 LEDs. They go out from the top.</span>
+function showLeft(count: number) {
+    for (let i = 0; i &lt; 25; i++) {
+        if (i &gt;= 25 - count) {
+            led.plot(i % 5, Math.idiv(i, 5))
+        } else {
+            led.unplot(i % 5, Math.idiv(i, 5))
+        }
+    }
+}
+
+basic.forever(function () {
+    if (input.pinIsPressed(TouchPin.P0)) {
+        if (parkedAt &lt; 0) {
+            parkedAt = input.runningTime()
+            done = false
+            music.playTone(523, music.beat(BeatFraction.Quarter))
+        }
+        let left = TOTAL - (input.runningTime() - parkedAt)
+        if (left &gt; 0) {
+            showLeft(Math.ceil(left * 25 / TOTAL))
+        } else if (!(done)) {
+            done = true
+            basic.showIcon(IconNames.Yes)
+            music.playTone(988, music.beat(BeatFraction.Half))
+        }
+    } else {
+        if (parkedAt &gt;= 0 &amp;&amp; !(done)) {
+            <span class="c">// Lifted while still cooling.</span>
+            basic.showIcon(IconNames.No)
+            music.playTone(262, music.beat(BeatFraction.Whole))
+            music.playTone(262, music.beat(BeatFraction.Whole))
+            basic.pause(3000)
+        }
+        parkedAt = -1
+        done = false
+        basic.showIcon(IconNames.SmallSquare)
+    }
+})</pre>
+</details>
+<p>I tested version 2 with the same three people. All three left the gun in until the tick. Student C watched the lights go out and said, "It's like a loading bar backwards." The technician could read it from 2 metres, but not from the door.</p>
+
+<h2 id="try">Try both versions</h2>
+<p>This runs the same logic as the code above. Time is sped up, so 10 minutes takes 20 seconds. Try the hand and the lights on version 1, then on version 2.</p>
+<div class="sim" id="sim">
+  <div class="versions" role="group" aria-label="Prototype version">
+    <button type="button" data-v="1" aria-pressed="false">Version 1: light sensor</button>
+    <button type="button" data-v="2" aria-pressed="true">Version 2: foil pads</button>
+  </div>
+  <div class="sim-grid">
+    <div class="scene" id="scene" aria-hidden="true">
+      <svg viewBox="0 0 360 230" role="img">
+        <rect id="room" x="0" y="0" width="360" height="230" rx="6" fill="#fff8ea"/>
+        <rect x="0" y="196" width="360" height="34" fill="#9a7b56"/>
+        <rect x="18" y="184" width="74" height="12" fill="#d9dde0" stroke="#6b737a"/>
+        <text x="55" y="215" text-anchor="middle" font-size="11" fill="#fff" font-family="system-ui, sans-serif">tile</text>
+        <path d="M86 196 V150 H300 V196 Z" fill="#d8b98c" stroke="#7a5a35" stroke-width="2"/>
+        <path d="M86 150 l14 -12 h214 l-14 12" fill="#e7cfa8" stroke="#7a5a35" stroke-width="2"/>
+        <rect x="104" y="184" width="186" height="8" fill="#c9a676" stroke="#7a5a35"/>
+        <g id="v1-parts">
+          <rect x="170" y="178" width="46" height="6" fill="#1d1d1d"/>
+          <text x="193" y="214" text-anchor="middle" font-size="11" fill="#fff" font-family="system-ui, sans-serif">micro:bit under the hole</text>
+        </g>
+        <g id="v2-parts">
+          <rect x="140" y="176" width="110" height="5" fill="#f2a23a"/>
+          <rect x="140" y="183" width="110" height="3" fill="#b9c2c9"/>
+          <rect x="140" y="173" width="110" height="3" fill="#b9c2c9"/>
+          <text x="195" y="214" text-anchor="middle" font-size="11" fill="#fff" font-family="system-ui, sans-serif">foil pads and foam</text>
+          <path d="M300 196 L334 120 L346 124 L312 196 Z" fill="#d8b98c" stroke="#7a5a35" stroke-width="2"/>
+          <rect x="316" y="128" width="16" height="40" transform="rotate(24 324 148)" fill="#1d1d1d"/>
+          <rect id="mini" x="319" y="133" width="10" height="30" transform="rotate(24 324 148)" fill="#5a1a12"/>
+        </g>
+        <g id="gun" transform="translate(0,0)">
+          <path d="M120 152 H262 a10 10 0 0 1 10 10 v6 a10 10 0 0 1 -10 10 H120 Z" fill="#4c6b8a" stroke="#22364a" stroke-width="2"/>
+          <path d="M120 156 L84 162 L84 168 L120 174 Z" fill="#8a949c" stroke="#3e464d" stroke-width="2"/>
+          <rect x="72" y="163" width="14" height="4" fill="#3e464d"/>
+          <path d="M224 178 l10 -2 l10 0 l-6 2 Z" fill="#22364a"/>
+          <rect x="262" y="160" width="40" height="8" rx="4" fill="#e9e3d6" stroke="#8a8170"/>
+          <text x="190" y="170" text-anchor="middle" font-size="12" fill="#fff" font-family="system-ui, sans-serif">glue gun</text>
+        </g>
+        <g id="hand" opacity="0">
+          <path d="M150 40 q40 -16 80 0 l0 36 q-40 14 -80 0 Z" fill="#c58f6a" stroke="#7a5136" stroke-width="2"/>
+          <text x="190" y="66" text-anchor="middle" font-size="12" fill="#2a1a10" font-family="system-ui, sans-serif">a hand</text>
+        </g>
+        <text id="lights-label" x="12" y="22" font-size="12" fill="#55462f" font-family="system-ui, sans-serif">Room lights on</text>
+      </svg>
+    </div>
+    <div>
+      <div class="mb" id="mb">
+        <p class="mb-label">micro:bit display</p>
+        <div class="leds" id="leds"></div>
+        <div class="cover">Under the gun. Nobody can see this.</div>
+      </div>
+      <p class="readout" id="readout">Sensor: starting</p>
+    </div>
+  </div>
+  <div class="controls">
+    <button type="button" class="primary" id="park">Park the gun</button>
+    <button type="button" id="hand-btn">Wave a hand over the dock</button>
+    <button type="button" id="lights" aria-pressed="false">Lights off</button>
+    <button type="button" id="reboot">Switch the micro:bit off and on</button>
+  </div>
+  <div class="controls">
+    <label for="speed">Speed</label>
+    <select id="speed">
+      <option value="30" selected>Fast: 1 minute takes 2 seconds</option>
+      <option value="1">Real time</option>
+    </select>
+    <button type="button" id="sound" aria-pressed="true">Sound: on</button>
+  </div>
+  <p class="live" id="live" aria-live="polite">Version 2 is running. The dock is empty.</p>
+  <ol class="log" id="log" aria-label="What happened"></ol>
+</div>
+<p class="small">The simulator plays the beeps through your speaker and also writes them in words. On a real micro:bit V2 they come from its built-in speaker.</p>
+
+<h2 id="change">What I'd change</h2>
+<p>The technician's wish is still open. One dock tells you about one gun, standing next to it. She wants to know from the door. A class set of 10 docks also needs 10 micro:bits, and that's most of my kit.</p>
+<p>Next loop I'd test a "What if" from the critique. Each dock sends its state by radio to one micro:bit by the door. It shows how many guns are still cooling. I'd also test idea 1, the early unplug, on its own first. If it works, the dock may only be needed for the last few guns.</p>
+<p>One more doubt: three testers in my own room, who knew me. Version 2 needs a test in a real pack-up, with the bell going and 20 students.</p>
+
+<h2 id="safety">Safety</h2>
+<div class="safety">
+<ul class="tight">
+  <li>The dock is for guns that are already unplugged. It times cooling. It doesn't switch anything off.</li>
+  <li>The nozzle always rests on a ceramic tile, never on card.</li>
+  <li>The dock is a reminder, not a thermometer. Treat every gun in it as hot until it shows a tick.</li>
+  <li>Craft knives: steel ruler, cutting mat, cut away from your body. I cut the thick parts myself.</li>
+  <li>The foil pads carry only the micro:bit's own small battery current. Use the 2 × AAA pack, not mains.</li>
+</ul>
+</div>
+
+<h2 id="sources">Sources</h2>
+<ul class="tight small">
+  <li>Glue gun temperatures: <a href="https://diy.bostik.com/en-IE/frequently-asked-questions/what-operating-temperature-glue-gun">Bostik, What is the operating temperature for a glue gun?</a>.</li>
+  <li>Light sensing with the LEDs, and the temperature sensor inside the processor: <a href="https://microbit.org/get-started/features/sensors/">micro:bit sensors</a>.</li>
+  <li>Light level runs from 0 to 255, and the first reading is 0: <a href="https://makecode.microbit.org/reference/input/light-level">MakeCode, light level</a>.</li>
+  <li>Pins 0, 1 and 2 count as pressed when joined to GND, and work best on batteries: <a href="https://makecode.microbit.org/reference/input/pin-is-pressed">MakeCode, pin is pressed</a>.</li>
+  <li>The 5 × 5 LED display, built-in speaker on the V2 and the 2 × AAA battery pack: <a href="https://microbit.org/get-started/features/overview/">micro:bit features</a>.</li>
+  <li>The five modes: <a href="https://dschool.stanford.edu/resources/design-thinking-bootleg">Stanford d.school, Design Thinking Bootleg</a>.</li>
+</ul>
+</main>
+</body>
+</html>
