@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lights On, Nobody Home: the code, by Tom Brennan</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Tom Brennan is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<p><a href="index.html">Back to Lights On, Nobody Home</a></p>
+<h1>The code<span class="sub">Four pieces: two micro:bits, a web page and a script</span></h1>
+<p class="lede">The micro:bit programs are MakeCode JavaScript. Paste them into the JavaScript tab at <a href="https://makecode.microbit.org/">makecode.microbit.org</a>, then switch to Blocks if your class prefers blocks. The gateway page is <a href="gateway.html">its own page</a>, and its code is <a href="gateway.js">gateway.js</a>.</p>
+<ol class="tight">
+  <li><a href="#node">Sensor node</a></li>
+  <li><a href="#gateway">Gateway micro:bit</a></li>
+  <li><a href="#page">Gateway page</a></li>
+  <li><a href="#script">Apps Script web app</a></li>
+  <li><a href="#sheet">Sheet layout</a></li>
+</ol>
+
+<h2 id="node">1. Sensor node</h2>
+<p>On the wall by the light switches, on 2 AAA batteries. It samples every second. Every minute it sends the average light, the loudest sound and the temperature. Every 10 seconds it checks for the "last one out" moment.</p>
+<pre><code><span class="c">// Sensor node: micro:bit V2 on the wall. Sends 3 readings a minute.</span>
+const GATEWAY_SERIAL = 0   <span class="c">// set from the gateway page log. 0 accepts any sender.</span>
+const LIT = 70             <span class="c">// light above this: lights are on (measure your room)</span>
+const QUIET = 80           <span class="c">// sound below this: nobody talking (measure your room)</span>
+let mode = "remind"
+let lastBlockPeak = 0
+
+radio.setGroup(83)
+radio.setTransmitSerialNumber(true)
+
+radio.onReceivedString(function (cmd) {
+    if (GATEWAY_SERIAL != 0 &amp;&amp; radio.receivedPacket(RadioPacketProperty.SerialNumber) != GATEWAY_SERIAL) {
+        return   <span class="c">// not our gateway</span>
+    }
+    if (cmd == "remind" || cmd == "quiet") {
+        mode = cmd
+    } else if (cmd == "test") {
+        basic.showIcon(IconNames.Yes)
+        basic.pause(2000)
+        basic.clearScreen()
+    }   <span class="c">// anything else is ignored</span>
+})
+
+basic.forever(function () {
+    let lightSum = 0
+    let minutePeak = 0
+    for (let block = 0; block &lt; 6; block++) {      <span class="c">// 6 blocks of 10 seconds</span>
+        let blockPeak = 0
+        let blockLight = 0
+        for (let s = 0; s &lt; 10; s++) {
+            let l = input.lightLevel()
+            lightSum += l
+            blockLight += l
+            blockPeak = Math.max(blockPeak, input.soundLevel())
+            basic.pause(1000)
+        }
+        <span class="c">// Last one out: loud, then quiet, with the lights still on.</span>
+        if (mode == "remind" &amp;&amp; lastBlockPeak &gt; QUIET + 20 &amp;&amp; blockPeak &lt; QUIET &amp;&amp; blockLight / 10 &gt; LIT) {
+            music.playTone(523, music.beat(BeatFraction.Half))
+            basic.showLeds(`
+                . # # # .
+                # . . . #
+                . # . # .
+                . . # . .
+                . . # . .
+                `)
+            basic.pause(3000)
+            basic.clearScreen()
+        }
+        lastBlockPeak = blockPeak
+        minutePeak = Math.max(minutePeak, blockPeak)
+    }
+    radio.sendValue("light", Math.round(lightSum / 60))
+    radio.sendValue("sound", minutePeak)
+    radio.sendValue("temp", input.temperature())
+})
+
+input.onButtonPressed(Button.A, function () {
+    basic.showNumber(control.deviceSerialNumber())   <span class="c">// handy during setup</span>
+})</code></pre>
+<p class="small">The nudge pauses the loop for 3 seconds, so that minute is a little longer. The light is read while the screen is off, because the screen's LEDs do the sensing.</p>
+
+<h2 id="gateway">2. Gateway micro:bit</h2>
+<p>Plugged into the classroom PC by USB. It passes readings from the node to the PC as <code>name:value</code> lines. It passes modes from the PC to the node by radio.</p>
+<pre><code><span class="c">// Gateway: micro:bit on the PC's USB port.</span>
+const NODE_SERIAL = 0   <span class="c">// set from the log. 0 forwards any sender and logs who it was.</span>
+radio.setGroup(83)
+radio.setTransmitSerialNumber(true)
+serial.setBaudRate(BaudRate.BaudRate115200)
+
+radio.onReceivedValue(function (name, value) {
+    let from = radio.receivedPacket(RadioPacketProperty.SerialNumber)
+    if (NODE_SERIAL == 0) {
+        serial.writeValue("from", from)
+    } else if (from != NODE_SERIAL) {
+        serial.writeValue("stranger", from)   <span class="c">// another class's node, or someone testing</span>
+        return
+    }
+    serial.writeValue(name, value)          <span class="c">// e.g. light:112</span>
+    led.toggle(4, 4)
+})
+
+serial.onDataReceived(serial.delimiters(Delimiters.NewLine), function () {
+    let line = serial.readUntil(serial.delimiters(Delimiters.NewLine))
+    if (line.indexOf("mode:remind") == 0) {
+        radio.sendString("remind")
+    } else if (line.indexOf("mode:quiet") == 0) {
+        radio.sendString("quiet")
+    } else if (line.indexOf("mode:test") == 0) {
+        radio.sendString("test")
+    }
+})
+
+input.onButtonPressed(Button.A, function () {
+    basic.showNumber(control.deviceSerialNumber())
+})</code></pre>
+
+<h2 id="page">3. Gateway page</h2>
+<p>The <a href="gateway.html">gateway page</a> runs in Chrome on the PC. What it does:</p>
+<ul class="tight">
+  <li>Opens the micro:bit's serial port at 115200 baud with Web Serial, after you click Connect.</li>
+  <li>Reads <code>light</code>, <code>sound</code> and <code>temp</code> lines, and groups them into minutes.</li>
+  <li>Every 5 minutes, builds one row: average light, loudest sound, average temperature, and lit, quiet minutes.</li>
+  <li>Posts it to the web app. The body is JSON, sent as plain text. That keeps it a "simple" request, so the browser sends no preflight check first.</li>
+  <li>Reads the reply. If the mode changed, writes <code>mode:quiet</code> (or remind, or test) back to the micro:bit.</li>
+  <li>Keeps failed rows in a queue in the browser's storage, and retries them oldest first.</li>
+  <li>Keeps the web app address and token in that browser only. They are never in the page's code.</li>
+</ul>
+<p>The full code is <a href="gateway.js">gateway.js</a>, with comments.</p>
+
+<h2 id="script">4. Apps Script web app</h2>
+<p>In the Sheet: Extensions, then Apps Script. Paste this. In Project Settings, add a Script Property called TOKEN with a long random value. Deploy as a web app that runs as you. Access must allow anonymous posts from the PC.</p>
+<pre><code><span class="c">// Lights On, Nobody Home: takes a 5-minute row, replies with the mode.</span>
+const ROOMS = ['2E'];
+const MODES = ['remind', 'quiet', 'test'];
+
+function doPost(e) {
+  const reply = (obj) =&gt; ContentService.createTextOutput(JSON.stringify(obj))
+      .setMimeType(ContentService.MimeType.JSON);
+  let row;
+  try {
+    row = JSON.parse(e.postData.contents);
+  } catch (err) {
+    return reply({ ok: false, error: 'not JSON' });
+  }
+  const token = PropertiesService.getScriptProperties().getProperty('TOKEN');
+  if (!token || row.token !== token) return reply({ ok: false, error: 'bad token' });
+  if (ROOMS.indexOf(row.room) &lt; 0) return reply({ ok: false, error: 'unknown room' });
+
+  <span class="c">// null is allowed: it means "no reading", and becomes a blank cell.</span>
+  const inRange = (v, lo, hi) =&gt; v === null || (typeof v === 'number' &amp;&amp; v &gt;= lo &amp;&amp; v &lt;= hi);
+  if (!inRange(row.light, 0, 255) || !inRange(row.sound_peak, 0, 255) ||
+      !inRange(row.temp_c, 0, 60) || !inRange(row.lit_quiet_min, 0, 5)) {
+    return reply({ ok: false, error: 'value out of range' });
+  }
+
+  const lock = LockService.getScriptLock();
+  lock.waitLock(10000);
+  try {
+    const book = SpreadsheetApp.getActiveSpreadsheet();
+    const data = book.getSheetByName('Data');
+    const from = Math.max(2, data.getLastRow() - 199);
+    const recent = data.getRange(from, 1, 200, 1).getValues().flat();
+    if (recent.indexOf(row.id) &lt; 0) {   <span class="c">// a retry never makes a double row</span>
+      data.appendRow([row.id, row.time, new Date(), row.room, row.light,
+        row.sound_peak, row.temp_c, row.lit_quiet_min, String(row.status || 'ok').slice(0, 20)]);
+    }
+    let mode = String(book.getSheetByName('Control').getRange('B1').getValue()).trim().toLowerCase();
+    if (MODES.indexOf(mode) &lt; 0) mode = 'quiet';   <span class="c">// a typo in B1 means no beeps</span>
+    return reply({ ok: true, mode: mode });
+  } finally {
+    lock.releaseLock();
+  }
+}</code></pre>
+<p>A reply looks like <code>{"ok":true,"mode":"remind"}</code>. Apps Script sends replies through a redirect to script.googleusercontent.com. The browser follows it by itself. If you test with curl, add <code>-L</code>.</p>
+
+<h2 id="sheet">5. Sheet layout</h2>
+<p>Data tab, row 1, one header per column:</p>
+<div class="scroll">
+<table>
+  <thead><tr><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th><th>G</th><th>H</th><th>I</th></tr></thead>
+  <tbody><tr><td>id</td><td>time</td><td>received</td><td>room</td><td>light</td><td>sound_peak</td><td>temp_c</td><td>lit_quiet_min</td><td>status</td></tr></tbody>
+</table>
+</div>
+<p>A row the gateway sends, with made-up values:</p>
+<pre><code>{
+  "id": "2E-2026-10-21T10:05",
+  "time": "2026-10-21T10:05:00+08:00",
+  "room": "2E",
+  "light": 112,
+  "sound_peak": 64,
+  "temp_c": 30.2,
+  "lit_quiet_min": 3,
+  "status": "ok",
+  "token": "(from this PC's browser)"
+}</code></pre>
+<p>Notice the numbers have no quotes. If a student's code sends <code>"light": "112"</code>, the script refuses it: a string is not a number. Control tab: A1 says "mode", B1 holds remind, quiet or test. Protect the tab so only the eco monitors and the teacher can edit it.</p>
+<p class="small">I wrote these programs for this example and checked the blocks and calls against the MakeCode and Apps Script references. I have not run them on every micro:bit firmware. If a block name differs in your editor, check the MakeCode reference.</p>
+</main>
+</body>
+</html>

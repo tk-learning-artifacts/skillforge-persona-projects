@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Box Box: live battery telemetry for robot practice, by Marcus Lee</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="sim.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Marcus Lee is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<p class="kicker">Digital Making and IoT · end project</p>
+<h1>Box Box</h1>
+<p class="lede">An M5Stack on our robot reads the battery pack and sends it to an Adafruit IO dashboard. From the dashboard, the coach sends one word back. "BOX" turns the robot's screen red: come in, swap the pack.</p>
+<p>I'm Marcus. I coach a secondary school robotics team. Last season our robot got slower in the third practice run of every session. The students blamed the code, then the wheels, then each other. It was the battery. This project is how we stopped guessing. It runs on the practice table, with my Sec 3 and Sec 4 team of four. It comes off the robot before any official run.</p>
+<p>The brief: a mini telemetry demo. The device sends a sensor reading to the cloud and responds to a control message. Here the sensor reading is the pack's voltage. The control message is a pit call.</p>
+<ul class="toc">
+  <li><a href="#sim"><span>01</span>Run the pit wall</a></li>
+  <li><a href="#video"><span>02</span>Demo video</a></li>
+  <li><a href="#flow"><span>03</span>Data-flow diagram</a></li>
+  <li><a href="code.html"><span>04</span>The code</a></li>
+  <li><a href="#reliability"><span>05</span>Reliability test log</a></li>
+  <li><a href="#clarity"><span>06</span>Data clarity</a></li>
+  <li><a href="#security"><span>07</span>Security basics</a></li>
+  <li><a href="#build"><span>08</span>Build it</a></li>
+  <li><a href="#rubric"><span>09</span>Rubric check</a></li>
+</ul>
+
+<h2 id="sim"><span class="num">01</span>Run the pit wall</h2>
+<p>This simulates the whole system: the board, the hotspot, Adafruit IO and the dashboard. The rules come from the real sketch and Adafruit IO's published limits. Start a run. Then try to break it: pull the Wi-Fi, spam FAST, send a word it doesn't know.</p>
+<div class="wall" id="wall">
+  <div class="wall-top">
+    <span class="title">Pit wall · <span id="ver-name">Final version</span></span>
+    <span class="clock" id="clock">T+00:00</span>
+  </div>
+  <div class="row versions">
+    <button type="button" data-ver="v1" aria-pressed="false">Version 1</button>
+    <button type="button" data-ver="final" aria-pressed="true">Final version</button>
+    <button type="button" class="go" id="demo">Play the 56 s demo</button>
+    <button type="button" id="pause">Pause</button>
+    <label for="speed">Speed</label>
+    <select id="speed"><option value="1">1×</option><option value="4">4×</option></select>
+  </div>
+  <div class="grid">
+    <div class="panel">
+      <h3>On the robot: M5Stack Core</h3>
+      <div class="m5">
+        <div class="screen" id="screen" role="img" aria-label="The M5Stack screen">
+          <div class="bar"><span id="scr-wifi" class="on">WiFi ok</span><span id="scr-mqtt" class="on">IO ok</span><span id="scr-rate">5s</span></div>
+          <div class="big" id="scr-v">-.--<small>V</small></div>
+          <div class="mm"><span id="scr-min">min -.--</span><span id="scr-max">max -.--</span></div>
+          <div class="msg" id="scr-msg">Online</div>
+        </div>
+        <div class="m5-buttons">
+          <button type="button" id="btn-a" title="Button A resets min and max">A: reset min/max</button>
+          <button type="button" id="btn-reset" title="The side button restarts the board">Reset</button>
+        </div>
+      </div>
+      <div class="batt">
+        <div class="stat"><span>Pack charge (simulated)</span><b id="soc-text">100%</b></div>
+        <div class="meter"><span id="soc-bar"></span></div>
+      </div>
+      <div class="row">
+        <button type="button" class="go" id="run" aria-pressed="false">Start a run</button>
+        <button type="button" id="swap">Swap pack</button>
+        <button type="button" id="wifi" aria-pressed="false">Pull the Wi-Fi</button>
+      </div>
+    </div>
+    <div class="panel">
+      <h3>Adafruit IO dashboard (simulated)</h3>
+      <div class="tiles">
+        <div class="tile"><div class="k">robot-volts</div><div class="v" id="d-last">--</div></div>
+        <div class="tile"><div class="k">Last seen</div><div class="v" id="d-seen">--</div></div>
+        <div class="tile"><div class="k">Account</div><div class="v" id="d-ban">OK</div></div>
+      </div>
+      <svg class="chart" id="chart" viewBox="0 0 400 220" role="img" aria-label="Line chart of pack volts over the last 90 seconds"></svg>
+      <div class="stat"><span>Data points in the last minute (free limit)</span><b id="rate-text">0 of 30</b></div>
+      <div class="meter rate" id="rate-meter"><span id="rate-bar"></span></div>
+      <div class="stat"><span>robot-status</span><b id="d-status">booted</b></div>
+      <div class="row" aria-label="Pit call buttons">
+        <button type="button" class="box" data-cmd="BOX">BOX</button>
+        <button type="button" data-cmd="CLEAR">CLEAR</button>
+        <button type="button" data-cmd="FAST">FAST</button>
+        <button type="button" data-cmd="SLOW">SLOW</button>
+      </div>
+      <form class="row" id="custom-form">
+        <label for="custom">Any other word</label>
+        <input id="custom" maxlength="20" autocomplete="off" placeholder="e.g. SPIN">
+        <button type="submit">Send</button>
+      </form>
+      <h3>Message log, newest first</h3>
+      <ul class="log" id="log" aria-label="Message log"></ul>
+    </div>
+  </div>
+  <p class="caption" id="caption" aria-live="polite"></p>
+  <p class="live" id="sim-live" aria-live="polite"></p>
+</div>
+<p class="small">Try version 1 too. Pull the Wi-Fi for 20 seconds and watch it freeze. Then press FAST and click CLEAR a few times. It gets banned. That is what happened to us.</p>
+
+<h2 id="video"><span class="num">02</span>Demo video</h2>
+<p>56 seconds, captions burned in, no sound. It is a screen recording of the simulator above running the demo script. These pages show no photos of real kit. With a real team, film the robot screen and the dashboard in one shot. Then the delay is visible.</p>
+<video controls preload="none" playsinline poster="poster.jpg" src="demo.mp4" aria-describedby="transcript-label"></video>
+<details>
+  <summary id="transcript-label">Transcript and shot list</summary>
+  <ol class="tight">
+    <li>0 s. Box Box: our robot battery, live on the pit wall.</li>
+    <li>2 s. Run starts. The M5Stack reads the pack and sends every 5 s.</li>
+    <li>9 s. Each reading goes by MQTT, over TLS, to an Adafruit IO feed.</li>
+    <li>15 s. We pull the Wi-Fi. The screen keeps going. It counts what it missed.</li>
+    <li>25 s. Wi-Fi back. It reconnects, then reports the gap.</li>
+    <li>33 s. FAST: every 3 s. 20 a minute stays under the free limit of 30.</li>
+    <li>39 s. Under 6.6 V while running. The coach presses BOX.</li>
+    <li>41 s. BOX BOX reaches the robot screen in about a second.</li>
+    <li>47 s. Run stopped. Fresh pack in. CLEAR.</li>
+    <li>53 s. Back to work. Test, change one thing, test again.</li>
+  </ol>
+</details>
+
+<h2 id="flow"><span class="num">03</span>Data-flow diagram</h2>
+<p>One reading goes down the left. The pit call comes back up the right. Each box says what the data looks like at that hop.</p>
+<figure>
+<svg class="diagram flow" viewBox="0 0 360 690" role="img" aria-labelledby="flow-title flow-desc">
+  <title id="flow-title">Data flow for Box Box</title>
+  <desc id="flow-desc">The pack voltage goes through a divider to pin G36 on the M5Stack. The M5Stack averages it and publishes it by MQTT over TLS through a hotspot to the Adafruit IO feed robot-volts, which feeds the dashboard. The coach's BOX button publishes to the pit-call feed, which Adafruit IO sends back to the M5Stack, which turns its screen red and beeps.</desc>
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="f-acc"/></marker>
+    <marker id="ar2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="f-red"/></marker>
+  </defs>
+  <style>
+    .flow .bx { fill: var(--ground); stroke: var(--ink-2); stroke-width: 1.5; }
+    .flow .bx.cloud { fill: var(--accent-soft); stroke: var(--accent); }
+    .flow .t { fill: var(--ink); font: 700 13px system-ui, sans-serif; }
+    .flow .s { fill: var(--muted); font: 11.5px system-ui, sans-serif; }
+    .flow .m { fill: var(--accent); font: 11px ui-monospace, Menlo, monospace; }
+    .flow .ln { stroke: var(--accent); stroke-width: 2.5; fill: none; }
+    .flow .rd { stroke: var(--red); stroke-width: 2.5; fill: none; stroke-dasharray: 7 4; }
+    .flow .f-acc { fill: var(--accent); }
+    .flow .f-red { fill: var(--red); }
+    .flow .rt { fill: var(--red); font: 700 11.5px system-ui, sans-serif; }
+  </style>
+  <rect class="bx" x="10" y="10" width="250" height="62" rx="8"/>
+  <text class="t" x="22" y="32">1. Robot pack</text>
+  <text class="s" x="22" y="50">6 NiMH cells, 7.2 V nominal</text>
+  <text class="m" x="22" y="64">about 7.2 V</text>
+  <path class="ln" d="M135 72 V96" marker-end="url(#ar)"/>
+  <rect class="bx" x="10" y="98" width="250" height="62" rx="8"/>
+  <text class="t" x="22" y="120">2. Divider, 20 kΩ over 10 kΩ</text>
+  <text class="s" x="22" y="138">Pin G36 (ADC1) sees a third</text>
+  <text class="m" x="22" y="152">about 2.40 V at the pin</text>
+  <path class="ln" d="M135 160 V184" marker-end="url(#ar)"/>
+  <rect class="bx" x="10" y="186" width="250" height="78" rx="8"/>
+  <text class="t" x="22" y="208">3. M5Stack Core (ESP32)</text>
+  <text class="s" x="22" y="226">Average 10 readings, × 3, calibrate</text>
+  <text class="s" x="22" y="242">Screen every 1 s. Send every 5 s.</text>
+  <text class="m" x="22" y="257">7.12</text>
+  <path class="ln" d="M135 264 V288" marker-end="url(#ar)"/>
+  <rect class="bx" x="10" y="290" width="250" height="62" rx="8"/>
+  <text class="t" x="22" y="312">4. Phone hotspot (WPA2)</text>
+  <text class="s" x="22" y="330">Practice table only</text>
+  <text class="s" x="22" y="345">Not the school network</text>
+  <path class="ln" d="M135 352 V376" marker-end="url(#ar)"/>
+  <rect class="bx" x="10" y="378" width="250" height="78" rx="8"/>
+  <text class="t" x="22" y="400">5. MQTT over TLS, port 8883</text>
+  <text class="s" x="22" y="418">Topic:</text>
+  <text class="m" x="22" y="433">user/feeds/robot-volts</text>
+  <text class="m" x="22" y="448">payload: 7.12</text>
+  <path class="ln" d="M135 456 V480" marker-end="url(#ar)"/>
+  <rect class="bx cloud" x="10" y="482" width="250" height="78" rx="8"/>
+  <text class="t" x="22" y="504">6. Adafruit IO feeds</text>
+  <text class="s" x="22" y="522">robot-volts, robot-status, pit-call</text>
+  <text class="s" x="22" y="538">Free limit: 30 data points a minute</text>
+  <text class="m" x="22" y="553">"value": "7.12" (a string)</text>
+  <path class="ln" d="M135 560 V584" marker-end="url(#ar)"/>
+  <rect class="bx cloud" x="10" y="586" width="250" height="94" rx="8"/>
+  <text class="t" x="22" y="608">7. Pit Wall dashboard</text>
+  <text class="s" x="22" y="626">Line chart, gauge, status text</text>
+  <text class="s" x="22" y="642">Coach presses BOX</text>
+  <text class="m" x="22" y="658">user/feeds/pit-call</text>
+  <text class="m" x="22" y="672">payload: BOX</text>
+  <path class="rd" d="M260 640 H318 V228 H268" marker-end="url(#ar2)"/>
+  <text class="rt" transform="translate(338 440) rotate(-90)" text-anchor="middle">pit call: BOX, CLEAR, FAST, SLOW</text>
+  <text class="rt" x="270" y="220">red + beep</text>
+</svg>
+<figcaption>Down the left: one reading, from battery to dashboard. Up the right, dashed: the control message, from dashboard to robot screen. The control path can only change the screen and the beep.</figcaption>
+</figure>
+<div class="card">
+<p><strong>What can fail at each hop</strong></p>
+<ul class="tight">
+  <li>Hops 1 to 2: a loose pack plug. The reading drops towards 0 V. The screen shows it at once.</li>
+  <li>Hop 3: noise from the motors. That is why we average 10 readings.</li>
+  <li>Hop 4: the hotspot goes to sleep or walks away in a pocket. The board counts missed sends and keeps the screen live.</li>
+  <li>Hop 5: an expired certificate. The connect fails every time. The screen says "Retry".</li>
+  <li>Hop 6: too many data points. Adafruit IO rejects the publish and disconnects the board. That is why the board caps itself at 24 a minute.</li>
+  <li>Hop 7, coming back: a BOX sent while the board is offline is missed. On reconnect the board asks for the last pit call.</li>
+</ul>
+</div>
+
+<h2 id="code"><span class="num">04</span>The code</h2>
+<p>The full sketch, the secrets file and the dashboard setup are on <a href="code.html">the code page</a>. The short version:</p>
+<ul class="tight">
+  <li>Arduino C++ on the M5Stack Core, with the M5Unified and Adafruit MQTT libraries.</li>
+  <li>One publish feed for the data, one for status notes, one subscribe feed for the pit call.</li>
+  <li>Four commands. Anything else is ignored.</li>
+  <li>Reconnects with a growing wait, from 5 s up to 60 s, and never gives up.</li>
+  <li>Keys live in <code>secrets.h</code>, which is in <code>.gitignore</code>.</li>
+</ul>
+
+<h2 id="reliability"><span class="num">05</span>Reliability: the test log</h2>
+<p>Competition teams know this: if you didn't test it, it doesn't work. We ran every trial below on the practice table. Version 1 failed a lot. That was the point of testing it.</p>
+<p class="note">My team and these runs are made up, like me. The trials are the ones I would run. The limits and what Adafruit IO does at them come from Adafruit's docs, linked below.</p>
+<div class="scroll">
+<table>
+  <thead><tr><th>Trial</th><th>Version</th><th>Result</th><th></th></tr></thead>
+  <tbody>
+    <tr><td>Pull the hotspot for 20 s, 3 times</td><td>1</td><td>Froze all 3 times. Needed the reset button.</td><td><span class="tag fail">fail</span></td></tr>
+    <tr><td>FAST, then click CLEAR on the dashboard</td><td>1</td><td>At 60 a minute, the first publish over 30 was rejected. Disconnected, then banned for 30 s.</td><td><span class="tag fail">fail</span></td></tr>
+    <tr><td>BOX while the hotspot was off</td><td>1</td><td>Lost. The robot never saw it.</td><td><span class="tag fail">fail</span></td></tr>
+    <tr><td>Pull the hotspot 10 times, 10 to 60 s</td><td>Final</td><td>10 of 10 came back with no touch. Back within 6 s of the hotspot in 7 trials. The slowest took 38 s.</td><td><span class="tag part">partly</span></td></tr>
+    <tr><td>2-hour bench run at 5 s</td><td>Final</td><td>1436 of 1440 readings on the feed (99.7%). The 4 missing ones were one hotspot drop, and robot-status said so.</td><td><span class="tag pass">pass</span></td></tr>
+    <tr><td>BOX pressed 20 times during runs</td><td>Final</td><td>20 of 20 arrived. Median 0.8 s to the screen, slowest 2.1 s.</td><td><span class="tag pass">pass</span></td></tr>
+    <tr><td>BOX while the hotspot was off, 5 times</td><td>Final</td><td>5 of 5 shown after reconnect, from the pit-call/get request.</td><td><span class="tag pass">pass</span></td></tr>
+    <tr><td>FAST plus 4 students clicking for 10 min</td><td>Final</td><td>Never throttled. The board's own cap of 24 skipped 3 sends.</td><td><span class="tag pass">pass</span></td></tr>
+  </tbody>
+</table>
+</div>
+<p>The slow reconnect in trial 4 has a cause. The wait doubles while the hotspot is off. So after a 60-second drop, the next try can be 40 s away. The fix is to reset the wait as soon as Wi-Fi rejoins. I list it under what I would change.</p>
+
+<h2 id="clarity"><span class="num">06</span>Data clarity</h2>
+<p>A pit wall is read in two seconds, under pressure. So every number needs its unit and its meaning.</p>
+<ul class="tight">
+  <li>Names. Feeds say what they hold: <code>robot-volts</code>, not <code>feed1</code>.</li>
+  <li>Units. Volts, always with V on the screen and the chart axis.</li>
+  <li>Precision. Two decimal places. A third would only show noise.</li>
+  <li>Smoothing. Each value is the average of 10 readings. It wobbles less, but reacts a little later. For a pack that drains over minutes, that trade is fine.</li>
+  <li>One line to watch. The chart has a dashed line at 6.6 V. Below it, while running, you swap. We picked 6.6 from our own runs, not from a datasheet.</li>
+  <li>Gaps are gaps. The chart breaks the line where readings are missing. It never draws a straight line across a dropout.</li>
+  <li>Freshness. "Last seen" turns amber after 15 s and red after 30 s. Old data looks old.</li>
+  <li>JSON. When students read the feed by HTTP, the value comes back as a string, <code>"7.12"</code>. They convert it before comparing. The <a href="code.html#json">code page</a> shows the reply.</li>
+</ul>
+<p>One thing to know about the number: a NiMH cell is rated 1.2 V, and Energizer rates capacity down to 1.0 V a cell. So a 6-cell pack is "empty" around 6 V at rest. Under motor load it reads lower than at rest. Compare runs under the same load.</p>
+
+<h2 id="security"><span class="num">07</span>Security basics</h2>
+<div class="card">
+<ul class="tight">
+  <li>Encrypted link. MQTT over TLS on port 8883, with the certificate checked. Adafruit IO strongly recommends SSL on 8883 over plain 1883.</li>
+  <li>Key out of the code. The Adafruit IO key is in <code>secrets.h</code>, which is in <code>.gitignore</code>. It never goes on the projector or in the video.</li>
+  <li>Key leaks happen. If one does, regenerate the key on Adafruit IO. The old one stops working at once, so update the board.</li>
+  <li>Only 4 commands. Unknown text is ignored and never shown. Nobody can put a message on the robot.</li>
+  <li>No remote driving. A cloud message can change the screen and the beep. It cannot move a motor. A robot that moves on a network message is a safety risk at a crowded table.</li>
+  <li>Private dashboard. Only the coach's laptop is signed in. Students get the view, not the key.</li>
+  <li>Own network. A phone hotspot with a long WPA2 password, at practice only. Not the school Wi-Fi, unless IT has said yes.</li>
+  <li>Least data. Volts and a status note. No names, no locations.</li>
+</ul>
+</div>
+
+<h2 id="build"><span class="num">08</span>Build it</h2>
+<h3>Parts</h3>
+<ul class="tight">
+  <li>M5Stack Core (Basic): ESP32, 320 × 240 screen, three buttons, speaker.</li>
+  <li>A 4-wire Grove-style cable for Port B.</li>
+  <li>Resistors: one 20 kΩ and one 10 kΩ, 1% if you have them.</li>
+  <li>A small stripboard or breadboard, and a plug that matches your pack.</li>
+  <li>The robot's 6-cell NiMH pack, 7.2 V nominal.</li>
+  <li>A multimeter, a phone hotspot and a laptop with the Arduino IDE.</li>
+</ul>
+<h3>Wiring</h3>
+<figure>
+<svg class="diagram wiring" viewBox="0 0 360 300" role="img" aria-labelledby="wire-title wire-desc">
+  <title id="wire-title">Wiring the divider to Port B</title>
+  <desc id="wire-desc">Pack plus goes through a 20 kilo-ohm resistor to a middle point, then through a 10 kilo-ohm resistor to pack minus. The middle point goes to the white wire, G36, on Port B. Pack minus goes to the black wire, ground. The red 5 V wire and the yellow G26 wire are not connected.</desc>
+  <style>
+    .wiring .w { stroke: var(--ink); stroke-width: 2.5; fill: none; }
+    .wiring .r { fill: var(--amber-soft); stroke: var(--amber); stroke-width: 2; }
+    .wiring .t { fill: var(--ink); font: 700 12.5px system-ui, sans-serif; }
+    .wiring .s { fill: var(--muted); font: 11.5px system-ui, sans-serif; }
+    .wiring .pk { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 2; }
+    .wiring .port { fill: var(--ground); stroke: var(--ink-2); stroke-width: 1.5; }
+    .wiring .dot { fill: var(--ink); }
+    .wiring .nc { stroke: var(--muted); stroke-width: 2; stroke-dasharray: 4 4; fill: none; }
+  </style>
+  <rect class="pk" x="14" y="40" width="86" height="200" rx="10"/>
+  <text class="t" x="57" y="132" text-anchor="middle">NiMH</text>
+  <text class="t" x="57" y="150" text-anchor="middle">pack</text>
+  <text class="s" x="57" y="168" text-anchor="middle">7.2 V</text>
+  <text class="t" x="57" y="62" text-anchor="middle">+</text>
+  <text class="t" x="57" y="230" text-anchor="middle">−</text>
+  <path class="w" d="M100 58 H140 V74"/>
+  <rect class="r" x="128" y="74" width="24" height="54" rx="4"/>
+  <text class="s" x="158" y="105">20 kΩ</text>
+  <path class="w" d="M140 128 V150"/>
+  <circle class="dot" cx="140" cy="150" r="4"/>
+  <path class="w" d="M140 150 V168"/>
+  <rect class="r" x="128" y="168" width="24" height="44" rx="4"/>
+  <text class="s" x="158" y="194">10 kΩ</text>
+  <path class="w" d="M140 212 V222 H100"/>
+  <circle class="dot" cx="140" cy="222" r="4"/>
+  <rect class="port" x="206" y="60" width="146" height="196" rx="8"/>
+  <text class="t" x="279" y="82" text-anchor="middle">Port B</text>
+  <text class="s" x="279" y="97" text-anchor="middle">on the M5Stack</text>
+  <text class="s" x="216" y="128">white: G36</text>
+  <text class="s" x="216" y="158">yellow: G26</text>
+  <text class="s" x="216" y="172">not connected</text>
+  <text class="s" x="216" y="198">red: 5V</text>
+  <text class="s" x="216" y="212">not connected</text>
+  <text class="s" x="216" y="240">black: GND</text>
+  <path class="w" d="M140 150 H180 V124 H210"/>
+  <path class="w" d="M140 222 H180 V236 H210"/>
+  <text class="s" x="14" y="272">At 7.2 V the pin sees 2.40 V. Even 9 V gives 3.0 V,</text>
+  <text class="s" x="14" y="288">under the 3.1 V the ESP32 reads at 11 dB.</text>
+</svg>
+<figcaption>Only two wires go to the M5Stack: white (G36) to the middle of the divider, black (GND) to pack minus. The divider draws about 0.24 mA from a 7.2 V pack.</figcaption>
+</figure>
+<h3>Steps</h3>
+<ol class="tight">
+  <li>Unplug the pack from the robot. Wire the divider with no power on it.</li>
+  <li>Check the resistors with the multimeter before soldering: 20 kΩ on top, 10 kΩ to minus.</li>
+  <li>Plug in the pack. Measure the middle point with the multimeter. It must be under 3.1 V. Only then connect Port B.</li>
+  <li>Make the three feeds and the dashboard. Fill in <code>secrets.h</code>.</li>
+  <li>Upload the sketch. Compare the screen with the multimeter on the pack. Set <code>CAL</code> so they agree. Upload again.</li>
+  <li>Run the test log above. Every trial, on the practice table, before you trust it.</li>
+</ol>
+<div class="card">
+<p><strong>Safety</strong></p>
+<ul class="tight">
+  <li>Never short the pack's wires. A NiMH pack can push a lot of current through a short and get hot. Insulate every joint.</li>
+  <li>Never wire anything with the pack plugged in.</li>
+  <li>Use this on the NiMH pack it was built for. A LiPo pack needs different charging and handling rules. Ask before you try one.</li>
+  <li>If soldering: a teacher present, a stand for the iron, eye protection and a fume extractor.</li>
+  <li>The red 5V wire stays unconnected. Feeding pack voltage into it can damage the board.</li>
+</ul>
+</div>
+
+<h2 id="rubric"><span class="num">09</span>Rubric check</h2>
+<div class="scroll">
+<table>
+  <thead><tr><th>Rubric line</th><th>Evidence</th><th>My call</th></tr></thead>
+  <tbody>
+    <tr><td>Reliability</td><td>Eight trials, with the version 1 failures kept. 99.7% of readings in a 2-hour run. Missed calls are fetched again.</td><td><span class="tag pass">met</span></td></tr>
+    <tr><td>Data clarity</td><td>Named feeds, units, two decimals, a swap line, broken gaps and a freshness tile.</td><td><span class="tag pass">met</span></td></tr>
+    <tr><td>Security basics</td><td>TLS, key out of git, 4 commands only, no remote driving, private dashboard.</td><td><span class="tag pass">met</span></td></tr>
+    <tr><td>Documentation</td><td>Code page, diagram, wiring, steps, safety and this log. The video is a simulator recording, not the real rig.</td><td><span class="tag part">mostly</span></td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2 id="change"><span class="num">10</span>What I would change</h2>
+<ul class="tight">
+  <li>Reset the reconnect wait when Wi-Fi rejoins. Trial 4's 38-second gap is too long during a run.</li>
+  <li>The 6.6 V swap line came from one pack. Packs age. I'd log each pack by its number and set a line per pack.</li>
+  <li>The demo video should be the real rig. A screen recording proves the logic, not the wiring.</li>
+  <li>The M5Stack adds weight to the robot. For a light robot, a smaller board would be better.</li>
+</ul>
+
+<h2 id="sources"><span class="num">11</span>Sources</h2>
+<ul class="tight small">
+  <li>MQTT host, port 8883 with SSL, the 30-a-minute free limit, rejected publishes, 30-second bans, the throttle and errors topics, the /get modifier and no retain flag: <a href="https://io.adafruit.com/api/docs/mqtt.html">Adafruit IO MQTT API</a>.</li>
+  <li>The data/last endpoint, the X-AIO-Key header, values as strings, and regenerating a key: <a href="https://io.adafruit.com/api/docs/http.html">Adafruit IO HTTP API</a> and <a href="https://learn.adafruit.com/mqtt-adafruit-io-and-you/getting-started-on-adafruit-io">Getting started on Adafruit IO</a>.</li>
+  <li>Free plan: 10 feeds, 5 dashboards, 30 days of data: <a href="https://learn.adafruit.com/welcome-to-adafruit-io/io-plus">Adafruit IO Plus</a>. Limits can change, so check again.</li>
+  <li>The TLS example the sketch builds on: <a href="https://github.com/adafruit/Adafruit_MQTT_Library/blob/master/examples/adafruitio_secure_esp32/adafruitio_secure_esp32.ino">Adafruit MQTT Library, adafruitio_secure_esp32</a>.</li>
+  <li>Port B pins G26 and G36, ADC1 on G32 to G39, the 320 × 240 screen and buttons: <a href="https://docs.m5stack.com/en/core/basic_v2.7">M5Stack Core Basic docs</a>.</li>
+  <li>ADC2 is also used by Wi-Fi: <a href="https://docs.espressif.com/projects/esp-idf/en/stable/esp32/api-reference/peripherals/adc/adc_oneshot.html">ESP-IDF ADC oneshot driver</a>.</li>
+  <li>11 dB attenuation reads 150 to 3100 mV, and analogReadMilliVolts: <a href="https://docs.espressif.com/projects/arduino-esp32/en/latest/api/adc.html">Arduino-ESP32 ADC API</a>.</li>
+  <li>M5Unified display, button and speaker calls: <a href="https://github.com/m5stack/M5Unified">M5Unified on GitHub</a> and its examples.</li>
+  <li>NiMH cells: 1.2 V nominal, capacity rated to 1.0 V: <a href="https://data.energizer.com/pdfs/nh15-2000-ap.pdf">Energizer NH15-2000 datasheet</a>.</li>
+</ul>
+</main>
+</body>
+</html>

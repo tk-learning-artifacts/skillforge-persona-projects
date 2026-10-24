@@ -1,0 +1,6 @@
+{
+  "module": "iot-electronics",
+  "persona": "marcus",
+  "title": "Box Box: live battery telemetry for robot practice",
+  "summary": "An M5Stack sends a robot's battery volts to Adafruit IO by MQTT and turns red when the coach sends a pit call. With a runnable simulator, a demo video, a data-flow diagram, the code and a reliability test log."
+}
