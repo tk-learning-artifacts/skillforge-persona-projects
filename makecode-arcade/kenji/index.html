@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kopi Run: a two-level MakeCode Arcade platformer, by Kenji Watanabe</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="engine.js" defer></script>
+<script src="kopi-data.js" defer></script>
+<script src="kopi-run.js" defer></script>
+<script src="code.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Kenji Watanabe is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<h1>Kopi Run <small>A two-level platformer, a starter project and a 4-lesson jam</small></h1>
+<p class="lede">A delivery bot runs across HDB rooftops. Grab the kopi, jump the canals, scare off the crows and reach the flag.</p>
+<p>I'm Kenji. I make games for a living and teach game design part-time. This is my end project for the MakeCode Arcade module. I built it for a Sec 2 enrichment class of 36. Most of them had done Chase the Pizza and little else.</p>
+<ul class="toc">
+  <li><a href="#play">Play it</a></li>
+  <li><a href="#share">Get it in MakeCode</a></li>
+  <li><a href="#inside">Events, variables, tilemap</a></li>
+  <li><a href="#jump">Tuning the jump</a></li>
+  <li><a href="#playtests">Playtest notes</a></li>
+  <li><a href="starter.html">Starter and task sheet</a></li>
+  <li><a href="jam.html">1-page jam plan</a></li>
+</ul>
+
+<h2 id="play">Play it</h2>
+<p>This page runs a copy of the game, built to follow Arcade's rules. Same 160 by 120 screen, same numbers, same events. The MakeCode code is <a href="#share">below</a>.</p>
+<div class="cabinet">
+  <p class="mode" id="mode">Full game: 2 levels</p>
+  <div class="hud" aria-hidden="true"><span id="hud-life">Lives 3</span><span id="hud-level">Level 1</span><span id="hud-score">Kopi 0</span></div>
+  <div class="stage">
+    <canvas id="screen" tabindex="0" aria-label="Kopi Run game screen"></canvas>
+    <div class="dlg" id="dlg" hidden>
+      <h3 id="dlg-title">Kopi Run</h3>
+      <p id="dlg-text"></p>
+      <button type="button" id="dlg-go">Start</button>
+    </div>
+  </div>
+  <div class="pad" id="pad" aria-label="Game buttons">
+    <button type="button" data-key="left" aria-label="Left">&#9664;</button>
+    <button type="button" data-key="right" aria-label="Right">&#9654;</button>
+    <button type="button" class="a" data-key="A" aria-label="A: jump">A</button>
+  </div>
+  <div class="controls">
+    <button type="button" id="pause">Pause</button>
+    <button type="button" id="sound" aria-pressed="true">Sound: on</button>
+    <label><input type="checkbox" id="trail"> Show jump trail</label>
+  </div>
+  <p class="live" id="live" aria-live="polite"></p>
+</div>
+<p class="small">Keyboard: arrow keys or A and D to move. Space, Z or Enter is the A button. Tap the screen first.</p>
+<p>Try the <strong>jump trail</strong>. Each dot is where the bot's feet were, every other frame. Dots spread out when it moves fast.</p>
+
+<h2 id="share">Get it in MakeCode</h2>
+<p>The brief asks for a share link. I didn't publish one from this page. A link made without signing in can't be deleted later. Only a "Report Abuse" can take it down. So here is every line instead. Five steps give you your own link.</p>
+<ol class="steps">
+  <li>Open <a href="https://arcade.makecode.com/">arcade.makecode.com</a> and start a New Project.</li>
+  <li>Click <strong>JavaScript</strong> at the top. Delete what is there.</li>
+  <li>Press <strong>Copy the code</strong> below and paste it in.</li>
+  <li>Click <strong>Blocks</strong>. The game is now in blocks, ready to change.</li>
+  <li>Press the <strong>Share</strong> button. Post the link in your class SLS or Google Classroom only.</li>
+</ol>
+<div class="row">
+  <button type="button" class="primary" data-copy="code-js">Copy the code</button>
+  <a class="btn" href="kopi-run-js.txt">Open as JavaScript</a>
+  <a class="btn" href="kopi-run-python.txt">Open as Python</a>
+</div>
+<textarea class="code" id="code-js" readonly aria-label="Kopi Run code in JavaScript" spellcheck="false">// Kopi Run: a two-level platformer. Collect kopi, dodge crows, reach the flag.
+namespace SpriteKind {
+    export const Goal = SpriteKind.create()
+}
+// Tile pictures. EMPTY is see-through. ROOF, BRICK and CHIMNEY are walls.
+const EMPTY = image.create(16, 16)
+const ROOF = img`
+    2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+    2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+    e 2 2 2 e 2 2 2 e 2 2 2 e 2 2 2
+    2 2 e 2 2 2 e 2 2 2 e 2 2 2 e 2
+    b b b b b b b b b b b b b b b b
+    b d d d d d d d d d d d d d d d
+    d d d d d d d d b d d d d d d d
+    d d d d d d d d b d d d d d d d
+    d d d d d d d d b d d d d d d d
+    d d d d d d d d b d d d d d d d
+    b b b b b b b b b b b b b b b b
+    d d d d d d d d b d d d d d d d
+    b d d d d d d d d d d d d d d d
+    b d d d d d d d d d d d d d d d
+    b d d d d d d d d d d d d d d d
+    b d d d d d d d d d d d d d d d
+`
+const BRICK = img`
+    b d d d d d d d d d d d d d d d
+    b d d d d d d d d d d d d d d d
+    b d d d d d d d d d d d d d d d
+    b d d d d d d d d d d d d d d d
+    b b b b b b b b b b b b b b b b
+    b d d d d d d d d d d d d d d d
+    d d d d d d d d b d d d d d d d
+    d d d d d d d d b d d d d d d d
+    d d d d d d d d b d d d d d d d
+    d d d d d d d d b d d d d d d d
+    b b b b b b b b b b b b b b b b
+    d d d d d d d d b d d d d d d d
+    b d d d d d d d d d d d d d d d
+    b d d d d d d d d d d d d d d d
+    b d d d d d d d d d d d d d d d
+    b d d d d d d d d d d d d d d d
+`
+const CHIMNEY = img`
+    . . c c c c c c c c c c c c . .
+    . . c c c c c c c c c c c c . .
+    . . c c c c c c c c c c c c . .
+    . . c b b b b b b b b b b c . .
+    . . c b b b b b b b b b b c . .
+    . . c c c c c c c c c c c c . .
+    . . c b b b b b b b b b b c . .
+    . . c b b b b b b b b b b c . .
+    . . c b b b b b b b b b b c . .
+    . . c b b b b b b b b b b c . .
+    . . c c c c c c c c c c c c . .
+    . . c b b b b b b b b b b c . .
+    . . c b b b b b b b b b b c . .
+    . . c b b b b b b b b b b c . .
+    . . c b b b b b b b b b b c . .
+    . . c c c c c c c c c c c c . .
+`
+const WATER = img`
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    9 9 6 6 6 6 9 9 9 9 6 6 6 6 9 9
+    8 8 9 9 8 8 8 8 9 9 8 8 8 8 9 9
+    8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8
+    8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8
+    8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8
+    8 8 8 8 9 9 8 8 8 8 9 9 8 8 8 8
+    8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8
+    8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8
+    8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8
+    9 9 8 8 8 8 9 9 8 8 8 8 9 9 8 8
+    8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8
+    8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8
+    8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8
+`
+const FLAGSPOT = img`
+    . . . . . . . . . . . . . . . .
+    . . . f 7 6 7 6 7 6 7 6 7 6 . .
+    . . . f 6 7 6 7 6 7 6 7 6 7 . .
+    . . . f 7 6 7 6 7 6 7 6 7 6 . .
+    . . . f 6 7 6 7 6 7 6 7 6 7 . .
+    . . . f 7 6 7 6 7 6 7 6 7 6 . .
+    . . . f 6 7 6 7 6 7 6 7 6 7 . .
+    . . . f 7 6 7 6 7 6 7 6 7 6 . .
+    . . . f . . . . . . . . . . . .
+    . . . f . . . . . . . . . . . .
+    . . . f . . . . . . . . . . . .
+    . . . f . . . . . . . . . . . .
+    . . . f . . . . . . . . . . . .
+    . . . f . . . . . . . . . . . .
+    . . . f . . . . . . . . . . . .
+    . . . f . . . . . . . . . . . .
+`
+const DOOR = img`
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . e e e e e e e e e e . . .
+    . . . e 4 4 4 4 4 4 4 4 e . . .
+    . . . e 4 4 4 4 4 4 4 4 e . . .
+    . . . e 4 4 4 4 4 4 4 4 e . . .
+    . . . e 4 4 4 4 4 4 4 4 e . . .
+    . . . e 4 4 4 4 4 4 4 4 e . . .
+    . . . e 4 4 4 4 4 4 4 4 e . . .
+    . . . e 4 4 4 4 4 4 5 4 e . . .
+    . . . e 4 4 4 4 4 4 4 4 e . . .
+    . . . e 4 4 4 4 4 4 4 4 e . . .
+    . . . e 4 4 4 4 4 4 4 4 e . . .
+    . . . e 4 4 4 4 4 4 4 4 e . . .
+    . . . e 4 4 4 4 4 4 4 4 e . . .
+    . . . e 4 4 4 4 4 4 4 4 e . . .
+`
+const CUPSPOT = img`
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . 5 5 . . . . . . .
+    . . . . . . . 5 5 . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+`
+const CROWSPOT = img`
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . f f . . . . . . .
+    . . . . . . . f f . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+`
+
+// The two levels. Each one is a tilemap. The marker tiles say where things start.
+const LEVELS = [
+    tiles.createTilemap(hex`28000900000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000070000000000000000000000070000000000000007000000000000000000060000070000000300000000000700000003000008000000030000000700000101010000000005010101010101010101010101000001010101010101010101010101010101010102020201010101010202020202020202020202020404020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202`, img`
+        . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+        . . . . . . . . 2 . . . . . . . . . 2 . . . . . . 2 . . . . . . 2 2 2 . . . . .
+        2 2 2 2 2 2 2 2 2 2 2 2 . . 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+        2 2 2 2 2 2 2 2 2 2 2 2 . . 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+        2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+    `, [EMPTY, ROOF, BRICK, CHIMNEY, WATER, FLAGSPOT, DOOR, CUPSPOT, CROWSPOT], TileScale.Sixteen),
+    tiles.createTilemap(hex`30000900000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007000000000700000007000000000000000000000000000000000000000000000000000007000000000000000000000101010000000101010101010100000000000000070000000000000600000700000003000008000000030000000000010202020000000202020202020200080000000300010101000005010101010101010101010101010101010101000001020202020000000202020202020201010101010101020202010101020202020202020202020202020202020202040402020202020404040202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202`, img`
+        . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . . . . . . . . 2 2 2 . . . 2 2 2 2 2 2 2 . . . . . . . . . . . . .
+        . . . . . . . . 2 . . . . . . 2 . . . . . 2 2 2 2 . . . 2 2 2 2 2 2 2 . . . . . 2 . 2 2 2 . . .
+        2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 . . 2 2 2 2 2 . . . 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+        2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 . . 2 2 2 2 2 . . . 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+        2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+    `, [EMPTY, ROOF, BRICK, CHIMNEY, WATER, FLAGSPOT, DOOR, CUPSPOT, CROWSPOT], TileScale.Sixteen)
+]
+
+let level = 0
+let bot = sprites.create(img`
+    . . . . f f f f . . . .
+    . . . f 1 1 1 1 f . . .
+    . . f 1 f 1 1 f 1 f . .
+    . . f 1 f 1 1 f 1 f . .
+    . . f 1 1 1 1 1 1 f . .
+    . . . f f f f f f . . .
+    . . f 4 4 4 4 4 4 f . .
+    . f 4 4 4 4 4 4 4 4 f .
+    . f 4 4 d d d d 4 4 f .
+    . f 4 4 d e e d 4 4 f .
+    . f 4 4 4 4 4 4 4 4 f .
+    . . f f f f f f f f . .
+    . . . f f . . f f . . .
+    . . . f f . . f f . . .
+`, SpriteKind.Player)
+controller.moveSprite(bot, 80, 0)
+bot.ay = 350
+scene.cameraFollowSprite(bot)
+scene.setBackgroundColor(9)
+info.setScore(0)
+info.setLife(3)
+
+// Load a level, then swap each marker tile for a cup, a crow or the flag.
+function startLevel(n: number) {
+    level = n
+    sprites.destroyAllSpritesOfKind(SpriteKind.Food)
+    sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
+    sprites.destroyAllSpritesOfKind(SpriteKind.Goal)
+    tiles.setCurrentTilemap(LEVELS[n])
+    tiles.placeOnRandomTile(bot, DOOR)
+    for (let spot of tiles.getTilesByType(CUPSPOT)) {
+        let cup = sprites.create(img`
+    . 1 . 1 . . . .
+    . . 1 . 1 . . .
+    1 1 1 1 1 1 . .
+    1 e e e e 1 1 1
+    1 e e e e 1 . 1
+    1 e e e e 1 1 1
+    . 1 e e 1 . . .
+    . . 1 1 . . . .
+`, SpriteKind.Food)
+        tiles.placeOnTile(cup, spot)
+        tiles.setTileAt(spot, EMPTY)
+    }
+    for (let spot of tiles.getTilesByType(CROWSPOT)) {
+        let crow = sprites.create(img`
+    . . . . f f f . . . . .
+    . . . f f f f f . . . .
+    . . f f 1 f f f f . . .
+    . 5 5 f f f f f f . . .
+    . . . f f f f f f f f .
+    . . . f f f f f f f f f
+    . . . . f f f f f f . .
+    . . . . . f . f . . . .
+    . . . . . f . f . . . .
+    . . . . f f f f f . . .
+`, SpriteKind.Enemy)
+        tiles.placeOnTile(crow, spot)
+        tiles.setTileAt(spot, EMPTY)
+        crow.vx = 25 + 15 * n
+        crow.setBounceOnWall(true)
+    }
+    for (let spot of tiles.getTilesByType(FLAGSPOT)) {
+        let flag = sprites.create(img`
+    . . . . . . . . . . . .
+    . f 7 6 7 6 7 6 7 6 7 6
+    . f 6 7 6 7 6 7 6 7 6 7
+    . f 7 6 7 6 7 6 7 6 7 6
+    . f 6 7 6 7 6 7 6 7 6 7
+    . f 7 6 7 6 7 6 7 6 7 6
+    . f 6 7 6 7 6 7 6 7 6 7
+    . f 7 6 7 6 7 6 7 6 7 6
+    . f . . . . . . . . . .
+    . f . . . . . . . . . .
+    . f . . . . . . . . . .
+    . f . . . . . . . . . .
+    . f . . . . . . . . . .
+    . f . . . . . . . . . .
+    . f . . . . . . . . . .
+    . f . . . . . . . . . .
+`, SpriteKind.Goal)
+        tiles.placeOnTile(flag, spot)
+        tiles.setTileAt(spot, EMPTY)
+    }
+    game.splash("Level " + (n + 1))
+}
+
+// Jump only from the ground, so there is no flying.
+controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (bot.isHittingTile(CollisionDirection.Bottom)) {
+        bot.vy = -150
+        music.play(music.melodyPlayable(music.jumpUp), music.PlaybackMode.InBackground)
+    }
+})
+
+// A cup is worth 1 point.
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSprite) {
+    otherSprite.destroy(effects.confetti, 200)
+    info.changeScoreBy(1)
+    music.play(music.melodyPlayable(music.baDing), music.PlaybackMode.InBackground)
+})
+
+// Land on a crow from above to scare it off. Touch it any other way and lose a life.
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
+    if (sprite.vy &gt; 0 &amp;&amp; sprite.bottom &lt; otherSprite.y) {
+        otherSprite.destroy(effects.disintegrate, 200)
+        sprite.vy = -100
+        info.changeScoreBy(3)
+    } else {
+        info.changeLifeBy(-1)
+        scene.cameraShake(4, 300)
+        music.play(music.melodyPlayable(music.smallCrash), music.PlaybackMode.InBackground)
+        tiles.placeOnRandomTile(sprite, DOOR)
+    }
+})
+
+// Fall in the canal and you go back to the door. The game loop checks every frame.
+game.onUpdate(function () {
+    if (tiles.tileAtLocationEquals(bot.tilemapLocation(), WATER)) {
+        info.changeLifeBy(-1)
+        music.play(music.melodyPlayable(music.smallCrash), music.PlaybackMode.InBackground)
+        tiles.placeOnRandomTile(bot, DOOR)
+    }
+})
+
+// The flag ends level 1. On level 2 it wins the game.
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Goal, function (sprite, otherSprite) {
+    if (level == 0) {
+        startLevel(1)
+    } else {
+        game.over(true)
+    }
+})
+
+startLevel(0)
+</textarea>
+<p class="small">I pasted this into the editor on 24 October 2026. It ran with no errors and switched to Blocks. The Python file is what the editor made when I clicked Python.</p>
+<p class="note">Before anyone presses Share: no names, faces or school details in the game. MakeCode says all shared projects can be copied and edited. It also keeps projects in the browser, and clearing the browser can delete them. The link is your backup.</p>
+
+<h2 id="inside">Events, variables and a tilemap</h2>
+<p>The rubric asks for all three. Here is where each one lives in the code.</p>
+<div class="scroll">
+<table class="stack">
+  <thead><tr><th>Idea</th><th>In Kopi Run</th><th>Block or line</th></tr></thead>
+  <tbody>
+    <tr><td>Event</td><td>Press A to jump, only from the ground.</td><td><code>controller.A.onEvent</code></td></tr>
+    <tr><td>Event</td><td>Touch a cup: it vanishes and the score goes up.</td><td><code>sprites.onOverlap</code> with Food</td></tr>
+    <tr><td>Event</td><td>Touch a crow: stomp it, or lose a life.</td><td><code>sprites.onOverlap</code> with Enemy</td></tr>
+    <tr><td>Event</td><td>Touch the flag: next level, or you win.</td><td><code>sprites.onOverlap</code> with Goal</td></tr>
+    <tr><td>Event</td><td>Every frame, check for canal water under the bot. Lose a life, back to the door.</td><td><code>game.onUpdate</code></td></tr>
+    <tr><td>Variable</td><td><code>level</code> says which map you are on. The flag reads it.</td><td><code>let level = 0</code></td></tr>
+    <tr><td>Variable</td><td>Score and lives use Arcade's own counters.</td><td><code>info.changeScoreBy</code>, <code>info.changeLifeBy</code></td></tr>
+    <tr><td>Tilemap</td><td>Two levels, 40 and 48 tiles wide. Roof, brick and chimney tiles are walls.</td><td><code>tiles.setCurrentTilemap</code></td></tr>
+    <tr><td>Tilemap</td><td>Marker tiles show where cups, crows and the flag start. The code swaps them for sprites.</td><td><code>tiles.getTilesByType</code></td></tr>
+  </tbody>
+</table>
+</div>
+<h3>A trap I fell into</h3>
+<p>My first version used "on overlap tile" for the canal and the flag. It ran fine in JavaScript. Then I clicked Blocks and back. The code broke.</p>
+<p>Blocks puts event blocks before "on start". My tile pictures are set in "on start". So the events asked for a tile that did not exist yet. The editor said "used before its declaration".</p>
+<p>The fix: the flag became a sprite, with its own kind. The canal check moved into the game loop, which only runs after "on start". Now the code survives the trip to Blocks and back. I checked.</p>
+<h3>The crow rule, side by side</h3>
+<p>This is the event my students argue about most. Blocks to text is a big step, so I show both.</p>
+<div class="two">
+<pre aria-label="JavaScript"><span class="tag">JavaScript</span>
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy,
+  function (sprite, otherSprite) {
+    if (sprite.vy &gt; 0 &amp;&amp; sprite.bottom &lt; otherSprite.y) {
+        otherSprite.destroy(effects.disintegrate, 200)
+        sprite.vy = -100
+        info.changeScoreBy(3)
+    } else {
+        info.changeLifeBy(-1)
+        scene.cameraShake(4, 300)
+        tiles.placeOnRandomTile(sprite, DOOR)
+    }
+})</pre>
+<pre aria-label="Python"><span class="tag">Python</span>
+def on_on_overlap2(sprite2, otherSprite2):
+    if sprite2.vy &gt; 0 and sprite2.bottom &lt; otherSprite2.y:
+        otherSprite2.destroy(effects.disintegrate, 200)
+        sprite2.vy = -100
+        info.change_score_by(3)
+    else:
+        info.change_life_by(-1)
+        scene.camera_shake(4, 300)
+        tiles.place_on_random_tile(sprite2, DOOR)
+sprites.on_overlap(SpriteKind.player,
+    SpriteKind.enemy, on_on_overlap2)</pre>
+</div>
+<p class="small">The Python names come from the editor itself. I left out the sound line to fit.</p>
+<p>Read it out loud. "Falling, and your feet are above its middle? You win. Any other touch? You lose a life." Players learn that rule in one try. It feels fair because it is exact.</p>
+
+<h2 id="jump">Tuning the jump</h2>
+<p>A jump in Arcade is two numbers. <code>ay</code> pulls the bot down, in pixels per second, per second. Pressing A sets <code>vy</code> to -150, an upward speed. Kopi Run uses <code>ay = 350</code>.</p>
+<div class="card">
+<ul class="tight">
+  <li>Height: 150 × 150 ÷ (2 × 350) = 32 pixels. That is 2 tiles.</li>
+  <li>Time in the air: 2 × 150 ÷ 350 = 0.86 seconds.</li>
+  <li>Distance: the bot runs at 80 pixels a second. 80 × 0.86 = 69 pixels, about 4 tiles.</li>
+</ul>
+</div>
+<p>So my level rules are simple. Steps are 1 tile high. Gaps are 3 tiles wide at most. A 4-tile gap is possible on paper. In the playtest nobody made it.</p>
+
+<h2 id="playtests">Playtest notes from 2 rounds</h2>
+<p class="note">The students and their words are made up, like me. The numbers are the game's real settings in each version.</p>
+<h3>Round 1: version 1, four Sec 2 students</h3>
+<p>Version 1 had <code>ay = 500</code>. A crow hit took a life with no sound. Falling in a canal restarted the whole level.</p>
+<ul class="tight">
+  <li>Note 1. Three of four fell in the first canal. They blamed the keyboard. The jump was 22 pixels high and 0.6 seconds long.</li>
+  <li>Note 2. Student A lost two lives to crows and did not notice.</li>
+  <li>Note 3. Student B fell in a canal near the flag. Back at the start, with every cup back too. She stopped playing.</li>
+  <li>Note 4. Student C landed on a crow and said, "Why didn't it die?"</li>
+</ul>
+<div class="card">
+<p><strong>Changes for version 2</strong></p>
+<ul class="tight">
+  <li>From note 1: <code>ay</code> down to 350. The jump is now 2 tiles high.</li>
+  <li>From note 2: a crash sound and a screen shake. You also go back to the door.</li>
+  <li>From note 3: a fall sends you to the door. Cups you took stay taken.</li>
+  <li>From note 4: the stomp rule. Land on a crow for 3 points.</li>
+</ul>
+</div>
+<h3>Round 2: version 2, four other Sec 2 students</h3>
+<ul class="tight">
+  <li>Note 1. Level 2 had a 4-tile gap. Nobody crossed it in 5 tries. The maths said 69 pixels of air for 64 pixels of gap. Too tight.</li>
+  <li>Note 2. Student D stomped every crow on purpose. He said it was the best part.</li>
+  <li>Note 3. Student E asked where to go after the high platform.</li>
+  <li>Note 4. Student F lost a life at the end of level 2. The long walk back from the door made him groan.</li>
+</ul>
+<div class="card">
+<p><strong>Changes for version 3, the game above</strong></p>
+<ul class="tight">
+  <li>From note 1: the gap is now 3 tiles.</li>
+  <li>From note 2: nothing. Stomping is the fun, so it stays.</li>
+  <li>From note 3: a row of cups on the high platform points the way.</li>
+  <li>From note 4: nothing yet. See <a href="#change">what I would change</a>.</li>
+</ul>
+</div>
+
+<h2 id="starter">Starter project</h2>
+<p>For the class I cut the finished game back into a starter. The levels, the bot and the crows are done. Students fill 3 gaps:</p>
+<ol class="steps">
+  <li>The bot can jump in mid-air, again and again. Fix it with an <code>if</code>.</li>
+  <li>Cups do nothing. Write the overlap event and the score.</li>
+  <li>The flag goes nowhere. Use the <code>level</code> variable to load level 2, then win.</li>
+</ol>
+<div class="row">
+  <a class="btn primary" href="index.html?starter#play">Play the starter</a>
+  <a class="btn" href="starter.html">Starter code and task sheet</a>
+</div>
+
+<h2 id="jam">Game jam plan</h2>
+<p>Four 60-minute lessons, one a week. Teams of 3 make a 2-level game on the theme "My neighbourhood". The last lesson is a showcase where the class plays every game.</p>
+<p><a class="btn primary" href="jam.html">Read the 1-page jam plan</a></p>
+
+<h2 id="change">What I would change</h2>
+<p>Falling near the end of level 2 sends you back to the door. That is a long walk, and it feels like punishment. A checkpoint tile halfway would fix it. It is also a good stretch task for fast teams.</p>
+<p>The pasted levels show as grey code blocks in Blocks. Students can't draw on them in the tilemap editor. Teams that want new levels draw a new tilemap and swap it in. That takes a demo.</p>
+<p>And there is one jump height. I would like a higher jump when you hold the button longer. That needs a timer, and more code than a Sec 2 starter should hold.</p>
+
+<h2 id="sources">Sources</h2>
+<ul class="tight small">
+  <li>Screen size, 160 by 120 with 16 colours: <a href="https://makecode.com/blog/arcade/01-18-2019">MakeCode blog, January 2019</a>.</li>
+  <li>Gravity: <a href="https://arcade.makecode.com/reference/sprites/sprite/ay">ay reference</a> and <a href="https://arcade.makecode.com/reference/sprites/sprite/vy">vy reference</a>.</li>
+  <li>Ground check: <a href="https://arcade.makecode.com/reference/sprites/sprite/is-hitting-tile">is hitting tile</a>.</li>
+  <li>Events: <a href="https://arcade.makecode.com/reference/sprites/on-overlap">on overlap</a> and <a href="https://arcade.makecode.com/reference/scene/on-overlap-tile">on overlap tile</a>.</li>
+  <li>Levels: <a href="https://arcade.makecode.com/reference/tiles/set-current-tilemap">set current tilemap</a> and <a href="https://arcade.makecode.com/reference/tiles/get-tiles-by-type">get tiles by type</a>.</li>
+  <li>Moving: <a href="https://arcade.makecode.com/reference/controller/move-sprite">move sprite</a>. Ending: <a href="https://arcade.makecode.com/reference/game/over">game over</a>.</li>
+  <li>Share links and copying: <a href="https://arcade.makecode.com/share">Sharing projects</a>. Saving in the browser: <a href="https://arcade.makecode.com/save">Saving projects</a>.</li>
+</ul>
+</main>
+</body>
+</html>

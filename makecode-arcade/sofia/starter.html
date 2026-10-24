@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Duckling Round-Up starter project and chilli cards, by Sofia Reyes</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="code.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Sofia Reyes is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<div class="noprint">
+<p><a href="index.html">Back to Duckling Round-Up</a></p>
+<h1>Duckling Round-Up starter <small>Three missing rules, three chilli levels</small></h1>
+<p class="lede">The parks, the duck and the mowers are ready. Pairs pick how hot they want it.</p>
+<div class="card">
+<ul class="tight">
+  <li>Who: 24 campers aged 9 to 12, in 12 pairs. Each pair has an older and a younger camper.</li>
+  <li>When: day 1, 9:40 to 10:30, after they play the full game.</li>
+  <li>Before this: 20 minutes of Chase the Pizza, so they know sprites and overlap events.</li>
+  <li>Devices: one camp laptop per pair, a browser, no sign-in.</li>
+</ul>
+</div>
+<p>Why chilli levels? In a mixed camp, one task never fits. Everyone does Mild. Then each pair picks Medium or Spicy. Nobody feels slow, because the cards are different, not ranked by age.</p>
+<h2>Get the starter</h2>
+<ol class="steps">
+  <li><a href="index.html?starter#play">Play the starter here</a>. Can you spot the 3 missing rules?</li>
+  <li>In <a href="https://arcade.makecode.com/">MakeCode Arcade</a>, click New Project, then JavaScript.</li>
+  <li>Paste the starter code, then click Blocks.</li>
+</ol>
+<div class="row">
+  <button type="button" class="primary" data-copy="code-starter">Copy the starter code</button>
+  <a class="btn" href="duckling-starter-js.txt">Open as JavaScript</a>
+  <a class="btn" href="duckling-starter-python.txt">Open as Python</a>
+</div>
+<textarea class="code" id="code-starter" readonly aria-label="Duckling Round-Up starter code in JavaScript" spellcheck="false">// Duckling Round-Up STARTER. The parks, the duck and the mowers are ready.
+// Fill the gaps marked GAP. Pick your chilli level on the task card.
+namespace SpriteKind {
+    export const Found = SpriteKind.create()
+    export const Goal = SpriteKind.create()
+}
+// Tile pictures. HEDGE and GATE are walls.
+const GRASS = img`
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 6 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 6 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 6 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 6 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 6 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    6 7 7 7 7 7 7 7 7 7 7 6 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 6 7 7 7 7 7 7 7 7 7 7 6 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 6 7 7 7 7 7 7 7 7 7 7 6 7 7
+`
+const HEDGE = img`
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 c
+    7 6 7 c 6 6 c 6 6 6 6 6 6 7 c c
+    7 c 6 6 6 6 6 6 7 c 6 6 c 6 6 c
+    7 6 6 7 c 6 6 c 6 6 6 6 6 6 7 c
+    7 6 c 6 6 6 6 6 6 7 c 6 6 c 6 c
+    7 6 6 6 7 c 6 6 c 6 6 6 6 6 6 c
+    7 6 6 c 6 6 6 6 6 6 7 c 6 6 c c
+    7 6 6 6 6 7 c 6 6 c 6 6 6 6 6 c
+    7 c 6 6 c 6 6 6 6 6 6 7 c 6 6 c
+    7 6 6 6 6 6 7 c 6 6 c 6 6 6 6 c
+    7 7 c 6 6 c 6 6 6 6 6 6 7 c 6 c
+    7 6 6 6 6 6 6 7 c 6 6 c 6 6 6 c
+    7 6 7 c 6 6 c 6 6 6 6 6 6 7 c c
+    7 c 6 6 6 6 6 6 7 c 6 6 c 6 6 c
+    7 6 6 7 c 6 6 c 6 6 6 6 6 6 7 c
+    c c c c c c c c c c c c c c c c
+`
+const GATE = img`
+    6 d d 7 7 7 d d 7 7 7 d d 7 7 7
+    7 d d 7 7 7 d d 7 7 7 d d 7 7 7
+    7 d d 7 7 7 d d 7 7 7 d d 7 7 7
+    e e e e e e e e e e e e e e e e
+    7 d d 7 7 7 d d 7 7 7 d d 6 7 7
+    7 d d 7 7 7 d d 6 7 7 d d 7 7 7
+    7 d d 6 7 7 d d 7 7 7 d d 7 6 7
+    7 d d 7 7 7 d d 7 6 7 d d 7 7 7
+    7 d d 7 6 7 d d 7 7 7 d d 7 7 6
+    7 d d 7 7 7 d d 7 7 6 d d 7 7 7
+    7 d d 7 7 6 d d 7 7 7 d d 7 7 7
+    6 d d 7 7 7 d d 7 7 7 d d 7 7 7
+    e e e e e e e e e e e e e e e e
+    7 d d 7 7 7 d d 7 7 7 d d 7 7 7
+    7 d d 7 7 7 d d 7 7 7 d d 7 7 7
+    7 d d 7 7 7 d d 7 7 7 d d 6 7 7
+`
+const PONDSPOT = img`
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 9 9 9 9 9 9 7 7 7 7 7
+    7 7 7 7 9 9 9 9 9 9 9 9 7 7 7 7
+    7 7 7 9 9 8 8 9 8 8 8 9 9 7 7 7
+    7 7 9 9 8 8 9 8 8 8 8 9 9 9 7 7
+    7 9 9 8 8 9 8 8 8 8 9 8 8 9 9 7
+    7 9 9 8 9 8 8 8 8 9 8 8 8 9 9 7
+    7 9 9 9 8 8 8 8 9 8 8 8 8 9 9 7
+    7 9 9 8 8 8 8 9 8 8 8 8 9 9 9 7
+    7 9 9 8 8 8 9 8 8 8 8 9 8 9 9 7
+    7 9 9 8 8 9 8 8 8 8 9 8 8 9 9 7
+    7 7 9 9 9 8 8 8 8 9 8 8 9 9 7 7
+    7 7 7 9 9 8 8 8 9 8 8 9 9 7 7 7
+    7 7 7 7 9 9 9 9 9 9 9 9 7 7 7 7
+    7 7 7 7 7 9 9 9 9 9 9 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+`
+const NEST = img`
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 e 4 e 4 e 4 7 7 7 7 7
+    7 7 7 4 e 4 e 4 e 4 e 4 e 7 7 7
+    7 7 4 e 4 d d d d d d e 4 e 7 7
+    7 4 e 4 d d d d d d d d e 4 e 7
+    7 e 4 e d d d d d d d d 4 e 4 7
+    7 4 e 4 d d d d d d d d e 4 e 7
+    7 e 4 e d d d d d d d d 4 e 4 7
+    7 7 e 4 e d d d d d d 4 e 4 7 7
+    7 7 7 e 4 e 4 e 4 e 4 e 4 7 7 7
+    7 7 7 7 7 4 e 4 e 4 e 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+`
+const DUCKSPOT = img`
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 5 5 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 5 5 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+`
+const MOWERSPOT = img`
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 2 2 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 2 2 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+`
+const MOWERSPOTV = img`
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 a a 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 a a 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+`
+
+// The two park mazes. Marker tiles show where ducklings, mowers and the pond start.
+const LEVELS = [
+    tiles.createTilemap(hex`11000b0001010101010101010101010101010101010104000000000001000000000000050101010001010100000100010101010000010101000105000000000000000000000001010100010101010001010100010100000101010000000006000000000001000000010101000101000101010100000100010101010100050100000000010000010000000101010101010001010001010101000100010101050000000000000000000600000002030101010101010101010101010101010101`, img`
+        2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+        2 . . . . . . 2 . . . . . . . 2 2
+        2 . 2 2 2 . . 2 . 2 2 2 2 . . 2 2
+        2 . 2 . . . . . . . . . . . . 2 2
+        2 . 2 2 2 2 . 2 2 2 . 2 2 . . 2 2
+        2 . . . . . . . . . . 2 . . . 2 2
+        2 . 2 2 . 2 2 2 2 . . 2 . 2 2 2 2
+        2 . . 2 . . . . 2 . . 2 . . . 2 2
+        2 2 2 2 . 2 2 . 2 2 2 2 . 2 . 2 2
+        2 . . . . . . . . . . . . . . 2 .
+        2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+    `, [GRASS, HEDGE, GATE, PONDSPOT, NEST, DUCKSPOT, MOWERSPOT, MOWERSPOTV], TileScale.Sixteen),
+    tiles.createTilemap(hex`16000d0001010101010101010101010101010101010101010101010400000000010000000000050001000000000001010100010101000100010101010100010001010100010101000100050001000000000001000000010500000101010001000101010101010000010101010100010001010100000700000000000000060000000000000100010101010100010101000101010101010001010001070101010500000000010001000000000100000100000001010100010101000100010001010001010001010100010101000000010000000100050100000000000000000101010101000101010101000101010001010101010001010105000000000000000600000000000000000005020301010101010101010101010101010101010101010101`, img`
+        2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+        2 . . . . . 2 . . . . . . . 2 . . . . . 2 2
+        2 . 2 2 2 . 2 . 2 2 2 2 2 . 2 . 2 2 2 . 2 2
+        2 . 2 . . . 2 . . . . . 2 . . . 2 . . . 2 2
+        2 . 2 . 2 2 2 2 2 2 . . 2 2 2 2 2 . 2 . 2 2
+        2 . . . . . . . . . . . . . . . . . 2 . 2 2
+        2 2 2 . 2 2 2 . 2 2 2 2 2 2 . 2 2 . 2 . 2 2
+        2 . . . . . 2 . 2 . . . . 2 . . 2 . . . 2 2
+        2 . 2 2 2 . 2 . 2 . 2 2 . 2 2 . 2 2 2 . 2 2
+        2 . . . 2 . . . 2 . . 2 . . . . . . . . 2 2
+        2 2 2 . 2 2 2 2 2 . 2 2 2 . 2 2 2 2 2 . 2 2
+        2 . . . . . . . . . . . . . . . . . . . 2 .
+        2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+    `, [GRASS, HEDGE, GATE, PONDSPOT, NEST, DUCKSPOT, MOWERSPOT, MOWERSPOTV], TileScale.Sixteen)
+]
+
+let level = 0
+let ducklingsLeft = 0
+let mama = sprites.create(img`
+    . . . . 1 1 1 1 . . . .
+    . . . 1 1 1 1 1 1 . . .
+    . . . 1 1 f 1 1 1 . . .
+    . . . 1 1 1 1 1 4 4 . .
+    . . . 1 1 1 1 1 4 4 4 4
+    . . . . 1 1 1 1 . . . .
+    . 1 1 1 1 1 1 1 1 1 1 .
+    1 1 1 1 1 1 1 1 1 1 1 .
+    1 1 1 1 d 1 1 1 1 1 1 1
+    . 1 1 1 d d 1 1 1 1 1 .
+    . . 1 1 1 1 1 1 1 1 . .
+    . . . . 4 . . 4 . . . .
+`, SpriteKind.Player)
+controller.moveSprite(mama, 60, 60)
+scene.cameraFollowSprite(mama)
+info.setScore(0)
+info.setLife(3)
+
+function startLevel(n: number) {
+    level = n
+    sprites.destroyAllSpritesOfKind(SpriteKind.Food)
+    sprites.destroyAllSpritesOfKind(SpriteKind.Found)
+    sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
+    sprites.destroyAllSpritesOfKind(SpriteKind.Goal)
+    tiles.setCurrentTilemap(LEVELS[n])
+    tiles.placeOnRandomTile(mama, NEST)
+    ducklingsLeft = 0
+    for (let spot of tiles.getTilesByType(DUCKSPOT)) {
+        let duckling = sprites.create(img`
+    . . . 5 5 5 . . .
+    . . 5 5 f 5 5 . .
+    . . 5 5 5 5 4 4 .
+    . . . 5 5 5 . . .
+    . 5 5 5 5 5 5 5 .
+    5 5 5 5 5 5 5 5 .
+    . 5 5 5 5 5 5 . .
+    . . 4 . . 4 . . .
+`, SpriteKind.Food)
+        tiles.placeOnTile(duckling, spot)
+        tiles.setTileAt(spot, GRASS)
+        ducklingsLeft += 1
+    }
+    for (let spot of tiles.getTilesByType(MOWERSPOT)) {
+        let mower = sprites.create(img`
+    . . . . . . . f f . . .
+    . . . . . . f f . . . .
+    . . . . . f f . . . . .
+    . 2 2 2 2 2 2 2 2 2 2 .
+    2 2 2 2 2 2 2 2 2 2 2 2
+    2 b b b b b b b b b b 2
+    2 2 2 2 2 2 2 2 2 2 2 2
+    . f f . . . . . . f f .
+    f b b f . . . . f b b f
+    . f f . . . . . . f f .
+`, SpriteKind.Enemy)
+        tiles.placeOnTile(mower, spot)
+        tiles.setTileAt(spot, GRASS)
+        mower.vx = 30 + 15 * n
+        mower.setBounceOnWall(true)
+    }
+    for (let spot of tiles.getTilesByType(MOWERSPOTV)) {
+        let mower = sprites.create(img`
+    . . . . . . . f f . . .
+    . . . . . . f f . . . .
+    . . . . . f f . . . . .
+    . 2 2 2 2 2 2 2 2 2 2 .
+    2 2 2 2 2 2 2 2 2 2 2 2
+    2 b b b b b b b b b b 2
+    2 2 2 2 2 2 2 2 2 2 2 2
+    . f f . . . . . . f f .
+    f b b f . . . . f b b f
+    . f f . . . . . . f f .
+`, SpriteKind.Enemy)
+        tiles.placeOnTile(mower, spot)
+        tiles.setTileAt(spot, GRASS)
+        mower.vy = 30 + 15 * n
+        mower.setBounceOnWall(true)
+    }
+    for (let spot of tiles.getTilesByType(PONDSPOT)) {
+        let pond = sprites.create(img`
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 9 9 9 9 9 9 7 7 7 7 7
+    7 7 7 7 9 9 9 9 9 9 9 9 7 7 7 7
+    7 7 7 9 9 8 8 9 8 8 8 9 9 7 7 7
+    7 7 9 9 8 8 9 8 8 8 8 9 9 9 7 7
+    7 9 9 8 8 9 8 8 8 8 9 8 8 9 9 7
+    7 9 9 8 9 8 8 8 8 9 8 8 8 9 9 7
+    7 9 9 9 8 8 8 8 9 8 8 8 8 9 9 7
+    7 9 9 8 8 8 8 9 8 8 8 8 9 9 9 7
+    7 9 9 8 8 8 9 8 8 8 8 9 8 9 9 7
+    7 9 9 8 8 9 8 8 8 8 9 8 8 9 9 7
+    7 7 9 9 9 8 8 8 8 9 8 8 9 9 7 7
+    7 7 7 9 9 8 8 8 9 8 8 9 9 7 7 7
+    7 7 7 7 9 9 9 9 9 9 9 9 7 7 7 7
+    7 7 7 7 7 9 9 9 9 9 9 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+`, SpriteKind.Goal)
+        tiles.placeOnTile(pond, spot)
+        tiles.setTileAt(spot, GRASS)
+    }
+    game.splash("Park " + (n + 1), "Find " + ducklingsLeft + " ducklings")
+    info.startCountdown(60 + 30 * n)
+}
+
+// GAP 1 (mild): ducklings do nothing yet.
+// When the duck touches a duckling: add 1 to the score, take 1 from ducklingsLeft,
+// and make the duckling vanish. Extra: make it follow you instead.
+
+// GAP 3 (spicy): openGate is ready, but nothing calls it.
+// Call it when ducklingsLeft reaches 0.
+// The gate opens once every duckling is found.
+function openGate() {
+    for (let spot of tiles.getTilesByType(GATE)) {
+        tiles.setWallAt(spot, false)
+        tiles.setTileAt(spot, GRASS)
+    }
+    mama.sayText("Gate open!", 1500)
+    music.play(music.melodyPlayable(music.powerUp), music.PlaybackMode.InBackground)
+}
+
+// GAP 2 (medium): mowers do nothing yet.
+// When a mower touches the duck: take away 1 life and send the duck back to the nest.
+
+// The pond ends park 1. In park 2 it wins the game.
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Goal, function (sprite, otherSprite) {
+    if (level == 0) {
+        startLevel(1)
+    } else {
+        game.over(true)
+    }
+})
+
+startLevel(0)
+</textarea>
+<p class="small">At camp I load the starter on every laptop before the campers arrive. I tested this code in the editor. It runs, and it goes to Blocks and back cleanly.</p>
+<h2>The chilli cards</h2>
+<p>One A4 page. I print one per pair and cut the cards apart.</p>
+<p><button type="button" id="print" class="primary">Print the cards</button></p>
+</div>
+
+<section aria-label="Chilli cards">
+<h1>Duckling Round-Up: pick your chilli</h1>
+<p>Pair names: ______________________ &nbsp; Driver swaps after every card.</p>
+
+<div class="task">
+<h3><span class="chilli mild">Mild</span> Ducklings count. Everyone does this one first.</h3>
+<p>Now: the duck walks over ducklings and nothing happens.</p>
+<p>Make it: when the duck touches a duckling, add 1 to the score. Take 1 from <code>ducklingsLeft</code>. Make the duckling vanish.</p>
+<p>Blocks you need: "on sprite of kind Player overlaps otherSprite of kind Food", "change score by", "change ducklingsLeft by -1", "destroy otherSprite".</p>
+<ul class="tick"><li>Test: touch 2 ducklings. Score says 2.</li></ul>
+</div>
+
+<div class="task">
+<h3><span class="chilli medium">Medium</span> Mowers hurt</h3>
+<p>Now: mowers roll right through the duck.</p>
+<p>Make it: a mower costs 1 life and sends the duck back to the nest.</p>
+<p>Blocks you need: an overlap event with kind Enemy, "change life by -1", "place sprite on top of random NEST".</p>
+<ul class="tick"><li>Test: walk into a mower. One heart goes, and you are back at the nest.</li></ul>
+</div>
+
+<div class="task">
+<h3><span class="chilli spicy">Spicy</span> Open the gate. Do Mild first!</h3>
+<p>Now: you find every duckling, but the gate stays shut.</p>
+<p>Make it: when <code>ducklingsLeft</code> reaches 0, call <code>openGate</code>.</p>
+<p>Hint: inside your Mild event, add "if ducklingsLeft = 0 then call openGate".</p>
+<ul class="tick"><li>Test: find all 4 ducklings in park 1. The gate opens and you can reach the pond.</li></ul>
+</div>
+
+<div class="task">
+<h3><span class="chilli hot">Extra hot</span> Finished? Pick one</h3>
+<ul class="tight">
+  <li>Ducklings follow you home. Try the "follow" block.</li>
+  <li>A third park. Draw it with the tilemap editor, then load it when park 2 ends.</li>
+  <li>A bonus: 5 extra seconds for every duckling found.</li>
+</ul>
+</div>
+<p>Stuck for 3 minutes? Swap the driver, read the card out loud, then put up your hand.</p>
+</section>
+</main>
+</body>
+</html>
