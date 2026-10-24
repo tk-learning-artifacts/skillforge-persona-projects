@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kopi Rush: a kopitiam drinks game vibe-coded for camp, by Sofia Reyes</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="kopi.js" defer></script>
+<script src="game.js" defer></script>
+<script src="demo.js" defer></script>
+<script src="tests.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Sofia Reyes is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<header class="sign">
+  <h1>Kopi Rush</h1>
+  <p>A kopitiam drinks game I made with Claude, for my holiday camp</p>
+</header>
+<ul class="pagenav">
+  <li><a href="index.html" aria-current="page">Play</a></li>
+  <li><a href="#demo">90-second demo</a></li>
+  <li><a href="prompts.html">Prompt log</a></li>
+  <li><a href="#reflection">Reflection</a></li>
+</ul>
+
+<p class="lede">A customer orders "Teh C siew dai peng". Can you make it? You run the drinks stall. Read the order code, build the drink, and serve.</p>
+<p>I'm Sofia. I run holiday camps for mixed ages. My June camp had 18 campers aged 8 to 12. Most had heard an adult order "Kopi O" at a hawker centre. Very few knew what it meant. So the code is a puzzle they already half-know. That's my favourite kind.</p>
+<p>This is my end project for the Vibe Coding module. Claude wrote most of the code. My campers broke it, and I fixed it. Everything is here: the game, a 90-second demo, my prompt log, and what I changed and why.</p>
+
+<h2 id="play">Play it</h2>
+<div class="demo-bar" id="demo-bar" hidden>
+  <p class="caption" id="caption" aria-live="polite"></p>
+  <div class="row">
+    <button type="button" id="demo-play">Pause</button>
+    <button type="button" id="demo-stop">Stop and play it myself</button>
+    <span class="time" id="demo-clock">0:00 / 1:30</span>
+  </div>
+  <input type="range" id="demo-seek" min="0" max="90" step="0.1" value="0" aria-label="Demo position, in seconds">
+</div>
+<div class="demo-wrap" id="demo-wrap">
+  <div id="game"><p class="small">Kopi Rush needs JavaScript to run.</p></div>
+  <div class="ring" id="ring" aria-hidden="true"></div>
+  <div class="titlecard" id="titlecard" hidden><strong>Kopi Rush</strong><span>A kopitiam drinks game for camp. Made with Claude and my campers.</span></div>
+</div>
+<p><button type="button" class="btn" id="watch">Watch the 90-second demo</button></p>
+
+<h3>How to play</h3>
+<ol class="tight">
+  <li>Read the order on the ticket.</li>
+  <li>Tap one button in each row: drink, milk, sugar, and hot or iced.</li>
+  <li>Check the cup. The words under it say what you made.</li>
+  <li>Tap Serve. If something is wrong, the customer says which part and why.</li>
+</ol>
+
+<h3>Three modes, for three kinds of camper</h3>
+<ul class="tight">
+  <li><b>Learn</b> is for everyone at the start. No timer, and the code board stays open. Five right in a row moves you up a level. Level 1 is only drink and milk words. Level 2 adds sugar. Level 3 adds peng.</li>
+  <li><b>Rush</b> is for the camper who finished early. 90 seconds, the board is hidden, and Peek shows it for 3 seconds. At the end you see every mix-up with the right answer.</li>
+  <li><b>Call it</b> flips the game. You see the drink and pick its order from three. Younger campers liked this best, because there's no building and no clock.</li>
+</ul>
+<p>There is no sound and no class leaderboard. My quiet campers play without anyone hearing them get it wrong.</p>
+
+<h2 id="demo">The 90-second demo</h2>
+<p>My demo video is the game playing itself. Press <b>Watch the 90-second demo</b> above. A red ring shows each tap, and captions tell the story. I made it for the screen at our parents' showcase on the last camp day. It plays the real game, so it never shows an old version.</p>
+<ul class="pagenav" id="chapters" aria-label="Jump to a part of the demo"></ul>
+<h3>The script</h3>
+<ol class="script" id="script"></ol>
+
+<h2 id="build">How I built it</h2>
+<ul class="tight">
+  <li>I used Claude in a browser. When Claude writes a small web app, it can show it in an artifact window beside the chat. I could play each version the moment it was written.</li>
+  <li>11 prompts in all, over about two hours on two evenings. The <a href="prompts.html">prompt log</a> has every one, word for word.</li>
+  <li>My campers never used Claude. Its terms say users must be 18 or over. They played the game on camp iPads, with no accounts and nothing saved.</li>
+</ul>
+
+<h3>The 2-minute bug hunt</h3>
+<p>On day 3, I ran my favourite CodePen game with the campers. Pairs got the game for two minutes. Their job was to break it. Tap fast, tap everything, do silly things. Each pair wrote one bug on a sticky note. Here is what they found, and what each note became.</p>
+<p class="small">My campers and their notes are made up, like me. The bugs and fixes are real parts of the code.</p>
+<div class="scroll">
+<table>
+  <thead><tr><th>Sticky note</th><th>What was wrong</th><th>What I did</th></tr></thead>
+  <tbody>
+    <tr><td>"Tap Serve two times = 2 points!!"</td><td>A fast double tap scored one drink twice.</td><td>Prompt 6. Serve now locks while the customer talks.</td></tr>
+    <tr><td>"The new order came too fast. I didn't read why I was wrong."</td><td>A wrong drink skipped to the next order after 1 second.</td><td>Prompt 6. A wrong cup stays, so you fix only the wrong part.</td></tr>
+    <tr><td>"Serve is under the screen" (on a small phone)</td><td>On a narrow screen, Serve sat below the fold.</td><td>Prompt 6. The order and buttons stack in one column, Serve right under the choices.</td></tr>
+    <tr><td>"Kopi and Teh look the same colour"</td><td>The cup colours were too close.</td><td>Prompt 8. Different browns, and words under the cup.</td></tr>
+    <tr><td>"Too easy. I did 30 in a row."</td><td>One 11-year-old cleared level 3 in four minutes.</td><td>Prompt 9. Rush mode, with the board hidden.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>Checking the kopitiam facts</h3>
+<p>Claude's first code table was wrong in a way I'd have missed if I didn't drink kopi. It said C means condensed milk, and plain Kopi uses evaporated milk. It's the other way round. Plain Kopi has condensed milk, C means evaporated milk, and O means no milk. It also asked for "Kopi kosong". My sources only list kosong with O or C, like "Kopi O kosong". So I took plain kosong orders out. I fixed the table by hand, and I checked every word on the code board against the sources below.</p>
+
+<h2 id="code">Under the hood</h2>
+<p>The code is in three plain JavaScript files, with no libraries.</p>
+<ul class="tight">
+  <li><code>kopi.js</code> holds the order rules: the word table, the 44 drinks, and the customer's messages. No page code, so it can be tested on its own.</li>
+  <li><code>game.js</code> draws the stall and runs the three modes.</li>
+  <li><code>demo.js</code> runs the 90-second demo, using the real buttons.</li>
+</ul>
+<p>The word table sits at the top of <code>kopi.js</code>. To fix a word, you change one line. This was my prompt 2: I wanted to fix facts without reading the whole program. Here is the milk part:</p>
+<pre><code>milk: [
+  { key: 'condensed', word: '', label: 'condensed milk' }, // Sofia: Claude had C here
+  { key: 'evaporated', word: 'C', label: 'evaporated milk' }, // Sofia: and condensed here
+  { key: 'none', word: 'O', label: 'no milk' }
+],</code></pre>
+<h3>The order checker tests</h3>
+<p>Claude wrote these tests from my prompt 7. They make every order, read it back, and check it's the same drink. They also check that "Kopi kosong" is refused.</p>
+<p><button type="button" class="btn plain" id="run-tests">Run the tests again</button></p>
+<p id="test-result" class="tests" aria-live="polite"></p>
+<ul id="test-fails"></ul>
+
+<h2 id="reflection">Reflection: what I changed and why</h2>
+<ul class="tight">
+  <li>I swapped condensed and evaporated milk in the word table. Claude had them the wrong way round.</li>
+  <li>I took out plain "Kopi kosong" and "Teh kosong" orders, because I couldn't find them in my sources.</li>
+  <li>I rewrote every customer message. Claude's said "Incorrect milk selection." An 8-year-old needs the rule, like "C means evaporated milk."</li>
+  <li>I cut the Peek time from 5 seconds to 3. Campers just waited with the board open.</li>
+  <li>I stopped the same order coming twice in a row. Two campers thought the game was stuck.</li>
+  <li>Every bug-hunt note above became a prompt, and I tested each fix with the camper who found it.</li>
+</ul>
+
+<h3>How much was AI and how much was me</h3>
+<p>I marked every line I typed with "// Sofia". There are 23 of them in 647 lines of code. That's under 4%. Claude wrote the rest, including the tests and the demo player.</p>
+<p>That number makes me look lazy, and it misses most of the work. The ideas were mine and my campers'. The three modes came from watching who got bored and who froze. The facts were mine to check, and Claude got the most important one wrong. I'd say Claude did 90% of the typing and 30% of the thinking.</p>
+
+<h3>Rubric check</h3>
+<ul class="tight">
+  <li><b>App works in the browser.</b> Yes. All three modes, on a phone-width screen and a laptop, in light and dark mode. The tests pass on load.</li>
+  <li><b>Readable code that follows good practice.</b> Mostly. The rules are apart from the screen code, the word table is in one place, and the tests run without a library. But <code>game.js</code> has one long <code>mount()</code> function. If a camper asked me where Rush lives, I'd have to scroll.</li>
+  <li><b>Precise, reproducible prompts.</b> My first prompt names the age group, every button, the device and what I don't want. Claude will write different code each time. But anyone can check the result against the same list.</li>
+  <li><b>Fair reflection on AI vs human effort.</b> I've given the line count and said why I think it undersells the human part. You might disagree. Typing is effort too.</li>
+</ul>
+
+<h2 id="change">What I would change</h2>
+<p>Kopi Rush needs reading. A 7-year-old who reads slowly can't play Learn mode alone, and Rush punishes slow readers most. Next camp I'd add a "read it to me" button. I'd also add Milo and a few more drinks, because the campers kept asking for them. Finally, the game teaches the code, not what's in the cup. A kopi with normal sugar has a lot of sugar. That's a good talk for another day.</p>
+
+<h2 id="sources">Sources</h2>
+<ul class="tight small">
+  <li>Kopi, Kopi O, Kopi C, kosong, siew dai, gah dai and peng: <a href="https://en.wikipedia.org/wiki/Kopi_(drink)">Wikipedia, Kopi (drink)</a>, ordering table. Its table cites the Singapore Coffee Association.</li>
+  <li>The same words for teh: <a href="https://thehoneycombers.com/singapore/order-teh-singapore/">Honeycombers, How to order teh in Singapore</a>.</li>
+  <li>Claude artifacts: <a href="https://support.anthropic.com/en/articles/9487310-what-are-artifacts-and-how-do-i-use-them">Anthropic Help Center, What are artifacts and how do I use them?</a></li>
+  <li>Claude's minimum age of 18: <a href="https://www.anthropic.com/legal/consumer-terms">Anthropic Consumer Terms of Service</a>.</li>
+</ul>
+</main>
+</body>
+</html>

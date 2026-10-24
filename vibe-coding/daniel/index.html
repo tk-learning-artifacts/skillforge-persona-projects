@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fair Picker: a no-repeats name picker built with ChatGPT, by Daniel Ong</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="app.css">
+<link rel="stylesheet" href="style.css">
+<script src="app.js" defer></script>
+<script src="mount.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Daniel Ong is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<ul class="tabs-nav">
+  <li><a href="index.html" aria-current="page">Project</a></li>
+  <li><a href="demo.html">90-second demo</a></li>
+  <li><a href="prompts.html">Prompt log</a></li>
+  <li><a href="code.html">Who wrote the code</a></li>
+</ul>
+<h1>Fair Picker<small>A name picker with no repeats, and a group maker. Built with ChatGPT for my Sec 2 class.</small></h1>
+<p class="lede">I kept picking the same five hands. A random name picker fixed that, until it picked the same boy twice in a row. So I built one that gives everyone a turn before anyone gets a second.</p>
+<p>I'm Daniel. I've been a trainer for six months. I teach a Sec 2 coding enrichment class of 28 on Wednesday afternoons. This is my end project for the Vibe Coding module. ChatGPT wrote most of the first code. I tested it, found six problems, and fixed them. Some fixes I asked for, and some I typed myself.</p>
+
+<div class="deliver">
+  <a href="#use"><strong>The app</strong><span>Use it right here, or full screen for a projector.</span></a>
+  <a href="demo.html"><strong>90-second demo</strong><span>The app drives itself, with my voice-over as captions.</span></a>
+  <a href="prompts.html"><strong>Prompt log</strong><span>All 9 prompts, word for word. My best 3 are marked.</span></a>
+  <a href="#reflection"><strong>Reflection</strong><span>What I changed, why, and how much was me.</span></a>
+</div>
+
+<h2 id="use">Use it</h2>
+<p>Start on the Class tab. Paste some names, or press <b>Use register numbers</b>. Then pick, mark someone absent, and make groups.</p>
+<div id="picker"><p class="small">Fair Picker needs JavaScript to run.</p></div>
+<p class="small">Your list stays in this browser. Nothing is sent anywhere. <a href="app.html">Open it full screen</a> for a projector.</p>
+
+<h3>What it does</h3>
+<ul class="tight">
+  <li>Pick next chooses someone who hasn't had a turn this round. When everyone has had one, New round puts them all back.</li>
+  <li>Undo puts the last pick back.</li>
+  <li>Absent students are skipped, but keep their turn for when they're back.</li>
+  <li>Groups of 2 to 6. Spare students join groups one each, so nobody is left alone.</li>
+  <li>The class and the round survive a page refresh.</li>
+</ul>
+
+<h2 id="how">How I built it</h2>
+<ul class="tight">
+  <li>ChatGPT in Chrome wrote the code. CodePen ran each version.</li>
+  <li>I used 9 prompts over two evenings. The <a href="prompts.html">prompt log</a> has every one.</li>
+  <li>I checked lines against MDN, and built a test for the shuffle.</li>
+  <li>It took about 1 hour of prompting and 2 hours of testing and reading. The testing found every bug.</li>
+</ul>
+<div class="sticky">
+<p><b>Is this vibe coding?</b> Andrej Karpathy coined the term in a post on 2 February 2025. Simon Willison wrote in March 2025 that vibe coding means not reviewing the code the AI writes. By that line, my first two prompts were vibe coding. After that I read every line. So the finished app is AI-assisted coding.</p>
+</div>
+
+<h3>Why my students aren't building this one yet</h3>
+<p>I wanted my class to make their own pickers. Then I read the terms. ChatGPT needs users aged 13 or over, and under-18s need a parent's permission. CodePen's terms say under-18s can't have their own account. A guardian can sign up for a 13 to 17 year old. Most of my Sec 2s are 14. So for now, I build and they test. I need to sort out consent before they prompt.</p>
+
+<h2 id="reflection">Reflection: what I changed and why</h2>
+<p>ChatGPT's code worked the first time I ran it. That fooled me. Each of these problems only showed up when I tested something on purpose.</p>
+<div class="scroll">
+<table>
+  <thead><tr><th>What I changed</th><th>Why</th><th>How I checked</th></tr></thead>
+  <tbody>
+    <tr><td>The shuffle. From <code>sort(() =&gt; Math.random() - 0.5)</code> to the Fisher-Yates shuffle. (P5, P6)</td><td>It isn't fair. In my test, No. 1 came first about 9 times in 100. Fair is about 3.6.</td><td><a href="code.html#shuffle">A test of 20,000 shuffles</a> on the code page.</td></tr>
+    <tr><td>Groups. <code>Math.round</code> became <code>Math.floor</code>. (P4)</td><td>28 in groups of 3 left one student alone. Then 5 in pairs did the same.</td><td>A loop over every class size from 2 to 30.</td></tr>
+    <tr><td>Names are set as text, never through <code>innerHTML</code>. (P7)</td><td>A "name" that is really code ran in the page.</td><td>MDN's test string, before and after. See 1:10 in the <a href="demo.html">demo</a>.</td></tr>
+    <tr><td>The round is saved, not only the names. (P3)</td><td>A refresh mid-lesson restarted the round.</td><td>Pick 3, refresh, count.</td></tr>
+    <tr><td>Absent students keep their turn. (P8)</td><td>ChatGPT's version dropped them from the round for good.</td><td>Mark absent, pick everyone, unmark, pick.</td></tr>
+    <tr><td>Register numbers, and a Forget button. (Me)</td><td>The lab laptops are shared. Saved data stays in the browser with no end date.</td><td>Forget, then refresh: the list is gone.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>How much was AI and how much was me</h3>
+<p>I tagged every block of the code with who wrote it. The <a href="code.html">code page</a> counts the lines:</p>
+<ul class="tight">
+  <li><span class="tag ai">AI</span> ChatGPT wrote it and I kept it: <b>101 lines (39%)</b>.</li>
+  <li><span class="tag mix">AI, then me</span> ChatGPT wrote it and I changed it: <b>121 lines (47%)</b>.</li>
+  <li><span class="tag me">Me</span> I wrote it: <b>35 lines (14%)</b>.</li>
+</ul>
+<p>So ChatGPT wrote the first version of 86% of the lines. That clears the brief's 50%. But lines aren't the whole story. Most of my changes were one or two lines, and finding each one took longer than all the typing. The AI did most of the writing. I did most of the testing and checking. Without the testing, I'd have shipped all six bugs.</p>
+
+<h3>Rubric check</h3>
+<ul class="tight">
+  <li><b>App works in the browser.</b> Yes. I tested it in Chrome on a phone-width window and a wide screen. It also works with the keyboard alone. The class survives a refresh.</li>
+  <li><b>Readable code that follows good practice.</b> Mostly. Small helper functions, comments a beginner can follow, and no typed text through <code>innerHTML</code>. The weak spot: <code>mount()</code> is about 185 lines long. I'd split it.</li>
+  <li><b>Precise, reproducible prompts.</b> My best three (P2, P4, P7) give the class size, the rules and the tests. You'll get different code if you run them, because ChatGPT never answers the same way twice. But you can test the new code against the same checks. P1 is in the log as a bad example.</li>
+  <li><b>Fair reflection on AI vs human effort.</b> I think so. The counts are above, and they come from tags in the code, not my memory. I've also said what the counts leave out.</li>
+</ul>
+
+<h2 id="change">What I would change</h2>
+<p>It holds one class, in one browser. If I switch laptops, my list is gone, and there's no export. A "copy my class" button would fix that.</p>
+<p>The bigger question is about people, not code. The picker is fair to the maths. It isn't always kind to a quiet student who dreads being called. Should I add a Pass button that keeps their turn? I don't know yet. I'd like to try "phone a friend" first and see.</p>
+<p>One thing still confuses me. I can see in the chart that the sort shuffle is unfair. I can't fully explain why. javascript.info says the result depends on how each browser's sort works inside. I'm taking that on trust for now.</p>
+
+<h2 id="sources">Sources</h2>
+<ul class="tight small">
+  <li>Karpathy's post, 2 February 2025: <a href="https://en.wikipedia.org/wiki/Vibe_coding">Wikipedia, Vibe coding</a>.</li>
+  <li>Simon Willison, <a href="https://simonwillison.net/2025/Mar/19/vibe-coding/">Not all AI-assisted programming is vibe coding (but vibe coding rocks)</a>, 19 March 2025.</li>
+  <li>Why the sort shuffle is unfair, and Fisher-Yates: <a href="https://javascript.info/task/shuffle">javascript.info, Shuffle an array</a>. Also <a href="https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle">Wikipedia, Fisher-Yates shuffle</a>.</li>
+  <li>innerHTML and textContent: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/innerHTML">MDN, Element: innerHTML property</a>.</li>
+  <li>How long saved data lasts: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage">MDN, Window: localStorage property</a>.</li>
+  <li>ChatGPT age rules: <a href="https://openai.com/policies/terms-of-use/">OpenAI Terms of Use</a>.</li>
+  <li>CodePen age rules: <a href="https://blog.codepen.io/documentation/terms-of-service/">CodePen Terms of Service</a>.</li>
+</ul>
+</main>
+</body>
+</html>

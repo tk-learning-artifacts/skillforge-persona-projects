@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fair Picker: my prompt log, by Daniel Ong</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="prompts.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Daniel Ong is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<ul class="tabs-nav">
+  <li><a href="index.html">Project</a></li>
+  <li><a href="demo.html">90-second demo</a></li>
+  <li><a href="prompts.html" aria-current="page">Prompt log</a></li>
+  <li><a href="code.html">Who wrote the code</a></li>
+</ul>
+<h1>My prompt log</h1>
+<p class="lede">Every prompt I sent ChatGPT for Fair Picker, word for word. I didn't tidy them afterwards. My best three are marked.</p>
+<div class="card">
+<ul class="tight">
+  <li>Tool: ChatGPT in Chrome. Each answer went into CodePen to run.</li>
+  <li>When: two evenings in one week. Prompts 1 to 4 on the first, 5 to 9 on the second.</li>
+  <li>Each entry has five parts: the prompt, what ChatGPT gave, what I changed, why, and how I checked.</li>
+  <li>P-numbers match the tags in the code. The <a href="code.html">code page</a> shows which lines came from which prompt.</li>
+</ul>
+</div>
+<div class="sticky">
+<p>If you run these prompts yourself, you'll get different code. ChatGPT never answers the same way twice. What you can repeat are the checks. Each strong prompt says what the code must do, so you can test any answer against it.</p>
+</div>
+
+<article class="entry" id="p1">
+<h3>P1. The first try</h3>
+<dl>
+<dt>Prompt</dt>
+<dd><p class="prompt">make a random name picker for my class</p></dd>
+<dt>What ChatGPT gave</dt>
+<dd>A box for names and a button. Each press picked a name with <code>Math.random()</code>. It ran first time.</dd>
+<dt>What I changed</dt>
+<dd>Nothing. I threw it away.</dd>
+<dt>Why</dt>
+<dd>With 5 names, it picked the same name twice in 10 presses. Of course it did: I never said "no repeats". I also never said the class size, the device, or that it had to save.</dd>
+<dt>How I checked</dt>
+<dd>Pressed the button 10 times with 5 names and wrote down each pick.</dd>
+</dl>
+</article>
+
+<article class="entry best" id="p2">
+<h3>P2. The real brief <span class="star">Best prompt</span></h3>
+<dl>
+<dt>Prompt</dt>
+<dd><p class="prompt">I teach a Sec 2 class of 28 students. Build a web app as one HTML file with a &lt;style&gt; section and a &lt;script&gt; section. Use plain JavaScript, no libraries.
+
+It must:
+1. Let me paste a class list, one name per line, and save it.
+2. Pick a random student with a big Pick next button. Nobody is picked twice until everyone has had a turn. Then start a new round.
+3. Show how many students are left this round.
+4. Have an Undo button for the last pick.
+5. Make random groups of a size I choose, from 2 to 6.
+
+Write comments a beginner can follow. Text must be big enough to read on a classroom projector. After the code, list 5 tests I should do by hand.</p>
+<button type="button" class="btn copy" data-copy>Copy this prompt</button></dd>
+<dt>What ChatGPT gave</dt>
+<dd>One file of about 150 lines that worked in CodePen. It kept a "remaining" list for the round. The groups used <code>sort(() =&gt; Math.random() - 0.5)</code> to shuffle. Every name went onto the page with <code>innerHTML</code>. Its 5 tests were sensible, like "pick until the list is empty".</dd>
+<dt>What I changed</dt>
+<dd>Nothing yet.</dd>
+<dt>Why</dt>
+<dd>All 5 of its tests passed, so I thought it was done. This is where I was still vibe coding: I ran it, but I didn't read it. Prompts 3 to 8 are me finding out what I'd missed.</dd>
+<dt>How I checked</dt>
+<dd>Ran its 5 tests. Picked through 5 names twice: no repeats inside a round.</dd>
+</dl>
+</article>
+
+<article class="entry" id="p3">
+<h3>P3. Saving</h3>
+<dl>
+<dt>Prompt</dt>
+<dd><p class="prompt">Save the class list and the picks in this round in localStorage, so a page refresh in the middle of a lesson loses nothing. First explain localStorage in two sentences for a beginner.</p></dd>
+<dt>What ChatGPT gave</dt>
+<dd>A clear explanation: it keeps text in this browser, even after you close it, and it only stores strings, so objects go through <code>JSON.stringify</code>. But the code saved only the names, and only when I pressed Save list.</dd>
+<dt>What I changed</dt>
+<dd>I added who is left and who was picked to what gets saved. Every change now saves at once. I wrapped loading in <code>try</code> and <code>catch</code>, in case storage is blocked.</dd>
+<dt>Why</dt>
+<dd>I took "this saves your data" at face value. Then I refreshed after 3 picks and the round started over.</dd>
+<dt>How I checked</dt>
+<dd>Picked 3, refreshed, and the counter still said 3 picked. MDN's localStorage page confirmed the data has no expiry time.</dd>
+</dl>
+</article>
+
+<article class="entry best" id="p4">
+<h3>P4. Nobody left alone <span class="star">Best prompt</span></h3>
+<dl>
+<dt>Prompt</dt>
+<dd><p class="prompt">Here is my makeGroups function. With 28 students and groups of 3, I get nine groups of 3 and one student alone. Change it so no group is smaller than the size I chose. Extra students join existing groups, one each. Keep it under 15 lines and don't change how it is called.
+
+[I pasted the makeGroups function here]</p>
+<button type="button" class="btn copy" data-copy>Copy this prompt</button></dd>
+<dt>What ChatGPT gave</dt>
+<dd>A shorter function. It worked out the number of groups with <code>Math.round(list.length / size)</code>, then dealt students into the groups like cards.</dd>
+<dt>What I changed</dt>
+<dd><code>Math.round</code> became <code>Math.floor</code>. That was the whole fix.</dd>
+<dt>Why</dt>
+<dd>28 in groups of 3 worked now. But 5 students in pairs gave 2, 2 and 1. <code>Math.round(2.5)</code> is 3, so it made three groups. Rounding down makes two groups, of 3 and 2.</dd>
+<dt>How I checked</dt>
+<dd>I asked ChatGPT for a loop that tries every class size from 2 to 30 with every group size from 2 to 6, and prints any group smaller than the size. After my change, it printed nothing. The only exception is a class smaller than the group size, which makes one group.</dd>
+</dl>
+</article>
+
+<article class="entry" id="p5">
+<h3>P5. Is the shuffle fair?</h3>
+<dl>
+<dt>Prompt</dt>
+<dd><p class="prompt">Is list.sort(() => Math.random() - 0.5) a fair shuffle? Answer yes or no first, then explain why.</p></dd>
+<dt>What ChatGPT gave</dt>
+<dd>"Not perfectly." Then it said the method is fine for casual uses.</dd>
+<dt>What I changed</dt>
+<dd>Nothing in this step. I nearly stopped here, because a classroom felt casual.</dd>
+<dt>Why</dt>
+<dd>Then I read javascript.info's shuffle task. It says not all orders are equally likely with this trick. I wanted to see it, so I built the test on the <a href="code.html#shuffle">code page</a>. In a class of 28, No. 1 came first about 9 times in 100 shuffles. Fair is about 3.6. That's not casual if you're No. 1.</dd>
+<dt>How I checked</dt>
+<dd>20,000 shuffles, counting who lands first.</dd>
+</dl>
+</article>
+
+<article class="entry" id="p6">
+<h3>P6. Fisher-Yates</h3>
+<dl>
+<dt>Prompt</dt>
+<dd><p class="prompt">Rewrite shuffle using the Fisher-Yates shuffle. Put a short comment on the line that picks the random spot.</p></dd>
+<dt>What ChatGPT gave</dt>
+<dd>A loop that walks back from the end of the list and swaps each name with a random one at or before it.</dd>
+<dt>What I changed</dt>
+<dd>I made it copy the list first, with <code>list.slice()</code>.</dd>
+<dt>Why</dt>
+<dd>It shuffled the class list itself. After making groups, the Class tab showed my class in a jumbled order.</dd>
+<dt>How I checked</dt>
+<dd>The same 20,000-shuffle test. Every student now lands first about 3.6 times in 100. I also made groups and checked the Class tab kept its order.</dd>
+</dl>
+</article>
+
+<article class="entry best" id="p7">
+<h3>P7. Security check <span class="star">Best prompt</span></h3>
+<dl>
+<dt>Prompt</dt>
+<dd><p class="prompt">Check this code for security problems. The names come from a textarea that anyone at the teacher's desk can type into. For each problem, give the line, what could go wrong, and the fix. Then rewrite render() so no user text goes through innerHTML.
+
+[I pasted the render function here]</p>
+<button type="button" class="btn copy" data-copy>Copy this prompt</button></dd>
+<dt>What ChatGPT gave</dt>
+<dd>It found the problem: names went onto the page with <code>innerHTML</code>, so a "name" could be HTML that runs code. It rewrote <code>render()</code> with a small helper that builds each element and sets its text.</dd>
+<dt>What I changed</dt>
+<dd>I kept the helper. I added a part for <code>aria-</code> attributes, which it had dropped from the tabs.</dd>
+<dt>Why</dt>
+<dd>I tried MDN's example string as a name before the fix: <code>&lt;img src=x onerror=alert(1)&gt;</code>. An alert box popped up. A student at my desk could do worse than an alert.</dd>
+<dt>How I checked</dt>
+<dd>The same string after the fix shows as plain text. It's at 1:10 in the <a href="demo.html">demo</a>.</dd>
+</dl>
+</article>
+
+<article class="entry" id="p8">
+<h3>P8. Absent students</h3>
+<dl>
+<dt>Prompt</dt>
+<dd><p class="prompt">Add a list of students with a tap to mark them absent. Absent students are skipped by Pick next and left out of groups. When they come back, they still get their turn this round.</p></dd>
+<dt>What ChatGPT gave</dt>
+<dd>Tap-to-mark buttons that worked. But marking someone absent took them out of the round's list. Unmarking didn't put them back.</dd>
+<dt>What I changed</dt>
+<dd>The round's list keeps everyone. Pick next skips absent students at the moment it picks.</dd>
+<dt>Why</dt>
+<dd>My prompt said "they still get their turn". The code didn't do it. This one surprised me, because the prompt was clear.</dd>
+<dt>How I checked</dt>
+<dd>Marked No. 3 absent. Picked everyone else. Unmarked No. 3 and pressed Pick next: No. 3 came up.</dd>
+</dl>
+</article>
+
+<article class="entry" id="p9">
+<h3>P9. Tabs</h3>
+<dl>
+<dt>Prompt</dt>
+<dd><p class="prompt">Split the page into three tabs: Pick, Groups and Class. Use role="tab" and aria-selected so a screen reader knows which tab is open.</p></dd>
+<dt>What ChatGPT gave</dt>
+<dd>Three tab buttons, with each panel hidden until its tab is pressed.</dd>
+<dt>What I changed</dt>
+<dd>Nothing. I added one line myself: the Class tab opens first when there's no class yet.</dd>
+<dt>Why</dt>
+<dd>A new user saw "No class yet" and didn't know where to go.</dd>
+<dt>How I checked</dt>
+<dd>Used the whole app with Tab and Enter only, no mouse.</dd>
+</dl>
+</article>
+
+<h2>Changes with no prompt</h2>
+<p>These I typed myself. They're tagged "Me" in the code.</p>
+<ul class="tight">
+  <li>The Use register numbers button. Names on a shared lab laptop stay there until someone clears them.</li>
+  <li>The Forget this class button, for the same reason.</li>
+  <li>Two students with the same name get "(2)", so they stay two people.</li>
+  <li>A way for the demo page to start the app with made-up names that are never saved.</li>
+</ul>
+
+<h2>What I learned about prompting</h2>
+<ul class="tight">
+  <li>Numbers make prompts testable. "28 students, groups of 3, nobody alone" told me what to check.</li>
+  <li>Asking for the tests in the same prompt (P2) was useful. But its tests only checked what I'd asked for, not what I'd forgotten.</li>
+  <li>Pasting one function and describing one bug (P4, P7) got better fixes than "fix my code".</li>
+  <li>"Yes or no first" (P5) stopped a long answer. It didn't stop a wrong-ish one.</li>
+</ul>
+
+<h2>Sources</h2>
+<ul class="tight small">
+  <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage">MDN, Window: localStorage property</a>.</li>
+  <li><a href="https://javascript.info/task/shuffle">javascript.info, Shuffle an array</a>.</li>
+  <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/innerHTML">MDN, Element: innerHTML property</a>, for the test string.</li>
+</ul>
+</main>
+</body>
+</html>
