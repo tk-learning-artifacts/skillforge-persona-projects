@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Power Down Cup: a Sec 3 energy league run by a robotics CCA, by Marcus Lee</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="data.js" defer></script>
+<script src="league.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Marcus Lee is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<header class="band">
+  <p class="kicker">Sec 3 energy league · 6 weeks · 8 classrooms</p>
+  <h1>Power Down Cup</h1>
+  <p>My robotics CCA built light sensors from micro:bits. We put one in each Sec 3 classroom. Then we turned switching off into a league.</p>
+  <div class="stats">
+    <div class="stat"><b class="num">84%</b><span>less empty-room energy in the cup weeks</span></div>
+    <div class="stat"><b class="num">56%</b><span>less, two weeks after the cup ended</span></div>
+    <div class="stat"><b class="num">85 → 14</b><span>lights-on minutes per room, per afternoon</span></div>
+    <div class="stat"><b class="num">~300 kg</b><span>CO<sub>2</sub> a year, if the "after" level holds</span></div>
+  </div>
+</header>
+
+<ul class="nav">
+  <li><a href="#plan">Plan</a></li>
+  <li><a href="#league">Results</a></li>
+  <li><a href="sentinel.html">Build the sensor</a></li>
+  <li><a href="plan.html">Engagement plan and materials</a></li>
+  <li><a href="#change">What I'd change</a></li>
+</ul>
+
+<p>I'm Marcus. I coach a robotics team for competitions. My team likes a scoreboard, and so does every Sec 3 class I know. So I asked: what if saving energy had one?</p>
+<p>Our classrooms run on lights and ceiling fans. After the last lesson, a lot of rooms stay lit and the fans keep spinning, for hours, with nobody inside. That waste is easy to see, easy to measure and easy to stop. It suits a competition.</p>
+
+<h2 id="plan"><small>Deliverable 1</small>Project plan</h2>
+<div class="card">
+<p><b>Question:</b> Will a class-against-class league cut the energy our empty classrooms waste after school? And will the habit stick once the league ends?</p>
+<p><b>What we measure:</b> two things, in the 4 hours after each room empties.</p>
+<ul class="tight">
+  <li>Lights-on minutes. A micro:bit "sentinel" reads the light level every minute. <a href="sentinel.html">How it works.</a></li>
+  <li>Fans left on. Two CCA members patrol the 8 rooms at 3 pm and count spinning fans.</li>
+</ul>
+<p><b>How we turn that into energy:</b> lights minutes × lights power, plus fans × fan power × hours left on. Then kWh × 0.402 kg CO<sub>2</sub> per kWh, Singapore's grid average for 2024.</p>
+<p><b>Links:</b> UN Goal 7, target 7.3: "double the global rate of improvement in energy efficiency". MOE aims for a two-thirds cut in net carbon emissions from schools by 2030. Our school has to start somewhere.</p>
+</div>
+
+<h3>Timeline</h3>
+<ol class="steps">
+  <li>Weeks 1 and 2: baseline. Sentinels log silently. Classes know a CCA project is measuring light. They don't know about the cup yet.</li>
+  <li>Weeks 3 and 4: the cup. Launch in every class. Power captains. Leaderboard every Monday.</li>
+  <li>Weeks 5 and 6: after. No leaderboard, no announcements. Sentinels keep logging. Does it stick?</li>
+</ol>
+
+<h3>Goals and results</h3>
+<div class="goals">
+  <div class="card"><h3>1. Cut energy in cup weeks</h3><p>Goal: 50% less than baseline, all 8 rooms.<br>Result: <b>84% less</b> <span class="pill met">Met</span></p></div>
+  <div class="card"><h3>2. Keep it after the cup</h3><p>Goal: still 60% less in weeks 5 and 6.<br>Result: <b>56% less</b> <span class="pill miss">Missed</span></p></div>
+  <div class="card"><h3>3. CCA can measure</h3><p>Goal: all 12 members pass the calibration and kWh check.<br>Result: <b>12 of 12</b> <span class="pill met">Met</span></p></div>
+  <div class="card"><h3>4. Captains do the check</h3><p>Goal: every class does the switch-off check on 8 of 10 cup days.<br>Result: <b>7 of 8 classes</b> <span class="pill miss">Missed</span></p></div>
+</div>
+
+<h2 id="league"><small>Deliverable 2</small>Before and after</h2>
+<p class="made-up">My school, team and these numbers are made up, like me. They show how the measuring and scoring work. The power settings are estimates you can change. The grid figure and the other facts are real and linked below.</p>
+
+<h3>The final league table</h3>
+<p>Each class is ranked by how far it cut its own baseline. Ties go to the class with more zero days: afternoons with no lights on at all.</p>
+<div class="scroll">
+<table>
+  <thead><tr><th>#</th><th>Class</th><th>Base kWh</th><th>Cup kWh</th><th>Drop</th><th>Zero</th><th>After</th></tr></thead>
+  <tbody id="league-rows"></tbody>
+</table>
+</div>
+<p class="small">kWh per room per afternoon, mean of 10 school days. Drop: cup weeks against baseline. Zero: cup days with no lights on. After: weeks 5 and 6 against baseline.</p>
+
+<h3>Change the power settings</h3>
+<p>I don't have a meter on each room. These are estimates. Move them and watch whether the winner changes.</p>
+<div class="controls">
+  <div><label for="light-w">Lights in one room: <output id="light-w-out">300 W</output></label>
+    <input type="range" id="light-w" min="100" max="600" step="20" value="300"></div>
+  <div><label for="fan-w">One ceiling fan: <output id="fan-w-out">60 W</output></label>
+    <input type="range" id="fan-w" min="30" max="100" step="5" value="60"></div>
+  <div><label for="fan-h">Hours a fan runs once left on: <output id="fan-h-out">3 h</output></label>
+    <input type="range" id="fan-h" min="1" max="4" step="0.5" value="3"></div>
+</div>
+<button type="button" id="reset">Reset to our estimates</button>
+<p class="live" id="live" aria-live="polite"></p>
+
+<h3>Class by class</h3>
+<div class="seg" role="group" aria-label="What the chart shows">
+  <button type="button" data-metric="kwh" aria-pressed="true">Energy</button>
+  <button type="button" data-metric="lights" aria-pressed="false">Lights minutes</button>
+  <button type="button" data-metric="fans" aria-pressed="false">Fans at 3 pm</button>
+</div>
+<p class="small" id="chart-title"></p>
+<svg class="chart" id="league-chart" role="img" aria-labelledby="chart-title chart-desc"><desc id="chart-desc">Grouped bars for classes 3A to 3H: baseline, cup and after. Every class falls sharply in the cup weeks and rises again after, but stays below its baseline.</desc></svg>
+<ul class="legend"><li><i class="k-base"></i>Baseline, weeks 1 and 2</li><li><i class="k-cup"></i>Cup, weeks 3 and 4</li><li><i class="k-after"></i>After, weeks 5 and 6</li></ul>
+
+<h3>All 8 rooms, per school week</h3>
+<div class="totals">
+  <div class="total"><b class="num" id="t-base"></b><span>Baseline week</span></div>
+  <div class="total"><b class="num" id="t-cup"></b><span id="t-cup-drop">Cup week</span></div>
+  <div class="total"><b class="num" id="t-after"></b><span id="t-after-drop">After week</span></div>
+  <div class="total"><b class="num" id="t-co2"></b><span>CO<sub>2</sub> saved over 40 school weeks, at the "after" level</span></div>
+</div>
+
+<h3>What the numbers say</h3>
+<ul class="tight">
+  <li>Every class dropped in the cup weeks. The mean room went from 85 lights-on minutes per afternoon to 14. Fans spinning at 3 pm, across all 8 rooms, went from 18.5 to 2.8.</li>
+  <li>The drop is real, not noise. In the 3 biggest rooms, 3A, 3D and 3G, even the worst cup day was far below the median baseline day.</li>
+  <li>Then it faded. After the cup, lights crept back to 37 minutes. That is still 56% less energy than baseline, but it missed my 60% goal.</li>
+  <li>3G is the warning. Its captains pressed A on the way out but skipped the switch check on four days. The sentinel beeped, and they left anyway. It finished last, just behind 3B. After the cup it was only 41% below baseline.</li>
+  <li>The CO<sub>2</sub> is small. About 300 kg a year is a rounding error on a school bill. What matters is that 300 students now switch off, and 12 can prove it with data.</li>
+</ul>
+<p>Moving the sliders changes the kWh a lot. It barely changes the ranking. 3E wins at every setting I tried, because it cut both lights and fans to almost zero. That told me the scoring rule was fair enough.</p>
+
+<h2 id="engage"><small>Deliverable 3</small>Student engagement</h2>
+<p>Two groups take part. The full plan, the sessions and the printables are on the <a href="plan.html">engagement plan page</a>.</p>
+<ul class="tight">
+  <li>12 Sec 3 robotics CCA members build, test and run it. Four 2-hour CCA sessions before launch. 20 minutes a week after.</li>
+  <li>8 Sec 3 classes compete. A 5-minute launch pitch by two CCA members. Two power captains per class. A leaderboard poster every Monday.</li>
+  <li>Materials: a power captain card, a switch sticker, a patrol sheet, a leaderboard poster and the pitch script.</li>
+</ul>
+
+<h2 id="rubric">Against the rubric</h2>
+<ul class="tight">
+  <li><b>Measurable drop.</b> 84% less empty-room energy in the cup, 56% after. Both measured against a two-week baseline in the same rooms.</li>
+  <li><b>Clear learning outcomes.</b> CCA members calibrate a sensor and convert minutes to kg CO<sub>2</sub>. Classes learn what uses power and a switch-off routine. See the <a href="plan.html#outcomes">outcomes</a>.</li>
+  <li><b>School limits.</b> 9 micro:bit V2s, which many schools already have. Cardboard, Blu-tack, batteries. No wiring into anything. No touching the switchboard.</li>
+  <li><b>Others can adopt it.</b> The code is one short file. The <a href="sentinel.html">build page</a> has every step. A school without micro:bits can run the 3 pm patrol alone.</li>
+</ul>
+
+<h2 id="change">What I'd change</h2>
+<p>The cup worked because of pressure, and the pressure ended. The after weeks lost a third of the gain. Next time, I wouldn't stop the league cold. I'd run a monthly "spot check" round for the rest of the term, with no warning.</p>
+<p>The measurement is also partial. We only cover after school. Rooms are empty during PE, lab lessons and recess too, and we never saw those hours. The fan number is the weakest: one patrol at 3 pm and a guess at how long fans then run.</p>
+<p>And the sentinel's beep changed behaviour on its own, in the cup weeks. So I can't split the effect of the league from the effect of the beep. Next time I'd keep the beep off in half the rooms.</p>
+
+<h2 id="sources">Sources</h2>
+<ul class="tight small">
+  <li>Grid emission factor of 0.402 kg CO<sub>2</sub> per kWh in 2024: <a href="https://www.nccs.gov.sg/singapores-climate-action/mitigation-efforts/power/">National Climate Change Secretariat, Power</a>, using EMA data.</li>
+  <li>MOE's two-thirds cut by 2030 and the Eco Stewardship Programme: <a href="https://www.moe.gov.sg/news/press-releases/20210304-learn-for-life-equipping-ourselves-for-a-changing-world-nurturing-stewards-of-the-environment">MOE press release, 4 March 2021</a>.</li>
+  <li>Target 7.3: <a href="https://sdgs.un.org/goals/goal7">UN SDG 7</a>.</li>
+  <li>Turning devices off when not in use: <a href="https://www.mse.gov.sg/save-energy/">MSE, Let's Save Energy Together</a>.</li>
+  <li>micro:bit data logging, light sensor and timestamps: <a href="https://microbit.org/get-started/user-guide/data-logging/">micro:bit data logging guide</a> and <a href="https://makecode.microbit.org/reference/datalogger">MakeCode datalogger reference</a>.</li>
+</ul>
+</main>
+</body>
+</html>

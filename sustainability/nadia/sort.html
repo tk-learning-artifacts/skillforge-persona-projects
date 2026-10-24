@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Which bin? A sorting game for P4, by Nadia Hussain</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="sort.css">
+<script src="icons.js" defer></script>
+<script src="items.js" defer></script>
+<script src="sort.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Nadia Hussain is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<p><a class="backlink" href="index.html">Back to Right Bin, Every Time</a></p>
+<h1>Which bin?</h1>
+<p class="lede">You see one thing at a time. Pick the bin it goes in. There is no timer.</p>
+
+<div class="settings" role="group" aria-label="Game settings">
+  <div class="set">
+    <span class="set-label" id="count-label">How many things?</span>
+    <div class="seg" role="radiogroup" aria-labelledby="count-label">
+      <button type="button" role="radio" aria-checked="true" data-count="6">6</button>
+      <button type="button" role="radio" aria-checked="false" data-count="12">12</button>
+    </div>
+  </div>
+  <div class="set">
+    <span class="set-label">Help</span>
+    <div class="seg">
+      <button type="button" id="speak" aria-pressed="false">Read it out</button>
+      <button type="button" id="big" aria-pressed="false">Bigger words</button>
+    </div>
+  </div>
+</div>
+
+<section class="stage" id="stage" aria-labelledby="item-name">
+  <p class="progress" id="progress">Thing 1 of 6</p>
+  <div class="item">
+    <span class="item-pic" id="item-pic"></span>
+    <h2 class="item-name" id="item-name">Clean worksheet</h2>
+  </div>
+  <div class="bins" id="bins" role="group" aria-label="Pick a bin"></div>
+  <div class="feedback" id="feedback" hidden>
+    <p class="verdict" id="verdict"></p>
+    <p id="why"></p>
+    <button type="button" class="primary" id="next">Next</button>
+  </div>
+</section>
+
+<section class="done" id="done" hidden aria-labelledby="done-title">
+  <h2 id="done-title">All sorted</h2>
+  <p class="score" id="score"></p>
+  <p id="missed-head">Look at these again:</p>
+  <ul class="missed" id="missed"></ul>
+  <div class="row">
+    <button type="button" class="primary" id="retry">Try the missed ones again</button>
+    <button type="button" id="restart">Start again</button>
+  </div>
+</section>
+
+<p class="live" id="live" aria-live="polite"></p>
+<p class="small">Keyboard: press 1, 2 or 3 to pick a bin. Press Enter for the next thing.</p>
+
+<h2>Notes for the teacher</h2>
+<ul class="tight">
+  <li>Each bin has a colour, a shape and a word. A pupil who can't tell blue from grey can still use the shape.</li>
+  <li>"Read it out" uses the device's own voice. It may sound different on a Chromebook and an iPad.</li>
+  <li>Six things is the start. Twelve is the full check. Some of my pupils stayed on six all week, and that was fine.</li>
+  <li>The answers follow NEA's Recycle Right guidance. Your school's bins may have a different label. Check yours first.</li>
+</ul>
+</main>
+</body>
+</html>
