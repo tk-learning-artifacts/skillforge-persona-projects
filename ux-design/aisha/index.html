@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Laser Slot: booking the makerspace laser cutter, by Aisha Rahman</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Aisha Rahman is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<h1><span>Laser Slot</span></h1>
+<p class="lede">Our makerspace books the laser cutter through one long online form. Students double-book, turn up untrained, or bring plastic we can't cut. I redesigned that one task. I tested it on paper with 5 students, then built the fixed version.</p>
+<p>I'm Aisha. I teach design and making in a school makerspace. I don't trust a design until someone has tapped it with a finger. So this project is mostly paper, cardboard and sticky notes. A working site comes at the end. Then my Sec 2 class does the same steps on their own app ideas.</p>
+
+<ul class="notes" aria-label="Contents">
+  <li><a class="sticky" href="#before"><b>Step 1</b>The old form</a></li>
+  <li><a class="sticky pink" href="#interviews"><b>Step 2</b>Interviews</a></li>
+  <li><a class="sticky blue" href="#persona"><b>Step 3</b>Persona and user flow</a></li>
+  <li><a class="sticky green" href="#wireframes"><b>Step 4</b>3 wireframes on cards</a></li>
+  <li><a class="sticky" href="prototype.html"><b>Step 5</b>Try the paper and final versions</a></li>
+  <li><a class="sticky pink" href="#tests"><b>Step 6</b>Test notes from 5 students</a></li>
+  <li><a class="sticky blue" href="lesson.html"><b>Step 7</b>Lesson plan and critique rules</a></li>
+  <li><a class="sticky green" href="#change"><b>Step 8</b>What I would change</a></li>
+</ul>
+
+<p class="made-up">Kestrel Secondary, its Maker Lab, the students and their words are made up, like me. The safety rules and design research I quote are real, with links at the bottom.</p>
+
+<h2 id="before"><span class="num">1</span>The old form</h2>
+<p>Students book on a single-page form. Every answer is a free text box. After you press Submit, a teacher reads it and emails you back. Sometimes.</p>
+<figure>
+<svg viewBox="0 0 480 600" role="img" aria-labelledby="of-t of-d" xmlns="http://www.w3.org/2000/svg">
+  <title id="of-t">The old Maker Lab booking form</title>
+  <desc id="of-d">A long form with free text boxes for name, class, email, machine, date, time and material, a file upload and a Submit button. Four numbered problems are marked on the right.</desc>
+  <rect width="480" height="600" rx="18" fill="#FFFFFF"/>
+  <rect x="20" y="20" width="310" height="560" rx="10" fill="#F4F6F5" stroke="#DDE3E1"/>
+  <g font-family="Segoe UI, system-ui, sans-serif" font-size="15" fill="#3C4846">
+    <text x="36" y="52" font-size="17" font-weight="700" fill="#15211F">Maker Lab booking</text>
+    <text x="36" y="88">Name</text><rect x="36" y="96" width="278" height="30" rx="4" fill="#FFFFFF" stroke="#B9C2BF"/>
+    <text x="36" y="148">Class</text><rect x="36" y="156" width="278" height="30" rx="4" fill="#FFFFFF" stroke="#B9C2BF"/>
+    <text x="36" y="208">Machine</text><rect x="36" y="216" width="278" height="30" rx="4" fill="#FFFFFF" stroke="#B9C2BF"/><text x="46" y="236" fill="#15211F">Laser cutter</text><path d="M292 226l6 7 6-7" fill="none" stroke="#3C4846" stroke-width="2"/>
+    <text x="36" y="268">Date you want</text><rect x="36" y="276" width="278" height="30" rx="4" fill="#FFFFFF" stroke="#B9C2BF"/><text x="46" y="296" fill="#15211F">next tue??</text>
+    <text x="36" y="328">Time</text><rect x="36" y="336" width="278" height="30" rx="4" fill="#FFFFFF" stroke="#B9C2BF"/><text x="46" y="356" fill="#15211F">after school</text>
+    <text x="36" y="388">Material</text><rect x="36" y="396" width="278" height="30" rx="4" fill="#FFFFFF" stroke="#B9C2BF"/><text x="46" y="416" fill="#15211F">acrylic or pvc</text>
+    <text x="36" y="448">Your file</text><rect x="36" y="456" width="110" height="30" rx="4" fill="#FFFFFF" stroke="#B9C2BF"/><text x="48" y="476">Choose file</text>
+    <rect x="36" y="514" width="110" height="38" rx="6" fill="#55625F"/><text x="62" y="538" fill="#FFFFFF" font-weight="700">Submit</text>
+  </g>
+  <g font-family="Segoe UI, system-ui, sans-serif" font-size="15" fill="#A3352A">
+    <g stroke="#A3352A" stroke-width="2" fill="none"><path d="M318 291h22"/><path d="M318 411h22"/><path d="M200 533h140"/><path d="M318 231h22"/></g>
+    <circle cx="356" cy="231" r="13" fill="#A3352A"/><text x="351" y="236" fill="#FFFFFF" font-weight="700">1</text>
+    <text x="374" y="228">No safety</text><text x="374" y="246">check</text>
+    <circle cx="356" cy="291" r="13" fill="#A3352A"/><text x="351" y="296" fill="#FFFFFF" font-weight="700">2</text>
+    <text x="374" y="288">Free slots</text><text x="374" y="306">not shown</text>
+    <circle cx="356" cy="411" r="13" fill="#A3352A"/><text x="351" y="416" fill="#FFFFFF" font-weight="700">3</text>
+    <text x="374" y="408">Any material</text><text x="374" y="426">can be typed</text>
+    <circle cx="356" cy="533" r="13" fill="#A3352A"/><text x="351" y="538" fill="#FFFFFF" font-weight="700">4</text>
+    <text x="374" y="530">"Response</text><text x="374" y="548">recorded."</text><text x="374" y="566">Then nothing.</text>
+  </g>
+</svg>
+<figcaption>The old form, redrawn. The red notes are mine.</figcaption>
+</figure>
+<p>I matched each problem to one of <a href="https://www.nngroup.com/articles/ten-usability-heuristics/">Nielsen's 10 usability heuristics</a>.</p>
+<ol class="steps">
+  <li><strong>No safety check.</strong> Anyone can book, trained or not. That breaks "Error Prevention".</li>
+  <li><strong>Free slots are hidden.</strong> You guess a day and hope. That breaks "Visibility of System Status".</li>
+  <li><strong>Any material can be typed.</strong> Someone typed "pvc". PVC must never go in a laser cutter. That breaks "Error Prevention" too, and it is a safety problem.</li>
+  <li><strong>"Your response has been recorded."</strong> Booked? Not booked? When? That breaks "Visibility of System Status" again.</li>
+</ol>
+
+<h2 id="interviews"><span class="num">2</span>Interviews</h2>
+<p>I interviewed 3 students and our lab technician, for about 10 minutes each. We stood at the laser cutter. I asked about the last time they booked it.</p>
+<ul class="notes">
+  <li class="sticky"><strong>Sec 2 student, keychain project</strong><br>"I booked Tuesday. So did two other people. I went home."<br><b>Pain:</b> no way to see who else booked.</li>
+  <li class="sticky pink"><strong>Sec 3 student, robotics CCA</strong><br>She cuts acrylic parts weekly. "Why does it ask my class again?" Last month she found someone else on her slot.<br><b>Pain:</b> long form, and clashes.</li>
+  <li class="sticky blue"><strong>Sec 4 student, project parts</strong><br>He booked before his safety session. The technician sent him away at the door.<br><b>Pain:</b> found out too late.</li>
+  <li class="sticky green"><strong>Lab technician</strong><br>"Once a month someone brings a vinyl sticker sheet." He checks every material by hand.<br><b>Pain:</b> unsafe material reaches the machine.</li>
+</ul>
+<p>The surprise: I thought the problem was the long form. Students hated the clash more. Two of three had turned up to find the machine taken.</p>
+
+<h2 id="persona"><span class="num">3</span>Persona and user flow</h2>
+<div class="persona">
+  <div class="sticky tape">
+    <p class="quote">"I booked Tuesday. So did two other people."</p>
+    <p><strong>Who</strong>Darren, 14, Sec 2. First time on the laser cutter.</p>
+    <p><strong>Goal</strong>Cut his acrylic keychain before the project is due on Friday.</p>
+  </div>
+  <div class="sticky blue tape">
+    <p><strong>Frustration</strong>He can't see which slots are free. He doesn't know which plastics are allowed.</p>
+    <p><strong>Device</strong>His phone, at recess, in a noisy canteen. One hand, two minutes.</p>
+    <p><strong>Must work</strong>Show free slots. Stop unsafe bookings early, before he wastes a trip.</p>
+  </div>
+</div>
+<p class="small">Darren's quote is the Sec 2 student's. His "found out too late" problem comes from the Sec 4 student and the technician.</p>
+
+<h3>User flow: 8 steps, 2 decisions</h3>
+<figure>
+<svg viewBox="0 0 480 750" role="img" aria-labelledby="uf-t uf-d" xmlns="http://www.w3.org/2000/svg">
+  <title id="uf-t">User flow for booking the laser cutter</title>
+  <desc id="uf-d">1 open Maker Lab bookings. 2 choose laser cutter. 3 decision: safety session done? If no, book a safety session and stop there. 4 see this week's slots. 5 tap a free slot. 6 choose your material. 7 decision: allowed in our lab? If no, see why and pick another. 8 book it and see your booking card.</desc>
+  <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#22201C"/></marker></defs>
+  <rect width="480" height="750" rx="18" fill="#FFFFFF"/>
+  <g font-family="Segoe UI, system-ui, sans-serif" font-size="15" fill="#1C1D20">
+    <g stroke="#22201C" stroke-width="2.5" fill="none" marker-end="url(#ah)">
+      <path d="M180 76v22"/><path d="M180 156v22"/><path d="M180 252v22"/><path d="M180 332v22"/><path d="M180 412v22"/><path d="M180 492v22"/><path d="M180 588v22"/>
+      <path d="M300 216h38"/>
+      <path d="M300 552h38"/><path d="M404 526v-62h-102"/>
+    </g>
+    <g fill="#FFF1A8" stroke="#22201C" stroke-width="2">
+      <rect x="60" y="20" width="240" height="56" rx="3"/><rect x="60" y="100" width="240" height="56" rx="3"/>
+      <rect x="60" y="276" width="240" height="56" rx="3"/><rect x="60" y="356" width="240" height="56" rx="3"/>
+      <rect x="60" y="436" width="240" height="56" rx="3"/><rect x="60" y="612" width="240" height="56" rx="3"/>
+    </g>
+    <g fill="#D8EBFF" stroke="#22201C" stroke-width="2.5">
+      <path d="M180 180L300 216L180 252L60 216Z"/><path d="M180 516L300 552L180 588L60 552Z"/>
+    </g>
+    <g fill="#FFDBE5" stroke="#22201C" stroke-width="2" stroke-dasharray="6 4">
+      <rect x="340" y="190" width="130" height="52" rx="3"/><rect x="340" y="526" width="130" height="52" rx="3"/>
+    </g>
+    <g fill="none" stroke="#22201C" stroke-width="2.5"><circle cx="32" cy="48" r="15"/><circle cx="32" cy="128" r="15"/><circle cx="32" cy="216" r="15"/><circle cx="32" cy="304" r="15"/><circle cx="32" cy="384" r="15"/><circle cx="32" cy="464" r="15"/><circle cx="32" cy="552" r="15"/><circle cx="32" cy="640" r="15"/></g>
+    <g font-weight="800" text-anchor="middle"><text x="32" y="53">1</text><text x="32" y="133">2</text><text x="32" y="221">3</text><text x="32" y="309">4</text><text x="32" y="389">5</text><text x="32" y="469">6</text><text x="32" y="557">7</text><text x="32" y="645">8</text></g>
+    <g text-anchor="middle">
+      <text x="180" y="53">Open Maker Lab bookings</text>
+      <text x="180" y="133">Choose "Laser cutter"</text>
+      <text x="180" y="212" font-weight="800">Decision:</text><text x="180" y="231">safety session done?</text>
+      <text x="180" y="309">See this week's slots</text>
+      <text x="180" y="389">Tap a free slot</text>
+      <text x="180" y="469">Choose your material</text>
+      <text x="180" y="548" font-weight="800">Decision:</text><text x="180" y="567">allowed in our lab?</text>
+      <text x="180" y="637">Book it. See your</text><text x="180" y="657">booking card</text>
+      <text x="405" y="212">Book a safety</text><text x="405" y="231">session. Stop.</text>
+      <text x="405" y="548">See why, then</text><text x="405" y="567">pick another</text>
+    </g>
+    <g font-weight="800"><text x="306" y="208">No</text><text x="190" y="270">Yes</text><text x="306" y="544">No</text><text x="190" y="606">Yes</text></g>
+    <g transform="translate(40 704)">
+      <rect width="40" height="26" rx="3" fill="#FFF1A8" stroke="#22201C" stroke-width="2"/><text x="50" y="18">Step</text>
+      <path d="M140 0L162 13L140 26L118 13Z" fill="#D8EBFF" stroke="#22201C" stroke-width="2.5"/><text x="172" y="18">Decision</text>
+      <rect x="260" width="40" height="26" rx="3" fill="#FFDBE5" stroke="#22201C" stroke-width="2" stroke-dasharray="6 4"/><text x="310" y="18">Side trip</text>
+    </g>
+  </g>
+</svg>
+<figcaption>Both decisions stop a bad booking before it is made. The shape and the word "Decision" mark them, not the colour.</figcaption>
+</figure>
+
+<h2 id="wireframes"><span class="num">4</span>Three wireframes, on index cards</h2>
+<p>I drew each screen in pencil on an A6 card. Boxes and labels only. One main action each, three text sizes, no colour. Then I slid the cards into a cardboard phone frame and tested them. You can make the frame from the <a href="lesson.html#frame">cutting diagram in the lesson plan</a>.</p>
+<p>These are the cards as I tested them. Testing changed all three. Spot the problems before you read my notes.</p>
+<div class="cards3">
+<figure>
+<svg viewBox="0 0 300 430" role="img" aria-labelledby="c1-t c1-d" xmlns="http://www.w3.org/2000/svg">
+  <title id="c1-t">Card 1: Pick a slot</title>
+  <desc id="c1-d">A grid of Monday to Friday by 3:00, 3:30 and 4:00 pm. Some boxes are shaded grey. Free boxes are blank. A Next button at the bottom.</desc>
+  <rect width="300" height="430" rx="8" fill="#FFFFFF"/>
+  <path d="M0 40h300" stroke="#E07A7A" stroke-width="1.5"/>
+  <g stroke="#C9DDF2" stroke-width="1"><path d="M0 70h300M0 100h300M0 130h300M0 160h300M0 190h300M0 220h300M0 250h300M0 280h300M0 310h300M0 340h300M0 370h300M0 400h300"/></g>
+  <g fill="none" stroke="#2B2B2B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="16" y="14" width="268" height="402" rx="18"/>
+    <g transform="translate(64 128)">
+      <rect x="0" y="0" width="38" height="44"/><rect x="42" y="0" width="38" height="44"/><rect x="84" y="0" width="38" height="44"/><rect x="126" y="0" width="38" height="44"/><rect x="168" y="0" width="38" height="44"/>
+      <rect x="0" y="50" width="38" height="44"/><rect x="42" y="50" width="38" height="44"/><rect x="84" y="50" width="38" height="44"/><rect x="126" y="50" width="38" height="44"/><rect x="168" y="50" width="38" height="44"/>
+      <rect x="0" y="100" width="38" height="44"/><rect x="42" y="100" width="38" height="44"/><rect x="84" y="100" width="38" height="44"/><rect x="126" y="100" width="38" height="44"/><rect x="168" y="100" width="38" height="44"/>
+    </g>
+    <rect x="34" y="350" width="232" height="46" rx="10" stroke-width="4"/>
+  </g>
+  <g fill="#9A9A9A" opacity="0.75"><rect x="65" y="129" width="36" height="42"/><rect x="149" y="179" width="36" height="42"/><rect x="191" y="129" width="36" height="42"/><rect x="107" y="229" width="36" height="42"/><rect x="233" y="179" width="36" height="42"/></g>
+  <g font-family="Segoe UI, system-ui, sans-serif" fill="#2B2B2B">
+    <text x="34" y="62" font-size="14">&lt; Laser cutter</text>
+    <text x="34" y="94" font-size="22" font-weight="700">Pick a slot</text>
+    <g font-size="14" text-anchor="middle"><text x="83" y="120">Mon</text><text x="125" y="120">Tue</text><text x="167" y="120">Wed</text><text x="209" y="120">Thu</text><text x="251" y="120">Fri</text></g>
+    <g font-size="14"><text x="24" y="155">3:00</text><text x="24" y="205">3:30</text><text x="24" y="255">4:00</text></g>
+    <text x="34" y="306" font-size="16">Each slot is 30 minutes.</text>
+    <text x="150" y="379" font-size="16" font-weight="700" text-anchor="middle">Next</text>
+  </g>
+</svg>
+<figcaption>Main action: tap a blank box. Grey meant taken. Only I knew that.</figcaption>
+</figure>
+<figure>
+<svg viewBox="0 0 300 430" role="img" aria-labelledby="c2-t c2-d" xmlns="http://www.w3.org/2000/svg">
+  <title id="c2-t">Card 2: What will you cut?</title>
+  <desc id="c2-d">Three choices with round buttons: Plywood 3 mm, PMMA 3 mm, Card. A Next button at the bottom.</desc>
+  <rect width="300" height="430" rx="8" fill="#FFFFFF"/>
+  <path d="M0 40h300" stroke="#E07A7A" stroke-width="1.5"/>
+  <g stroke="#C9DDF2" stroke-width="1"><path d="M0 70h300M0 100h300M0 130h300M0 160h300M0 190h300M0 220h300M0 250h300M0 280h300M0 310h300M0 340h300M0 370h300M0 400h300"/></g>
+  <g fill="none" stroke="#2B2B2B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="16" y="14" width="268" height="402" rx="18"/>
+    <rect x="34" y="132" width="232" height="50" rx="8"/><rect x="34" y="192" width="232" height="50" rx="8"/><rect x="34" y="252" width="232" height="50" rx="8"/>
+    <circle cx="58" cy="157" r="11"/><circle cx="58" cy="217" r="11"/><circle cx="58" cy="277" r="11"/>
+    <rect x="34" y="350" width="232" height="46" rx="10" stroke-width="4"/>
+  </g>
+  <g font-family="Segoe UI, system-ui, sans-serif" fill="#2B2B2B">
+    <text x="34" y="62" font-size="14">&lt; Slots · Thu 3:30</text>
+    <text x="34" y="100" font-size="22" font-weight="700">What will you cut?</text>
+    <text x="80" y="163" font-size="16">Plywood 3 mm</text><text x="80" y="223" font-size="16">PMMA 3 mm</text><text x="80" y="283" font-size="16">Card</text>
+    <text x="34" y="330" font-size="14">Not on the list? Ask the technician.</text>
+    <text x="150" y="379" font-size="16" font-weight="700" text-anchor="middle">Next</text>
+  </g>
+</svg>
+<figcaption>Main action: choose one material. A list replaces the free text box, so "pvc" can't be typed.</figcaption>
+</figure>
+<figure>
+<svg viewBox="0 0 300 430" role="img" aria-labelledby="c3-t c3-d" xmlns="http://www.w3.org/2000/svg">
+  <title id="c3-t">Card 3: Check and book</title>
+  <desc id="c3-d">A summary: laser cutter, Thursday 3:30 pm, plywood 3 mm. A tick box: I have done the safety session. A big Book it button.</desc>
+  <rect width="300" height="430" rx="8" fill="#FFFFFF"/>
+  <path d="M0 40h300" stroke="#E07A7A" stroke-width="1.5"/>
+  <g stroke="#C9DDF2" stroke-width="1"><path d="M0 70h300M0 100h300M0 130h300M0 160h300M0 190h300M0 220h300M0 250h300M0 280h300M0 310h300M0 340h300M0 370h300M0 400h300"/></g>
+  <g fill="none" stroke="#2B2B2B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="16" y="14" width="268" height="402" rx="18"/>
+    <rect x="34" y="118" width="232" height="112" rx="8"/>
+    <rect x="34" y="262" width="24" height="24" rx="4"/>
+    <rect x="34" y="340" width="232" height="56" rx="10" stroke-width="5"/>
+  </g>
+  <g font-family="Segoe UI, system-ui, sans-serif" fill="#2B2B2B">
+    <text x="34" y="62" font-size="14">&lt; Material</text>
+    <text x="34" y="100" font-size="22" font-weight="700">Check and book</text>
+    <text x="48" y="148" font-size="16">Laser cutter</text><text x="48" y="178" font-size="16">Thu, 3:30 pm</text><text x="48" y="208" font-size="16">Plywood 3 mm</text>
+    <text x="68" y="280" font-size="14">I have done the safety</text><text x="68" y="298" font-size="14">session</text>
+    <text x="150" y="374" font-size="16" font-weight="700" text-anchor="middle">Book it</text>
+  </g>
+</svg>
+<figcaption>Main action: "Book it", the thickest box. The safety tick box sat here, at the very end.</figcaption>
+</figure>
+</div>
+
+<h2 id="mockup"><span class="num">5</span>The mock-up: paper, then final</h2>
+<p>The mock-up page has both versions, working. The paper version clicks through my index cards as I tested them. The final version is the coloured, accessible site, with every fix from testing. Its contrast and label checks run on the page, so you can see the numbers.</p>
+<p><a class="big-link" href="prototype.html">Try both versions</a></p>
+
+<h2 id="tests"><span class="num">6</span>Test notes from 5 students</h2>
+<p>I tested the paper cards with 5 students, from Sec 2 to Sec 4. One at a time, at a makerspace bench, about 6 minutes each. I played "computer" and swapped the cards. A Sec 3 helper took notes and tallied my interruptions. I interrupted twice, so I dropped those two moments from the notes.</p>
+<p>Each student had 3 tasks, read aloud from a card:</p>
+<ul class="tight">
+  <li>Task A: "Book the laser cutter after school on Thursday."</li>
+  <li>Task B: "You want to cut a clear acrylic sheet. Is it allowed?"</li>
+  <li>Task C: "You are sick on Thursday. Cancel your booking."</li>
+</ul>
+<h3>Everything we saw</h3>
+<ol class="obs">
+  <li>Task A. Student 1 tapped a grey box first. "Grey is free, right? Like empty?" Grey meant taken.</li>
+  <li>Task A. Student 2's job needs about 45 minutes. One slot is 30. She booked one and said, "I'll just go fast."</li>
+  <li>Task A. Student 3 had not done the safety session. He reached card 3, saw the tick box, and stopped. "So I did all that for nothing?"</li>
+  <li>Task B. Student 4 read the list twice. "Acrylic isn't here. What's PMMA?" PMMA is acrylic, but nobody calls it that.</li>
+  <li>Task A. Student 5 finished, looked at "Done" and asked, "Done what? Which day did I get?"</li>
+  <li>Task C. Students 1 and 5 couldn't find a way to cancel. It was hidden in a menu card I hadn't shown.</li>
+</ol>
+<h3>The top 3 fixes</h3>
+<p>I ranked by safety first, then by how many students got stuck.</p>
+<ul class="fixlist">
+  <li><b>N3</b> The safety question moved to the very start. "Not yet" shows the next safety sessions. You never pick a slot you can't use.</li>
+  <li><b>N1</b> Every slot now says "Free" or "Taken" in words. Taken slots are striped and can't be tapped. Colour is no longer the only clue.</li>
+  <li><b>N5, N6</b> After booking you get a booking card: day, time, room, what to bring. It stays on the first screen, with a "Cancel booking" button.</li>
+</ul>
+<h3>Smaller fixes</h3>
+<ul class="fixlist">
+  <li><b>N4</b> "Acrylic (PMMA, also sold as Perspex) 3 mm". Students' word first.</li>
+  <li class="open"><b>N2</b> Not fixed. Longer jobs need two slots in a row. The technician and I have to agree on that rule first.</li>
+</ul>
+
+<h2 id="lesson"><span class="num">7</span>The lesson</h2>
+<p>My Sec 2 class does the same steps on their own app ideas. They use cardboard phone frames and index cards. In one 60-minute lesson they build 3 cards and test them in a carousel. Then they pin them up for critique.</p>
+<p><a class="big-link" href="lesson.html">Read the lesson plan</a></p>
+
+<h2 id="change"><span class="num">8</span>What I would change</h2>
+<p>N2 bugs me. A student who needs 45 minutes will still book 30 and rush. Rushing at a laser cutter is exactly what we don't want. Next I'd add "How long is your cut?" and offer two slots in a row.</p>
+<p>I also tested only the paper version. The coloured site has not met a real student yet. The paper test found the big problems. A second round of 5 on the site would catch the small ones. And I only tested with students. Teachers book the cutter too, for whole classes, and they need something different.</p>
+
+<h2 id="sources"><span class="num">✓</span>Sources</h2>
+<ul class="tight small">
+  <li>Heuristic names: <a href="https://www.nngroup.com/articles/ten-usability-heuristics/">NN/g, 10 Usability Heuristics for User Interface Design</a>.</li>
+  <li>Never leave a cutter running alone: <a href="https://www.uml.edu/docs/Laser_Cutter_Safety_Guidelines_tcm18-343975.pdf">UMass Lowell, Laser Cutter Safety Guidelines</a>.</li>
+  <li>PVC gives off hydrogen chloride when cut: <a href="https://www.cmu.edu/ehs/Guidelines/ehs-guideline-laser-cutter-safety-v.11.pdf">Carnegie Mellon EHS, Laser Cutter Safety guideline</a>.</li>
+  <li>No PVC or foam in school laser cutters, trained staff, supervised learners, extraction on: <a href="https://nasuwt.org.uk/advice/health-safety/laser-cutters-and-3d-printers.html">NASUWT (a UK teachers' union), Laser cutters and 3D printers</a>. This is UK guidance. Follow your own school's risk assessment.</li>
+  <li>PMMA is acrylic, sold as Perspex: <a href="https://www.modip.ac.uk/plastics/materials/polymethyl-methacrylate">MoDiP, Polymethyl methacrylate</a>.</li>
+  <li>Colour alone: <a href="https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html">WCAG 2.2, Understanding 1.4.1 Use of Color</a>.</li>
+  <li>Five users: <a href="https://www.nngroup.com/articles/why-you-only-need-to-test-with-5-users/">NN/g, Why You Only Need to Test with 5 Users</a>.</li>
+  <li>Discarding moments where the facilitator biased the user: <a href="https://www.nngroup.com/articles/thinking-aloud-the-1-usability-tool/">NN/g, Thinking Aloud: The #1 Usability Tool</a>.</li>
+  <li>A6 is 105 by 148 mm, a quarter of an A4 sheet: <a href="https://www.adobe.com/uk/creativecloud/design/discover/a6-format.html">Adobe, A6 format</a>. The A sizes are set by <a href="https://scc-ccn.ca/standardsdb/standards/8117979">ISO 216</a>.</li>
+</ul>
+</main>
+</body>
+</html>

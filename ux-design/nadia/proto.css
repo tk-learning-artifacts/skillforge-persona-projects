@@ -1,0 +1,71 @@
+/* The mock-up: a phone-sized homework page. */
+.versions { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 4px; }
+.versions a { display: inline-flex; align-items: center; min-height: 48px; padding: 0 16px; border-radius: 12px;
+  border: 2px solid var(--accent); text-decoration: none; font-weight: 700; }
+.versions a[aria-current="page"] { background: var(--accent); color: var(--ground); }
+.device { max-width: 420px; margin: 16px auto; border: 3px solid var(--ink-2); border-radius: 28px; padding: 10px; background: var(--surface); }
+.app { background: var(--ground); border-radius: 20px; padding: 14px 14px 22px; min-height: 560px; font-size: 18px; }
+.app.size-large { font-size: 21px; }
+.app.size-xl { font-size: 25px; }
+.app.spacing-wide, .app.spacing-wide * { line-height: 1.5 !important; letter-spacing: 0.12em !important; word-spacing: 0.16em !important; }
+.app.spacing-wide p { margin-bottom: 2em; }
+.app h2 { border: 0; margin: 6px 0 4px; padding: 0; font-size: 1.45em; }
+.app .school { margin: 0; font-size: 0.85em; color: var(--muted); }
+.app .count { margin: 0 0 10px; color: var(--muted); font-size: 0.9em; }
+.app button { font: inherit; cursor: pointer; }
+.tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin: 10px 0 8px; }
+.tabs button { min-height: 52px; border-radius: 12px; border: 2px solid var(--line); background: var(--surface); color: var(--ink); font-weight: 700; padding: 4px 8px; }
+.tabs button[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+.settings { margin: 4px 0 10px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+.settings summary { min-height: 48px; display: flex; align-items: center; padding: 0 14px; font-weight: 700; cursor: pointer; color: var(--accent); }
+.settings fieldset { border: 0; margin: 0; padding: 4px 14px 10px; }
+.settings legend { font-weight: 700; padding: 0; margin-bottom: 4px; }
+.settings label { display: flex; align-items: center; gap: 10px; min-height: 44px; }
+.settings input { width: 24px; height: 24px; accent-color: var(--accent); margin: 0; }
+.tasks { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+.task { display: flex; align-items: stretch; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); overflow: hidden; }
+.task .open { flex: 1; text-align: left; background: none; border: 0; color: var(--ink); padding: 12px; min-height: 64px; min-width: 0; }
+.task .subj { display: block; font-size: 0.8em; font-weight: 700; color: var(--ink-2); letter-spacing: 0.04em; }
+.task .what { display: block; font-weight: 600; overflow-wrap: anywhere; }
+.task .due { display: inline-block; margin-top: 4px; font-size: 0.82em; font-weight: 700; padding: 1px 8px; border-radius: 999px; background: var(--warn-soft); color: var(--warn); }
+.task .due.later { background: none; color: var(--muted); padding-left: 0; }
+.task .tick { flex: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+  min-width: 76px; min-height: 48px; border: 0; border-left: 1px solid var(--line); background: none; color: var(--ink-2); font-weight: 700; font-size: 0.8em; padding: 6px; }
+.task .tick .box { width: 1.6em; height: 1.6em; min-width: 28px; min-height: 28px; border: 3px solid var(--ink-2); border-radius: 7px; display: grid; place-items: center; font-size: 20px; line-height: 1; }
+.task.is-done { background: var(--done-soft); border-color: var(--done); }
+.task.is-done .what { text-decoration: line-through; text-decoration-thickness: 2px; }
+.task.is-done .tick { color: var(--done); }
+.task .done-tag { display: inline-block; margin-top: 4px; font-size: 0.82em; font-weight: 700; color: var(--done); }
+/* Version 1: a small tick box with no words, and abbreviated days */
+.v1 .task .due { background: none; color: #b3261e; padding-left: 0; }
+.v1 .task .due.later { color: var(--muted); }
+.v1 .task .tick { min-width: 44px; border-left: 0; }
+.v1 .task .tick .box { width: 20px; height: 20px; border-width: 2px; font-size: 14px; }
+.v1 .task .tick { padding: 0; width: 20px; min-width: 20px; height: 20px; min-height: 20px; align-self: center; margin-right: 14px; }
+.app .back { display: block; text-align: left; background: none; border: 0; color: var(--accent); font-weight: 700; min-height: 48px; padding: 0 4px; text-decoration: underline; text-underline-offset: 3px; }
+.app .lead { font-size: 1.15em; font-weight: 600; margin: 4px 0 10px; }
+.app .steps-list { padding-left: 0; list-style: none; counter-reset: s; margin: 0 0 12px; }
+.app .steps-list li { counter-increment: s; display: flex; gap: 10px; align-items: flex-start; margin-bottom: 10px; }
+.app .steps-list li::before { content: counter(s); flex: none; width: 1.7em; height: 1.7em; border-radius: 50%; background: var(--accent-soft); color: var(--accent); font-weight: 700; display: grid; place-items: center; }
+.app details.example { border: 1px solid var(--line); border-radius: 12px; margin: 8px 0 14px; background: var(--surface); }
+.app details.example summary { min-height: 48px; display: flex; align-items: center; padding: 0 12px; color: var(--accent); font-weight: 700; cursor: pointer; }
+.app details.example p { margin: 0; padding: 0 12px 12px; }
+.app .main-btn { display: block; width: 100%; min-height: 56px; border-radius: 14px; border: 0; background: var(--accent); color: var(--ground); font-weight: 700; font-size: 1.05em; margin-top: 12px; }
+.app .ghost-btn { display: block; width: 100%; min-height: 52px; border-radius: 14px; border: 2px solid var(--accent); background: var(--ground); color: var(--accent); font-weight: 700; margin-top: 14px; }
+.bag { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+.bag label { display: flex; align-items: center; gap: 12px; min-height: 56px; padding: 6px 12px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); cursor: pointer; }
+.bag input { width: 30px; height: 30px; margin: 0; flex: none; accent-color: var(--done); }
+.bag .why { display: block; font-size: 0.8em; color: var(--muted); }
+.bag label.on { background: var(--done-soft); border-color: var(--done); }
+.allset { margin-top: 12px; padding: 12px; border-radius: 12px; background: var(--done-soft); color: var(--done); font-weight: 700; }
+.undo { background: none; border: 2px solid var(--done); color: var(--done); border-radius: 10px; min-height: 44px; padding: 0 12px; font-weight: 700; margin-top: 6px; }
+.live { min-height: 1.6em; margin: 10px 0 0; font-size: 0.9em; color: var(--ink-2); }
+.run { min-height: 52px; padding: 0 22px; border-radius: 14px; border: 0; background: var(--accent); color: var(--ground); font-weight: 700; cursor: pointer; }
+#report h3 { margin-top: 20px; }
+#report .res { list-style: none; padding: 0; }
+#report .res li { display: grid; grid-template-columns: 64px 1fr; gap: 8px; padding: 8px 0; border-bottom: 1px solid var(--line); }
+#report .pass, #report .fail { font-weight: 700; font-size: 0.9rem; border-radius: 8px; padding: 2px 6px; height: fit-content; text-align: center; }
+#report .pass { background: var(--done-soft); color: var(--done); }
+#report .fail { background: var(--warn-soft); color: var(--warn); }
+#report .sw { display: inline-block; width: 1em; height: 1em; border-radius: 3px; border: 1px solid var(--line); vertical-align: -2px; margin-right: 2px; }
+#report .summary { font-weight: 700; font-size: 1.1rem; }

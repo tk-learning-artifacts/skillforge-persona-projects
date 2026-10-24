@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tonight and Tomorrow: the accessible mock-up, by Nadia Hussain</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="proto.css">
+<script src="palette.js" defer></script>
+<script src="proto.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Nadia Hussain is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<p><a href="index.html">Back to the project</a></p>
+<h1>The mock-up</h1>
+<p class="lede">This is the homework page as a pupil would see it. Try the three test tasks below. Then switch versions and feel what changed.</p>
+
+<nav class="versions" aria-label="Versions">
+  <a href="prototype.html?v=1" data-v="1">Version 1: what I tested</a>
+  <a href="prototype.html" data-v="2">Final version</a>
+</nav>
+<p class="small" id="v-about"></p>
+
+<div class="try card">
+  <p><strong>The three test tasks</strong></p>
+  <ol class="tight">
+    <li>Find the Maths homework that is due tomorrow.</li>
+    <li>You finished the English reading. Show that.</li>
+    <li>Do you need your PE kit tomorrow?</li>
+  </ol>
+</div>
+
+<div class="device">
+  <div class="app" id="app" aria-label="Homework page mock-up" role="region"></div>
+</div>
+<p class="small">The homework and the school are made up. It is Wednesday night in the mock-up.</p>
+
+<h2 id="checks">Run the checks</h2>
+<p>This checks the mock-up above, as it is right now. Try it on both versions. Try it with bigger text too.</p>
+<button type="button" class="run" id="run">Run the checks</button>
+<div id="report" aria-live="polite"></div>
+
+<h2>What each check means</h2>
+<ul class="tight">
+  <li>Text contrast: 4.5:1 for normal text, 3:1 for large text. Large means 18 pt, or 14 pt bold. That is about 24 px, or about 18.5 px bold.</li>
+  <li>Control contrast: tick box borders and focus rings need 3:1 against their background.</li>
+  <li>Labels: every input has a label. Every button has a name a screen reader can say.</li>
+  <li>Targets: everything you tap is at least 24 by 24 CSS pixels. I aim for 44 or more.</li>
+</ul>
+<p class="small">Sources: <a href="https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html">1.4.3 Contrast</a>, <a href="https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html">1.4.11 Non-text Contrast</a>, <a href="https://www.w3.org/WAI/WCAG22/Understanding/labels-or-instructions.html">3.3.2 Labels</a>, <a href="https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html">2.5.8 Target Size</a>, <a href="https://www.w3.org/WAI/WCAG22/Understanding/text-spacing.html">1.4.12 Text Spacing</a>. The contrast maths is the WCAG formula, the same one the <a href="https://webaim.org/resources/contrastchecker/">WebAIM Contrast Checker</a> uses.</p>
+</main>
+</body>
+</html>
