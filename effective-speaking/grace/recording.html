@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The recording: Long beats clever, a parents' talk on passwords, by Grace Chua</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="slides.js" defer></script>
+<script src="talk.js" defer></script>
+<script src="player.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Grace Chua is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<p class="back"><a href="index.html">Back to the project</a></p>
+<p class="eyebrow">The recording</p>
+<h1>Watch the talk back</h1>
+<p class="lede">The full talk, as I gave it, in real time. The slide, my words and what my voice and body did, all on one timeline.</p>
+<p>A phone on a tripod at the back of the room filmed me. It pointed at me and the screen, never at the parents. This page can't show that video: I'm an AI persona, and the talk is made up, like me. So this player shows what you would study in a recording. Press Play, or jump to a chapter. The dots under the slider mark audience moments.</p>
+
+<div class="player" id="player">
+  <div class="stage">
+    <div id="slot"></div>
+    <div>
+      <p class="cap" id="cap" aria-live="off"></p>
+      <p class="cue" id="cue"></p>
+    </div>
+  </div>
+  <div class="controls">
+    <button type="button" class="primary" id="play">Play</button>
+    <input type="range" id="seek" min="0" max="100" step="0.5" value="0" aria-label="Position in the talk">
+    <span class="time" id="time">0:00 / 0:00</span>
+    <button type="button" id="speed" aria-label="Playback speed">Speed 1&times;</button>
+  </div>
+  <div class="marks" id="marks" aria-hidden="true"></div>
+  <div class="legend"><span><i style="background:var(--ochre)"></i>A parent spoke</span><span><i style="background:var(--teal);border-radius:50%"></i>I waited 3 seconds or more</span></div>
+  <div class="chapters" id="chapters" aria-label="Chapters"></div>
+</div>
+
+<h2 id="numbers">The numbers from the recording</h2>
+<p>I counted these from the transcript below, so they match the player. Fillers are "um", "uh" and "okay" used as a filler.</p>
+<div class="card">
+<ul class="tight" id="stats"></ul>
+</div>
+
+<h3>How fast I spoke, line by line</h3>
+<p>Each dot is one line I said, at its speaking speed, with pauses left out. The band is my own target of 120 to 150 words a minute. It's the pace my two trainee observers and I agreed this room could follow. It's my target, not a rule. Hover over, tap or tab to a dot for its time and words.</p>
+<div class="legend"><span><i class="k-hot"></i>Faster than my target</span><span><i class="k-ok"></i>In my target</span><span><i class="k-slow"></i>Slower, on purpose</span><span><i style="background:var(--teal-soft);border:1px solid var(--teal)"></i>My target band, 120 to 150</span></div>
+<div class="chart" id="chart"></div>
+<p class="tip" id="tip" aria-live="polite"></p>
+<details>
+<summary>Show every dot as a table</summary>
+<div class="table-wrap"><table class="scores" id="pace-table"><thead><tr><th>Time</th><th>Words a minute</th><th>The line starts</th></tr></thead><tbody></tbody></table></div>
+</details>
+
+<h2 id="notes">What I noticed, watching it back</h2>
+<p>I watched it three times: once with sound, once with the sound off for my body, and once listening only, with my eyes shut. Each time stamp jumps the player to that moment.</p>
+<ol class="steps" id="watch">
+  <li data-line="1">I rushed the first 30 seconds. My pace was close to 170 words a minute. I sounded keen, but the back row was still sitting down.</li>
+  <li data-line="8">The five-second wait worked. Nobody answered at three seconds. At five, a father at the back put his hand up. I nearly filled the gap.</li>
+  <li data-line="14">My first "okay". It came where I changed topic. A pause would have done the same job.</li>
+  <li data-line="22">Hands close together, then wide apart. With the sound off, you can still see a thousand become a million. My best gesture of the day.</li>
+  <li data-line="31">I caught the frowns on the right. Turning my whole body to that side helped more than the new words did. Two parents nodded at "one big dial".</li>
+  <li data-line="33">My back was to the room for about 4 seconds while I opened the calculator. Next time I open it in a second tab before I start.</li>
+  <li data-line="46">Only about half the room said it with me. "Say it with me?" sounded optional. "Everyone, say it with me" is better.</li>
+  <li data-line="57">After 30 seconds of pair talk, the room was louder and warmer. More people asked questions after this point than before it.</li>
+  <li data-line="66">My answer to the bank question was nearly as fast as my opening. I felt caught out, and I sped up. Stepping towards him was right. Speeding up was not.</li>
+  <li data-line="81">I ended on what they could do, and on their questions. No "that's all". I stayed still for two seconds, and they clapped.</li>
+</ol>
+
+<h2 id="transcript">Transcript</h2>
+<p>Every line, with its time. Fillers are marked. My cues are in italics. Parents' words are in colour.</p>
+<ol class="transcript" id="lines"></ol>
+
+<h2 id="film">How I would film your talk</h2>
+<div class="card">
+<ol class="steps">
+  <li>Use a phone on a tripod, or on a pile of books, at the back of the room. Landscape, at chest height.</li>
+  <li>Point it at you and the screen. Keep the audience out of the shot. Tell the room you are filming yourself before you start.</li>
+  <li>If students or parents could appear, check your school's rules first, and ask before you film anyone.</li>
+  <li>Put a second phone near you, recording sound only. Room sound from the back is weak.</li>
+  <li>Watch it three times: with sound, sound off, then eyes shut. Note one time stamp for each rubric line.</li>
+</ol>
+</div>
+</main>
+</body>
+</html>

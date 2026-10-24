@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The replay: Be the Screen, a camp talk on pixels, by Sofia Reyes</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="pictures.js" defer></script>
+<script src="talk.js" defer></script>
+<script src="replay.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Sofia Reyes is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<p class="back"><a href="index.html">Back to Be the Screen</a></p>
+<span class="tag">The recording</span>
+<h1>Replay the talk<span class="pix" aria-hidden="true"></span></h1>
+<p class="lede">All 11 minutes 51 seconds, in real time, seen from above. Watch where I stand, who talks, and the ghost appear on the mat.</p>
+<p>Jun filmed the talk on a phone, from a chair outside the circle. The camp had parents' consent for photos and video for training, and the phone pointed at me. Even so, campers' faces are in it, so it stays off the internet. And this camp is made up, like me. So here is the next best thing: a plan view of the room, with every word on a timeline. It shows what a recording would teach you: where I stood, where my back was, and who did the talking.</p>
+
+<div class="player" id="player">
+  <div class="stage">
+    <svg id="scene" viewBox="0 0 400 400" role="img" aria-label="Plan view of the camp circle. Sixteen campers sit in a ring. I am the coral diamond marked Me. A floor mat in the middle fills in as we decode the ghost. The words and cues below say what happens."></svg>
+    <div>
+      <p class="cap" id="cap" aria-live="off"></p>
+      <p class="cue" id="cue"></p>
+      <div class="key">
+        <span><i style="background:var(--coral)"></i>Me</span>
+        <span><i style="background:var(--teal);border-radius:50%"></i>A camper. Letters are Aryan, Ethan, Mia, Nur and Wei Ling.</span>
+        <span><i style="border:2px dashed var(--teal);border-radius:50%"></i>Speaking now</span>
+        <span><i style="border:2px solid var(--sun)"></i>Tape grid for the human pixels</span>
+      </div>
+    </div>
+  </div>
+  <div class="controls">
+    <button type="button" class="primary" id="play">Play</button>
+    <input type="range" id="seek" min="0" max="100" step="0.5" value="0" aria-label="Position in the talk">
+    <span class="time" id="time">0:00 / 0:00</span>
+    <button type="button" id="speed" aria-label="Playback speed">Speed 1&times;</button>
+  </div>
+  <div class="chapters" id="chapters" aria-label="Chapters"></div>
+</div>
+
+<h2 id="talktime">Who was talking</h2>
+<p>This is the number I cared about most. Each sliver of the strip is a moment of the talk. My silences after a question count as the campers' time, because that is when they think.</p>
+<div id="strip"></div>
+<div class="split">
+  <div><span><i style="display:inline-block;width:12px;height:12px;border-radius:3px;background:var(--coral);margin-right:6px"></i>Me talking</span><b id="k-me"></b></div>
+  <div><span><i style="display:inline-block;width:12px;height:12px;border-radius:3px;background:var(--teal);margin-right:6px"></i>Campers talking</span><b id="k-kid"></b></div>
+  <div><span><i style="display:inline-block;width:12px;height:12px;border-radius:3px;background:var(--sun);margin-right:6px"></i>Campers doing or thinking</span><b id="k-do"></b></div>
+</div>
+<p>My aim was half and half. I talked for well over half, and the campers spoke aloud for under a minute in all. Most of their talk was one-word answers in chorus. The long yellow stretch in the middle is buddy time. That is where the learning happened, and it is the part I'd make longer.</p>
+
+<h2 id="notes">What I noticed, watching it back</h2>
+<p>I watched it twice: once for my voice, once with the sound off for where I stood. Tap a time to jump there.</p>
+<ol class="steps" id="watch">
+  <li data-line="1">Clap, then "Pixels". The circle was quiet in under ten seconds. The call and answer did the shouting for me, so I never had to.</li>
+  <li data-line="9">"Before snack time" works better than "in 12 minutes". Campers know when snack is. Nobody under ten knows what 12 minutes feels like.</li>
+  <li data-line="13">I walked over to Wei Ling. My back was to half the circle for about ten seconds. In the middle of a circle, someone always sees your back, so I try to turn every two or three sentences. Here I forgot.</li>
+  <li data-line="17">Too many numbers in one breath. Ethan loved 1,920 by 1,080. Mia's face went blank. One number, "two million", would have been enough.</li>
+  <li data-line="22">22 seconds of handing out cards. The talk stopped dead. Next time the cards wait on the tape squares before anyone arrives.</li>
+  <li data-line="29">I crouched next to Mia, so we were the same height. The smallest camper got the biggest moment, and her shortcut became a joke we used all week.</li>
+  <li data-line="36">Two campers were poking each other at the back. I didn't name them. A stand-up, sit-down check got everyone moving and back with me.</li>
+  <li data-line="45">Five seconds of silence. Aryan's hand went up at two. I kept waiting, and three more hands went up. It felt like forever. On the replay it's nothing.</li>
+  <li data-line="55">Buddy time. I talked least here, and walked the outside of the circle so I never stood over anyone.</li>
+  <li data-line="73">The big reveal dragged. Rows five to eight took over half a minute, and most campers had guessed it by row four. Next time, Jun colours them while we talk, and we turn the mat round.</li>
+</ol>
+
+<h2 id="transcript">Transcript</h2>
+<p>Every line, as it happened. My words are on the right, campers' on the left, and what we did in the middle.</p>
+<ol class="chat" id="lines"></ol>
+
+<h2 id="film">If you film your own camp talk</h2>
+<div class="card">
+<ol class="steps">
+  <li>Check the camp's consent forms first. Only film if parents have agreed, and keep the video private.</li>
+  <li>Point the camera at you, from just outside the circle. Campers' backs, not faces.</li>
+  <li>Stand the phone on something steady, at sitting height. That is the campers' view of you.</li>
+  <li>Watch it once with the sound off. Count how often your back faces each side of the circle.</li>
+  <li>Delete the video once you have your notes, unless the camp needs it.</li>
+</ol>
+</div>
+</main>
+</body>
+</html>
