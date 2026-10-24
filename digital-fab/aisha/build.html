@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Build guide: the Volume Box, by Aisha Rahman</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Aisha Rahman is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<p><a href="index.html">Back to the Volume Box</a></p>
+<h1><span class="tag">Build guide</span>Print it, fill it, hang it</h1>
+<p class="lede">Everything you need to make one case. It runs from the tolerance test to the pin on the wall. The steps marked "pupils" suit a P6 group of 4.</p>
+
+<h2 id="parts">Parts for one case</h2>
+<ul class="tight">
+  <li>The printed body and lid, in PLA. About 39 g of plastic.</li>
+  <li>One micro:bit V2. The sound level block needs a V2.</li>
+  <li>One 2 × AAA battery holder with a switch and a JST-PH plug. Mine is 63 × 26 × 16 mm. Measure yours: the bay is 64 × 26.8 mm and 16 mm deep.</li>
+  <li>Two AAA batteries.</li>
+  <li>One drawing pin or small hook, with a head under 8 mm across.</li>
+  <li>For the teacher: digital callipers and a plastic scraper.</li>
+</ul>
+
+<h2 id="safety">Safety first</h2>
+<ul class="tight">
+  <li>The nozzle runs at about 200°C for PLA. The bed is hot too. Pupils never touch the nozzle, bed or moving parts while the printer is on.</li>
+  <li>The printer sits away from desks, in a room with good air flow. Washington State's health department gives one more rule. Keep the room or printer cover shut for 20 minutes after a print.</li>
+  <li>A teacher is in the room whenever it prints. No prints left running overnight.</li>
+  <li>Let the bed cool before you lift a part. Use a scraper, never fingers or a craft knife.</li>
+  <li>Batteries go in the right way round. Don't mix old and new ones.</li>
+</ul>
+
+<h2 id="profile">Slicer profile</h2>
+<p>These are my settings in UltiMaker Cura, for PLA on a 0.4 mm nozzle. Open Custom mode and type them in. The <a href="case-profile.cfg" download>case-profile.cfg</a> file has the same list, with Cura's own setting names.</p>
+<div class="scroll">
+<table>
+  <thead><tr><th>In Cura</th><th>Setting name</th><th>Value</th><th>Why</th></tr></thead>
+  <tbody>
+    <tr><td>Layer Height</td><td class="mm">layer_height</td><td>0.2 mm</td><td>Smooth enough for the lip. Half the time of 0.12 mm.</td></tr>
+    <tr><td>Initial Layer Height</td><td class="mm">layer_height_0</td><td>0.2 mm</td><td>Keeps the window edges on the lid crisp.</td></tr>
+    <tr><td>Wall Line Count</td><td class="mm">wall_line_count</td><td>3</td><td>Walls give strength. Infill adds little here.</td></tr>
+    <tr><td>Top Layers / Bottom Layers</td><td class="mm">top_layers, bottom_layers</td><td>5 / 5</td><td>A 1 mm solid skin each way.</td></tr>
+    <tr><td>Infill Density</td><td class="mm">infill_sparse_density</td><td>15%</td><td>Only the cradle block has infill.</td></tr>
+    <tr><td>Infill Pattern</td><td class="mm">infill_pattern</td><td>Gyroid</td><td>Even in every direction for a drop.</td></tr>
+    <tr><td>Generate Support</td><td class="mm">support_enable</td><td>Off</td><td>Nothing overhangs.</td></tr>
+    <tr><td>Build Plate Adhesion Type</td><td class="mm">adhesion_type</td><td>Skirt</td><td>Switch to Brim if corners lift.</td></tr>
+    <tr><td>Printing Temperature</td><td class="mm">material_print_temperature</td><td>205°C</td><td>Check your filament's box first.</td></tr>
+    <tr><td>Build Plate Temperature</td><td class="mm">material_bed_temperature</td><td>60°C</td><td>Usual for PLA.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2 id="steps">Steps</h2>
+<h3>Before the class (teacher)</h3>
+<ol class="steps">
+  <li>Print the tolerance test from SkillForge's fit article. Find the snug hole. Write the number on a sticky label on the printer.</li>
+  <li>Use the <a href="index.html#lid">lid maker</a> to make a lid with your gap. Or use my lid if your snug hole was between 10.0 and 10.2 mm.</li>
+  <li>Open both STLs in Cura. Load the profile settings above.</li>
+  <li>Check the preview: a whole first layer, no supports, and a time you can supervise.</li>
+  <li>Print one case first. Test the lid before you print nine.</li>
+</ol>
+<h3>Check the print (pupils)</h3>
+<ol class="steps">
+  <li>Run a finger round the lip. Feel for blobs or strings. Tell the teacher if you find one.</li>
+  <li>Look at the four posts on the lid. Each should be straight and whole.</li>
+  <li>Push the lid on with no parts inside. It should press in and stay.</li>
+</ol>
+<h3>Fill it (pupils)</h3>
+<ol class="steps">
+  <li>Put the batteries in the holder. Switch it off.</li>
+  <li>Lay the holder in the bottom bay, switch facing up. The lead goes towards the notch in the wall.</li>
+  <li>Feed the plug through the notch, into the hollow under the board.</li>
+  <li>Plug it into the micro:bit's battery socket.</li>
+  <li>Lower the micro:bit into its pocket, LEDs facing up. It should drop in by itself. Don't force it.</li>
+  <li>Press the lid on, starting at the battery end.</li>
+  <li>Switch on. The board should light up through the window.</li>
+</ol>
+<h3>Code it (pupils)</h3>
+<p>Make this in <a href="https://makecode.microbit.org/">MakeCode for micro:bit</a>. In blocks, it is one "forever" with a "plot bar graph" inside. The sound level goes from 0 (quiet) to 255 (loud).</p>
+<pre>basic.forever(function () {
+    led.plotBarGraph(input.soundLevel(), 255)
+})</pre>
+<p>Download it to the board with the USB cable. Lift the board out to plug in. Then put it back and close the lid.</p>
+<h3>Hang it (teacher)</h3>
+<ol class="steps">
+  <li>Push a pin into the pinboard at pupils' eye level. Leave 3 mm sticking out.</li>
+  <li>Put the round part of the keyhole over the pin head. Slide the case down.</li>
+  <li>Tug it gently. The pin should sit at the top of the slot.</li>
+</ol>
+
+<h2 id="fix">When it goes wrong</h2>
+<div class="scroll">
+<table>
+  <thead><tr><th>What you see</th><th>Likely cause</th><th>Fix</th></tr></thead>
+  <tbody>
+    <tr><td>The lid won't go on</td><td>Your printer runs tight</td><td>Make a lid with a gap 0.05 mm bigger.</td></tr>
+    <tr><td>The lid falls off</td><td>Your printer runs loose</td><td>Make a lid with a gap 0.05 mm smaller.</td></tr>
+    <tr><td>The board stands up at one end</td><td>The lead is under the board's edge</td><td>Route the lead through the notch and the hollow.</td></tr>
+    <tr><td>Body corners curl up</td><td>Weak bed grip</td><td>Clean the bed. Switch the skirt to a brim.</td></tr>
+    <tr><td>Thin strings across the windows</td><td>Plastic oozing on travel moves</td><td>Lower the temperature by 5°C. Pull the strings off once cool.</td></tr>
+    <tr><td>The bar graph never moves</td><td>A V1 board</td><td>Check the back of the board. Sound level needs a V2.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2 id="pupils">Taking it further with pupils</h2>
+<p>Pupils under 13 should not make their own Tinkercad accounts. A teacher can set up a Tinkercad class with seats instead. SkillForge's printing article explains how. Then each group can remix the lid. They could add their group name, or a raised ring round the window. The lip and posts must stay the same, or it won't fit.</p>
+
+<h2 id="sources">Sources</h2>
+<ul class="tight small">
+  <li>PLA nozzle temperature, supervision and ventilation: SkillForge's printing article and <a href="https://doh.wa.gov/community-and-environment/schools/3d-printers">Washington State Department of Health, 3D printers in schools</a>.</li>
+  <li>Setting names: <a href="https://github.com/Ultimaker/Cura/blob/main/resources/definitions/fdmprinter.def.json">UltiMaker Cura's setting definitions</a>.</li>
+  <li>Battery socket on the micro:bit V2: <a href="https://tech.microbit.org/hardware/2-0-revision/">micro:bit Foundation, V2 hardware</a>.</li>
+  <li>Code blocks: <a href="https://makecode.microbit.org/reference/input/sound-level">sound level</a> and <a href="https://makecode.microbit.org/reference/led/plot-bar-graph">plot bar graph</a>.</li>
+  <li>Class seats for pupils under 13: <a href="https://www.tinkercad.com/help-center/creating-class-seats">Tinkercad Help, creating class seats</a>.</li>
+</ul>
+</main>
+</body>
+</html>

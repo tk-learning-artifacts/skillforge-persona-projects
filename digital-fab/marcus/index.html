@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ping Mount: a crash-proof HC-SR04 bracket, by Marcus Lee</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="viewer.js" defer></script>
+<script src="meshes.js" defer></script>
+<script src="app.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Marcus Lee is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<div class="stripe" aria-hidden="true"></div>
+<header class="hero">
+<h1><small>Robotics CCA · digital fab project</small>Ping Mount</h1>
+<p class="lede">A 3D-printed bracket for the HC-SR04 distance sensor on our practice robots. In our crash tests, version 3 took 50 hits and did not crack.</p>
+<p class="made-up">My team, our robots and our test log are made up, like me. Every print time and test result on this page comes from that log. The bracket sizes are the real sizes in the STL files.</p>
+</header>
+<p>I'm Marcus. I coach a Sec 3 robotics team. Our robots follow walls using an HC-SR04 ultrasonic sensor. We used to cable-tie the sensor to the chassis. After one hard crash it pointed at the floor, and the robot drove in circles. So my "mount for a classroom device" had to survive crashes. It also had to print fast and go back on in a minute.</p>
+<ul class="toc">
+  <li><a href="#rig">3D view and print playback</a></li>
+  <li><a href="#media">Photo and video</a></li>
+  <li><a href="#why">Short rationale</a></li>
+  <li><a href="#fit">Fit</a></li>
+  <li><a href="#print">Printability</a></li>
+  <li><a href="#strength">Strength vs time</a></li>
+  <li><a href="#laps">Three versions</a></li>
+  <li><a href="#files">STL and slicer profile</a></li>
+  <li><a href="print.html">Pit sheet: print, fit, test</a></li>
+</ul>
+
+<h2 id="rig">3D view and print playback</h2>
+<p>Drag to turn the bracket, or click it and use the arrow keys. Switch versions to see what changed.</p>
+<div class="rig">
+  <div class="row" role="group" aria-label="Version">
+    <span class="label">Version</span>
+    <button type="button" data-version="1" aria-pressed="false">V1</button>
+    <button type="button" data-version="2" aria-pressed="false">V2</button>
+    <button type="button" data-version="3" aria-pressed="true">V3 final</button>
+  </div>
+  <div class="row" role="group" aria-label="Position">
+    <span class="label">Show</span>
+    <button type="button" data-pose="robot" aria-pressed="true">On the robot</button>
+    <button type="button" data-pose="bed" aria-pressed="false">On the print bed</button>
+  </div>
+  <canvas id="view" tabindex="0" aria-label="3D view of the bracket. Drag or use the arrow keys to turn it."></canvas>
+  <p class="small" id="view-text"></p>
+  <div class="row">
+    <button type="button" class="go" id="play">Play the print</button>
+    <span class="clock" id="clock" aria-live="polite">00:00 / 26:00</span>
+  </div>
+  <label for="layer" class="small">Height printed so far</label>
+  <input type="range" id="layer" min="1" max="100" value="100">
+  <p class="small" id="layer-text">Full part.</p>
+</div>
+<p class="small">Play V2, then V3. Watch which way the layers stack across the bend. That is the whole story of this project.</p>
+
+<h2 id="media">Photo and video</h2>
+<p>No photos here. SkillForge shows physical builds as models, drawings and simulations. So the "video" is the print playback above. It is built from the same STL files you can download. The "photos" are the 3D view and the drawings below. The <a href="print.html">pit sheet</a> covers every step in words.</p>
+
+<h2 id="why">Short rationale</h2>
+<ul class="tight">
+  <li>Crashes happen every practice. The bracket has to take them, so strength drove the design.</li>
+  <li>Speed matters too. A broken part must be reprinted before the next session. So it stays small: about 26 minutes and 6 g.</li>
+  <li>Two M3 screws in slots, not cable ties. The slots slide 5 mm, so one bracket fits all six of our chassis.</li>
+  <li>The sensor's two cans push through the front plate. The plate takes the hit, not the sensor.</li>
+  <li>One cable tie through a slot between the cans holds the board in.</li>
+  <li>Gussets at both ends stop the plate folding back.</li>
+</ul>
+
+<h2 id="fit">Fit</h2>
+<p>The Pi Hut lists this sensor at 43 × 20 × 15 mm. Boards from different makers vary. So we measured our own boards with callipers.</p>
+<p class="made-up">The measured sizes below are from our made-up team log.</p>
+<div class="scroll">
+<table>
+  <thead><tr><th>What</th><th>Measured</th><th>In the bracket</th><th>Why</th></tr></thead>
+  <tbody>
+    <tr><td>Board</td><td class="digits">45.0 × 20.0</td><td class="digits">plate 50 × 24</td><td>Covers the board with 2.5 mm spare each side.</td></tr>
+    <tr><td>Each can, across</td><td class="digits">16.0</td><td class="digits">hole 16.6</td><td>0.3 mm per side. The cans slide in with no force.</td></tr>
+    <tr><td>Can centres apart</td><td class="digits">26.0</td><td class="digits">26.0</td><td>Measure yours. Boards differ.</td></tr>
+    <tr><td>M3 screw</td><td class="digits">3.0</td><td class="digits">slot 3.4 × 8.4</td><td>Printed holes come out small. The slot length gives 5 mm of slide.</td></tr>
+  </tbody>
+</table>
+</div>
+<p>Version 1 had 16.0 mm holes, the same size as the cans. They jammed. One student pushed hard and bent a can's legs. That sensor never read right again. Never draw a hole the same size as the part.</p>
+
+<h2 id="print">Printability</h2>
+<ul class="tight">
+  <li>V3 prints on its side, so it stands 50 mm tall on a small footprint. A 5 mm brim stops it tipping.</li>
+  <li>On its side, the can holes are horizontal. A round hole's top would sag. So the holes are teardrops, pointed on top. Every edge is 45° or steeper.</li>
+  <li>Cura's base default support angle is 50°. Our 45° tops are under that, so no supports.</li>
+  <li>The gussets at each end are flat on the bed or at the top. No overhangs.</li>
+  <li>The point of each teardrop sits beside the can, not under it. The can still touches the hole all round its lower half.</li>
+</ul>
+
+<h2 id="strength">Strength vs time</h2>
+<p>This is where I was wrong. I think speed wins, so I start with 0.28 mm layers. That part was right. But I ignored which way the part lay on the bed. That turned out to matter most, and it cost almost no time.</p>
+<svg class="diagram" viewBox="0 0 480 330" role="img" aria-labelledby="lay-t lay-d">
+<title id="lay-t">Why print orientation changes strength</title>
+<desc id="lay-d">Left: printed upright, the layers stack across the bend, and a crash cracks the bracket along one layer line. Right: printed on its side, every layer is a whole L shape, and the walls run round the bend.</desc>
+<text x="20" y="36">Printed upright</text>
+<path class="part" d="M24 250 H164 V82 H143 V229 H24 Z"/>
+<line class="layer" x1="24" y1="244" x2="164" y2="244"/>
+<line class="layer" x1="24" y1="238" x2="164" y2="238"/>
+<line class="layer" x1="24" y1="232" x2="164" y2="232"/>
+<line class="layer" x1="143" y1="226" x2="164" y2="226"/>
+<line class="layer" x1="143" y1="220" x2="164" y2="220"/>
+<line class="layer" x1="143" y1="214" x2="164" y2="214"/>
+<line class="layer" x1="143" y1="208" x2="164" y2="208"/>
+<line class="layer" x1="143" y1="202" x2="164" y2="202"/>
+<line class="layer" x1="143" y1="196" x2="164" y2="196"/>
+<line class="layer" x1="143" y1="190" x2="164" y2="190"/>
+<line class="layer" x1="143" y1="184" x2="164" y2="184"/>
+<line class="layer" x1="143" y1="178" x2="164" y2="178"/>
+<line class="layer" x1="143" y1="172" x2="164" y2="172"/>
+<line class="layer" x1="143" y1="166" x2="164" y2="166"/>
+<line class="layer" x1="143" y1="160" x2="164" y2="160"/>
+<line class="layer" x1="143" y1="154" x2="164" y2="154"/>
+<line class="layer" x1="143" y1="148" x2="164" y2="148"/>
+<line class="layer" x1="143" y1="142" x2="164" y2="142"/>
+<line class="layer" x1="143" y1="136" x2="164" y2="136"/>
+<line class="layer" x1="143" y1="130" x2="164" y2="130"/>
+<line class="layer" x1="143" y1="124" x2="164" y2="124"/>
+<line class="layer" x1="143" y1="118" x2="164" y2="118"/>
+<line class="layer" x1="143" y1="112" x2="164" y2="112"/>
+<line class="layer" x1="143" y1="106" x2="164" y2="106"/>
+<line class="layer" x1="143" y1="100" x2="164" y2="100"/>
+<line class="layer" x1="143" y1="94" x2="164" y2="94"/>
+<line class="layer" x1="143" y1="88" x2="164" y2="88"/>
+<line class="crack" x1="141" y1="228" x2="167" y2="225"/>
+<path class="push" d="M216 102 H176"/><path class="head" d="M170 102 l12 -7 v14 z"/>
+<text x="170" y="88">crash</text>
+<text x="20" y="284">cracks along</text><text x="20" y="308">a layer line</text>
+<text x="262" y="36">Printed on its side</text>
+<path class="part" d="M262 250 H402 V82 H381 V229 H262 Z"/>
+<path class="layer" fill="none" d="M265 246 H398 V86 H385 V225 H265"/>
+<path class="layer" fill="none" d="M265 242 H394 V90 H389 V221 H265"/>
+<path class="push" d="M454 102 H414"/><path class="head" d="M408 102 l12 -7 v14 z"/>
+<text x="408" y="88">crash</text>
+<text x="262" y="284">walls run round</text><text x="262" y="308">the bend</text>
+</svg>
+<p class="small">Side view of the bracket. Layer lines are drawn wider apart than real ones.</p>
+<p>A printed part is weakest across its layers. Printed upright, the layers stack across the bend. The crash pulls them apart there. Printed on its side, each layer is a whole L. The walls run round the bend without a break.</p>
+<h3>Crash test results</h3>
+<p>Test: the robot drives into a plywood wall at full speed, from 1 m away. We count crashes until the bracket cracks. We stop at 50.</p>
+<div class="scroll">
+<table>
+  <thead><tr><th>Build</th><th>Print</th><th>Crashes</th><th class="bar">Out of 50</th></tr></thead>
+  <tbody>
+    <tr><td>V2 upright, 0.28 mm, 2 walls, 15%</td><td class="digits">14 min</td><td class="digits">6</td><td class="bar"><div class="meter" style="width: 12%"></div></td></tr>
+    <tr><td>V2 upright, 0.28 mm, 4 walls, 15%</td><td class="digits">17 min</td><td class="digits">11</td><td class="bar"><div class="meter" style="width: 22%"></div></td></tr>
+    <tr><td>V2 upright, 0.28 mm, 2 walls, 60%</td><td class="digits">19 min</td><td class="digits">8</td><td class="bar"><div class="meter" style="width: 16%"></div></td></tr>
+    <tr><td>V3 upright, 0.28 mm, 4 walls, 15%</td><td class="digits">24 min</td><td class="digits">22</td><td class="bar"><div class="meter" style="width: 44%"></div></td></tr>
+    <tr class="best"><td>V3 on its side, 0.28 mm, 4 walls, 15%</td><td class="digits">26 min</td><td class="digits">50+</td><td class="bar"><div class="meter good" style="width: 100%"></div></td></tr>
+    <tr><td>V3 on its side, 0.12 mm, 4 walls, 15%</td><td class="digits">61 min</td><td class="digits">50+</td><td class="bar"><div class="meter good" style="width: 100%"></div></td></tr>
+  </tbody>
+</table>
+</div>
+<div class="win">
+<h3>What we kept</h3>
+<p>More walls beat more infill, as Prusa's guide says. Gussets helped. Turning the part on its side cost 2 minutes and did the most. Fine 0.12 mm layers cost 35 more minutes and changed nothing we could measure.</p>
+</div>
+
+<h2 id="laps">Three versions</h2>
+<h3>V1: the jam</h3>
+<ul class="tight">
+  <li>2 mm thick, printed upright. 16.0 mm holes.</li>
+  <li>The cans jammed. One sensor was damaged getting it in.</li>
+  <li>Change: holes to 16.6 mm.</li>
+</ul>
+<h3>V2: the snap</h3>
+<ul class="tight">
+  <li>Same shape, 16.6 mm holes, and a cable-tie slot. Fit was good.</li>
+  <li>It snapped clean along a layer line at the bend, after 6 crashes.</li>
+  <li>We tried more walls and more infill first. Neither got past 11 crashes.</li>
+  <li>Change: thicker, gussets, and a new way up on the bed.</li>
+</ul>
+<h3>V3: the keeper</h3>
+<ul class="tight">
+  <li>3 mm thick, with a 12 mm gusset at each end.</li>
+  <li>Printed on its side, with teardrop holes and a brim.</li>
+  <li>50 crashes, no crack. Our robots now wear these at every practice.</li>
+</ul>
+
+<h2 id="files">STL and slicer profile</h2>
+<ul class="tight">
+  <li><a href="ping-mount-v3.stl" download>ping-mount-v3.stl</a>: the final bracket, already on its side. 24 × 20 × 50 mm as it sits on the bed.</li>
+  <li><a href="ping-mount-v2.stl" download>ping-mount-v2.stl</a> and <a href="ping-mount-v1.stl" download>ping-mount-v1.stl</a>: the old versions, upright. Print V2 if you want to run the crash test yourself.</li>
+  <li><a href="ping-mount-profile.cfg" download>ping-mount-profile.cfg</a>: our Cura settings as a text file. The <a href="print.html#profile">pit sheet</a> lists each one.</li>
+</ul>
+<p class="small">Units are millimetres. Each STL is one closed solid. I checked them with a mesh library before posting.</p>
+
+<h2 id="change">What I would change</h2>
+<p>The bracket is strong, but the robot is now the weak point. In crash 38, the chassis plate under the screws bent. A part that never breaks just moves the damage somewhere else. Next time I would add a thin "fuse" that snaps first. It would be a cheap part that prints in 5 minutes. Also, the 26 mm can spacing is our boards' number. A team with different boards must measure and edit the file. I have not made that easy yet.</p>
+
+<h2 id="sources">Sources</h2>
+<ul class="tight small">
+  <li>HC-SR04 size, 5 V, 2 to 400 cm range and 40 kHz: <a href="https://thepihut.com/collections/adafruit-sensors/products/ultrasonic-distance-sensor-hcsr04">The Pi Hut, HC-SR04 listing</a>.</li>
+  <li>Parts are weakest across their layers: <a href="https://wiki.polymaker.com/the-basics/fun-3d-printing-facts/print-orientation-affects-strength">Polymaker Wiki, print orientation affects strength</a>.</li>
+  <li>Walls matter more than infill: <a href="https://help.prusa3d.com/article/infill_42">Prusa Knowledge Base, Infill</a>.</li>
+  <li>Cura's default support angle (50°), brim width and setting names: <a href="https://github.com/Ultimaker/Cura/blob/main/resources/definitions/fdmprinter.def.json">UltiMaker Cura's setting definitions</a>.</li>
+  <li>Holes print small, and clearance: SkillForge's fit article, drawing on <a href="https://wiki.cci.arts.ac.uk/books/digital-fabrication-lab/page/design-the-clearance-and-tolerance-yC5">UAL's fab lab guide</a>.</li>
+</ul>
+</main>
+</body>
+</html>

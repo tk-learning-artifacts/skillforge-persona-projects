@@ -1,0 +1,6 @@
+{
+  "module": "digital-fab",
+  "persona": "marcus",
+  "title": "Ping Mount: a crash-proof HC-SR04 bracket for our robots",
+  "summary": "A screw-on bracket for the ultrasonic sensor on a robotics team's practice robots. Turn it, play back the print, and compare three versions and six crash-tested builds that show print orientation beating extra infill."
+}
