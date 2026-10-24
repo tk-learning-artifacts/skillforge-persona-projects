@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Walk the Last Bit: design, specs and the WalkTap prototype, by Tom Brennan</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Tom Brennan is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<p class="crumb"><a href="index.html">Walk the Last Bit</a> / Design</p>
+<h1>The <mark>design</mark></h1>
+<p class="lede">Move the drop-off 400 metres back. Walk the children in together. Tell parents when they arrive. Keep the gate for the children who need it.</p>
+<ul class="tabs">
+  <li><a href="index.html">1. The problem</a></li>
+  <li><a href="design.html" aria-current="page">2. The design and app</a></li>
+  <li><a href="rollout.html">3. The rollout plan</a></li>
+</ul>
+
+<h2>The street, before and after</h2>
+<figure>
+<div class="wide"><svg viewBox="0 0 680 420" role="img" aria-labelledby="mapT">
+  <title id="mapT">Plan of the street, not to scale. The school is at the top centre, with its gate on the main road and a bus stop beside it. A Gate Zone in front of the gate has no drop-offs from 7:00 to 7:30. Two Drop-and-Walk points sit about 400 metres away, one to the left by the community club and one to the right by a car park. Dashed walking routes lead from two HDB blocks, through the drop points and across the road at signalled crossings, to the gate.</title>
+  <rect class="ground" x="0" y="0" width="680" height="420"/>
+  <rect class="quietf" x="0" y="150" width="680" height="70" opacity="0.55"/>
+  <line class="inks" x1="0" y1="185" x2="680" y2="185" stroke-dasharray="14 10" stroke-width="2"/>
+  <rect class="cardf" x="250" y="30" width="180" height="96" rx="6"/>
+  <rect class="inks" x="250" y="30" width="180" height="96" rx="6" stroke-width="2"/>
+  <text x="340" y="70" text-anchor="middle" class="lab">Primary school</text>
+  <text x="340" y="92" text-anchor="middle">gate below</text>
+  <rect class="hif" x="300" y="126" width="80" height="24"/>
+  <text x="340" y="143" text-anchor="middle" class="lab">GATE</text>
+  <rect class="accf" x="230" y="152" width="220" height="31" opacity="0.28"/>
+  <rect class="accs" x="230" y="152" width="220" height="31" stroke-width="2"/>
+  <text x="340" y="173" text-anchor="middle" class="lab">Gate Zone 7:00 to 7:30</text>
+  <g class="warnf"><path d="M236 174 l6 -12 l6 12z"/><path d="M432 174 l6 -12 l6 12z"/></g>
+  <rect class="cardf" x="470" y="152" width="80" height="20" rx="3"/>
+  <rect class="inks" x="470" y="152" width="80" height="20" rx="3"/>
+  <text x="510" y="167" text-anchor="middle" style="font-size:12px">bus stop</text>
+  <rect class="cardf" x="72" y="150" width="26" height="70"/><rect class="inks" x="72" y="150" width="26" height="70"/>
+  <rect class="cardf" x="582" y="150" width="26" height="70"/><rect class="inks" x="582" y="150" width="26" height="70"/>
+  <text x="106" y="212" style="font-size:12px">signalled crossing</text>
+  <text x="574" y="212" text-anchor="end" style="font-size:12px">signalled crossing</text>
+  <rect class="accf" x="20" y="226" width="130" height="40" rx="6"/>
+  <text x="85" y="251" text-anchor="middle" class="cardf" style="font-weight:700">Drop point 1</text>
+  <text x="85" y="285" text-anchor="middle">community club</text>
+  <rect class="accf" x="530" y="226" width="130" height="40" rx="6"/>
+  <text x="595" y="251" text-anchor="middle" class="cardf" style="font-weight:700">Drop point 2</text>
+  <text x="595" y="285" text-anchor="middle">car park entrance</text>
+  <rect class="cardf" x="40" y="330" width="110" height="60" rx="4"/><rect class="inks" x="40" y="330" width="110" height="60" rx="4"/>
+  <text x="95" y="365" text-anchor="middle" class="lab">Block 214</text>
+  <rect class="cardf" x="530" y="330" width="110" height="60" rx="4"/><rect class="inks" x="530" y="330" width="110" height="60" rx="4"/>
+  <text x="585" y="365" text-anchor="middle" class="lab">Block 188</text>
+  <path class="accs" d="M95 330 L95 290 M85 226 L85 140 L298 140" stroke-width="4" stroke-dasharray="2 9" stroke-linecap="round"/>
+  <path class="accs" d="M585 330 L585 290 M595 226 L595 140 L382 140" stroke-width="4" stroke-dasharray="2 9" stroke-linecap="round"/>
+  <text x="100" y="124" class="lab">Bus A walks in</text>
+  <text x="450" y="124" class="lab">Bus B walks in</text>
+  <text x="20" y="410" style="font-size:12px">Not to scale. Drop points are about 400 m from the gate. Both routes are step-free.</text>
+</svg></div>
+<figcaption>Fig. 3. The plan. Cars drop off at two points about 400 m away. Two walking buses start at HDB blocks. They pick up at the drop points and walk to the gate. The bus stop stays clear.</figcaption>
+</figure>
+
+<h2>The three parts, with specs</h2>
+<h3>1. Drop-and-Walk points</h3>
+<div class="scroll"><table>
+<tr><th>Spec</th><th>Detail</th></tr>
+<tr><td>Where</td><td>Two places with a legal place to stop, about 400 m from the gate. One on each side, so no family drives through the Gate Zone.</td></tr>
+<tr><td>When</td><td>Children wait with a volunteer from 6:55. Walking buses leave at 7:04 and 7:05.</td></tr>
+<tr><td>Marked by</td><td>A folding sign and two volunteers in vests. No new paint or kerbs at first.</td></tr>
+<tr><td>Check first</td><td>Ask the Town Council and car park owner. A stop must not block another bus stop or a lift lobby.</td></tr>
+</table></div>
+
+<h3>2. Walking buses</h3>
+<p>A walking bus is a group of children who walk to school with adult volunteers. It has a fixed route, with stops and times. The rules below come from <a href="https://www.devon.gov.uk/roads-and-transport/safe-travel/road-safety/schools/walking-bus/">Devon County Council's walking bus guidance</a> in the UK.</p>
+<div class="scroll"><table>
+<tr><th>Spec</th><th>Detail</th></tr>
+<tr><td>Adults</td><td>At least 2 per bus, one in front and one at the back. 1 adult for every 8 children.</td></tr>
+<tr><td>Size</td><td>No more than 16 children on one bus.</td></tr>
+<tr><td>Vests</td><td>High-visibility vests for every adult and child, kept in a box at each start point.</td></tr>
+<tr><td>Routes</td><td>Two routes, each about 400 m from its drop point. Step-free, with signalled crossings only. My Sec 3 class audits each route first.</td></tr>
+<tr><td>Volunteers</td><td>Parents, grandparents and residents. The school checks every volunteer before they start.</td></tr>
+<tr><td>Weather</td><td>Light rain: ponchos. Lightning warning or heavy rain at 6:45: the walk is cancelled and parents get a message.</td></tr>
+</table></div>
+
+<h3>3. WalkTap</h3>
+<p>The tech part is small on purpose. Working parents told us they drive because they want to know their child arrived. WalkTap answers that, and nothing more.</p>
+<figure>
+<div class="wide"><svg viewBox="0 0 680 200" role="img" aria-labelledby="tapT">
+  <title id="tapT">How WalkTap works. A bag tag holding only a code is tapped on the leader's phone at the start, and on the gate teacher's phone at school. The phone sends the code and time to the school's WalkTap list. The list matches the code to a parent and sends an app message or SMS.</title>
+  <rect class="cardf" x="10" y="50" width="130" height="100" rx="8"/><rect class="inks" x="10" y="50" width="130" height="100" rx="8" stroke-width="2"/>
+  <rect class="hif" x="45" y="70" width="60" height="38" rx="6"/><text x="75" y="94" text-anchor="middle" class="lab">tag</text>
+  <text x="75" y="132" text-anchor="middle">Bag tag: a code</text>
+  <rect class="cardf" x="190" y="40" width="130" height="120" rx="14"/><rect class="inks" x="190" y="40" width="130" height="120" rx="14" stroke-width="2"/>
+  <text x="255" y="90" text-anchor="middle" class="lab">Leader's or</text><text x="255" y="110" text-anchor="middle" class="lab">gate phone</text>
+  <text x="255" y="134" text-anchor="middle">code + time</text>
+  <rect class="cardf" x="370" y="50" width="130" height="100" rx="8"/><rect class="inks" x="370" y="50" width="130" height="100" rx="8" stroke-width="2"/>
+  <text x="435" y="94" text-anchor="middle" class="lab">School's</text><text x="435" y="114" text-anchor="middle" class="lab">WalkTap list</text>
+  <rect class="cardf" x="550" y="50" width="120" height="100" rx="8"/><rect class="inks" x="550" y="50" width="120" height="100" rx="8" stroke-width="2"/>
+  <text x="610" y="94" text-anchor="middle" class="lab">Parent</text><text x="610" y="114" text-anchor="middle">app or SMS</text>
+  <g class="inks" stroke-width="2"><path d="M140 100 L186 100 M180 94 L186 100 L180 106"/><path d="M320 100 L366 100 M360 94 L366 100 L360 106"/><path d="M500 100 L546 100 M540 94 L546 100 L540 106"/></g>
+  <text x="340" y="190" text-anchor="middle" style="font-size:13px">Two taps a day. No GPS, no photos, no tracking in between.</text>
+</svg></div>
+<figcaption>Fig. 4. The tag holds a random code, not a name. A lost tag tells a finder nothing.</figcaption>
+</figure>
+<div class="scroll"><table>
+<tr><th>Spec</th><th>Detail</th></tr>
+<tr><td>Tags</td><td>One NFC sticker tag per child, on the bag tag. It holds a random code only.</td></tr>
+<tr><td>Readers</td><td>Six school-owned Android phones with NFC: one per walking bus leader, two at the gate, two spare. Families buy nothing.</td></tr>
+<tr><td>Taps</td><td>Two a day: joining the bus, and reaching the gate.</td></tr>
+<tr><td>Messages</td><td>App message, SMS for any phone, or none. The parent chooses.</td></tr>
+<tr><td>Languages</td><td>English, Chinese, Malay and Tamil, translated by the school's staff and checked by parents.</td></tr>
+<tr><td>Sign-up and consent</td><td>Through <a href="https://www.moe.gov.sg/news/press-releases/20190102-parents-gateway-digitally-connecting-parents-and-school">Parents Gateway</a>, MOE's app that schools already use for notices and consent forms.</td></tr>
+<tr><td>Data kept</td><td>Tap times for 30 days, then deleted. Parent phone numbers until the family leaves. No location, no photos.</td></tr>
+<tr><td>If it fails</td><td>The leader has a paper list too. A missed tap means a missing message, never a missing child: the headcount is done by eye.</td></tr>
+</table></div>
+
+<h3>Why not GPS watches or live tracking?</h3>
+<p>Some parents asked for a live map. I said no, for three reasons.</p>
+<ul class="tight">
+  <li>Who it leaves out: a GPS watch costs money. A free bag tag works for every family.</li>
+  <li>Who it watches: a live map of where children walk is sensitive data about children. Two tap times answer the real question.</li>
+  <li>What it fixes: parents wanted to know their child arrived. They did not need to watch the walk.</li>
+</ul>
+
+<h3>The Gate Zone</h3>
+<p>From 7:00 to 7:30, no drop-offs in front of the gate. Cones and two volunteer marshals mark it. School buses and vans still stop. So do families with a Gate Zone pass, for children with disabilities or injuries.</p>
+<p>This is a light version of London's School Streets, where roads outside schools close to traffic at drop-off and pick-up. The <a href="https://www.london.gov.uk/press-releases/mayoral/school-streets-improve-air-quality">Mayor of London reported in 2021</a> that almost 350 had been delivered since April 2020. A study at 18 primary schools found nitrogen dioxide fell by up to 23% during morning drop-off. 81% of parents and carers supported them, and 18% said they drove to school less.</p>
+<p>"Up to 23%" is a best case, not an average. And our Gate Zone does not close the road. A full closure would need LTA and the Traffic Police. LTA's <a href="https://www.lta.gov.sg/content/ltagov/en/upcoming_projects/road_commuter_facilities/friendly-streets.html">Friendly Streets</a> already include streets near schools, such as near Teck Ghee Primary in Ang Mo Kio. That is the route I would use in phase two.</p>
+
+<h2>Who it serves</h2>
+<div class="scroll"><table>
+<tr><th>Who</th><th>What changes for them</th></tr>
+<tr><td>Children who walk from the flats</td><td>A clear gate, a clear bus stop, and fewer cars to squeeze between.</td></tr>
+<tr><td>Children who are driven</td><td>Drop at a calm point, then 400 m on foot with friends.</td></tr>
+<tr><td>Children with disabilities</td><td>Gate Zone pass for door drop-off. Step-free walking routes for those who want to walk with friends.</td></tr>
+<tr><td>Working parents</td><td>A message when the child joins and arrives.</td></tr>
+<tr><td>Families without smartphones or data</td><td>SMS, or the leader's paper list. Nobody has to buy anything.</td></tr>
+<tr><td>Grandparents who walk children in</td><td>They can join the bus, or volunteer. The ratio rule means they never walk alone with a big group.</td></tr>
+<tr><td>Public bus riders</td><td>The bus can pull into its stop.</td></tr>
+</table></div>
+
+<h2 id="prototype">Try the WalkTap prototype</h2>
+<p>Two phones, wired together. On the leader's phone, tap children's tags, start walking, then reach the gate. Watch the parent's phone and the message log change. Then try "Not walking today" on the parent's phone, or switch to SMS in Settings.</p>
+<div class="demo">
+  <div><div class="phone"><p class="who">Walking bus leader</p><div class="screen" id="leader"></div></div></div>
+  <div><div class="phone"><p class="who">Aisyah's parent</p><div class="screen" id="parent"></div></div></div>
+</div>
+<div class="log"><strong>Messages sent, newest first</strong><ol id="log" aria-live="polite"></ol></div>
+<p class="small">The children, volunteers and blocks are made up. The prototype runs in this page only and sends nothing.</p>
+
+<p><a href="rollout.html">Next: the rollout plan</a></p>
+
+<h2>Sources for this page</h2>
+<ul class="tight small">
+  <li>Walking bus ratios, group size and vests: <a href="https://www.devon.gov.uk/roads-and-transport/safe-travel/road-safety/schools/walking-bus/">Devon County Council, Walking bus</a>.</li>
+  <li>School Streets in London: <a href="https://www.london.gov.uk/press-releases/mayoral/school-streets-improve-air-quality">Mayor of London press release, 9 March 2021</a>.</li>
+  <li>Friendly Streets: <a href="https://www.lta.gov.sg/content/ltagov/en/upcoming_projects/road_commuter_facilities/friendly-streets.html">LTA, Friendly Streets</a>.</li>
+  <li>Parents Gateway: <a href="https://www.moe.gov.sg/news/press-releases/20190102-parents-gateway-digitally-connecting-parents-and-school">MOE, Parents Gateway press release</a> and <a href="https://www.tech.gov.sg/products-and-services/for-citizens/education/parents-gateway/">GovTech, Parents Gateway</a>.</li>
+</ul>
+</main>
+</body>
+</html>

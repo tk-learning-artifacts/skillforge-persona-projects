@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sensor waits: design, specs and mockups, by Hafiz Ismail</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Hafiz Ismail is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<p class="crumb"><a href="index.html">Still on the road</a> / Design</p>
+<h1>Design: specs and mockups</h1>
+<p class="lede">Two small detectors watch the crossing. If someone is still on the road when the green man ends, the cars wait. Never longer than 13 seconds.</p>
+
+<h2><span class="num">3.1</span>The idea in one picture</h2>
+<figure>
+<div class="wide"><svg viewBox="0 0 640 420" role="img" aria-labelledby="planT">
+  <title id="planT">Plan view of the crossing. A four-lane road runs left to right. Two poles stand on opposite kerbs. Each pole has a detector aimed across the road. Their zones cover the crossing between the two white lines, kerb to kerb, but not the waiting areas on the pavements.</title>
+  <rect class="kerb" x="0" y="0" width="640" height="95"/>
+  <rect class="kerb" x="0" y="325" width="640" height="95"/>
+  <rect class="road" x="0" y="95" width="640" height="230"/>
+  <g class="zebra">
+    <rect x="262" y="95" width="4" height="230"/><rect x="374" y="95" width="4" height="230"/>
+    <rect x="232" y="95" width="5" height="230"/><rect x="403" y="95" width="5" height="230"/>
+  </g>
+  <rect class="zone" x="266" y="95" width="108" height="230"/>
+  <rect class="zone-line" x="266" y="95" width="108" height="230"/>
+  <circle class="ink" cx="250" cy="80" r="9"/>
+  <circle class="ink" cx="390" cy="340" r="9"/>
+  <path class="zone-line" d="M250 80 L268 96 M250 80 L330 200"/>
+  <path class="zone-line" d="M390 340 L372 324 M390 340 L310 220"/>
+  <rect class="paper" x="420" y="20" width="200" height="56" rx="6"/>
+  <text x="430" y="42" class="ink">Pole A: signal, card reader,</text>
+  <text x="430" y="62" class="ink">detector aimed across</text>
+  <rect class="paper" x="20" y="344" width="200" height="56" rx="6"/>
+  <text x="30" y="366" class="ink">Pole B: the same, aimed</text>
+  <text x="30" y="386" class="ink">back the other way</text>
+  <rect class="paper" x="440" y="190" width="180" height="40" rx="6"/>
+  <text x="450" y="215" class="ink">Detection zone</text>
+  <path class="stroke" d="M440 210 L380 210"/>
+  <text x="20" y="40" class="ink">Waiting areas on both pavements: not watched</text>
+</svg></div>
+<figcaption><b>Fig. 3.</b> Plan view, not to scale. The zone covers the road between the crossing lines. People waiting on the pavement do not count, so they cannot hold the cars.</figcaption>
+</figure>
+
+<h2><span class="num">3.2</span>Where the idea comes from</h2>
+<p>I did not invent this. The UK has used it for years in its Puffin crossings. The Department for Transport's guide, <a href="https://www.tsrgd.co.uk/pdf/tal/2002/tal-1-02.pdf">Traffic Advisory Leaflet 1/02</a>, describes it:</p>
+<ul class="tight">
+  <li>On-crossing detectors are "normally mounted one on each side" and focused on the crossing area.</li>
+  <li>The clearance time after the green man "can be extended" while people are detected on the crossing.</li>
+  <li>It "can also give more time to slower moving pedestrians."</li>
+  <li>If the detector sees nothing, which may mean a fault, the controller gives the longest preset time.</li>
+</ul>
+<p>Singapore poles already carry sensors. LTA has <a href="https://www.lta.gov.sg/content/ltagov/en/who_we_are/statistics_and_publications/Connect/GLIDE.html">trialled crossings where a wave of the hand calls the green man</a>. So a pole-mounted detector is not a strange new object here.</p>
+
+<h2><span class="num">3.3</span>Why not an AI camera?</h2>
+<p>Every vendor pitch I read says "AI". An AI camera could spot a walking stick or a wheelchair, and give time only to them. I don't think that is better.</p>
+<ul class="tight">
+  <li>I don't need to know who you are. I need to know if someone is still on the road. A presence detector answers that.</li>
+  <li>A camera that sees faces collects personal data. The PDPC expects a clear purpose and a <a href="https://www.pdpc.gov.sg/-/media/files/pdpc/pdf-files/advisory-guidelines/ag-on-selected-topics/advisory-guidelines-on-the-pdpa-for-selected-topics-(revised-may-2024).pdf">plan for how long footage is kept</a>. A detector with no images avoids most of that.</li>
+  <li>Picking who "deserves" time is the Green Man+ problem again. The mother with the pram, the man on crutches and the tired teenager are all still on the road.</li>
+  <li>A model trained elsewhere may do worse in heavy rain, glare or crowds. I would need local test data before trusting it. The simpler detector has a long track record.</li>
+</ul>
+<p>If the trial shows the detector misses people, I would look at cameras again. With evidence, not because the word AI sounds modern.</p>
+
+<h2><span class="num">3.4</span>Specs</h2>
+<div class="scroll"><table>
+<caption>Sensor waits: specification</caption>
+<tr><th>Part</th><th>What it does</th></tr>
+<tr><td>Detectors</td><td>Two pole-mounted presence detectors, one per kerb, aimed across the road. No camera, no images. They must see people who are moving slowly or standing still.</td></tr>
+<tr><td>Zone</td><td>The road between the two crossing lines, kerb to kerb. The waiting area is left out.</td></tr>
+<tr><td>Steady green man</td><td>Unchanged: 6 to 10 s, as today.</td></tr>
+<tr><td>Flashing green man</td><td>Unchanged: 1 s per metre of road.</td></tr>
+<tr><td>Hold</td><td>At the end of the flashing green man, if the zone is occupied, cars stay red. Check every 0.5 s. Release as soon as the zone is clear.</td></tr>
+<tr><td>Cap</td><td>The hold never goes past 13 s, the same as the largest Green Man+ extension. This limits delay to buses and cars.</td></tr>
+<tr><td>Walkers at the kerb</td><td>See the red man during the hold, so nobody new starts.</td></tr>
+<tr><td>Countdown timer</td><td>Where a crossing has a pedestrian countdown, it reaches 0 as now. The hold happens after it.</td></tr>
+<tr><td>Green Man+</td><td>Kept. A card tap still adds time at the start. The sensor covers whoever is still crossing after that.</td></tr>
+<tr><td>Fault mode</td><td>If a detector fails its self-check, the controller gives the full 13 s every cycle and reports the fault. It fails on the safe side, as in the UK guide.</td></tr>
+<tr><td>Power</td><td>From the existing signal pole. No new cable under the road.</td></tr>
+<tr><td>Data kept</td><td>Per cycle: the date, time, and seconds held. No images and nothing that identifies a person. Kept for the trial plus 12 months, then deleted.</td></tr>
+</table></div>
+
+<h2><span class="num">3.5</span>Timing rules, step by step</h2>
+<ol class="tight">
+  <li>Someone presses the button or taps a card. The green man comes on.</li>
+  <li>Steady green man, then flashing green man, exactly as today.</li>
+  <li>When the flashing ends, the walker signal turns to red man.</li>
+  <li>The controller asks: is anyone in the zone? If not, cars get green. Done.</li>
+  <li>If yes, cars stay red. Ask again every half second.</li>
+  <li>When the zone is clear, or 13 seconds have passed, cars get green.</li>
+</ol>
+
+<h2><span class="num">3.6</span>Mockups</h2>
+<h3>What each person sees</h3>
+<div class="heads">
+<figure>
+<svg viewBox="0 0 150 170" role="img" aria-labelledby="h1t"><title id="h1t">Phase 1: steady green man. Walker signal shows a green figure. Cars red.</title>
+  <rect class="paper" x="0" y="0" width="150" height="170" rx="8"/>
+  <rect x="40" y="12" width="70" height="110" rx="8" fill="#20252c"/>
+  <circle cx="75" cy="40" r="20" fill="#3a2020"/>
+  <circle cx="75" cy="92" r="20" fill="#29c46b"/>
+  <circle cx="75" cy="83" r="4" fill="#0e3a20"/><path d="M75 88 L75 100 M75 92 L68 97 M75 92 L82 96 M75 100 L70 108 M75 100 L81 108" stroke="#0e3a20" stroke-width="3"/>
+  <text x="75" y="145" text-anchor="middle" class="ink">Green man</text><text x="75" y="162" text-anchor="middle">Cars: red</text>
+</svg></figure>
+<figure>
+<svg viewBox="0 0 150 170" role="img" aria-labelledby="h2t"><title id="h2t">Phase 2: flashing green man with countdown. Cars red.</title>
+  <rect class="paper" x="0" y="0" width="150" height="170" rx="8"/>
+  <rect x="40" y="12" width="70" height="110" rx="8" fill="#20252c"/>
+  <text x="75" y="48" text-anchor="middle" style="fill:#ffb347;font:700 22px ui-monospace,monospace">07</text>
+  <circle cx="75" cy="92" r="20" fill="#29c46b" opacity="0.55"/>
+  <circle cx="75" cy="83" r="4" fill="#0e3a20"/><path d="M75 88 L75 100 M75 92 L68 97 M75 92 L82 96 M75 100 L70 108 M75 100 L81 108" stroke="#0e3a20" stroke-width="3"/>
+  <text x="75" y="145" text-anchor="middle" class="ink">Flashing, 7 s left</text><text x="75" y="162" text-anchor="middle">Cars: red</text>
+</svg></figure>
+<figure>
+<svg viewBox="0 0 150 170" role="img" aria-labelledby="h3t"><title id="h3t">New phase 3: held. Walker signal shows red man. Cars still red, because the detector sees someone on the road.</title>
+  <rect class="paper" x="0" y="0" width="150" height="170" rx="8"/>
+  <rect x="40" y="12" width="70" height="110" rx="8" fill="#20252c"/>
+  <circle cx="75" cy="40" r="20" fill="#e5484d"/>
+  <circle cx="75" cy="31" r="4" fill="#4a1012"/><path d="M75 36 L75 50 M75 40 L69 48 M75 40 L81 48 M75 50 L71 58 M75 50 L79 58" stroke="#4a1012" stroke-width="3"/>
+  <circle cx="75" cy="92" r="20" fill="#14301f"/>
+  <text x="75" y="145" text-anchor="middle" class="ink">Red man</text><text x="75" y="162" text-anchor="middle">Cars: still red (held)</text>
+</svg></figure>
+<figure>
+<svg viewBox="0 0 150 170" role="img" aria-labelledby="h4t"><title id="h4t">Phase 4: road clear. Red man. Cars green.</title>
+  <rect class="paper" x="0" y="0" width="150" height="170" rx="8"/>
+  <rect x="40" y="12" width="70" height="110" rx="8" fill="#20252c"/>
+  <circle cx="75" cy="40" r="20" fill="#e5484d"/>
+  <circle cx="75" cy="31" r="4" fill="#4a1012"/><path d="M75 36 L75 50 M75 40 L69 48 M75 40 L81 48 M75 50 L71 58 M75 50 L79 58" stroke="#4a1012" stroke-width="3"/>
+  <circle cx="75" cy="92" r="20" fill="#14301f"/>
+  <text x="75" y="145" text-anchor="middle" class="ink">Red man</text><text x="75" y="162" text-anchor="middle">Cars: green</text>
+</svg></figure>
+</div>
+<p class="small">Phase 3 is the only new one. From the kerb, it looks like today's red man. The difference is for the person already on the road: the cars do not move.</p>
+
+<h3>Kerb sign</h3>
+<figure>
+<div class="wide"><svg viewBox="0 0 520 220" role="img" aria-labelledby="signT"><title id="signT">Sign for the signal pole. It reads: This crossing waits for people still on the road. Do not start when the man is red. Cars wait up to 13 seconds. Below, a note says it is printed in four languages.</title>
+  <rect x="10" y="10" width="500" height="200" rx="14" fill="#1d3f73"/>
+  <rect x="24" y="24" width="472" height="172" rx="8" fill="none" stroke="#ffffff" stroke-width="2"/>
+  <circle cx="80" cy="95" r="36" fill="#ffffff"/>
+  <circle cx="80" cy="74" r="7" fill="#1d3f73"/><path d="M80 82 L80 104 M80 88 L68 98 M80 88 L94 96 M80 104 L72 120 M80 104 L90 120 M94 96 L98 120" stroke="#1d3f73" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <text x="135" y="72" style="fill:#ffffff;font:700 24px system-ui,sans-serif">This crossing waits</text>
+  <text x="135" y="102" style="fill:#ffffff;font:700 24px system-ui,sans-serif">for people still on the road.</text>
+  <text x="135" y="136" style="fill:#dfe8f7;font:18px system-ui,sans-serif">Do not start when the man is red.</text>
+  <text x="135" y="162" style="fill:#dfe8f7;font:18px system-ui,sans-serif">Cars wait up to 13 seconds.</text>
+  <text x="40" y="188" style="fill:#b9c9e6;font:13px system-ui,sans-serif">Printed in English, Chinese, Malay and Tamil. Large print, high contrast.</text>
+</svg></div>
+<figcaption><b>Fig. 4.</b> Sign mockup for the pole, at eye level for a wheelchair user. Translations would come from a professional translator, not from me.</figcaption>
+</figure>
+
+<h3>The engineer's weekly view</h3>
+<figure>
+<div class="wide"><svg viewBox="0 0 520 230" role="img" aria-labelledby="dashT"><title id="dashT">Mockup of a weekly report for one crossing, with made-up numbers. Cycles held per day, Monday to Sunday: 92, 88, 95, 90, 101, 126, 71. Average hold 3.1 seconds. Longest hold 13 seconds, 4 times. Detector faults: 0.</title>
+  <rect class="paper" x="0" y="0" width="520" height="230" rx="10"/>
+  <text x="16" y="26" class="ink" style="font-weight:700">Crossing 3, week 12: cycles where cars were held</text>
+  <line class="axis" x1="16" y1="180" x2="330" y2="180"/>
+  <g>
+    <rect class="bar" x="24" y="107" width="32" height="73" rx="4"/><rect class="bar" x="68" y="110" width="32" height="70" rx="4"/>
+    <rect class="bar" x="112" y="104" width="32" height="76" rx="4"/><rect class="bar" x="156" y="108" width="32" height="72" rx="4"/>
+    <rect class="bar" x="200" y="99" width="32" height="81" rx="4"/><rect class="bar" x="244" y="79" width="32" height="101" rx="4"/>
+    <rect class="bar" x="288" y="123" width="32" height="57" rx="4"/>
+  </g>
+  <g text-anchor="middle">
+    <text class="val" x="40" y="101">92</text><text class="val" x="84" y="104">88</text><text class="val" x="128" y="98">95</text>
+    <text class="val" x="172" y="102">90</text><text class="val" x="216" y="93">101</text><text class="val" x="260" y="73">126</text><text class="val" x="304" y="117">71</text>
+    <text x="40" y="198">Mon</text><text x="84" y="198">Tue</text><text x="128" y="198">Wed</text><text x="172" y="198">Thu</text><text x="216" y="198">Fri</text><text x="260" y="198">Sat</text><text x="304" y="198">Sun</text>
+  </g>
+  <text x="350" y="70" class="ink">Average hold</text><text x="350" y="92" class="val">3.1 s</text>
+  <text x="350" y="122" class="ink">Hit the 13 s cap</text><text x="350" y="144" class="val">4 times</text>
+  <text x="350" y="174" class="ink">Detector faults</text><text x="350" y="196" class="val">0</text>
+  <text x="16" y="220" style="font-size:12px">Made-up numbers, to show the layout only.</text>
+</svg></div>
+<figcaption><b>Fig. 5.</b> What LTA's engineers would check each week. Saturday is market day, so more holds. The cap count shows if 13 s is too short for this site.</figcaption>
+</figure>
+
+<h2><span class="num">3.7</span>Who it serves</h2>
+<div class="scroll"><table>
+<caption>Different walkers, and what the design does for each</caption>
+<tr><th>Walker</th><th>Today</th><th>With the sensor</th></tr>
+<tr><td>Older person with a Green Man+ card</td><td>Taps for 3 to 13 s more</td><td>Taps as before. If still slow, the sensor holds the cars.</td></tr>
+<tr><td>Older person with no card, or who forgot to tap</td><td>Standard time only</td><td>Held for, with nothing to do</td></tr>
+<tr><td>Wheelchair user, or someone pushing one</td><td>Green Man+ if they have the card</td><td>Held for. The detector must be tested with wheelchairs and walking frames.</td></tr>
+<tr><td>Blind or low-vision walker</td><td>Audio signal at some crossings</td><td>Audio unchanged. The hold means a slower, careful crossing is safer.</td></tr>
+<tr><td>Parent with a pram and a toddler</td><td>Not eligible for Green Man+</td><td>Held for</td></tr>
+<tr><td>Someone who stumbles or drops something</td><td>No help mid-crossing</td><td>Held for, up to 13 s</td></tr>
+<tr><td>Bus passengers and drivers</td><td>No delay</td><td>About 2 s more red per cycle in my simulator. The trial must measure this.</td></tr>
+</table></div>
+
+<p><a href="rollout.html">Next: the rollout plan</a></p>
+
+<h2>Sources for this page</h2>
+<ul class="tight small">
+  <li>Puffin crossing detection: <a href="https://www.tsrgd.co.uk/pdf/tal/2002/tal-1-02.pdf">UK Department for Transport, Traffic Advisory Leaflet 1/02, The Installation of Puffin Pedestrian Crossings</a>.</li>
+  <li>Wave-to-cross trial and GLIDE: <a href="https://www.lta.gov.sg/content/ltagov/en/who_we_are/statistics_and_publications/Connect/GLIDE.html">LTA Connect, GLIDE</a>.</li>
+  <li>Green Man+, steady and flashing green man, countdown timers: <a href="https://www.lta.gov.sg/content/ltagov/en/getting_around/driving_in_singapore/intelligent_transport_systems.html">LTA, Intelligent Transport Systems</a>.</li>
+  <li>Keeping camera footage: <a href="https://www.pdpc.gov.sg/-/media/files/pdpc/pdf-files/advisory-guidelines/ag-on-selected-topics/advisory-guidelines-on-the-pdpa-for-selected-topics-(revised-may-2024).pdf">PDPC, Advisory Guidelines on the PDPA for Selected Topics, revised May 2024</a>.</li>
+</ul>
+</main>
+</body>
+</html>
