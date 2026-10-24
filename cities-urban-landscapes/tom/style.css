@@ -1,0 +1,107 @@
+/* Tom's field-notebook look: paper, a route line, and map colours. */
+:root {
+  --ink: #1d2321; --ink-2: #3d4744; --muted: #59645f; --line: #d9dcd3;
+  --paper: #fbfaf6; --card: #f2f0e8; --route: #1f6f4a; --route-soft: #dcefe4;
+  --warn: #a8461a; --warn-soft: #f7e3d6; --block: #e3e0d6; --road: #c9c6bc; --tree: #6f9e6b;
+  --shade: rgba(31, 111, 74, 0.18); --bar-a: #1f6f4a; --bar-b: #a8461a;
+  --m1: #1f6f4a; --m2: #3b82a6; --m3: #7a5aa6; --m4: #a8461a; --m5: #c2972f; --m6: #8a8f8c; --m7: #dcefe4;
+  color-scheme: light dark;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ink: #eef0ea; --ink-2: #cdd2ca; --muted: #9da59f; --line: #34403b;
+    --paper: #141816; --card: #1e2421; --route: #6fd19b; --route-soft: #183327;
+    --warn: #f0a07a; --warn-soft: #3a2218; --block: #2c332f; --road: #3b423e; --tree: #5d8f5a;
+    --shade: rgba(111, 209, 155, 0.18); --bar-a: #6fd19b; --bar-b: #f0a07a;
+    --m1: #6fd19b; --m2: #7cc3e6; --m3: #b9a0e6; --m4: #f0a07a; --m5: #e6c56a; --m6: #a7aca9; --m7: #d9d4c4;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink);
+  font: 17px/1.6 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width: 860px; margin: 0 auto; padding: 18px 16px 72px; }
+h1, h2, h3 { font-family: Georgia, "Times New Roman", serif; line-height: 1.2; }
+h1 { font-size: 2.1rem; margin: 10px 0 6px; }
+h2 { font-size: 1.5rem; margin: 44px 0 10px; padding-top: 14px; border-top: 3px solid var(--route); }
+h3 { font-size: 1.15rem; margin: 22px 0 6px; }
+a { color: var(--route); }
+.kicker { font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 0; }
+.lede { font-size: 1.1rem; color: var(--ink-2); }
+.small { font-size: 0.9rem; color: var(--muted); }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; margin: 16px 0; }
+.madeup { background: var(--warn-soft); border-left: 4px solid var(--warn); border-radius: 8px; padding: 10px 14px; font-size: 0.95rem; }
+ul.tight li, ol.tight li { margin-bottom: 6px; }
+
+/* Stops along the top, like a bus route */
+.route { list-style: none; padding: 0; margin: 18px 0; display: flex; flex-wrap: wrap; gap: 6px 0; }
+.route li { position: relative; padding: 0 14px 0 28px; }
+.route li::before { content: ""; position: absolute; left: 4px; top: 7px; width: 12px; height: 12px;
+  border-radius: 50%; border: 3px solid var(--route); background: var(--paper); }
+.route a { font-weight: 600; text-decoration: none; }
+.route a[aria-current="page"] { text-decoration: underline; text-underline-offset: 4px; }
+
+/* Buttons and toggles */
+button { font: inherit; font-weight: 600; min-height: 44px; padding: 0 14px; border-radius: 22px;
+  border: 2px solid var(--route); background: var(--paper); color: var(--route); cursor: pointer; }
+button[aria-pressed="true"] { background: var(--route); color: var(--paper); }
+button:focus-visible, a:focus-visible, select:focus-visible { outline: 3px solid var(--warn); outline-offset: 2px; }
+.toggles { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+select { font: inherit; min-height: 44px; border-radius: 8px; border: 1px solid var(--line);
+  background: var(--paper); color: var(--ink); padding: 0 8px; max-width: 100%; }
+label { font-weight: 600; }
+
+/* Map. On a phone it keeps a readable size and scrolls inside its box. */
+.map-wrap { overflow-x: auto; margin: 8px 0; }
+.map-wrap .map { min-width: 560px; }
+.map-wrap #section { min-width: 480px; max-width: 600px; }
+.map { width: 100%; height: auto; display: block; background: var(--card); border-radius: 12px; border: 1px solid var(--line); }
+.map text { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; fill: var(--ink); }
+.map .lbl { font-size: 13px; }
+.map .lbl-s { font-size: 11px; fill: var(--muted); }
+.map .block { fill: var(--block); }
+.map .road { fill: var(--road); }
+.map .grass { fill: var(--route-soft); }
+.map .path { fill: var(--paper); stroke: var(--line); }
+.map .tree { fill: var(--tree); }
+.map .warn { fill: var(--warn); }
+.map .warn-line { stroke: var(--warn); }
+.map .route-line { stroke: var(--route); }
+.map .roof { fill: var(--shade); stroke: var(--route); stroke-dasharray: 5 4; }
+.map .pt { fill: var(--paper); stroke: var(--ink); stroke-width: 2; cursor: pointer; }
+.map .pt-t { font-size: 12px; font-weight: 700; pointer-events: none; }
+.map .new { display: none; }
+.map.show-new .new { display: inline; }
+.map.show-new .old { display: none; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 0.9rem; margin: 8px 0; padding: 0; list-style: none; }
+.legend span { display: inline-block; width: 14px; height: 14px; border-radius: 3px; vertical-align: -2px; margin-right: 4px; }
+
+/* Bars made of divs, so they reflow on a phone */
+.bars { margin: 10px 0; }
+.bar-row { display: grid; grid-template-columns: 7.5em 1fr; gap: 8px; align-items: center; margin: 6px 0; font-size: 0.92rem; }
+.bar-track { background: var(--card); border-radius: 6px; height: 26px; position: relative; overflow: hidden; border: 1px solid var(--line); }
+.bar-fill { height: 100%; background: var(--bar-a); }
+.bar-fill.warn { background: var(--bar-b); }
+.bar-val { position: absolute; left: 6px; top: 3px; font-weight: 700; font-size: 0.85rem; line-height: 18px; color: var(--ink);
+  background: var(--paper); padding: 0 6px; border-radius: 4px; }
+.stack { display: flex; height: 34px; border-radius: 6px; overflow: hidden; border: 1px solid var(--line); }
+.stack div { height: 100%; }
+.stack-name { font-weight: 700; margin: 14px 0 4px; }
+
+.scroll { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 0.93rem; }
+th, td { border: 1px solid var(--line); padding: 6px 8px; text-align: left; vertical-align: top; }
+th { background: var(--card); }
+table.times td:first-child { white-space: nowrap; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+.quote { border-left: 4px solid var(--route); margin: 10px 0; padding: 4px 12px; font-family: Georgia, serif; font-style: italic; }
+.quote cite { display: block; font-style: normal; font-family: system-ui, sans-serif; font-size: 0.85rem; color: var(--muted); }
+.phase { border-left: 6px solid var(--route); }
+.phase.p2 { border-left-color: var(--m2); }
+.phase.p3 { border-left-color: var(--m3); }
+.live { min-height: 1.5em; font-weight: 600; }
+@media (max-width: 480px) {
+  h1 { font-size: 1.7rem; }
+  .bar-row { grid-template-columns: 6em 1fr; }
+  table { font-size: 0.82rem; }
+  th, td { padding: 4px 5px; }
+}

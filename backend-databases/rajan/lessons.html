@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Build a library API: a 3-lesson plan for Sec 3, by Rajan Pillai</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Rajan Pillai is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main class="prose">
+<p><a href="index.html">Back to Class Library</a></p>
+<h1>Build a library API<small>Three 60-minute lessons for a Sec 3 class that already writes Python.</small></h1>
+<p class="lede">Students query a library database, write a Flask route that saves a loan, then add hashed logins. Everything runs on the lab PC. All data is made up.</p>
+
+<div class="panel">
+<ul class="tight">
+  <li>Class: 30 Sec 3 students. They have had a year of Python: functions, lists and dictionaries.</li>
+  <li>Time: 3 lessons of 60 minutes, one a week, in the computer lab.</li>
+  <li>Devices: one lab PC each, running Python 3.12 or newer with Flask installed. I ask IT for this two weeks ahead. Flask brings Werkzeug with it.</li>
+  <li>Why the lab, not Chromebooks: Flask needs Python running on the machine. Our school's managed Chromebooks can't install it.</li>
+  <li>Why no hosting accounts: <a href="https://www.pythonanywhere.com/terms/">PythonAnywhere's terms</a> (clause 5.2) ask users to be old enough to sign a binding contract. In Singapore that age is 18. So students run their apps on their own PC, at <code>http://127.0.0.1:5000</code>. Only my app goes online, on my account.</li>
+  <li>Starter folder on the shared drive: <code>schema.sql</code>, <code>setup_db.py</code>, the page, and an <code>app.py</code> with the GET routes done. The POST routes are stubs.</li>
+</ul>
+</div>
+
+<h2>By the end, students can</h2>
+<ul class="tight">
+  <li>Say what the browser sends, what the server does and what the database stores, for one click.</li>
+  <li>Write SELECT, INSERT and JOIN queries on the library tables.</li>
+  <li>Write a Flask route that saves data with <code>?</code> placeholders.</li>
+  <li>Store passwords as hashes, and say what a leaked table gives away.</li>
+</ul>
+
+<h2>Success criteria</h2>
+<ol class="tight">
+  <li>Borrowing a book in my page adds one row to <code>loans</code>.</li>
+  <li>Every value in every query goes in through a <code>?</code>.</li>
+  <li>The <code>users</code> table holds hashes, and logging in still works.</li>
+  <li>The data passes all five data rules below.</li>
+</ol>
+
+<div class="lesson">
+<h3>Lesson 1: Requests and tables</h3>
+<ol>
+  <li><span class="min">0 to 5</span> Settle, log in. Open Class Library on this site.</li>
+  <li><span class="min">5 to 15</span> I borrow and return a book on the projector. Students copy on their PC and watch the inspector. They write down 3 status codes they saw and what each meant.</li>
+  <li><span class="min">15 to 20</span> Mini lesson. Request, response, database. Method and path. Why a server checks, even when the page hides a button.</li>
+  <li><span class="min">20 to 45</span> SQL. Students run <code>python setup_db.py</code>, then <code>python -m sqlite3 library.db</code>. Cards on the desk ask for five queries. All books by title. One book by id. An INSERT for a new book. A JOIN of loans with books and users. Then only overdue loans, using <code>date('now', '+8 hours')</code>.</li>
+  <li><span class="min">45 to 55</span> Exit task. Write the JOIN that lists who has which book. Hand it in on paper.</li>
+  <li><span class="min">55 to 60</span> Log off, pack up.</li>
+</ol>
+<p class="timing">Check: 5 + 10 + 5 + 25 + 10 + 5 = 60 minutes.</p>
+<p class="small">Watch for: students who type the SQL without the final semicolon and think the shell is frozen. Tell them up front.</p>
+</div>
+
+<div class="lesson">
+<h3>Lesson 2: A route that saves</h3>
+<ol>
+  <li><span class="min">0 to 5</span> Settle. Copy the starter folder to the desktop.</li>
+  <li><span class="min">5 to 15</span> Demo. I run <code>flask --app app run --debug</code> and open <code>127.0.0.1:5000</code>. I walk through <code>list_books()</code>: route, query, list of dictionaries, JSON.</li>
+  <li><span class="min">15 to 22</span> Injection demo, on my PC only. The starter has a route I wrote badly on purpose, with an f-string. I type <code>' OR 1=1 --</code> and every row comes back. Then I fix it with <code>?</code> and type it again.</li>
+  <li><span class="min">22 to 47</span> Build. Students fill in the <code>borrow()</code> stub. Steps on the board: log in check, read the book id, check the book exists, INSERT with two <code>?</code> marks, return 201.</li>
+  <li><span class="min">47 to 54</span> Pair check. Swap seats. Read your partner's <code>app.py</code> and tick each query that uses <code>?</code> for every value. Borrow a book in their page and find the new row.</li>
+  <li><span class="min">54 to 60</span> Save the folder to the shared drive. Pack up.</li>
+</ol>
+<p class="timing">Check: 5 + 10 + 7 + 25 + 7 + 6 = 60 minutes.</p>
+<p class="small">Stuck: they use my finished <code>borrow()</code> with three lines blanked out. Early finishers: write <code>give_back()</code>, so a student can only return their own loan.</p>
+</div>
+
+<div class="lesson">
+<h3>Lesson 3: Logins and data rules</h3>
+<ol>
+  <li><span class="min">0 to 5</span> Settle. Open the folder from the shared drive.</li>
+  <li><span class="min">5 to 13</span> Demo in the Python shell. <code>generate_password_hash("test-cat")</code>, twice. Two different strings. Then <code>check_password_hash</code> says yes to both.</li>
+  <li><span class="min">13 to 35</span> Build. Fill in <code>signup()</code> and <code>login()</code>. Test with two made-up accounts.</li>
+  <li><span class="min">35 to 45</span> Leak drill. Swap <code>library.db</code> files with your partner. Open their <code>users</code> table. Write 3 sentences: what would an attacker get from this file? What would they get if it stored plain passwords?</li>
+  <li><span class="min">45 to 55</span> Data rules check. Students run the five checks below on their own folder and fix what fails. They write the README lines the rules ask for.</li>
+  <li><span class="min">55 to 60</span> Save to the shared drive. Exit line: which rule did you break first, and how did you find out?</li>
+</ol>
+<p class="timing">Check: 5 + 8 + 22 + 10 + 10 + 5 = 60 minutes.</p>
+</div>
+
+<h2 id="rules">Data rules, and how I check each one</h2>
+<p>These go on the first slide of lesson 1 and on the wall. I mark them from the folder on the shared drive.</p>
+<ol class="tight">
+  <li><strong>Made-up data only.</strong> Usernames are handles like <code>reader_kite</code>. No real names, classes, NRIC numbers or photos. Check: I open <code>library.db</code> with <code>python -m sqlite3</code> and read every row of <code>users</code>.</li>
+  <li><strong>Passwords are hashed.</strong> Check: <code>SELECT pw_hash FROM users</code>. Every value starts with <code>scrypt:</code> or <code>pbkdf2:</code>. One plain password and the rule fails.</li>
+  <li><strong>Test passwords are made up and start with "test-".</strong> Students list their test logins in <code>README.txt</code>. Check: I log in with one of them. If a listed password looks like a real one, we talk about it.</li>
+  <li><strong>Every value goes in through a ?.</strong> Check: I search <code>app.py</code> for <code>execute(</code> and read each query. An f-string or a <code>+</code> that carries a request value fails the rule. My fixed <code>TODAY</code> text is the only allowed f-string.</li>
+  <li><strong>Store only what the app needs.</strong> Each column gets a one-line reason in <code>README.txt</code>. Check: I hold <code>schema.sql</code> next to the README. A column with no reason fails. Most students try to add an email column. It has no use here.</li>
+</ol>
+
+<h2>How I mark it</h2>
+<p>Each success criterion gets "yes", "nearly" or "not yet", with one line of comment. Criterion 2 matters most. A joined string with a request value in it is "not yet". That holds even if the app works.</p>
+
+<h2>Sources</h2>
+<ul class="tight small">
+  <li><code>python -m sqlite3</code> shell, added in Python 3.12: <a href="https://docs.python.org/3/library/sqlite3.html#command-line-interface">sqlite3 command-line interface</a>.</li>
+  <li>Running Flask locally with <code>flask --app app run --debug</code>: <a href="https://flask.palletsprojects.com/en/stable/quickstart/">Flask Quickstart</a>.</li>
+  <li>Hosting terms, clause 5.2: <a href="https://www.pythonanywhere.com/terms/">PythonAnywhere terms</a>.</li>
+  <li>Contract age of 18 in Singapore, from 1 March 2009: <a href="https://law.nus.edu.sg/sjls/wp-content/uploads/sites/14/2024/07/2028-2010-sjls-dec-328.pdf">Loo Wee Ling, "Full contractual capacity", Singapore Journal of Legal Studies, 2010</a>.</li>
+  <li>Hash formats: <a href="https://werkzeug.palletsprojects.com/en/stable/utils/">Werkzeug utilities</a>.</li>
+</ul>
+</main>
+</body>
+</html>

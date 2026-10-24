@@ -1,0 +1,314 @@
+// Kopi Run: a two-level platformer. Collect kopi, dodge crows, reach the flag.
+namespace SpriteKind {
+    export const Goal = SpriteKind.create()
+}
+// Tile pictures. EMPTY is see-through. ROOF, BRICK and CHIMNEY are walls.
+const EMPTY = image.create(16, 16)
+const ROOF = img`
+    2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+    2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+    e 2 2 2 e 2 2 2 e 2 2 2 e 2 2 2
+    2 2 e 2 2 2 e 2 2 2 e 2 2 2 e 2
+    b b b b b b b b b b b b b b b b
+    b d d d d d d d d d d d d d d d
+    d d d d d d d d b d d d d d d d
+    d d d d d d d d b d d d d d d d
+    d d d d d d d d b d d d d d d d
+    d d d d d d d d b d d d d d d d
+    b b b b b b b b b b b b b b b b
+    d d d d d d d d b d d d d d d d
+    b d d d d d d d d d d d d d d d
+    b d d d d d d d d d d d d d d d
+    b d d d d d d d d d d d d d d d
+    b d d d d d d d d d d d d d d d
+`
+const BRICK = img`
+    b d d d d d d d d d d d d d d d
+    b d d d d d d d d d d d d d d d
+    b d d d d d d d d d d d d d d d
+    b d d d d d d d d d d d d d d d
+    b b b b b b b b b b b b b b b b
+    b d d d d d d d d d d d d d d d
+    d d d d d d d d b d d d d d d d
+    d d d d d d d d b d d d d d d d
+    d d d d d d d d b d d d d d d d
+    d d d d d d d d b d d d d d d d
+    b b b b b b b b b b b b b b b b
+    d d d d d d d d b d d d d d d d
+    b d d d d d d d d d d d d d d d
+    b d d d d d d d d d d d d d d d
+    b d d d d d d d d d d d d d d d
+    b d d d d d d d d d d d d d d d
+`
+const CHIMNEY = img`
+    . . c c c c c c c c c c c c . .
+    . . c c c c c c c c c c c c . .
+    . . c c c c c c c c c c c c . .
+    . . c b b b b b b b b b b c . .
+    . . c b b b b b b b b b b c . .
+    . . c c c c c c c c c c c c . .
+    . . c b b b b b b b b b b c . .
+    . . c b b b b b b b b b b c . .
+    . . c b b b b b b b b b b c . .
+    . . c b b b b b b b b b b c . .
+    . . c c c c c c c c c c c c . .
+    . . c b b b b b b b b b b c . .
+    . . c b b b b b b b b b b c . .
+    . . c b b b b b b b b b b c . .
+    . . c b b b b b b b b b b c . .
+    . . c c c c c c c c c c c c . .
+`
+const WATER = img`
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    9 9 6 6 6 6 9 9 9 9 6 6 6 6 9 9
+    8 8 9 9 8 8 8 8 9 9 8 8 8 8 9 9
+    8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8
+    8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8
+    8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8
+    8 8 8 8 9 9 8 8 8 8 9 9 8 8 8 8
+    8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8
+    8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8
+    8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8
+    9 9 8 8 8 8 9 9 8 8 8 8 9 9 8 8
+    8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8
+    8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8
+    8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8
+`
+const FLAGSPOT = img`
+    . . . . . . . . . . . . . . . .
+    . . . f 7 6 7 6 7 6 7 6 7 6 . .
+    . . . f 6 7 6 7 6 7 6 7 6 7 . .
+    . . . f 7 6 7 6 7 6 7 6 7 6 . .
+    . . . f 6 7 6 7 6 7 6 7 6 7 . .
+    . . . f 7 6 7 6 7 6 7 6 7 6 . .
+    . . . f 6 7 6 7 6 7 6 7 6 7 . .
+    . . . f 7 6 7 6 7 6 7 6 7 6 . .
+    . . . f . . . . . . . . . . . .
+    . . . f . . . . . . . . . . . .
+    . . . f . . . . . . . . . . . .
+    . . . f . . . . . . . . . . . .
+    . . . f . . . . . . . . . . . .
+    . . . f . . . . . . . . . . . .
+    . . . f . . . . . . . . . . . .
+    . . . f . . . . . . . . . . . .
+`
+const DOOR = img`
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . e e e e e e e e e e . . .
+    . . . e 4 4 4 4 4 4 4 4 e . . .
+    . . . e 4 4 4 4 4 4 4 4 e . . .
+    . . . e 4 4 4 4 4 4 4 4 e . . .
+    . . . e 4 4 4 4 4 4 4 4 e . . .
+    . . . e 4 4 4 4 4 4 4 4 e . . .
+    . . . e 4 4 4 4 4 4 4 4 e . . .
+    . . . e 4 4 4 4 4 4 5 4 e . . .
+    . . . e 4 4 4 4 4 4 4 4 e . . .
+    . . . e 4 4 4 4 4 4 4 4 e . . .
+    . . . e 4 4 4 4 4 4 4 4 e . . .
+    . . . e 4 4 4 4 4 4 4 4 e . . .
+    . . . e 4 4 4 4 4 4 4 4 e . . .
+    . . . e 4 4 4 4 4 4 4 4 e . . .
+`
+const CUPSPOT = img`
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . 5 5 . . . . . . .
+    . . . . . . . 5 5 . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+`
+const CROWSPOT = img`
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . f f . . . . . . .
+    . . . . . . . f f . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . .
+`
+
+// The two levels. Each one is a tilemap. The marker tiles say where things start.
+const LEVELS = [
+    tiles.createTilemap(hex`28000900000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000070000000000000000000000070000000000000007000000000000000000060000070000000300000000000700000003000008000000030000000700000101010000000005010101010101010101010101000001010101010101010101010101010101010102020201010101010202020202020202020202020404020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202`, img`
+        . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+        . . . . . . . . 2 . . . . . . . . . 2 . . . . . . 2 . . . . . . 2 2 2 . . . . .
+        2 2 2 2 2 2 2 2 2 2 2 2 . . 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+        2 2 2 2 2 2 2 2 2 2 2 2 . . 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+        2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+    `, [EMPTY, ROOF, BRICK, CHIMNEY, WATER, FLAGSPOT, DOOR, CUPSPOT, CROWSPOT], TileScale.Sixteen),
+    tiles.createTilemap(hex`30000900000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007000000000700000007000000000000000000000000000000000000000000000000000007000000000000000000000101010000000101010101010100000000000000070000000000000600000700000003000008000000030000000000010202020000000202020202020200080000000300010101000005010101010101010101010101010101010101000001020202020000000202020202020201010101010101020202010101020202020202020202020202020202020202040402020202020404040202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202`, img`
+        . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . . . . . . . . 2 2 2 . . . 2 2 2 2 2 2 2 . . . . . . . . . . . . .
+        . . . . . . . . 2 . . . . . . 2 . . . . . 2 2 2 2 . . . 2 2 2 2 2 2 2 . . . . . 2 . 2 2 2 . . .
+        2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 . . 2 2 2 2 2 . . . 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+        2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 . . 2 2 2 2 2 . . . 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+        2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+    `, [EMPTY, ROOF, BRICK, CHIMNEY, WATER, FLAGSPOT, DOOR, CUPSPOT, CROWSPOT], TileScale.Sixteen)
+]
+
+let level = 0
+let bot = sprites.create(img`
+    . . . . f f f f . . . .
+    . . . f 1 1 1 1 f . . .
+    . . f 1 f 1 1 f 1 f . .
+    . . f 1 f 1 1 f 1 f . .
+    . . f 1 1 1 1 1 1 f . .
+    . . . f f f f f f . . .
+    . . f 4 4 4 4 4 4 f . .
+    . f 4 4 4 4 4 4 4 4 f .
+    . f 4 4 d d d d 4 4 f .
+    . f 4 4 d e e d 4 4 f .
+    . f 4 4 4 4 4 4 4 4 f .
+    . . f f f f f f f f . .
+    . . . f f . . f f . . .
+    . . . f f . . f f . . .
+`, SpriteKind.Player)
+controller.moveSprite(bot, 80, 0)
+bot.ay = 350
+scene.cameraFollowSprite(bot)
+scene.setBackgroundColor(9)
+info.setScore(0)
+info.setLife(3)
+
+// Load a level, then swap each marker tile for a cup, a crow or the flag.
+function startLevel(n: number) {
+    level = n
+    sprites.destroyAllSpritesOfKind(SpriteKind.Food)
+    sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
+    sprites.destroyAllSpritesOfKind(SpriteKind.Goal)
+    tiles.setCurrentTilemap(LEVELS[n])
+    tiles.placeOnRandomTile(bot, DOOR)
+    for (let spot of tiles.getTilesByType(CUPSPOT)) {
+        let cup = sprites.create(img`
+    . 1 . 1 . . . .
+    . . 1 . 1 . . .
+    1 1 1 1 1 1 . .
+    1 e e e e 1 1 1
+    1 e e e e 1 . 1
+    1 e e e e 1 1 1
+    . 1 e e 1 . . .
+    . . 1 1 . . . .
+`, SpriteKind.Food)
+        tiles.placeOnTile(cup, spot)
+        tiles.setTileAt(spot, EMPTY)
+    }
+    for (let spot of tiles.getTilesByType(CROWSPOT)) {
+        let crow = sprites.create(img`
+    . . . . f f f . . . . .
+    . . . f f f f f . . . .
+    . . f f 1 f f f f . . .
+    . 5 5 f f f f f f . . .
+    . . . f f f f f f f f .
+    . . . f f f f f f f f f
+    . . . . f f f f f f . .
+    . . . . . f . f . . . .
+    . . . . . f . f . . . .
+    . . . . f f f f f . . .
+`, SpriteKind.Enemy)
+        tiles.placeOnTile(crow, spot)
+        tiles.setTileAt(spot, EMPTY)
+        crow.vx = 25 + 15 * n
+        crow.setBounceOnWall(true)
+    }
+    for (let spot of tiles.getTilesByType(FLAGSPOT)) {
+        let flag = sprites.create(img`
+    . . . . . . . . . . . .
+    . f 7 6 7 6 7 6 7 6 7 6
+    . f 6 7 6 7 6 7 6 7 6 7
+    . f 7 6 7 6 7 6 7 6 7 6
+    . f 6 7 6 7 6 7 6 7 6 7
+    . f 7 6 7 6 7 6 7 6 7 6
+    . f 6 7 6 7 6 7 6 7 6 7
+    . f 7 6 7 6 7 6 7 6 7 6
+    . f . . . . . . . . . .
+    . f . . . . . . . . . .
+    . f . . . . . . . . . .
+    . f . . . . . . . . . .
+    . f . . . . . . . . . .
+    . f . . . . . . . . . .
+    . f . . . . . . . . . .
+    . f . . . . . . . . . .
+`, SpriteKind.Goal)
+        tiles.placeOnTile(flag, spot)
+        tiles.setTileAt(spot, EMPTY)
+    }
+    game.splash("Level " + (n + 1))
+}
+
+// Jump only from the ground, so there is no flying.
+controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (bot.isHittingTile(CollisionDirection.Bottom)) {
+        bot.vy = -150
+        music.play(music.melodyPlayable(music.jumpUp), music.PlaybackMode.InBackground)
+    }
+})
+
+// A cup is worth 1 point.
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSprite) {
+    otherSprite.destroy(effects.confetti, 200)
+    info.changeScoreBy(1)
+    music.play(music.melodyPlayable(music.baDing), music.PlaybackMode.InBackground)
+})
+
+// Land on a crow from above to scare it off. Touch it any other way and lose a life.
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
+    if (sprite.vy > 0 && sprite.bottom < otherSprite.y) {
+        otherSprite.destroy(effects.disintegrate, 200)
+        sprite.vy = -100
+        info.changeScoreBy(3)
+    } else {
+        info.changeLifeBy(-1)
+        scene.cameraShake(4, 300)
+        music.play(music.melodyPlayable(music.smallCrash), music.PlaybackMode.InBackground)
+        tiles.placeOnRandomTile(sprite, DOOR)
+    }
+})
+
+// Fall in the canal and you go back to the door. The game loop checks every frame.
+game.onUpdate(function () {
+    if (tiles.tileAtLocationEquals(bot.tilemapLocation(), WATER)) {
+        info.changeLifeBy(-1)
+        music.play(music.melodyPlayable(music.smallCrash), music.PlaybackMode.InBackground)
+        tiles.placeOnRandomTile(bot, DOOR)
+    }
+})
+
+// The flag ends level 1. On level 2 it wins the game.
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Goal, function (sprite, otherSprite) {
+    if (level == 0) {
+        startLevel(1)
+    } else {
+        game.over(true)
+    }
+})
+
+startLevel(0)

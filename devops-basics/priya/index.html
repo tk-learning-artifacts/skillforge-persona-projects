@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pilot first: a team repository run with trainers, then a CCA, by Priya Nair</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="plan.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Priya Nair is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<div class="wrap">
+<header class="title">
+<p class="kicker">DevOps Basics end project</p>
+<h1>Pilot first: Starter Bank</h1>
+<p class="lede">Before I hand a team repository to a cohort, I run it with my trainers. Three of us built a small site through pull requests. Then I wrote the guide for a mixed Sec 1 to 3 CCA group.</p>
+</header>
+
+<div class="prose">
+<p>I'm Priya. I plan courses for a team of trainers. My question for this brief: could every trainer on my team run it? With any group, on a school network?</p>
+<p>So I made choices for the team, not for one expert. Everything happens in the GitHub website. Nobody installs anything or learns a second editor. The deploy workflow is GitHub's own Static HTML starter. I only updated its action versions. The only gate is a human one: a ruleset that needs one approval on every pull request.</p>
+</div>
+
+<h2 id="deliverables"><span class="wk">Stops on the map</span>The four deliverables</h2>
+<ol class="map">
+  <li data-n="1"><a href="template.html">team-site-template</a><span>The template repository. Starter pages that open straight away and a README with 3 tasks. Also an issue template and a review checklist. Every file is shown, with a zip.</span></li>
+  <li data-n="2"><a href="site/">Starter Bank, the live site</a><span>Three 5-minute paper starters for Git lessons, written by the pilot team. It is the site as we left it after the last merge.</span></li>
+  <li data-n="3"><a href="prs.html">5 merged pull requests, #4 to #8</a><span>Each with its diff and review. One broke a link on the live site. One had a conflict.</span></li>
+  <li data-n="4"><a href="guide.html">The 1-page class guide</a><span>For a CCA group of Sec 1 to 3 students. Team rules, and a plan for students who are still 12.</span></li>
+</ol>
+<p class="madeup">The two trainers, our account names and our review comments are made up, like me. The Git history is real. I made every branch, commit, conflict and merge in Git. The diffs come from that history.</p>
+
+<h2 id="pilot"><span class="wk">The pilot</span>What three trainers did</h2>
+<div class="facts">
+  <div><b>3</b><span>trainers, one page each</span></div>
+  <div><b>5</b><span>pull requests merged</span></div>
+  <div><b>0</b><span>commits straight to main</span></div>
+  <div><b>1</b><span>broken link that went live</span></div>
+</div>
+<div class="prose">
+<p>We met for two afternoon sessions. Each of us took one issue: write one 5-minute starter for a Git lesson. A starter had to need only paper. Then it still works when the devices won't log in.</p>
+<ol class="tight">
+  <li><b>harbour-trainer</b> wrote "Commit or not?", a card sort of good and bad commit messages.</li>
+  <li><b>pine-trainer</b> wrote "Spot the conflict", two sticky notes and one sentence.</li>
+  <li><b>plan-lead</b> (me) wrote "Who can see it?", about what a public repository shows.</li>
+  <li>pine-trainer then did task 3 for the team: renaming the site from "Our team site" to Starter Bank.</li>
+</ol>
+<p>Two things happened that I wanted the guide to plan for. My branch and pine-trainer's both added a line in the same place. GitHub showed a conflict. I fixed it in the browser. And the link in #5 said <code>spot-conflict.html</code> when the file was <code>spot-the-conflict.html</code>. I approved it without clicking it. It went live broken. harbour-trainer found it on a phone the next day. Pull request #7 fixed it.</p>
+<p>The review checklist already said "Every link on the page works". I had it open and skipped that line. A checklist depends on people reading it. I come back to that below.</p>
+</div>
+
+<h2 id="plan"><span class="wk">Plan your run</span>From pilot to cohort</h2>
+<div class="prose">
+<p>The guide is written for my CCA group. Your group will differ. Pick yours below. The plan checks ages, sizes the teams and fits the tasks into your session length. Every session starts with 5 minutes to settle and ends with 5 to pack up.</p>
+</div>
+<div class="planner" id="planner">
+  <div class="inputs">
+    <label>Group
+      <select id="group">
+        <option value="cca" selected>CCA, Sec 1 to 3 mixed</option>
+        <option value="sec1">Sec 1 class</option>
+        <option value="sec2">Sec 2 class</option>
+        <option value="sec34">Sec 3 or 4 class</option>
+      </select>
+    </label>
+    <label>Month you start
+      <select id="month">
+        <option value="1">January</option><option value="2">February</option><option value="3">March</option>
+        <option value="4">April</option><option value="5">May</option><option value="6">June</option>
+        <option value="7" selected>July</option><option value="8">August</option><option value="9">September</option>
+        <option value="10">October</option><option value="11">November</option>
+      </select>
+    </label>
+    <label>Session length
+      <select id="length">
+        <option value="60">60 minutes</option>
+        <option value="90">90 minutes</option>
+        <option value="120" selected>120 minutes (a CCA session)</option>
+      </select>
+    </label>
+    <label>Students
+      <input type="number" id="students" min="6" max="40" value="24" inputmode="numeric">
+    </label>
+  </div>
+  <div class="out" id="out" aria-live="polite">
+    <div class="box age" id="age"></div>
+    <div class="box" id="teams"></div>
+    <div class="box sessions"><h3 id="sessions-title">Sessions</h3><div class="grid" id="sessions"></div></div>
+    <div class="box" id="ready"></div>
+  </div>
+</div>
+<p class="small">Try this: set Sec 1 and January, then move the month to October. Watch how many students lose their own account, and what the plan does instead.</p>
+
+<h2 id="choices"><span class="wk">Why these choices</span>Built for a team of trainers</h2>
+<div class="prose">
+<ul class="tight">
+  <li><b>The GitHub website only.</b> The pencil edits a file. "Commit changes" lets you make a new branch, then "Propose changes" opens the pull request. One tool means one set of screenshots for my trainers.</li>
+  <li><b>The starter workflow, almost unchanged.</b> In Settings, Pages, a trainer picks GitHub Actions. The template already holds GitHub's Static HTML workflow. GitHub's copy still names action versions that run on Node 20. GitHub has moved its runners off Node 20. So I changed three version numbers and nothing else. If it breaks, GitHub's own docs still match it step for step.</li>
+  <li><b>A ruleset with one rule.</b> "Require a pull request before merging", with 1 approval. The author can't approve their own. Rulesets are free on public repositories with GitHub Free.</li>
+  <li><b>Public repositories.</b> GitHub Pages on a free account needs one. So the site and the history are public. The rules on names and emails matter more.</li>
+  <li><b>Template, not fork.</b> A repository made from a template starts with one commit. Students get a clean start and none of my history.</li>
+</ul>
+<p>I left out an automated check on purpose. It would mean one more file that only some trainers can fix. The broken link in #7 is the cost of that choice.</p>
+</div>
+
+<h2 id="rubric"><span class="wk">Rubric</span>How it measures up</h2>
+<ul class="rubric">
+  <li><b>Every change went through a pull request</b>Main has 6 commits: the template's first commit and 5 squash merges, #4 to #8. The ruleset blocked direct pushes. See the <a href="prs.html#history">history</a>.</li>
+  <li class="part"><b>Site deploys automatically and works</b>Every merge ran the Pages workflow. The <a href="site/">live site</a> works now. For a while it had a dead link, because nothing but a person checked it.</li>
+  <li><b>No keys or personal data in code</b>No keys exist in this project. Account names are made up. The checklist asks the reviewer to look for names, emails and photos. "Who can see it?" teaches the reason.</li>
+  <li><b>Guide fits your students' ages</b>The guide checks ages first. Most Sec 1 students turn 13 during the year. So it gives the under-13s a real role without an account.</li>
+</ul>
+
+<h2 id="change"><span class="wk">What I would change</span>Where the plan is thin</h2>
+<div class="prose">
+<p>My pilot was three adults. The timings in the guide are my best guess for 13-year-olds, not something I watched. A first pull request took each of us about 20 minutes. I have doubled that for students. One real session with a class would tell me more than my spreadsheet.</p>
+<p>The review checklist is also only as good as the reviewer. I approved a dead link with the checklist in front of me. For a cohort, I'd ask a colleague like Rajan to add a link check. Then a person checks the words, and a script checks the links.</p>
+</div>
+
+<h2 id="sources"><span class="wk">Sources</span>Checked against</h2>
+<ul class="tight small">
+  <li>The workflow, copied with newer action versions: <a href="https://github.com/actions/starter-workflows/blob/main/pages/static.yml">actions/starter-workflows, pages/static.yml</a>. Runners moving off Node 20: <a href="https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/">GitHub changelog</a>.</li>
+  <li>Pages needs a public repository on GitHub Free: <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site">Creating a GitHub Pages site</a>. Limits: <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/github-pages-limits">GitHub Pages limits</a>.</li>
+  <li>Rulesets on public repositories with GitHub Free: <a href="https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/about-rulesets">About rulesets</a>. Rule names: <a href="https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/available-rules-for-rulesets">Available rules for rulesets</a>.</li>
+  <li>Authors can't approve their own: <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/approving-a-pull-request-with-required-reviews">Approving a pull request with required reviews</a>.</li>
+  <li>Editing in the browser and starting a branch: <a href="https://docs.github.com/en/repositories/working-with-files/managing-files/editing-files">Editing files</a>.</li>
+  <li>Templates start with one commit: <a href="https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template">Creating a repository from a template</a>.</li>
+  <li>Pull request templates: <a href="https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/creating-a-pull-request-template-for-your-repository">Creating a pull request template</a>. "Closes #" keywords: <a href="https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/linking-a-pull-request-to-an-issue">Linking a pull request to an issue</a>.</li>
+  <li>Minimum age of 13: <a href="https://docs.github.com/en/site-policy/github-terms/github-terms-of-service">GitHub Terms of Service</a>.</li>
+  <li>Sec 1 ages: children join Primary 1 in the year they turn 7. MOE's 2026 exercise is for children born 2 January 2020 to 1 January 2021: <a href="https://www.moe.gov.sg/primary/p1-registration">MOE P1 registration</a>. After six years of primary school, Sec 1 is the year they turn 13.</li>
+  <li>Private commit email: <a href="https://docs.github.com/en/account-and-profile/how-tos/email-preferences/setting-your-commit-email-address">Setting your commit email address</a> and <a href="https://docs.github.com/en/account-and-profile/reference/email-addresses-reference">Email addresses reference</a>.</li>
+  <li>GitHub Classroom closed on 28 August 2026: <a href="https://github.blog/changelog/2026-08-27-github-classroom-deprecated">GitHub changelog</a>.</li>
+  <li>Every secondary student with a learning device by end 2021: <a href="https://www.moe.gov.sg/news/parliamentary-replies/20201102-personal-learning-device">MOE parliamentary reply, 2 November 2020</a>.</li>
+</ul>
+</div>
+</body>
+</html>

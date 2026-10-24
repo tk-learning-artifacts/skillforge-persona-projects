@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Waiting Corner: P5 makers redesign the pick-up area, by Aisha Rahman</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="survey.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Aisha Rahman is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<h1>The Waiting Corner</h1>
+<p class="lede">After school, up to 46 pupils wait in one corner by the side gate. They wait for a bus or a parent. There are 8 seats, all in the sun. So 17 children sit on the floor in the shade. My P5 makers measured it and built it in card. They tested a change for a week and pitched the fix.</p>
+
+<ul class="tabs" aria-label="Pages in this project">
+  <li><a href="index.html" aria-current="page">Site analysis and plan</a></li>
+  <li><a href="plan.html">Try the layout</a></li>
+  <li><a href="model.html">Card model and code</a></li>
+  <li><a href="feedback.html">Feedback report</a></li>
+</ul>
+
+<p>I'm Aisha. I teach design and making in our school makerspace. I wanted a space the pupils walk past every day. Then they could touch, measure and change it. The waiting corner was perfect. Everyone in the class had waited there.</p>
+
+<div class="card">
+<p><strong>How the class ran it</strong></p>
+<ul class="tight">
+  <li>Who: 32 P5 pupils, in 8 groups of 4.</li>
+  <li>When: 6 makerspace sessions of 60 minutes, in Term 3, plus one trial week.</li>
+  <li>Kit: 8 micro:bit V2s with battery packs, tally sheets and a 10 m tape. Card, scissors and glue sticks.</li>
+  <li>Rules: we stayed inside the school compound, away from the driveway and car park. No photos of faces. An adult was with every group outside.</li>
+</ul>
+</div>
+
+<h2 id="site">1. Site analysis</h2>
+<p class="madeup">My school, my pupils and every reading and count here are made up, like me. The micro:bit code and the way it measures are real. You can run the code on a real micro:bit V2.</p>
+
+<h3>Where pupils wait at 1.40 pm</h3>
+<p>Each group drew a dot for every pupil at 1.40 pm, on three days. This is the middle day. On a phone, swipe the map sideways.</p>
+<div class="drawing-wrap">
+<svg class="drawing" id="dots" viewBox="0 0 480 340" role="img" aria-labelledby="dots-t dots-d">
+  <title id="dots-t">Dot map of the waiting corner at 1.40 pm</title>
+  <desc id="dots-d">The corner is 8 m wide and 6 m deep. A roof shades the back 2 m. Two benches stand in the sun near the front. Red dots, for pupils on the floor, crowd the shaded back wall. Blue dots, for standing pupils, gather by the gate. Green dots fill the benches.</desc>
+  <rect class="floor" x="60" y="40" width="320" height="240"/>
+  <rect class="roof" x="60" y="40" width="320" height="80"/>
+  <rect class="wall" x="56" y="34" width="328" height="6"/>
+  <rect class="wall" x="380" y="34" width="6" height="26"/>
+  <rect class="wall" x="380" y="100" width="6" height="186"/>
+  <rect class="wall" x="54" y="34" width="6" height="126"/>
+  <rect class="wall" x="54" y="240" width="6" height="46"/>
+  <text x="66" y="58" class="s">roof shade at 1.40 pm (2 m deep)</text>
+  <text x="392" y="84">door</text>
+  <text x="392" y="100" class="s">to class block</text>
+  <text x="4" y="190">gate</text>
+  <text x="4" y="206" class="s">behind</text>
+  <text x="4" y="220" class="s">a bend</text>
+  <rect class="bench" x="120" y="200" width="80" height="20"/>
+  <rect class="bench" x="240" y="200" width="80" height="20"/>
+  <text x="160" y="192" class="s">two benches, in the sun</text>
+  <g id="dot-layer"></g>
+  <line x1="60" y1="310" x2="380" y2="310" stroke="var(--ink)" stroke-width="1.5"/>
+  <line x1="60" y1="304" x2="60" y2="316" stroke="var(--ink)" stroke-width="1.5"/>
+  <line x1="380" y1="304" x2="380" y2="316" stroke="var(--ink)" stroke-width="1.5"/>
+  <text x="206" y="330">8 m</text>
+</svg>
+</div>
+<ul class="legend" aria-hidden="true">
+  <li><span style="background:var(--hot)"></span>on the floor</li>
+  <li><span style="background:var(--blue)"></span>standing</li>
+  <li><span style="background:var(--green)"></span>on a bench</li>
+</ul>
+
+<div class="scroll">
+<table>
+  <caption class="small">Pupils in the corner at 1.40 pm (made up)</caption>
+  <thead><tr><th>Day</th><th class="num">Total</th><th class="num">On the floor</th><th class="num">Standing</th><th class="num">On a bench</th><th class="num">Went to the gate to look</th></tr></thead>
+  <tbody>
+    <tr><td>Mon</td><td class="num">44</td><td class="num">16</td><td class="num">20</td><td class="num">8</td><td class="num">11</td></tr>
+    <tr><td>Wed</td><td class="num">46</td><td class="num">17</td><td class="num">21</td><td class="num">8</td><td class="num">12</td></tr>
+    <tr><td>Thu</td><td class="num">46</td><td class="num">19</td><td class="num">19</td><td class="num">8</td><td class="num">14</td></tr>
+  </tbody>
+</table>
+</div>
+<p class="small">"Went to the gate to look" counts pupils who walked past the bend. They went to check for their bus. We counted for 20 minutes. That is a safety problem. The gate opens onto the driveway.</p>
+
+<h3>The micro:bit survey</h3>
+<p>Each group took a micro:bit to one spot. It logged sound and temperature every 10 seconds for 10 minutes. We did it three times: at recess, in a lesson and at dismissal. Each micro:bit sat in a small card box with open sides. That kept the sun off the board without blocking the air.</p>
+<div class="toggles" role="group" aria-label="What to show">
+  <button type="button" data-m="sound" aria-pressed="true">Sound</button>
+  <button type="button" data-m="temp" aria-pressed="false">Temperature</button>
+</div>
+<div class="toggles" role="group" aria-label="When">
+  <button type="button" data-t="0" aria-pressed="false">Recess 10.00</button>
+  <button type="button" data-t="1" aria-pressed="false">Lesson 11.30</button>
+  <button type="button" data-t="2" aria-pressed="true">Dismissal 1.40</button>
+</div>
+<div id="survey"></div>
+<p class="live" id="survey-note" aria-live="polite"></p>
+<div class="card">
+<p><strong>Two things my pupils had to learn first</strong></p>
+<ul class="tight">
+  <li>Sound is a number from 0 to 255, not decibels. It lets you compare spots measured with the same micro:bit setup. It does not tell you how loud a place is in real units.</li>
+  <li>The temperature sensor is inside the micro:bit's processor. It gives a rough idea of the air temperature. So we compared spots with each other, not with the weather report.</li>
+</ul>
+</div>
+<p>The code is on the <a href="model.html#code">card model and code page</a>.</p>
+
+<h3>What the site analysis says</h3>
+<ul class="tight">
+  <li>At dismissal, the front of the corner is the hottest spot we logged. It read 35.5 against 32.0 under the roof, in the same 10 minutes.</li>
+  <li>It is also the loudest spot at dismissal: 131 out of 255. My pupils said it is loud because children shout across to friends at the gate.</li>
+  <li>Children choose shade over seats. 17 sat on the floor under the roof while the benches stayed in the sun.</li>
+  <li>Children can't see their bus from the corner. So 12 walked out to the gate to look.</li>
+</ul>
+<p>We scored the corner with the <a href="https://www.pps.org/article/grplacefeat">Place Diagram</a>. Comfort was the worst of the four. It is too hot, with too few seats, so you end up on the floor.</p>
+
+<h2 id="trial">2. A one-week trial</h2>
+<p>Before asking for money, we tested a cheap version. For one week we put out 12 stools from the makerspace under the roof. We chalked two "bus bays" on the floor. A P5 pupil on duty held up a card bus board when each bus came in. The security officer told them by walkie-talkie.</p>
+<p>Before: the 3-day average from the table above. After: the average of three trial days, counted the same way, at 1.40 pm.</p>
+<div id="trial-bars"></div>
+<p class="small">Sound is the average dismissal reading at the front spot, out of 255. Made up, like all the counts.</p>
+<p>The stools emptied the floor. The bus board kept most children inside. The chalk bays faded after two days of rain. That told us paint was worth paying for.</p>
+
+<h2 id="design">3. The redesign</h2>
+<p>Each group built a card model at 1:25 and tested it with a wheelchair token. You can try our layouts and your own in the <a href="plan.html">layout tool</a>. The cutting plans are on the <a href="model.html">model page</a>.</p>
+<div class="card">
+<p><strong>The final layout</strong></p>
+<ul class="tight">
+  <li>A shade sail, 3 m by 2 m, over the front of the corner by the benches.</li>
+  <li>Four benches: two under the sail, two under the roof. That is 16 seats, all in shade at 1.40 pm.</li>
+  <li>A bus board on the back wall, made in the makerspace. Each bus has a slot. A pupil on duty slides in a card when the bus arrives.</li>
+  <li>Two painted bus bays on the floor, so each bus group waits in one place.</li>
+  <li>A low bag rack, so bags come off the floor.</li>
+  <li>A bright arrow sign at the bend by the gate, so new P1s find the corner.</li>
+  <li>A small book box on the back wall, for the pupils who voted for a reading nook.</li>
+  <li>A clear path at least 1.5 m wide from the gate to the door. One space 2 m across, where a wheelchair can turn.</li>
+</ul>
+</div>
+
+<h2 id="benefits">4. Measurable benefits</h2>
+<p>We will count again in the same way. That means 1.40 pm, three days, the same spots and the same card boxes.</p>
+<div class="scroll">
+<table>
+  <thead><tr><th>Measure</th><th class="num">Before</th><th class="num">Trial week</th><th class="num">Target</th></tr></thead>
+  <tbody>
+    <tr><td>Pupils on the floor at 1.40 pm</td><td class="num">17</td><td class="num">4</td><td class="num">2 or fewer</td></tr>
+    <tr><td>Seats in shade at 1.40 pm</td><td class="num">0</td><td class="num">12 stools</td><td class="num">16</td></tr>
+    <tr><td>Pupils who walk out to the gate to look</td><td class="num">12</td><td class="num">4</td><td class="num">2 or fewer</td></tr>
+    <tr><td>Temperature at the front bench spot</td><td class="num">35.5</td><td class="num">35.3</td><td class="num">within 1 degree of the roof spot</td></tr>
+    <tr><td>Sound at the front spot (0 to 255)</td><td class="num">131</td><td class="num">112</td><td class="num">under 110</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2 id="funding">5. Funding and delivery</h2>
+<p class="madeup">The costs are my class's estimates, not quotes. Before we pitch, the operations manager gets real quotes from the school's usual vendors.</p>
+<div class="scroll">
+<table>
+  <thead><tr><th>Item</th><th>Who makes or fits it</th><th class="num">Estimate</th></tr></thead>
+  <tbody>
+    <tr><td>Bus board, plywood and card slots</td><td>P5 makers, in the makerspace</td><td class="num">$60</td></tr>
+    <tr><td>Bag rack, plywood</td><td>P5 makers, with me on the power tools</td><td class="num">$90</td></tr>
+    <tr><td>Arrow sign at the bend, plywood and paint</td><td>P5 makers</td><td class="num">$40</td></tr>
+    <tr><td>Book box, from makerspace offcuts, with old library books</td><td>P5 makers</td><td class="num">$0</td></tr>
+    <tr><td>Floor paint and stencils for 2 bus bays</td><td>School contractor paints; pupils design the stencils</td><td class="num">$150</td></tr>
+    <tr><td>4 outdoor benches</td><td>Vendor supplies and fixes</td><td class="num">$1,600</td></tr>
+    <tr><td>Shade sail with 4 posts</td><td>Vendor installs, after a safety check</td><td class="num">$2,500</td></tr>
+    <tr><td><strong>Total</strong></td><td></td><td class="num"><strong>$4,440</strong></td></tr>
+  </tbody>
+</table>
+</div>
+<ul class="tight">
+  <li>Funding: from the school's own budget, through the operations manager. The cheap pupil-made parts can go first, while the vendor parts wait for approval.</li>
+  <li>Approvals: the principal signs off. The operations manager checks the fire exit route and where posts can go.</li>
+  <li>Safety: pupils never climb ladders or fix the sail. Adults use the saw and drill. Pupils sand, paint and assemble with hand tools.</li>
+  <li>Timeline: pitch in Term 3, week 9. Bus board and bag rack in Term 4. Benches, paint and sail in the year-end holidays, when the corner is empty.</li>
+</ul>
+
+<h2>What I would change</h2>
+<p>We only measured on dry days in Term 3. A rainy afternoon pushes everyone under the roof, and our plan may not cope. I'd also like a temperature reading we can trust more. The micro:bit gives a rough reading. So the 3.5 degree gap between spots is useful, but the exact numbers are not. A cheap thermometer next to each micro:bit would help pupils check it.</p>
+
+<h2>Sources</h2>
+<ul class="tight small">
+  <li>micro:bit temperature sensor: <a href="https://microbit.org/get-started/features/sensors/">micro:bit Educational Foundation, Sensors</a>.</li>
+  <li>Sound level from 0 to 255, V2 only: <a href="https://makecode.microbit.org/reference/input/sound-level">MakeCode reference, sound level</a>, and <a href="https://microbit.org/projects/make-it-code-it/sound-logger/">Sound logger project</a>.</li>
+  <li>Data logging on the V2 and the MY_DATA file: <a href="https://microbit.org/get-started/user-guide/data-logging/">micro:bit user guide, Data logging</a>.</li>
+  <li>Route widths and turning space: <a href="https://file.go.gov.sg/bca-coa2025.pdf">BCA, Code on Accessibility in the Built Environment 2025</a>, clauses 1.3.4 and 4.2.1.</li>
+  <li>The four qualities of a place: <a href="https://www.pps.org/article/grplacefeat">Project for Public Spaces, What Makes a Successful Place?</a></li>
+</ul>
+</main>
+</body>
+</html>

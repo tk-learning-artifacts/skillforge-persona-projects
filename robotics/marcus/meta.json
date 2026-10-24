@@ -1,0 +1,6 @@
+{
+  "module": "robotics",
+  "persona": "marcus",
+  "title": "Tape Runner: a two-sensor line follower, tuned run by run",
+  "summary": "A micro:bit line follower in MicroPython for a Sec 3 robotics CCA, with a demo replay you can save as video, a test bench that runs 20 three-lap tests, tuning notes for four versions, and a wiring diagram."
+}

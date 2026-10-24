@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Volume Box: a micro:bit noise meter case, by Aisha Rahman</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="viewer.js" defer></script>
+<script src="meshes.js" defer></script>
+<script src="lid.js" defer></script>
+<script src="app.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Aisha Rahman is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<h1><span class="tag">A micro:bit V2 case</span>The Volume Box</h1>
+<p class="lede">A wall case for the noise meter in my P6 makerspace. It holds a micro:bit and its battery pack. The lid presses on, with no screws and no glue.</p>
+<p>I'm Aisha. I teach design and making in a school makerspace. Our noise meter is a micro:bit. It shows a bar graph of the room's sound. It used to sit on a shelf with the battery pack hanging off it. It fell off twice in one term. So the brief had an easy answer: "an enclosure or mount for a classroom device".</p>
+<ul class="toc">
+  <li><a href="#look">Turn it and watch it print</a></li>
+  <li><a href="#media">Photo and video</a></li>
+  <li><a href="#why">Short rationale</a></li>
+  <li><a href="#fit">Fit</a></li>
+  <li><a href="#print">Printability</a></li>
+  <li><a href="#time">Strength vs time</a></li>
+  <li><a href="#versions">Three versions</a></li>
+  <li><a href="#lid">Make a lid for your printer</a></li>
+  <li><a href="#files">STL and slicer profile</a></li>
+  <li><a href="build.html">Build guide</a></li>
+</ul>
+
+<h2 id="look">Turn it and watch it print</h2>
+<p>Drag the model to turn it. On a keyboard, click it and use the arrow keys. Pick a version to see how it changed.</p>
+<div class="bench">
+  <div class="row" role="group" aria-label="Version">
+    <span class="label">Version</span>
+    <button type="button" data-version="1" aria-pressed="false">1</button>
+    <button type="button" data-version="2" aria-pressed="false">2</button>
+    <button type="button" data-version="3" aria-pressed="true">3 (final)</button>
+  </div>
+  <div class="row" role="group" aria-label="View">
+    <span class="label">Show</span>
+    <button type="button" data-mode="closed" aria-pressed="true">Closed</button>
+    <button type="button" data-mode="apart" aria-pressed="false">Apart</button>
+    <button type="button" data-mode="body" aria-pressed="false">Body as printed</button>
+    <button type="button" data-mode="lid" aria-pressed="false">Lid as printed</button>
+  </div>
+  <canvas id="view" tabindex="0" aria-label="3D view of the case. Drag or use the arrow keys to turn it."></canvas>
+  <p class="small" id="view-text">Version 3, closed. The orange body holds the parts. The blue lid presses on top.</p>
+  <h3>Print playback</h3>
+  <p class="small">This plays the print back, one layer at a time. It works on the body or the lid as printed.</p>
+  <div class="row">
+    <button type="button" class="primary" id="play">Play the print</button>
+    <span class="readout" id="layer-out" aria-live="polite">Full part</span>
+  </div>
+  <label for="layer" class="small">Height printed so far</label>
+  <input type="range" id="layer" min="1" max="100" value="100">
+</div>
+
+<h2 id="media">Photo and video</h2>
+<p>This page has no photos. SkillForge shows physical builds as drawings, models and simulations, never as photos. So here is what stands in for them:</p>
+<ul class="tight">
+  <li>The 3D view above, made from the same files you can download. It shows every version, closed and apart.</li>
+  <li>The print playback, which stands in for a time-lapse video. Drag the slider to see each layer.</li>
+  <li>The side section and fit drawing below. They are to scale, with the gaps marked.</li>
+  <li>The <a href="build.html">build guide</a>, with every step in words.</li>
+</ul>
+
+<h2 id="why">Short rationale</h2>
+<p>I started with what pupils will touch. They press buttons A and B and swap the batteries. They read the LEDs from across the room. Everything else came from that.</p>
+<ul class="tight">
+  <li>The front is one big window. The LEDs, buttons and logo stay open to fingers.</li>
+  <li>The battery pack gets its own bay. Its switch shows through a second window. Nobody opens the case to turn it off.</li>
+  <li>The lid presses on. A P6 pupil can open it with a thumbnail. There are no tiny screws to lose.</li>
+  <li>Two parts, both flat on the bed. No supports to snap off, so no craft knives at the printer.</li>
+  <li>A keyhole on the back hangs it on a pinboard pin, at eye level.</li>
+  <li>It is plain on purpose. Pupils decorate the lid with stickers, or remix the lid in Tinkercad.</li>
+</ul>
+
+<h2 id="fit">Fit</h2>
+<p>Every size starts from a measured part, then adds a gap. The board size is from the micro:bit Foundation. The battery pack size is from Pimoroni's listing. I checked both with callipers.</p>
+<div class="scroll">
+<table>
+  <thead><tr><th>Part</th><th>Real size</th><th>Space in the case</th><th>Gap per side</th></tr></thead>
+  <tbody>
+    <tr><td>micro:bit V2</td><td class="mm">51.60 × 42.00</td><td class="mm">52.4 × 42.8</td><td class="mm">0.4</td></tr>
+    <tr><td>2 × AAA pack</td><td class="mm">63 × 26 × 16</td><td class="mm">64 × 26.8 × 16</td><td class="mm">0.4 to 0.5</td></tr>
+    <tr><td>Plug on the board's back</td><td class="mm">5.50 deep</td><td class="mm">7 deep</td><td>room to spare</td></tr>
+    <tr><td>Lid lip in the body</td><td class="mm">64 × 72 opening</td><td class="mm">63.9 × 71.9 lip</td><td class="mm">0.05</td></tr>
+  </tbody>
+</table>
+</div>
+<p>The board gets a loose gap. Pupils lift it out to plug in USB, so it must drop in and out. The lid gets almost no gap, because it must grip. That number came from my printer, not from a guide.</p>
+<p class="made-up">The tolerance test result below is from my print log. Like me, the log is made up.</p>
+<div class="sticky">
+  <p><strong>Sticky label on our printer</strong></p>
+  <p>Tolerance test, PLA, 0.2 mm layers.</p>
+  <p>Snug: the 10.0 mm hole. Sliding: 10.2 mm.</p>
+  <p>So snug is 0 per side here. The guide says 0.1.</p>
+</div>
+<p>My printer runs a little loose. A 0 mm gap felt risky, so the lid uses 0.05 mm per side. That is half a step on the test plate. Your printer will differ. That is why the <a href="#lid">lid maker</a> is on this page.</p>
+<svg class="diagram" viewBox="0 0 480 240" role="img" aria-labelledby="sec-t sec-d">
+<title id="sec-t">Side section of the case, cut down the middle</title>
+<desc id="sec-d">The battery pack lies on the floor of the lower bay. The micro:bit sits on a raised cradle in the upper bay, with a hollow under it for the battery plug. The lid's lip presses on the battery pack. Four posts on the lid stop 0.2 mm above the board.</desc>
+<rect class="s-body" x="24" y="178.8" width="431.2" height="11.2"/>
+<rect class="s-body" x="24" y="72.4" width="14" height="106.4"/>
+<rect class="s-body" x="441.2" y="72.4" width="14" height="106.4"/>
+<rect class="s-body" x="188.1" y="122.8" width="11.2" height="56"/>
+<rect class="s-body" x="199.3" y="162" width="241.9" height="16.8"/>
+<rect class="s-body" x="199.3" y="122.8" width="15.1" height="39.2"/>
+<rect class="s-body" x="426.1" y="122.8" width="15.1" height="39.2"/>
+<rect class="s-body" x="199.3" y="100.4" width="1.1" height="22.4"/>
+<rect class="s-body" x="440.1" y="100.4" width="1.1" height="22.4"/>
+<rect class="s-bat" x="40.2" y="89.2" width="145.6" height="89.6"/>
+<rect class="s-board" x="201.5" y="113.8" width="235.2" height="9"/>
+<rect class="s-part" x="360" y="122.8" width="33.6" height="30.8"/>
+<rect class="s-part" x="248" y="88.4" width="33.6" height="25.5"/>
+<rect class="s-lid" x="24" y="61.2" width="30.8" height="11.2"/>
+<rect class="s-lid" x="171.3" y="61.2" width="45.9" height="11.2"/>
+<rect class="s-lid" x="428.9" y="61.2" width="26.3" height="11.2"/>
+<rect class="s-lid" x="38.3" y="72.4" width="9" height="16.8"/>
+<rect class="s-lid" x="432" y="72.4" width="9" height="16.8"/>
+<rect class="s-lid" x="201.5" y="72.4" width="16.8" height="40.3"/>
+<rect class="s-lid" x="427.8" y="72.4" width="11.2" height="40.3"/>
+<text x="113" y="139" text-anchor="middle">battery</text>
+<text x="315.2" y="77.8" text-anchor="middle">micro:bit</text>
+<line class="s-lead" x1="315.2" y1="88.8" x2="315.2" y2="111.8"/>
+<text x="315.2" y="175.4" text-anchor="middle">hollow for the plug</text>
+<text x="24" y="47.2" text-anchor="start">post: 0.2 mm above the board</text>
+<line class="s-lead" x1="209.9" y1="51.2" x2="209.9" y2="72.4"/>
+<text x="24" y="216" text-anchor="start">bottom edge</text>
+<text x="455.2" y="216" text-anchor="end">top edge</text>
+</svg>
+<p class="small">Side section, cut down the middle and drawn to scale. The case is 77 mm tall and 21 mm deep, plus a 2 mm lid.</p>
+<ul class="key" aria-hidden="true">
+  <li><span style="background: var(--s-body)"></span>body</li>
+  <li><span style="background: var(--s-lid)"></span>lid</li>
+  <li><span style="background: var(--s-bat)"></span>battery pack</li>
+  <li><span style="background: var(--s-board)"></span>micro:bit</li>
+  <li><span style="background: var(--s-part)"></span>plug and button</li>
+</ul>
+<p>The lid holds both parts still. Its lip rests on the battery pack. Its four posts stop 0.2 mm above the board. The board can't rattle or be crushed.</p>
+
+<h2 id="print">Printability</h2>
+<ul class="tight">
+  <li>The body prints back-down. Every wall goes straight up, so it needs no supports.</li>
+  <li>The lid prints face-down, lip pointing up. The windows are just gaps in the first layers.</li>
+  <li>Nothing hangs over thin air. The keyhole and the lead notch go straight through.</li>
+  <li>Walls are 2.5 mm. With a 0.4 mm nozzle, that is solid plastic, with no thin gaps to fill.</li>
+  <li>Corners are square, so bed grip matters. A skirt is enough on a clean bed. Add a brim if the corners lift.</li>
+</ul>
+<p>Safety at the printer: the nozzle runs at about 200°C and the bed is hot. Only I lift parts off, once the bed is cool. The printer sits in a room with good air flow. The <a href="build.html#safety">build guide</a> has the full list.</p>
+<p>Before any print, my pupils check three things in Cura's preview: the first layer is whole, no supports appear, and the time is under our cap.</p>
+
+<h2 id="time">Strength vs time</h2>
+<p>This case carries no load. It must survive a fall from a desk. The lid must come off a hundred times. So I spent time where it shows, and saved it everywhere else.</p>
+<p class="made-up">These print times and test results are from my print log. Like me and my class, the log is made up. The settings are real Cura settings. The sums use the planning rule from SkillForge's printing article.</p>
+<div class="scroll">
+<table>
+  <thead><tr><th>Body settings</th><th>Time</th><th>Plastic</th><th>What I saw</th></tr></thead>
+  <tbody>
+    <tr><td>0.28 mm layers, 2 walls, 10% infill</td><td>1 h 45 min</td><td>26 g</td><td>Rough lip edge. The lid gripped on one side only.</td></tr>
+    <tr><td><strong>0.2 mm layers, 3 walls, 15% gyroid</strong></td><td><strong>2 h 35 min</strong></td><td><strong>31 g</strong></td><td><strong>Even grip. Survived 5 drops from desk height.</strong></td></tr>
+    <tr><td>0.12 mm layers, 3 walls, 15% gyroid</td><td>4 h 10 min</td><td>31 g</td><td>Smoother. Nobody could tell from 2 m away.</td></tr>
+    <tr><td>0.2 mm layers, 3 walls, 40% infill</td><td>2 h 55 min</td><td>37 g</td><td>No difference I could feel.</td></tr>
+  </tbody>
+</table>
+</div>
+<p>The 40% row matches Prusa's advice: walls set most of a part's strength, more than infill. The lid prints in 38 minutes and uses 7 g.</p>
+<h3>The class sum</h3>
+<p>My P6 class of 36 works in 9 groups of 4. Each group gets one case. SkillForge's planning rule adds 5 minutes per print for heating and clearing.</p>
+<ul class="tight">
+  <li>Bodies: (155 + 5) × 9 ÷ 60 = 24 hours.</li>
+  <li>Lids, 4 to a plate: (152 + 5) × 3 ÷ 60 is about 8 hours.</li>
+  <li>Total: about 32 printer hours. I am in the makerspace about 7 hours a day. So that is about 5 school days.</li>
+</ul>
+<p>The printer only runs while I am in the room. At 0.12 mm, the bodies alone would need about 38 hours. That is the second week I don't have.</p>
+
+<h2 id="versions">Three versions</h2>
+<p class="made-up">Version 1 and 2 are real files in the 3D view above. The test notes, like me, are made up.</p>
+<h3>Version 1</h3>
+<ul class="tight">
+  <li>The lid used the guide's sliding gap, 0.2 mm per side. On the wall it dropped off when a door slammed.</li>
+  <li>The board sat on a solid block. The battery plug on its back hit the block. The board stood 5 mm proud. The lid would not close.</li>
+  <li>The battery window was 44 mm wide. The switch sat behind the frame.</li>
+</ul>
+<h3>Version 2</h3>
+<ul class="tight">
+  <li>I printed the tolerance test, then drew the lid at 0.05 mm per side. It grips.</li>
+  <li>The block got a 7 mm hollow under the board.</li>
+  <li>The battery window grew to 56 mm. Pupils can reach the switch with the lid on.</li>
+  <li>New problem: it hung on Blu Tack, and fell on day 3.</li>
+</ul>
+<h3>Version 3, the final case</h3>
+<ul class="tight">
+  <li>A keyhole on the back: an 8 mm round hole with a 4 mm slot above it. It hangs on a pin or a small hook.</li>
+  <li>The pin head sits in the hollow under the board. The case lies flat on the wall.</li>
+</ul>
+
+<h2 id="lid">Make a lid for your printer</h2>
+<p>Print the tolerance test from SkillForge's fit article first. Then pick the hole that gave your snug fit. This makes a lid STL with your gap. The body stays the same.</p>
+<div class="card">
+  <div class="row">
+    <label for="snug"><strong>My snug hole was</strong></label>
+    <select id="snug">
+      <option value="0">10.0 mm (0 per side)</option>
+      <option value="0.05" selected>Between 10.0 and 10.2 (0.05 per side)</option>
+      <option value="0.1">10.2 mm (0.1 per side)</option>
+      <option value="0.2">10.4 mm (0.2 per side)</option>
+      <option value="0.3">10.6 mm (0.3 per side)</option>
+    </select>
+  </div>
+  <p id="lid-out" aria-live="polite">Lip size: 63.9 × 71.9 mm.</p>
+  <div class="row">
+    <button type="button" class="primary" id="make-lid">Make my lid STL</button>
+    <button type="button" id="show-lid">Show it in the 3D view</button>
+  </div>
+  <p class="small">The file is made in your browser. Nothing is uploaded.</p>
+</div>
+
+<h2 id="files">STL and slicer profile</h2>
+<ul class="tight">
+  <li><a href="case-body.stl" download>case-body.stl</a>: the body, version 3, 69 × 77 × 21 mm. Already lying back-down.</li>
+  <li><a href="case-lid.stl" download>case-lid.stl</a>: the lid, 0.05 mm gap, lip pointing up.</li>
+  <li><a href="case-profile.cfg" download>case-profile.cfg</a>: my Cura settings as a text file. The <a href="build.html#profile">build guide</a> lists each one.</li>
+</ul>
+<p class="small">Units are millimetres. Both STLs are closed, single solids. I checked them with a mesh library before putting them here.</p>
+
+<h2 id="change">What I would change</h2>
+<p>The case closes off the edge connector. Next term I want to add a sound sensor or a light on crocodile clips. Right now, pupils must take the lid off to clip anything on. I would add a slot along the bottom edge for the clips. The lid also grips by friction only. On a printer that runs tight, my 0.05 mm lid will jam. A snap clip would forgive a wider range of printers.</p>
+
+<h2 id="sources">Sources</h2>
+<ul class="tight small">
+  <li>micro:bit V2 size (51.60 × 42.00 × 11.65 mm), plug depth and 3V battery: <a href="https://tech.microbit.org/hardware/2-0-revision/">micro:bit Foundation, V2 hardware</a>.</li>
+  <li>Battery pack size (63 × 26 × 16 mm) and JST-PH plug: <a href="https://shop.pimoroni.com/products/battery-holder-2-x-aaa-with-switch">Pimoroni, 2 × AAA battery holder with switch</a>.</li>
+  <li>Starting gaps and the tolerance test: SkillForge's fit article, which draws on <a href="https://wiki.cci.arts.ac.uk/books/digital-fabrication-lab/page/design-the-clearance-and-tolerance-yC5">UAL's fab lab guide</a>.</li>
+  <li>Walls matter more than infill: <a href="https://help.prusa3d.com/article/infill_42">Prusa Knowledge Base, Infill</a>.</li>
+  <li>Cura setting names and options: <a href="https://github.com/Ultimaker/Cura/blob/main/resources/definitions/fdmprinter.def.json">UltiMaker Cura's setting definitions</a>.</li>
+  <li>Sound level from 0 to 255, V2 only: <a href="https://makecode.microbit.org/reference/input/sound-level">MakeCode, sound level</a>. Bar graph: <a href="https://makecode.microbit.org/reference/led/plot-bar-graph">MakeCode, plot bar graph</a>.</li>
+  <li>Printers in classrooms: <a href="https://doh.wa.gov/community-and-environment/schools/3d-printers">Washington State Department of Health, 3D printers in schools</a>.</li>
+</ul>
+</main>
+</body>
+</html>

@@ -1,0 +1,6 @@
+{
+  "module": "devops-basics",
+  "persona": "rajan",
+  "title": "Stall Board: a team site that only ships green",
+  "summary": "A Sec 3 team builds a canteen menu site where a check and a review guard main: template repository, live site, 5 real merged pull requests, a merge gate simulator and a 1-page class guide."
+}

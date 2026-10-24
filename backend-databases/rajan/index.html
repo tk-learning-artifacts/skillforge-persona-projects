@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Class Library: a Flask and SQLite loans app, by Rajan Pillai</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="sql-wasm.js" defer></script>
+<script src="sql-wasm-binary.js" defer></script>
+<script src="schema.js" defer></script>
+<script src="server.js" defer></script>
+<script src="twin.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Rajan Pillai is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<div class="prose">
+<h1>Class Library<small>A book loans app in Flask and SQLite, with logins. By Rajan Pillai.</small></h1>
+<p class="lede">Students sign up, borrow books and return them. The librarian adds books and sees what is overdue. Under it sits a small JSON API, three tables and a 225-line app.py.</p>
+<p>I wrote software for a living before I taught. Now I teach programming to secondary students. This is my end project for Backends and Databases. My Sec 3 class builds a cut-down version in three lessons.</p>
+<ul class="toc">
+  <li><a href="#app">Use the app</a></li>
+  <li><a href="#break">Try to break it</a></li>
+  <li><a href="#click">One click, step by step</a></li>
+  <li><a href="code.html">Code and setup script</a></li>
+  <li><a href="lessons.html">3-lesson plan</a></li>
+  <li><a href="#rubric">Rubric check</a></li>
+</ul>
+</div>
+
+<h2 id="app">Use the app</h2>
+<div class="prose">
+<p>This is the hosted app, and it needs a word of explanation. This site is static, so there is no Python here. Instead, a twin of <code>app.py</code> runs in this tab. It uses <a href="https://github.com/sql-js/sql.js">sql.js</a>, which is SQLite compiled to run in a browser. The routes, status codes and SQL text match <code>app.py</code> line for line. So the inspector next to the app shows the real queries.</p>
+<p class="flag">Log in as <code>librarian</code> with the password <code>shelf-mark-2026</code>. Or sign up with a made-up name and password. Your data stays in this browser. Nothing is sent anywhere.</p>
+</div>
+
+<div class="bench">
+  <div>
+    <div class="window">
+      <div class="window-bar"><span class="dot"></span><span class="addr">Class Library</span></div>
+      <div class="lib" id="lib">
+        <header class="lib-top">
+          <strong>Class Library</strong>
+          <span id="who">Not logged in</span>
+          <button type="button" id="logout" hidden>Log out</button>
+        </header>
+
+        <form class="lib-card" id="auth">
+          <p class="lib-h">Log in or sign up</p>
+          <label>Username <input name="username" autocomplete="username" required></label>
+          <label>Password <input name="password" type="password" autocomplete="current-password" required></label>
+          <p class="lib-hint">Made-up names and passwords only.</p>
+          <div class="lib-row">
+            <button type="submit" data-action="login">Log in</button>
+            <button type="submit" data-action="signup">Sign up</button>
+          </div>
+        </form>
+
+        <section class="lib-card">
+          <p class="lib-h">Books</p>
+          <ul class="lib-list" id="books"></ul>
+        </section>
+
+        <section class="lib-card" id="mine" hidden>
+          <p class="lib-h">My loans</p>
+          <ul class="lib-list" id="loans"></ul>
+        </section>
+
+        <section class="lib-card" id="desk" hidden>
+          <p class="lib-h">Librarian desk</p>
+          <form id="add-book" class="lib-row">
+            <input name="title" placeholder="Title" required maxlength="100">
+            <input name="author" placeholder="Author" required maxlength="100">
+            <button type="submit">Add book</button>
+          </form>
+          <p class="lib-h">Overdue</p>
+          <ul class="lib-list" id="overdue"></ul>
+        </section>
+
+        <p class="lib-msg" id="msg" role="status" aria-live="polite"></p>
+      </div>
+    </div>
+    <p class="state" id="twin-state">Starting the server in this tab…</p>
+  </div>
+
+  <div class="inspector" aria-label="Inspector">
+    <h3>Requests, newest first</h3>
+    <div class="tools">
+      <button type="button" id="clear-log">Clear list</button>
+      <button type="button" id="reset">Reset the database</button>
+    </div>
+    <ul id="log" aria-live="off"></ul>
+    <details>
+      <summary>Send your own request</summary>
+      <form id="raw" class="raw">
+        <select id="raw-method" aria-label="Method"><option>GET</option><option>POST</option></select>
+        <input id="raw-path" aria-label="Path" value="/api/books/2" spellcheck="false">
+        <textarea id="raw-body" aria-label="JSON body" placeholder='{"book_id": 1}' spellcheck="false"></textarea>
+        <button type="submit">Send</button>
+      </form>
+      <p class="small muted" id="raw-note">This is what the page's fetch() does for you. Try <code>POST /api/loans</code> with <code>{"book_id": 1}</code>.</p>
+    </details>
+    <h3>Inside library.db</h3>
+    <div id="db-tabs">
+      <button type="button" data-table="users" aria-pressed="true">users</button>
+      <button type="button" data-table="books" aria-pressed="false">books</button>
+      <button type="button" data-table="loans" aria-pressed="false">loans</button>
+    </div>
+    <div id="db-view"></div>
+  </div>
+</div>
+
+<div class="prose">
+<h2 id="break">Try to break it</h2>
+<p>A backend is only as good as what it refuses. Try these, and read the inspector each time.</p>
+<ol class="tight">
+  <li>Log in with the username <code>' OR 1=1 --</code> and any password. You get 401. The inspector shows the text went into the <code>?</code> as plain data. It never became part of the SQL.</li>
+  <li>Sign up two users with the same password. Open the <code>users</code> table. The two hashes differ, because each one has its own random salt.</li>
+  <li>Log in as yourself, then send <code>GET /api/overdue</code> by hand. You get 403. Hiding a button is not security. The server checks.</li>
+  <li>Send <code>POST /api/loans</code> with <code>{"book_id": 1}</code>. Animal Farm is already out, so you get 409. The database itself refuses the second open loan. See <a href="code.html#schema">the unique index in schema.sql</a>.</li>
+  <li>Send <code>GET /api/books/99</code>. You get 404, and a JSON error the page can show.</li>
+</ol>
+
+<h2 id="click">One click, step by step</h2>
+<p>Here is what happens when a logged-in student clicks Borrow on The Hobbit.</p>
+<ol class="tight">
+  <li>The page calls <code>fetch("/api/loans")</code> with the method POST and the body <code>{"book_id": 2}</code>. The browser adds the session cookie by itself.</li>
+  <li>Flask matches the path and method to <code>borrow()</code>. It reads the user id from the signed session cookie, then looks the user up.</li>
+  <li>It checks book 2 exists. Then it runs one INSERT, with the user id and book id bound to the two <code>?</code> marks. The due date is today in Singapore plus 14 days.</li>
+  <li>If the book is already out, the unique index makes the INSERT fail. Flask turns that into 409. If not, the <code>with db():</code> block commits the row.</li>
+  <li>Flask sends back 201 and the new loan as JSON. The page shows the due date, then asks for the book list again.</li>
+</ol>
+<p>Step 3 is the one students cannot see. That is why the database view is next to the app. You watch the row appear.</p>
+
+<h2 id="rubric">Rubric check</h2>
+<div class="scroll">
+<table>
+  <tr><th>Rubric line</th><th>Where to check it</th></tr>
+  <tr><td>App reads and saves data correctly</td><td>Borrow, return and add a book. Reload the page: it is all still there. Each write shows in the <code>loans</code> or <code>books</code> table.</td></tr>
+  <tr><td>Queries use ? placeholders</td><td>Every query in <a href="code.html#app">app.py</a> that takes a value uses <code>?</code>. The inspector shows the values next to each query.</td></tr>
+  <tr><td>Passwords hashed, no real student data</td><td>The <code>users</code> table holds hashes only. Usernames are handles, with no names or classes. All books and readers are sample data.</td></tr>
+  <tr><td>Lessons fit your students and devices</td><td>The <a href="lessons.html">lesson plan</a> uses the school lab PCs, 60-minute lessons and a starter file. Students never make hosting accounts.</td></tr>
+</table>
+</div>
+
+<h2 id="deliverables">The three deliverables</h2>
+<ul class="tight">
+  <li>Link to the hosted app: <a href="#app">this page</a>. For the real Python version on PythonAnywhere, see <a href="code.html#host">how I put it online</a>. I'm an AI persona, so I have no PythonAnywhere account. There is no live Python copy to link.</li>
+  <li>Code with the database setup script: <a href="code.html">schema.sql, setup_db.py, app.py and the page</a>, plus a zip of the lot.</li>
+  <li>3-lesson plan with data rules: <a href="lessons.html">three 60-minute lessons for Sec 3</a>. It has five data rules, and how I check each one.</li>
+</ul>
+
+<h2 id="change">What I would change</h2>
+<p>Login has no limit on attempts. Anyone can try passwords all day, and the slow hash is the only brake. A real school app needs a lockout or a delay after a few misses. I left it out to keep <code>login()</code> short enough to teach.</p>
+<p>The twin is also a twin, not the thing itself. It hashes with PBKDF2, because browsers have no scrypt. <a href="code.html#twin">The code page lists every difference.</a></p>
+<p>And one lesson note. My first try at lesson 2 asked for three routes in 35 minutes. About half the class finished one. I now give the GET routes in the starter file. Students write only the POST.</p>
+
+<h2 id="sources">Sources</h2>
+<ul class="tight small">
+  <li>Flask JSON replies, sessions and the secret key: <a href="https://flask.palletsprojects.com/en/stable/quickstart/">Flask Quickstart</a>.</li>
+  <li>Hash methods and defaults: <a href="https://werkzeug.palletsprojects.com/en/stable/utils/">Werkzeug utilities</a>. In version 3.1 the default is scrypt, and pbkdf2 uses 1,000,000 rounds.</li>
+  <li>Placeholders and SQL injection: <a href="https://docs.python.org/3/library/sqlite3.html">Python's sqlite3 docs</a>, "How to use placeholders to bind values in SQL queries".</li>
+  <li>'now' is UTC: <a href="https://www.sqlite.org/lang_datefunc.html">SQLite date and time functions</a>.</li>
+  <li>Unique partial index: <a href="https://www.sqlite.org/partialindex.html">SQLite partial indexes</a>.</li>
+  <li>Running SQLite in a browser: <a href="https://github.com/sql-js/sql.js">sql.js</a>, MIT licence. Its licence is in <a href="SQLJS-LICENSE.txt">SQLJS-LICENSE.txt</a>.</li>
+  <li>Hosting rules: <a href="https://help.pythonanywhere.com/pages/FreeAccountsFeatures/">PythonAnywhere free account features</a>, <a href="https://help.pythonanywhere.com/pages/Flask/">PythonAnywhere Flask setup</a> and <a href="https://www.pythonanywhere.com/terms/">PythonAnywhere terms</a>.</li>
+</ul>
+</div>
+</main>
+</body>
+</html>

@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tonight and Tomorrow: a homework page every P5 pupil can use, by Nadia Hussain</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Nadia Hussain is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<h1>Tonight and Tomorrow</h1>
+<p class="lede">I redesigned one task on a school homework page. Pupils ask: "What is my homework tonight? What do I pack?" I designed it for P5 pupils who read slowly, lose their place or see poorly. Then I planned a lesson where my class does the same steps.</p>
+<p>I'm Nadia. My classes hold a wide range of learning needs. When a page is hard to read, these pupils give up first. So they were my first users, not an afterthought. This is my end project for the UI/UX Design module.</p>
+
+<ul class="toc">
+  <li><a href="#before"><b>1</b> The page I started with</a></li>
+  <li><a href="#interviews"><b>2</b> Interviews</a></li>
+  <li><a href="#persona"><b>3</b> Persona and user flow</a></li>
+  <li><a href="#wireframes"><b>4</b> 3 wireframes</a></li>
+  <li><a href="prototype.html"><b>5</b> The accessible mock-up (try it)</a></li>
+  <li><a href="#tests"><b>6</b> Test notes from 5 pupils</a></li>
+  <li><a href="lesson.html"><b>7</b> 1-lesson plan and critique rules</a></li>
+  <li><a href="#change"><b>8</b> What I would change</a></li>
+</ul>
+
+<p class="made-up"><strong>Made up, like me.</strong> Sunbird Primary, its homework page, the pupils and their words are invented for this example. The accessibility rules and research I quote are real, and linked in the sources.</p>
+
+<h2 id="before">1. The page I started with</h2>
+<p>The school's "Homework Board" is one long table. Every class and every week sits on one page. Pupils open it on a parent's phone at night.</p>
+<figure>
+<svg viewBox="0 0 480 430" role="img" aria-labelledby="b-t b-d" xmlns="http://www.w3.org/2000/svg">
+  <title id="b-t">The old Homework Board</title>
+  <desc id="b-d">A long table with tiny grey text. Due dates are shown only as red text. File icons have no labels. Three numbered problems are marked.</desc>
+  <rect width="480" height="430" rx="18" fill="#FFFFFF"/>
+  <rect x="20" y="20" width="440" height="44" rx="8" fill="#F4F6F5" stroke="#DDE3E1"/>
+  <text x="36" y="48" font-family="Segoe UI, system-ui, sans-serif" font-size="15" fill="#55625F">Sunbird Primary: Homework Board (all classes)</text>
+  <g font-family="Segoe UI, system-ui, sans-serif" font-size="14" fill="#55625F">
+    <text x="28" y="92">Date</text><text x="96" y="92">Class</text><text x="168" y="92">Homework</text><text x="400" y="92">Due</text>
+  </g>
+  <line x1="20" y1="102" x2="460" y2="102" stroke="#DDE3E1"/>
+  <g fill="#C9CFCD">
+    <rect x="28" y="116" width="48" height="8" rx="3"/><rect x="96" y="116" width="44" height="8" rx="3"/><rect x="168" y="116" width="200" height="8" rx="3"/><rect x="168" y="130" width="150" height="8" rx="3"/>
+    <rect x="28" y="160" width="48" height="8" rx="3"/><rect x="96" y="160" width="44" height="8" rx="3"/><rect x="168" y="160" width="180" height="8" rx="3"/>
+    <rect x="28" y="204" width="48" height="8" rx="3"/><rect x="96" y="204" width="44" height="8" rx="3"/><rect x="168" y="204" width="210" height="8" rx="3"/><rect x="168" y="218" width="120" height="8" rx="3"/>
+    <rect x="28" y="248" width="48" height="8" rx="3"/><rect x="96" y="248" width="44" height="8" rx="3"/><rect x="168" y="248" width="190" height="8" rx="3"/>
+    <rect x="28" y="292" width="48" height="8" rx="3"/><rect x="96" y="292" width="44" height="8" rx="3"/><rect x="168" y="292" width="200" height="8" rx="3"/><rect x="168" y="306" width="90" height="8" rx="3"/>
+    <rect x="28" y="336" width="48" height="8" rx="3"/><rect x="96" y="336" width="44" height="8" rx="3"/><rect x="168" y="336" width="170" height="8" rx="3"/>
+  </g>
+  <g fill="#E8A49B"><rect x="400" y="114" width="40" height="12" rx="3"/><rect x="400" y="246" width="40" height="12" rx="3"/></g>
+  <g fill="#DDE3E1"><rect x="400" y="158" width="40" height="12" rx="3"/><rect x="400" y="202" width="40" height="12" rx="3"/><rect x="400" y="290" width="40" height="12" rx="3"/><rect x="400" y="334" width="40" height="12" rx="3"/></g>
+  <g stroke="#55625F" fill="#FFFFFF" stroke-width="1.5">
+    <path d="M378 196h12l5 5v16h-17z"/><path d="M378 284h12l5 5v16h-17z"/>
+  </g>
+  <g font-family="Segoe UI, system-ui, sans-serif" font-size="15" font-weight="700" fill="#FFFFFF">
+    <circle cx="300" cy="140" r="15" fill="#3C3FA0"/><text x="295" y="145">1</text>
+    <circle cx="452" cy="250" r="15" fill="#3C3FA0"/><text x="447" y="255">2</text>
+    <circle cx="366" cy="182" r="15" fill="#3C3FA0"/><text x="361" y="187">3</text>
+  </g>
+  <text x="28" y="392" font-family="Segoe UI, system-ui, sans-serif" font-size="15" fill="#3C4846">…and 40 more rows, newest at the bottom.</text>
+</svg>
+<figcaption>The old page, drawn from memory. The grey bars stand for text that is about 12 px and pale grey.</figcaption>
+</figure>
+<p>I checked it against <a href="https://www.nngroup.com/articles/ten-usability-heuristics/">Nielsen's 10 usability heuristics</a> and the <a href="https://www.w3.org/WAI/tips/designing/">W3C's designing tips</a>. Three problems stood out.</p>
+<ol class="steps">
+  <li><strong>Small pale text, all one size.</strong> Nothing tells you where tonight starts. That breaks "Aesthetic and Minimalist Design". It also fails the W3C tip "Provide sufficient contrast between foreground and background".</li>
+  <li><strong>"Due" is shown by red text only.</strong> That breaks the tip "Don't use color alone to convey information". About 1 in 12 men have a colour vision deficiency. That figure is from the <a href="https://www.nei.nih.gov/learn-about-eye-health/eye-conditions-and-diseases/color-blindness">US National Eye Institute</a>.</li>
+  <li><strong>File icons with no words.</strong> You must remember what each icon means. That breaks "Recognition Rather than Recall".</li>
+</ol>
+
+<h2 id="interviews">2. Interviews</h2>
+<p>I interviewed 3 pupils and 1 parent, for about 10 minutes each. I asked about the last time they checked homework, not what they would like. Here are my notes, with the pain points marked.</p>
+<div class="card">
+<h3>Pupil 1, P5, has dyslexia</h3>
+<ul class="tight">
+  <li>Last night she checked on her mum's phone, in bed.</li>
+  <li>"I scroll and scroll. Then I forget which row is today."</li>
+  <li><span class="tag warn">Pain point</span> She reads every row from the top, every night.</li>
+</ul>
+<h3>Pupil 2, P5, has ADHD</h3>
+<ul class="tight">
+  <li>He checks after dinner, then gets up to pack, then forgets.</li>
+  <li>"I did the homework but my workbook was at home." That happened twice last month.</li>
+  <li><span class="tag warn">Pain point</span> Doing the work and packing for it are two separate memories.</li>
+</ul>
+<h3>Pupil 3, P5, low vision</h3>
+<ul class="tight">
+  <li>She zooms in with two fingers. Then the table slides sideways off the screen.</li>
+  <li>"The red ones are late? Or is it the dark ones?"</li>
+  <li><span class="tag warn">Pain point</span> She can't tell "due" from "not due".</li>
+</ul>
+<h3>Parent of a P4 and a P6 pupil</h3>
+<ul class="tight">
+  <li>She shares one phone between two children at bedtime.</li>
+  <li>"I just want to see their class only, not the whole school."</li>
+  <li><span class="tag warn">Pain point</span> Every class is mixed on one page.</li>
+</ul>
+</div>
+<p>One idea I would have got wrong without asking: I planned a weekly calendar. Nobody looked further than tomorrow. They wanted "tonight" and "tomorrow's bag", so that became the design.</p>
+
+<h2 id="persona">3. Persona and user flow</h2>
+<div class="card persona">
+<svg viewBox="0 0 150 150" role="img" aria-label="Wei Jie's persona badge: a school bag with a tick">
+  <rect width="150" height="150" rx="24" fill="#E6E7F7"/>
+  <path d="M64 34v-6a11 11 0 0 1 22 0v6" fill="none" stroke="#3C3FA0" stroke-width="6"/>
+  <rect x="24" y="62" width="16" height="44" rx="8" fill="#5D60C0"/><rect x="110" y="62" width="16" height="44" rx="8" fill="#5D60C0"/>
+  <path d="M36 62a24 24 0 0 1 24 -28h30a24 24 0 0 1 24 28v54a10 10 0 0 1 -10 10h-58a10 10 0 0 1 -10 -10z" fill="#3C3FA0"/>
+  <path d="M36 66h78" stroke="#2A2C78" stroke-width="4"/>
+  <rect x="48" y="80" width="54" height="34" rx="8" fill="#FFFFFF"/>
+  <path d="M62 97l9 8 17-16" fill="none" stroke="#1D6636" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+<div>
+<h3 style="margin-top:0">Wei Jie, 11, P5</h3>
+<dl>
+  <dt>Goal</dt><dd>Know tonight's homework and pack tomorrow's bag before bed.</dd>
+  <dt>Frustration</dt><dd>The long table. He loses his place, and red "due" text looks like the rest.</dd>
+  <dt>Device</dt><dd>His mum's Android phone, at night. Sometimes the school iPad.</dd>
+  <dt>Needs</dt><dd>Short lines, big targets, words next to every icon.</dd>
+</dl>
+<blockquote>"I did the homework but my workbook was at home."</blockquote>
+</div>
+</div>
+<p class="small">Wei Jie mixes the four interviews. His quote is Pupil 2's words. His frustration comes from Pupils 1 and 3. His shared phone comes from the parent.</p>
+
+<h3>User flow: 8 steps, 2 decisions</h3>
+<figure>
+<svg viewBox="0 0 480 760" role="img" aria-labelledby="f-t f-d" xmlns="http://www.w3.org/2000/svg">
+  <title id="f-t">User flow for checking homework and packing</title>
+  <desc id="f-d">Step 1 open the page. Step 2 decision: is my class saved? If no, pick your class once. Step 3 see the Tonight list. Step 4 tap a task. Step 5 decision: stuck? If yes, open the example. Step 6 tap Done. Step 7 open Pack my bag. Step 8 tick each item and see All packed.</desc>
+  <defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#3C4846"/></marker></defs>
+  <rect width="480" height="760" rx="18" fill="#FFFFFF"/>
+  <g font-family="Segoe UI, system-ui, sans-serif" font-size="15" fill="#15211F">
+    <g stroke="#3C4846" stroke-width="2" fill="none" marker-end="url(#ar)">
+      <path d="M180 76v22"/><path d="M180 172v22"/><path d="M300 136h38"/><path d="M404 162v62h-102"/>
+      <path d="M180 252v22"/><path d="M180 332v22"/><path d="M180 428v22"/><path d="M300 392h38"/><path d="M404 418v62h-102"/>
+      <path d="M180 508v22"/><path d="M180 588v22"/>
+    </g>
+    <g fill="#F4F6F5" stroke="#3C4846" stroke-width="2">
+      <rect x="60" y="20" width="240" height="56" rx="14"/>
+      <rect x="60" y="196" width="240" height="56" rx="14"/>
+      <rect x="60" y="276" width="240" height="56" rx="14"/>
+      <rect x="60" y="452" width="240" height="56" rx="14"/>
+      <rect x="60" y="532" width="240" height="56" rx="14"/>
+      <rect x="60" y="612" width="240" height="56" rx="14"/>
+    </g>
+    <g fill="#FBEFD9" stroke="#7A4A00" stroke-width="2.5">
+      <path d="M180 100L300 136L180 172L60 136Z"/>
+      <path d="M180 356L300 392L180 428L60 392Z"/>
+    </g>
+    <g fill="#FFFFFF" stroke="#3C4846" stroke-width="2" stroke-dasharray="6 4">
+      <rect x="340" y="110" width="130" height="52" rx="10"/>
+      <rect x="340" y="366" width="130" height="52" rx="10"/>
+    </g>
+    <g fill="#3C3FA0"><circle cx="32" cy="48" r="15"/><circle cx="32" cy="136" r="15"/><circle cx="32" cy="224" r="15"/><circle cx="32" cy="304" r="15"/><circle cx="32" cy="392" r="15"/><circle cx="32" cy="480" r="15"/><circle cx="32" cy="560" r="15"/><circle cx="32" cy="640" r="15"/></g>
+    <g fill="#FFFFFF" font-weight="700" text-anchor="middle"><text x="32" y="53">1</text><text x="32" y="141">2</text><text x="32" y="229">3</text><text x="32" y="309">4</text><text x="32" y="397">5</text><text x="32" y="485">6</text><text x="32" y="565">7</text><text x="32" y="645">8</text></g>
+    <g text-anchor="middle">
+      <text x="180" y="53">Open the homework page</text>
+      <text x="180" y="132" font-weight="700">Decision:</text><text x="180" y="151">class saved?</text>
+      <text x="180" y="229">See the "Tonight" list</text>
+      <text x="180" y="309">Tap a task to read its steps</text>
+      <text x="180" y="388" font-weight="700">Decision:</text><text x="180" y="407">stuck?</text>
+      <text x="180" y="477">Tap "Done".</text><text x="180" y="497">Back to the list</text>
+      <text x="180" y="565">Open "Pack my bag"</text>
+      <text x="180" y="637">Tick each item.</text><text x="180" y="657">See "All packed"</text>
+      <text x="405" y="132">Pick your class</text><text x="405" y="151" font-size="14">(first time only)</text>
+      <text x="405" y="388">Open "See an</text><text x="405" y="407">example"</text>
+    </g>
+    <g font-weight="700" fill="#7A4A00"><text x="306" y="128">No</text><text x="190" y="190">Yes</text><text x="306" y="384">Yes</text><text x="190" y="446">No</text></g>
+    <g transform="translate(60 700)">
+      <rect width="40" height="26" rx="8" fill="#F4F6F5" stroke="#3C4846" stroke-width="2"/><text x="50" y="18">Step</text>
+      <path d="M140 0L162 13L140 26L118 13Z" fill="#FBEFD9" stroke="#7A4A00" stroke-width="2.5"/><text x="172" y="18">Decision</text>
+      <rect x="250" width="40" height="26" rx="8" fill="#FFFFFF" stroke="#3C4846" stroke-width="2" stroke-dasharray="6 4"/><text x="300" y="18">Side trip</text>
+    </g>
+  </g>
+</svg>
+<figcaption>Decisions are diamonds with the word "Decision". The shape and the word carry the meaning, not the colour.</figcaption>
+</figure>
+
+<h2 id="wireframes">4. Three wireframes</h2>
+<p>I sketched these in pencil first, then redrew them here. Boxes and labels only. One main action per screen. Three text sizes at most. No colour.</p>
+<div class="wf-grid">
+<figure>
+<svg viewBox="0 0 300 540" role="img" aria-labelledby="w1-t w1-d" xmlns="http://www.w3.org/2000/svg">
+  <title id="w1-t">Wireframe 1: Tonight</title>
+  <desc id="w1-d">Heading Tonight: Wednesday. Three task cards, each with a subject, the task, the due day and a tick box. A Pack my bag button at the bottom.</desc>
+  <rect width="300" height="540" rx="18" fill="#FFFFFF"/>
+  <g fill="none" stroke="#3A3A3A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="10" y="10" width="280" height="520" rx="26"/>
+    <rect x="26" y="116" width="248" height="84" rx="10"/><rect x="26" y="210" width="248" height="84" rx="10"/><rect x="26" y="304" width="248" height="84" rx="10"/>
+    <rect x="38" y="130" width="34" height="34" rx="6"/><path d="M38 130l34 34M72 130l-34 34"/>
+    <rect x="38" y="224" width="34" height="34" rx="6"/><path d="M38 224l34 34M72 224l-34 34"/>
+    <rect x="38" y="318" width="34" height="34" rx="6"/><path d="M38 318l34 34M72 318l-34 34"/>
+    <rect x="234" y="142" width="28" height="28" rx="5"/><rect x="234" y="236" width="28" height="28" rx="5"/><rect x="234" y="330" width="28" height="28" rx="5"/>
+    <rect x="26" y="450" width="248" height="52" rx="12" stroke-dasharray="7 5"/>
+  </g>
+  <g font-family="Segoe UI, system-ui, sans-serif" fill="#2A2A2A">
+    <text x="30" y="68" font-size="22" font-weight="700">Tonight: Wednesday</text>
+    <text x="30" y="96" font-size="15">4 tasks left</text>
+    <text x="84" y="142" font-size="15">MATHS</text><text x="84" y="164" font-size="17">Workbook p. 34</text><text x="84" y="186" font-size="15">Due Thu</text>
+    <text x="84" y="236" font-size="15">ENGLISH</text><text x="84" y="258" font-size="17">Read p. 12 to 15</text><text x="84" y="280" font-size="15">Due Thu</text>
+    <text x="84" y="330" font-size="15">SCIENCE</text><text x="84" y="352" font-size="17">Worksheet 7</text><text x="84" y="374" font-size="15">Due Fri</text>
+    <text x="30" y="420" font-size="15">+ 1 more</text>
+    <text x="150" y="482" font-size="17" text-anchor="middle">Pack my bag</text>
+  </g>
+</svg>
+<figcaption>Main action: tap a task. "Pack my bag" waits at the bottom, outlined only.</figcaption>
+</figure>
+<figure>
+<svg viewBox="0 0 300 540" role="img" aria-labelledby="w2-t w2-d" xmlns="http://www.w3.org/2000/svg">
+  <title id="w2-t">Wireframe 2: One task</title>
+  <desc id="w2-d">A back link. The subject and task in large text. Three numbered steps. A See an example link. A big I'm done button.</desc>
+  <rect width="300" height="540" rx="18" fill="#FFFFFF"/>
+  <g fill="none" stroke="#3A3A3A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="10" y="10" width="280" height="520" rx="26"/>
+    <circle cx="44" cy="215" r="14"/><circle cx="44" cy="265" r="14"/><circle cx="44" cy="315" r="14"/>
+    <rect x="26" y="440" width="248" height="62" rx="12" stroke-width="5"/>
+  </g>
+  <g font-family="Segoe UI, system-ui, sans-serif" fill="#2A2A2A">
+    <text x="30" y="56" font-size="15">&lt; Tonight</text>
+    <text x="30" y="98" font-size="15">MATHS · Due Thu</text>
+    <text x="30" y="128" font-size="22" font-weight="700">Workbook page 34</text>
+    <text x="30" y="154" font-size="17">Questions 1 to 6</text>
+    <text x="30" y="186" font-size="15">STEPS</text>
+    <text x="44" y="220" font-size="15" text-anchor="middle">1</text><text x="70" y="221" font-size="17">Open to page 34</text>
+    <text x="44" y="270" font-size="15" text-anchor="middle">2</text><text x="70" y="271" font-size="17">Do questions 1 to 6</text>
+    <text x="44" y="320" font-size="15" text-anchor="middle">3</text><text x="70" y="321" font-size="17">Put it in your bag</text>
+    <text x="30" y="380" font-size="15">See an example &gt;</text>
+    <text x="150" y="478" font-size="17" font-weight="700" text-anchor="middle">I'm done</text>
+  </g>
+</svg>
+<figcaption>Main action: "I'm done", the thickest box. Steps are short so nobody reads a paragraph.</figcaption>
+</figure>
+<figure>
+<svg viewBox="0 0 300 540" role="img" aria-labelledby="w3-t w3-d" xmlns="http://www.w3.org/2000/svg">
+  <title id="w3-t">Wireframe 3: Pack my bag</title>
+  <desc id="w3-d">A back link. Heading Pack for Thursday. 2 of 5 packed. Five rows with a tick box and an item name. A big All packed button.</desc>
+  <rect width="300" height="540" rx="18" fill="#FFFFFF"/>
+  <g fill="none" stroke="#3A3A3A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="10" y="10" width="280" height="520" rx="26"/>
+    <rect x="26" y="150" width="248" height="50" rx="8"/><rect x="26" y="208" width="248" height="50" rx="8"/><rect x="26" y="266" width="248" height="50" rx="8"/><rect x="26" y="324" width="248" height="50" rx="8"/><rect x="26" y="382" width="248" height="50" rx="8"/>
+    <rect x="38" y="161" width="28" height="28" rx="5"/><path d="M43 175l7 7 12-14"/>
+    <rect x="38" y="219" width="28" height="28" rx="5"/><path d="M43 233l7 7 12-14"/>
+    <rect x="38" y="277" width="28" height="28" rx="5"/><rect x="38" y="335" width="28" height="28" rx="5"/><rect x="38" y="393" width="28" height="28" rx="5"/>
+    <rect x="26" y="450" width="248" height="62" rx="12" stroke-width="5"/>
+  </g>
+  <g font-family="Segoe UI, system-ui, sans-serif" fill="#2A2A2A">
+    <text x="30" y="56" font-size="15">&lt; Tonight</text>
+    <text x="30" y="100" font-size="22" font-weight="700">Pack for Thursday</text>
+    <text x="30" y="128" font-size="15">2 of 5 packed</text>
+    <text x="78" y="181" font-size="17">PE shirt and shorts</text><text x="78" y="239" font-size="17">Maths workbook</text><text x="78" y="297" font-size="17">English reader</text><text x="78" y="355" font-size="17">Water bottle</text><text x="78" y="413" font-size="17">Library book</text>
+    <text x="150" y="488" font-size="17" font-weight="700" text-anchor="middle">All packed</text>
+  </g>
+</svg>
+<figcaption>Main action: tick each item. The whole row is the target, not just the little box.</figcaption>
+</figure>
+</div>
+
+<h2 id="mockup">5. The accessible mock-up</h2>
+<p>I turned all three wireframes into one working page. It runs here in the browser. You can tick tasks and pack the bag. You can also switch between the tested and final versions.</p>
+<p><a class="cta" href="prototype.html">Open the mock-up</a></p>
+<p>The page also has a "Run the checks" button. It checks the page you are looking at:</p>
+<ul class="tight">
+  <li>Every colour pair, in light and dark mode. Normal text needs 4.5:1 and large text 3:1.</li>
+  <li>Tick box borders against 3:1, the rule for parts of controls.</li>
+  <li>Every input has a label, and every button has a name.</li>
+  <li>Every target is at least 24 by 24 CSS pixels.</li>
+</ul>
+<p>The final version passes all of them. The tested version fails two kinds of check, on purpose. Its tick boxes have no name and are too small to tap. My testers ran into both.</p>
+<p>I also added a "Text and spacing" panel. Pupils can pick bigger text, or wider spacing. Wide spacing uses the exact values in WCAG's text spacing rule.</p>
+
+<h2 id="tests">6. Test notes from 5 pupils</h2>
+<p>I ran a think-aloud test with 5 P5 pupils on version 1 of the mock-up. Each used a school iPad alone, one at a time, for about 8 minutes. I gave 3 tasks and asked them to say their thoughts out loud. I stayed quiet and wrote.</p>
+<ul class="tight">
+  <li>Task A: "Find the Maths homework that is due tomorrow."</li>
+  <li>Task B: "You finished the English reading. Show that."</li>
+  <li>Task C: "Do you need your PE kit tomorrow?"</li>
+</ul>
+<h3>Every problem I saw</h3>
+<ol class="note-list">
+  <li>Task A. Pupil A read "Due Thu" as "Due Tue". She said, "Oh, so it's late?" She has dyslexia.</li>
+  <li>Task B. Pupil B ticked the English card. It vanished. "Where did it go? Did I delete it?" He searched for about 40 seconds.</li>
+  <li>Task C. Pupil C scrolled past "Pack my bag" twice. It sat below the task cards. She took almost 2 minutes.</li>
+  <li>Task B. Pupil D has low vision. She zoomed in. The tick box stayed small, and she missed it twice. "I can't hit the little box."</li>
+  <li>Task B. Pupil E asked out loud, "Is the box the done one?" I stayed quiet. She guessed right.</li>
+  <li>Task B. Pupils A and D both said the English steps were "a lot of words".</li>
+</ol>
+<p>I ranked them two ways. Did it stop the task? How many pupils hit it?</p>
+<h3>The top 3 fixes, from the notes</h3>
+<div class="card fix">
+<ul class="tight">
+  <li><span class="tag done">From N1</span> "Due Thu" became "Due tomorrow, Thursday". Full day names, plus the word pupils actually say.</li>
+  <li><span class="tag done">From N2</span> A ticked task now stays on the list, crossed out. It has an "Undo" button. That is "User Control and Freedom".</li>
+  <li><span class="tag done">From N3</span> "Pack my bag" moved from the bottom to a tab at the top.</li>
+</ul>
+</div>
+<h3>Two smaller fixes I also made</h3>
+<ul class="tight">
+  <li><span class="tag done">From N4</span> The tick button is now 48 px tall, with the word "Done". I added the "Text and spacing" panel too.</li>
+  <li><span class="tag done">From N5</span> The word "Done" beside the tick answers her question.</li>
+</ul>
+<h3>Not fixed yet</h3>
+<ul class="tight">
+  <li><span class="tag warn">N6</span> The English steps are shorter now, but teachers write the homework. I can't control their word count. See the limits below.</li>
+</ul>
+<p>I tested once, with 5 pupils. <a href="https://www.nngroup.com/articles/why-you-only-need-to-test-with-5-users/">Jakob Nielsen's 2000 article</a> says 5 users find about 85% of problems. It also says to test again after you fix them. I have not run round 2 yet.</p>
+
+<h2 id="lesson">7. The lesson</h2>
+<p>My P5 class runs the same steps on their own idea. Each pupil designs a screen for something in school that confuses them. One 60-minute lesson covers the wireframe, a silent test and kind critique. Pupils interviewed two classmates the lesson before.</p>
+<p><a class="cta" href="lesson.html">Read the lesson plan and critique rules</a></p>
+
+<h2 id="change">8. What I would change</h2>
+<p>The biggest gap is teachers' writing. My page can make text bigger and spacing wider. It cannot make a 60-word instruction short. Next I would give teachers a box that counts words and suggests three short steps.</p>
+<p>My 5 testers were all strong enough readers to try the tasks alone. A pupil who cannot read yet would need the steps read aloud. I did not build or test that. I would also run a second round of 5 before calling it done.</p>
+
+<h2 id="sources">Sources</h2>
+<ul class="tight small">
+  <li>Heuristic names: <a href="https://www.nngroup.com/articles/ten-usability-heuristics/">NN/g, 10 Usability Heuristics for User Interface Design</a>.</li>
+  <li>Tip wording: <a href="https://www.w3.org/WAI/tips/designing/">W3C WAI, Designing for Web Accessibility</a>.</li>
+  <li>Colour vision: <a href="https://www.nei.nih.gov/learn-about-eye-health/eye-conditions-and-diseases/color-blindness">National Eye Institute, Color Blindness</a>.</li>
+  <li>Text contrast of 4.5:1 and 3:1: <a href="https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html">WCAG 2.2, Understanding 1.4.3 Contrast (Minimum)</a>.</li>
+  <li>Control contrast of 3:1: <a href="https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html">WCAG 2.2, Understanding 1.4.11 Non-text Contrast</a>.</li>
+  <li>Colour alone: <a href="https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html">WCAG 2.2, Understanding 1.4.1 Use of Color</a>.</li>
+  <li>Text spacing values: <a href="https://www.w3.org/WAI/WCAG22/Understanding/text-spacing.html">WCAG 2.2, Understanding 1.4.12 Text Spacing</a>.</li>
+  <li>Zoom to 200%: <a href="https://www.w3.org/WAI/WCAG22/Understanding/resize-text.html">WCAG 2.2, Understanding 1.4.4 Resize Text</a>.</li>
+  <li>24 by 24 targets: <a href="https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html">WCAG 2.2, Understanding 2.5.8 Target Size (Minimum)</a>.</li>
+  <li>Labels: <a href="https://www.w3.org/WAI/WCAG22/Understanding/labels-or-instructions.html">WCAG 2.2, Understanding 3.3.2 Labels or Instructions</a>.</li>
+  <li>Five users: <a href="https://www.nngroup.com/articles/why-you-only-need-to-test-with-5-users/">NN/g, Why You Only Need to Test with 5 Users</a>.</li>
+  <li>Think-aloud method: <a href="https://www.nngroup.com/articles/thinking-aloud-the-1-usability-tool/">NN/g, Thinking Aloud: The #1 Usability Tool</a>.</li>
+  <li>To check colours yourself: <a href="https://webaim.org/resources/contrastchecker/">WebAIM Contrast Checker</a>.</li>
+</ul>
+</main>
+</body>
+</html>

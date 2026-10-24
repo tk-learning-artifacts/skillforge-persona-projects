@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pit sheet: print, fit and test the Ping Mount, by Marcus Lee</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Marcus Lee is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<div class="stripe" aria-hidden="true"></div>
+<p><a href="index.html">Back to Ping Mount</a></p>
+<h1><small>Pit sheet</small>Print, fit, test</h1>
+<p class="lede">The one page my team keeps by the printer. A pair can go from STL to a mounted sensor in under 40 minutes.</p>
+
+<h2 id="kit">Kit for one robot</h2>
+<ul class="tight">
+  <li>One printed V3 bracket, in PLA. About 6 g.</li>
+  <li>One HC-SR04 sensor.</li>
+  <li>Two M3 screws, 10 mm long, with two M3 nuts. Check the length against your chassis plate.</li>
+  <li>One small cable tie, under 4 mm wide.</li>
+  <li>Tools: a screwdriver, flush cutters, a plastic scraper and digital callipers.</li>
+</ul>
+
+<h2 id="safety">Safety</h2>
+<ul class="tight">
+  <li>The nozzle runs at about 200°C for PLA, and the bed is hot. Hands off while it prints.</li>
+  <li>A teacher is in the room whenever the printer runs. Keep it in a room with good air flow.</li>
+  <li>Let the bed cool. Lift the part with the scraper, not fingers.</li>
+  <li>Cut the brim off with flush cutters, pointing away from you. Wear safety glasses: small bits fly.</li>
+  <li>In the crash test, keep hands and feet off the track. Whoever holds the controller calls "clear" first. Everyone wears safety glasses, because a snapped part can flick.</li>
+</ul>
+
+<h2 id="profile">Slicer profile</h2>
+<p>Our settings in UltiMaker Cura, for PLA on a 0.4 mm nozzle. Type them into Custom mode. <a href="ping-mount-profile.cfg" download>ping-mount-profile.cfg</a> has the same list with Cura's setting names.</p>
+<div class="scroll">
+<table>
+  <thead><tr><th>In Cura</th><th>Setting name</th><th>Value</th><th>Why</th></tr></thead>
+  <tbody>
+    <tr><td>Layer Height</td><td class="digits">layer_height</td><td>0.28 mm</td><td>Fast. Finer layers added 35 min and no strength.</td></tr>
+    <tr><td>Wall Line Count</td><td class="digits">wall_line_count</td><td>4</td><td>Walls carry the crash. With 3 mm parts, that is nearly solid.</td></tr>
+    <tr><td>Top / Bottom Layers</td><td class="digits">top_layers, bottom_layers</td><td>4 / 4</td><td>About 1.1 mm of solid skin.</td></tr>
+    <tr><td>Infill Density</td><td class="digits">infill_sparse_density</td><td>15%</td><td>More infill did not help in our tests.</td></tr>
+    <tr><td>Infill Pattern</td><td class="digits">infill_pattern</td><td>Grid</td><td>Cura's base default. Fine for this.</td></tr>
+    <tr><td>Generate Support</td><td class="digits">support_enable</td><td>Off</td><td>Teardrop holes need none.</td></tr>
+    <tr><td>Build Plate Adhesion Type</td><td class="digits">adhesion_type</td><td>Brim</td><td>The part is tall and narrow on the bed.</td></tr>
+    <tr><td>Brim Width</td><td class="digits">brim_width</td><td>5 mm</td><td>Cura's base default is 8 mm. 5 mm held and was quicker to trim.</td></tr>
+    <tr><td>Printing Temperature</td><td class="digits">material_print_temperature</td><td>210°C</td><td>A little hot helps layers stick. Check your filament's box.</td></tr>
+    <tr><td>Build Plate Temperature</td><td class="digits">material_bed_temperature</td><td>60°C</td><td>Usual for PLA.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2 id="steps">Print it</h2>
+<ol class="steps">
+  <li>Open ping-mount-v3.stl in Cura. Do not rotate it. It is already on its side.</li>
+  <li>Set the profile above.</li>
+  <li>Check the preview. Look for a brim all round and no supports. Each hole's teardrop point should be at the top.</li>
+  <li>Check the time. Ours says about 26 minutes. Up to four fit on one plate.</li>
+  <li>Print. Stay in the room.</li>
+  <li>When the bed is cool, lift it off and trim the brim.</li>
+</ol>
+
+<h2 id="fit">Fit it</h2>
+<ol class="steps">
+  <li>Measure your sensor's cans and the gap between their centres. If the centres are not 26 mm apart, stop. The file needs editing first.</li>
+  <li>Push the cans through the front plate from behind. They should slide in. Never force them: the legs bend.</li>
+  <li>Thread the cable tie through the slot between the cans. Loop it round the board. Pull it snug, not tight.</li>
+  <li>Bolt the foot to the chassis with two M3 screws and nuts. Slide it in its slots until the sensor faces dead ahead.</li>
+  <li>Plug in the sensor's four wires. Run your distance code and check a reading against a ruler at 30 cm.</li>
+</ol>
+
+<h2 id="test">Crash test</h2>
+<p>Run this on every new version before it goes to practice. It takes one CCA session.</p>
+<ol class="steps">
+  <li>Set up a plywood board as a wall at the end of the track. Mark a start line 1 m away.</li>
+  <li>Mount the bracket on a test robot. Put a strip of tape across the bend, so a crack shows.</li>
+  <li>Call "clear". Drive into the wall at full speed.</li>
+  <li>Check the bend and the screws. Note any crack, wobble or change in the sensor reading.</li>
+  <li>Repeat. Stop at the first crack, or at 50 crashes.</li>
+  <li>Log the build, print time and crash count. Compare with the table on the <a href="index.html#strength">main page</a>.</li>
+</ol>
+
+<h2 id="queue">Printing for the whole team</h2>
+<p>We have 6 practice robots, and keep one spare bracket each. That is 12 brackets, 4 to a plate. SkillForge's planning rule adds 5 minutes per print for heating and clearing.</p>
+<ul class="tight">
+  <li>One plate: 4 × 26 = 104 minutes, plus 5, so 109 minutes.</li>
+  <li>Three plates: 109 × 3 ÷ 60 is about 5.5 hours.</li>
+  <li>Our CCA runs two 2.5-hour sessions a week. So the full set takes just over a week.</li>
+</ul>
+<p>A single broken bracket is back on the robot in about 40 minutes: 31 for the print and heat-up, then trim and bolt on.</p>
+
+<h2 id="fix">When it goes wrong</h2>
+<div class="scroll">
+<table>
+  <thead><tr><th>What you see</th><th>Likely cause</th><th>Fix</th></tr></thead>
+  <tbody>
+    <tr><td>The part falls over mid-print</td><td>Tall part, small footprint</td><td>Clean the bed. Keep the brim. Slow the first layer.</td></tr>
+    <tr><td>Cans won't go in</td><td>Your printer runs tight</td><td>Ream the hole gently with a round file. Or widen it in the file.</td></tr>
+    <tr><td>Sensor droops after crashes</td><td>Cable tie loose</td><td>Re-tie it snug. Check the screws.</td></tr>
+    <tr><td>Crack at the bend</td><td>Printed upright by mistake</td><td>Reprint on its side. Check the preview first.</td></tr>
+    <tr><td>Screws won't fit the slots</td><td>Holes print small</td><td>Run an M3 screw through each slot once to clear it.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2 id="sources">Sources</h2>
+<ul class="tight small">
+  <li>Setting names and Cura's base defaults (grid infill, 8 mm brim, 50° support angle): <a href="https://github.com/Ultimaker/Cura/blob/main/resources/definitions/fdmprinter.def.json">UltiMaker Cura's setting definitions</a>.</li>
+  <li>PLA nozzle temperature, supervision and air flow: SkillForge's printing article and <a href="https://doh.wa.gov/community-and-environment/schools/3d-printers">Washington State Department of Health, 3D printers in schools</a>.</li>
+  <li>HC-SR04 range and voltage: <a href="https://thepihut.com/collections/adafruit-sensors/products/ultrasonic-distance-sensor-hcsr04">The Pi Hut, HC-SR04 listing</a>.</li>
+</ul>
+</main>
+</body>
+</html>

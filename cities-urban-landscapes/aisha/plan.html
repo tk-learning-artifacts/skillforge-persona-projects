@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Try the layout: a mockup tool for the waiting corner, by Aisha Rahman</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="plan.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Aisha Rahman is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<h1>Try the layout</h1>
+<p class="lede">This is the card model on a screen. Load each group's layout, or build your own. The checks update as you go.</p>
+
+<ul class="tabs" aria-label="Pages in this project">
+  <li><a href="index.html">Site analysis and plan</a></li>
+  <li><a href="plan.html" aria-current="page">Try the layout</a></li>
+  <li><a href="model.html">Card model and code</a></li>
+  <li><a href="feedback.html">Feedback report</a></li>
+</ul>
+
+<h2>Load a layout</h2>
+<div class="toggles" role="group" aria-label="Layouts">
+  <button type="button" data-preset="today" aria-pressed="true">Today</button>
+  <button type="button" data-preset="a" aria-pressed="false">Group A</button>
+  <button type="button" data-preset="b" aria-pressed="false">Group B</button>
+  <button type="button" data-preset="final" aria-pressed="false">Final</button>
+  <button type="button" id="clear">Empty</button>
+</div>
+<p class="live" id="plan-note" aria-live="polite"></p>
+
+<div class="tool">
+  <div>
+    <div class="drawing-wrap">
+      <svg class="drawing" id="plan" viewBox="0 0 540 420" role="img" aria-label="Plan of the waiting corner. The results are listed under Checks."></svg>
+    </div>
+    <p class="small">Blue squares are in shade at 1.40 pm. On a phone, swipe the plan sideways.</p>
+  </div>
+  <div>
+    <h3>Add or remove</h3>
+    <p class="small">Pick a thing, then tap a square. The thing's top-left corner goes there.</p>
+    <div class="palette" role="group" aria-label="Things to place">
+      <button type="button" data-tool="bench" aria-pressed="true">Bench</button>
+      <button type="button" data-tool="sail" aria-pressed="false">Shade sail</button>
+      <button type="button" data-tool="planter" aria-pressed="false">Planter</button>
+      <button type="button" data-tool="rack" aria-pressed="false">Bag rack</button>
+      <button type="button" data-tool="board" aria-pressed="false">Bus board</button>
+      <button type="button" data-tool="bay" aria-pressed="false">Bus bay</button>
+      <button type="button" data-tool="remove" aria-pressed="false">Remove</button>
+    </div>
+    <h3>Checks</h3>
+    <ul class="checks" id="checks" aria-live="polite"></ul>
+    <p class="small" id="cost"></p>
+  </div>
+</div>
+
+<h2>The things you can place</h2>
+<ul class="tight">
+  <li>Bench: 2 m long, 4 seats. It counts as shaded only if the whole bench is in shade.</li>
+  <li>Shade sail: 3 m by 2 m, with a post at each corner. Pupils can stand and sit under it, but not walk through the posts.</li>
+  <li>Planter: 1 m square. Green, but it takes up floor.</li>
+  <li>Bag rack: 1.5 m long. It gets bags off the floor.</li>
+  <li>Bus board: hangs on the back wall, so it does not block the floor.</li>
+  <li>Bus bay: a painted box on the floor where one bus group waits. You can walk over it.</li>
+</ul>
+
+<h2>How the checks work</h2>
+<ul class="tight">
+  <li>The path: the tool slides a 1.5 m square from the gate to the door. BCA's 2025 accessibility code asks for 1.5 m on the main routes of school buildings. We used the same width.</li>
+  <li>Turning: it looks for an empty space 2 m across. The code says a wheelchair needs 1.8 m of clear floor to turn freely. Our squares are 0.5 m, so 2 m is the nearest fit.</li>
+  <li>Shade: the roof shades the back 2 m at 1.40 pm. A sail shades the floor under it. Real shade moves with the sun. This tool only shows 1.40 pm.</li>
+  <li>Standing room: about 0.5 m² of shaded floor for each pupil who stands. That is our class's rule of thumb, not an official number.</li>
+</ul>
+
+<h2>What the groups found</h2>
+<ul class="tight">
+  <li>Group B's bag rack blocked the way to the door. In the card model, the wheelchair token got stuck right there. They had not seen it on paper.</li>
+  <li>Group A got close on shade, but one bench stayed in the sun. Nobody would sit on it at 1.40 pm. The floor count told us so.</li>
+  <li>The final layout takes the sail from Group A. The bus board and bays come from Group B. The benches along the back wall leave the path in front of them clear.</li>
+</ul>
+
+<h2>Sources</h2>
+<ul class="tight small">
+  <li>Route width (Table 3) and turning space (clause 1.3.4.1): <a href="https://file.go.gov.sg/bca-coa2025.pdf">BCA, Code on Accessibility in the Built Environment 2025</a>.</li>
+</ul>
+</main>
+</body>
+</html>

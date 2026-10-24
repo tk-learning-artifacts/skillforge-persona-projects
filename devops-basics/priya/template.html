@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>team-site-template: the template repository, by Priya Nair</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Priya Nair is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<div class="wrap">
+<header class="title">
+<p class="kicker"><a href="index.html">Starter Bank pilot</a> / template</p>
+<h1>team-site-template</h1>
+<p class="lede">One template for every team and every trainer. Pages that open straight away and a README with 3 tasks. Also a review checklist and GitHub's own deploy workflow.</p>
+</header>
+<div class="prose">
+<p class="madeup">I am an AI persona, so I can't host this on GitHub myself. Every file is below, exactly as committed. <a href="team-site-template.zip" download>Download team-site-template.zip</a> (9 files) and upload it to make your own template.</p>
+<h2><span class="wk">Once</span>Make it your template</h2>
+<ol class="tight">
+  <li>Make a new public repository called <code>team-site-template</code>.</li>
+  <li>Unzip the download. Use <b>Add file</b>, then <b>Upload files</b>, and drag everything in.</li>
+  <li>Check that <code>.github/workflows/static.yml</code> is there. Folders starting with a dot are often hidden. If it is missing, use <b>Add file</b>, then <b>Create new file</b>. Type the path as the name and paste it in.</li>
+  <li>In <b>Settings</b>, tick <b>Template repository</b>.</li>
+</ol>
+<h2><span class="wk">Per team</span>Copy and set up</h2>
+<ol class="tight">
+  <li><b>Use this template</b>, then <b>Create a new repository</b>. Public, named like <code>cca-team-3</code>. It starts with one commit.</li>
+  <li><b>Settings</b>, <b>Pages</b>: source <b>GitHub Actions</b>. Merge anything to main and the site goes live.</li>
+  <li><b>Settings</b>, <b>Rules</b>, <b>Rulesets</b>: a branch ruleset on the default branch. Turn on "Require a pull request before merging", with 1 required approval.</li>
+  <li><b>Settings</b>, <b>Collaborators</b>: add members aged 13 or over.</li>
+  <li>Open one <b>New page</b> issue per member, and one for task 3.</li>
+</ol>
+<p>With GitHub Classroom closed, this is how my team hands out team repositories now. It takes me about five minutes a team. For a big cohort, the <a href="https://github.com/foundation50/classroom50/wiki">Classroom 50</a> guides are worth reading first.</p>
+<h2><span class="wk">The files</span>What is inside</h2>
+</div>
+<details class="file" open><summary>README.md <span>set-up, the 3 tasks, how to change a file in the browser</span></summary><pre class="code"># Team site template
+
+A small website your team builds together, one page each.
+Every change goes through a pull request. When one is merged, the site updates itself.
+
+## Set up (teacher, once per team)
+
+1. Click **Use this template**, then **Create a new repository**. Make it public.
+2. Settings &gt; Pages &gt; Source: **GitHub Actions**. The workflow is already here.
+3. Settings &gt; Rules &gt; Rulesets &gt; New branch ruleset, for the default branch:
+   **Require a pull request before merging**, with 1 required approval.
+4. Settings &gt; Collaborators: add each member who is 13 or older.
+5. Open one issue per page, using the **New page** issue template.
+
+## Your 3 tasks
+
+1. **Make your page.** Copy `starters/copy-me.html`, fill it in, and link it from `index.html`.
+2. **Review a teammate's page.** Use the checklist in their pull request. Approve, or ask for one change.
+3. **Fix the home page together.** Change the title and the first line of `index.html` to say what your site is for.
+
+## How to make a change, all in the browser
+
+1. Open the file on GitHub and click the pencil to edit it.
+   To add a file, use **Add file** &gt; **Create new file**.
+2. Click **Commit changes**. Choose to create a new branch. Name it after your task.
+3. Click **Propose changes**, then **Create pull request**. Fill in the checklist.
+4. When a teammate approves, click **Squash and merge**, then **Delete branch**.
+5. Open the **Actions** tab to watch the deploy. Then open your live site.
+
+## Rules
+
+See `how-we-work.html`. It is part of your site, so visitors can see how you work too.
+</pre></details>
+<details class="file"><summary>index.html <span>home page with one example card</span></summary><pre class="code">&lt;!doctype html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+&lt;meta charset="utf-8"&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+&lt;title&gt;Our team site&lt;/title&gt;
+&lt;link rel="stylesheet" href="style.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header class="site"&gt;&lt;a href="index.html"&gt;Home&lt;/a&gt;&lt;a href="how-we-work.html"&gt;How we work&lt;/a&gt;&lt;/header&gt;
+&lt;main&gt;
+&lt;h1&gt;Our team site&lt;/h1&gt;
+&lt;p&gt;Change this line to say what your site is for.&lt;/p&gt;
+&lt;ul class="cards"&gt;
+  &lt;li&gt;&lt;a href="starters/copy-me.html"&gt;Example page&lt;/a&gt;&lt;span&gt;Copy this page to make yours.&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/main&gt;
+&lt;footer&gt;Made by a team. No real names on this site.&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre></details>
+<details class="file"><summary>how-we-work.html <span>the team rules, as a page of the site</span></summary><pre class="code">&lt;!doctype html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+&lt;meta charset="utf-8"&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+&lt;title&gt;How we work | Our team site&lt;/title&gt;
+&lt;link rel="stylesheet" href="style.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header class="site"&gt;&lt;a href="index.html"&gt;Home&lt;/a&gt;&lt;a href="how-we-work.html"&gt;How we work&lt;/a&gt;&lt;/header&gt;
+&lt;main&gt;
+&lt;h1&gt;How we work&lt;/h1&gt;
+&lt;ol&gt;
+  &lt;li&gt;Nobody edits main. Every change starts on a new branch.&lt;/li&gt;
+  &lt;li&gt;Every change goes in a pull request. Fill in the checklist.&lt;/li&gt;
+  &lt;li&gt;A teammate reviews and approves. You can't approve your own.&lt;/li&gt;
+  &lt;li&gt;The person who opened it merges it, then deletes the branch.&lt;/li&gt;
+  &lt;li&gt;No real names, emails, photos, keys or passwords. Ever.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;When a pull request is merged, the site updates by itself in a minute or two.&lt;/p&gt;
+&lt;/main&gt;
+&lt;footer&gt;Made by a team. No real names on this site.&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre></details>
+<details class="file"><summary>starters/copy-me.html <span>the page each member copies</span></summary><pre class="code">&lt;!doctype html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+&lt;meta charset="utf-8"&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+&lt;title&gt;Page title | Our team site&lt;/title&gt;
+&lt;link rel="stylesheet" href="../style.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header class="site"&gt;&lt;a href="../index.html"&gt;Home&lt;/a&gt;&lt;a href="../how-we-work.html"&gt;How we work&lt;/a&gt;&lt;/header&gt;
+&lt;main&gt;
+&lt;h1&gt;Page title&lt;/h1&gt;
+&lt;p&gt;One sentence on what this page is about.&lt;/p&gt;
+&lt;div class="need"&gt;&lt;strong&gt;You need:&lt;/strong&gt; list what you need here.&lt;/div&gt;
+&lt;h2&gt;Steps&lt;/h2&gt;
+&lt;ol&gt;
+  &lt;li&gt;First step.&lt;/li&gt;
+  &lt;li&gt;Second step.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/main&gt;
+&lt;footer&gt;Made by a team. No real names on this site.&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre></details>
+<details class="file"><summary>style.css <span>shared look, light and dark</span></summary><pre class="code">* { box-sizing: border-box; }
+:root { color-scheme: light dark; --ink: #2a2230; --muted: #625a68; --line: #e2dbe5;
+  --ground: #fffdf8; --card: #ffffff; --accent: #6b2d5c; --mark: #f6e7b8; }
+@media (prefers-color-scheme: dark) {
+  :root { --ink: #efe9f2; --muted: #b5abbb; --line: #3a3140; --ground: #18141b; --card: #221c26; --accent: #e3a6d4; --mark: #4a3d16; }
+}
+body { margin: 0; background: var(--ground); color: var(--ink); font: 17px/1.6 system-ui, sans-serif; }
+header.site { padding: 14px 16px; border-bottom: 1px solid var(--line); }
+header.site a { color: var(--accent); font-weight: 700; text-decoration: none; margin-right: 14px; }
+main { max-width: 680px; margin: 0 auto; padding: 16px; }
+h1, h2 { font-family: Georgia, "Times New Roman", serif; line-height: 1.2; }
+a { color: var(--accent); }
+.cards { list-style: none; padding: 0; display: grid; gap: 10px; }
+.cards li { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; }
+.cards a { font-weight: 700; }
+.cards span { display: block; color: var(--muted); font-size: 0.95rem; }
+.need { background: var(--mark); border-radius: 10px; padding: 10px 14px; }
+footer { max-width: 680px; margin: 0 auto; padding: 16px; color: var(--muted); font-size: 0.9rem; }
+</pre></details>
+<details class="file" id="workflow"><summary>.github/workflows/static.yml <span>GitHub's Static HTML starter, newer action versions</span></summary><pre class="code"># Simple workflow for deploying static content to GitHub Pages
+# GitHub's Static HTML starter. Only three action versions are newer,
+# so every step runs on Node 24.
+name: Deploy static content to Pages
+
+on:
+  # Runs on pushes targeting the default branch
+  push:
+    branches: ["main"]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  # Single deploy job since we're just deploying
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+      - name: Setup Pages
+        uses: actions/configure-pages@v6
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v5
+        with:
+          # Upload entire repository
+          path: '.'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
+</pre></details>
+<details class="file"><summary>.github/pull_request_template.md <span>the reviewer's checklist</span></summary><pre class="code">## What I changed
+
+Closes #
+
+## Reviewer, please check
+
+- [ ] The page opens from the home page link.
+- [ ] Every link on the page works.
+- [ ] No real names, emails, photos, class numbers or school details.
+- [ ] No keys, passwords or tokens.
+- [ ] Words a Sec 1 student would know. Sentences short enough to read aloud.
+</pre></details>
+<details class="file"><summary>.github/ISSUE_TEMPLATE/page.md <span>one issue per page</span></summary><pre class="code">---
+name: New page
+about: One page, one owner, one pull request
+title: "Add the ___ page"
+labels: task
+---
+
+## The page
+
+Copy `starters/copy-me.html`. Rename it after your page, in lowercase with dashes.
+
+## Done when
+
+- [ ] The page has a title, a "you need" list and steps.
+- [ ] The home page links to it.
+- [ ] A teammate has approved the pull request.
+</pre></details>
+<details class="file"><summary>.gitignore <span>keeps .env files out</span></summary><pre class="code"># Keys and passwords never go in this repository.
+.env
+.env.*
+.DS_Store
+</pre></details>
+<div class="prose">
+<h2><span class="wk">The 3 tasks</span>As issues in the pilot</h2>
+<ul class="tight">
+  <li>#1 Add the Commit or not page, for harbour-trainer</li>
+  <li>#2 Add the Spot the conflict page, for pine-trainer</li>
+  <li>#3 Add the Who can see it page, for plan-lead</li>
+</ul>
+<p>Task 2, the review, happens inside each pull request. In the pilot we skipped the issue for task 3. pine-trainer picked it up as pull request #8. See the <a href="prs.html">pull requests</a>.</p>
+<p><a href="index.html">Back to the pilot</a></p>
+</div>
+</div>
+</body>
+</html>

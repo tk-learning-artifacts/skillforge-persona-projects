@@ -1,0 +1,512 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Duckling Round-Up: a MakeCode Arcade maze game for a holiday camp, by Sofia Reyes</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="engine.js" defer></script>
+<script src="duck-data.js" defer></script>
+<script src="duckling.js" defer></script>
+<script src="code.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Sofia Reyes is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<h1>Duckling Round-Up <small>A two-park maze game, chilli-level starter cards and a 3-morning camp jam</small></h1>
+<p class="lede">Mama Duck has lost her ducklings in the park. Find them all before the clock runs out. Dodge the mowers. Lead everyone home to the pond.</p>
+<p>I'm Sofia. I run holiday camps for mixed ages. This is for my year-end camp. It has 24 campers aged 9 to 12, three mornings and one big jam. I made a maze game, not a platformer, on purpose. Nobody has to master a jump before the fun starts.</p>
+<ul class="chips">
+  <li><a href="#play">Play it</a></li>
+  <li><a href="#share">Get it in MakeCode</a></li>
+  <li><a href="#inside">What's inside</a></li>
+  <li><a href="#mixed">Built for mixed ages</a></li>
+  <li><a href="#playtests">Playtest notes</a></li>
+  <li><a href="starter.html">Chilli starter cards</a></li>
+  <li><a href="jam.html">1-page camp jam plan</a></li>
+</ul>
+
+<h2 id="play">Play it</h2>
+<p>This is a copy of my MakeCode game, rebuilt for this page. Same 160 by 120 screen, same speeds, same rules.</p>
+<div class="console">
+  <p class="mode" id="mode">Full game: 2 parks</p>
+  <div class="hud" aria-hidden="true"><span id="hud-life">Lives 3</span><span id="hud-time">60 s</span><span id="hud-score">Found 0</span><span id="hud-left">4 to find</span></div>
+  <div class="stage">
+    <canvas id="screen" tabindex="0" aria-label="Duckling Round-Up game screen"></canvas>
+    <div class="dlg" id="dlg" hidden>
+      <h3 id="dlg-title">Duckling Round-Up</h3>
+      <p id="dlg-text"></p>
+      <button type="button" id="dlg-go">Start</button>
+    </div>
+  </div>
+  <div class="pad" id="pad" aria-label="Game buttons">
+    <button type="button" class="up" data-key="up" aria-label="Up">&#9650;</button>
+    <button type="button" class="left" data-key="left" aria-label="Left">&#9664;</button>
+    <button type="button" class="right" data-key="right" aria-label="Right">&#9654;</button>
+    <button type="button" class="down-btn" data-key="down" aria-label="Down">&#9660;</button>
+    <button type="button" class="a" data-key="A" aria-label="A button">A</button>
+  </div>
+  <div class="controls">
+    <button type="button" id="pause">Pause</button>
+    <button type="button" id="sound" aria-pressed="true">Sound: on</button>
+  </div>
+  <p class="live" id="live" aria-live="polite"></p>
+</div>
+<p class="small">Keyboard: arrow keys or W, A, S and D. Space, Z or Enter is the A button. Tap the screen first.</p>
+<p>Challenge for early finishers: win park 2 with all 3 lives. Then try it with 20 seconds left.</p>
+
+<h2 id="share">Get it in MakeCode</h2>
+<p>The brief asks for a share link. I didn't publish one from this page. A link made without signing in can't be deleted later, only reported. So here is the whole game. Make your own link in five steps.</p>
+<ol class="steps">
+  <li>Open <a href="https://arcade.makecode.com/">arcade.makecode.com</a> and click New Project.</li>
+  <li>Click <strong>JavaScript</strong> at the top and delete what is there.</li>
+  <li>Press <strong>Copy the code</strong> and paste it in.</li>
+  <li>Click <strong>Blocks</strong>. Now you can change it with blocks.</li>
+  <li>Press <strong>Share</strong>. At camp, the link goes to the trainers only. More on that in the <a href="jam.html">jam plan</a>.</li>
+</ol>
+<div class="row">
+  <button type="button" class="primary" data-copy="code-js">Copy the code</button>
+  <a class="btn" href="duckling-round-up-js.txt">Open as JavaScript</a>
+  <a class="btn" href="duckling-round-up-python.txt">Open as Python</a>
+</div>
+<textarea class="code" id="code-js" readonly aria-label="Duckling Round-Up code in JavaScript" spellcheck="false">// Duckling Round-Up: find the lost ducklings, dodge the mowers, get home to the pond.
+namespace SpriteKind {
+    export const Found = SpriteKind.create()
+    export const Goal = SpriteKind.create()
+}
+// Tile pictures. HEDGE and GATE are walls.
+const GRASS = img`
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 6 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 6 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 6 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 6 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 6 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    6 7 7 7 7 7 7 7 7 7 7 6 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 6 7 7 7 7 7 7 7 7 7 7 6 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 6 7 7 7 7 7 7 7 7 7 7 6 7 7
+`
+const HEDGE = img`
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 c
+    7 6 7 c 6 6 c 6 6 6 6 6 6 7 c c
+    7 c 6 6 6 6 6 6 7 c 6 6 c 6 6 c
+    7 6 6 7 c 6 6 c 6 6 6 6 6 6 7 c
+    7 6 c 6 6 6 6 6 6 7 c 6 6 c 6 c
+    7 6 6 6 7 c 6 6 c 6 6 6 6 6 6 c
+    7 6 6 c 6 6 6 6 6 6 7 c 6 6 c c
+    7 6 6 6 6 7 c 6 6 c 6 6 6 6 6 c
+    7 c 6 6 c 6 6 6 6 6 6 7 c 6 6 c
+    7 6 6 6 6 6 7 c 6 6 c 6 6 6 6 c
+    7 7 c 6 6 c 6 6 6 6 6 6 7 c 6 c
+    7 6 6 6 6 6 6 7 c 6 6 c 6 6 6 c
+    7 6 7 c 6 6 c 6 6 6 6 6 6 7 c c
+    7 c 6 6 6 6 6 6 7 c 6 6 c 6 6 c
+    7 6 6 7 c 6 6 c 6 6 6 6 6 6 7 c
+    c c c c c c c c c c c c c c c c
+`
+const GATE = img`
+    6 d d 7 7 7 d d 7 7 7 d d 7 7 7
+    7 d d 7 7 7 d d 7 7 7 d d 7 7 7
+    7 d d 7 7 7 d d 7 7 7 d d 7 7 7
+    e e e e e e e e e e e e e e e e
+    7 d d 7 7 7 d d 7 7 7 d d 6 7 7
+    7 d d 7 7 7 d d 6 7 7 d d 7 7 7
+    7 d d 6 7 7 d d 7 7 7 d d 7 6 7
+    7 d d 7 7 7 d d 7 6 7 d d 7 7 7
+    7 d d 7 6 7 d d 7 7 7 d d 7 7 6
+    7 d d 7 7 7 d d 7 7 6 d d 7 7 7
+    7 d d 7 7 6 d d 7 7 7 d d 7 7 7
+    6 d d 7 7 7 d d 7 7 7 d d 7 7 7
+    e e e e e e e e e e e e e e e e
+    7 d d 7 7 7 d d 7 7 7 d d 7 7 7
+    7 d d 7 7 7 d d 7 7 7 d d 7 7 7
+    7 d d 7 7 7 d d 7 7 7 d d 6 7 7
+`
+const PONDSPOT = img`
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 9 9 9 9 9 9 7 7 7 7 7
+    7 7 7 7 9 9 9 9 9 9 9 9 7 7 7 7
+    7 7 7 9 9 8 8 9 8 8 8 9 9 7 7 7
+    7 7 9 9 8 8 9 8 8 8 8 9 9 9 7 7
+    7 9 9 8 8 9 8 8 8 8 9 8 8 9 9 7
+    7 9 9 8 9 8 8 8 8 9 8 8 8 9 9 7
+    7 9 9 9 8 8 8 8 9 8 8 8 8 9 9 7
+    7 9 9 8 8 8 8 9 8 8 8 8 9 9 9 7
+    7 9 9 8 8 8 9 8 8 8 8 9 8 9 9 7
+    7 9 9 8 8 9 8 8 8 8 9 8 8 9 9 7
+    7 7 9 9 9 8 8 8 8 9 8 8 9 9 7 7
+    7 7 7 9 9 8 8 8 9 8 8 9 9 7 7 7
+    7 7 7 7 9 9 9 9 9 9 9 9 7 7 7 7
+    7 7 7 7 7 9 9 9 9 9 9 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+`
+const NEST = img`
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 e 4 e 4 e 4 7 7 7 7 7
+    7 7 7 4 e 4 e 4 e 4 e 4 e 7 7 7
+    7 7 4 e 4 d d d d d d e 4 e 7 7
+    7 4 e 4 d d d d d d d d e 4 e 7
+    7 e 4 e d d d d d d d d 4 e 4 7
+    7 4 e 4 d d d d d d d d e 4 e 7
+    7 e 4 e d d d d d d d d 4 e 4 7
+    7 7 e 4 e d d d d d d 4 e 4 7 7
+    7 7 7 e 4 e 4 e 4 e 4 e 4 7 7 7
+    7 7 7 7 7 4 e 4 e 4 e 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+`
+const DUCKSPOT = img`
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 5 5 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 5 5 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+`
+const MOWERSPOT = img`
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 2 2 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 2 2 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+`
+const MOWERSPOTV = img`
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 a a 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 a a 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+`
+
+// The two park mazes. Marker tiles show where ducklings, mowers and the pond start.
+const LEVELS = [
+    tiles.createTilemap(hex`11000b0001010101010101010101010101010101010104000000000001000000000000050101010001010100000100010101010000010101000105000000000000000000000001010100010101010001010100010100000101010000000006000000000001000000010101000101000101010100000100010101010100050100000000010000010000000101010101010001010001010101000100010101050000000000000000000600000002030101010101010101010101010101010101`, img`
+        2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+        2 . . . . . . 2 . . . . . . . 2 2
+        2 . 2 2 2 . . 2 . 2 2 2 2 . . 2 2
+        2 . 2 . . . . . . . . . . . . 2 2
+        2 . 2 2 2 2 . 2 2 2 . 2 2 . . 2 2
+        2 . . . . . . . . . . 2 . . . 2 2
+        2 . 2 2 . 2 2 2 2 . . 2 . 2 2 2 2
+        2 . . 2 . . . . 2 . . 2 . . . 2 2
+        2 2 2 2 . 2 2 . 2 2 2 2 . 2 . 2 2
+        2 . . . . . . . . . . . . . . 2 .
+        2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+    `, [GRASS, HEDGE, GATE, PONDSPOT, NEST, DUCKSPOT, MOWERSPOT, MOWERSPOTV], TileScale.Sixteen),
+    tiles.createTilemap(hex`16000d0001010101010101010101010101010101010101010101010400000000010000000000050001000000000001010100010101000100010101010100010001010100010101000100050001000000000001000000010500000101010001000101010101010000010101010100010001010100000700000000000000060000000000000100010101010100010101000101010101010001010001070101010500000000010001000000000100000100000001010100010101000100010001010001010001010100010101000000010000000100050100000000000000000101010101000101010101000101010001010101010001010105000000000000000600000000000000000005020301010101010101010101010101010101010101010101`, img`
+        2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+        2 . . . . . 2 . . . . . . . 2 . . . . . 2 2
+        2 . 2 2 2 . 2 . 2 2 2 2 2 . 2 . 2 2 2 . 2 2
+        2 . 2 . . . 2 . . . . . 2 . . . 2 . . . 2 2
+        2 . 2 . 2 2 2 2 2 2 . . 2 2 2 2 2 . 2 . 2 2
+        2 . . . . . . . . . . . . . . . . . 2 . 2 2
+        2 2 2 . 2 2 2 . 2 2 2 2 2 2 . 2 2 . 2 . 2 2
+        2 . . . . . 2 . 2 . . . . 2 . . 2 . . . 2 2
+        2 . 2 2 2 . 2 . 2 . 2 2 . 2 2 . 2 2 2 . 2 2
+        2 . . . 2 . . . 2 . . 2 . . . . . . . . 2 2
+        2 2 2 . 2 2 2 2 2 . 2 2 2 . 2 2 2 2 2 . 2 2
+        2 . . . . . . . . . . . . . . . . . . . 2 .
+        2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+    `, [GRASS, HEDGE, GATE, PONDSPOT, NEST, DUCKSPOT, MOWERSPOT, MOWERSPOTV], TileScale.Sixteen)
+]
+
+let level = 0
+let ducklingsLeft = 0
+let mama = sprites.create(img`
+    . . . . 1 1 1 1 . . . .
+    . . . 1 1 1 1 1 1 . . .
+    . . . 1 1 f 1 1 1 . . .
+    . . . 1 1 1 1 1 4 4 . .
+    . . . 1 1 1 1 1 4 4 4 4
+    . . . . 1 1 1 1 . . . .
+    . 1 1 1 1 1 1 1 1 1 1 .
+    1 1 1 1 1 1 1 1 1 1 1 .
+    1 1 1 1 d 1 1 1 1 1 1 1
+    . 1 1 1 d d 1 1 1 1 1 .
+    . . 1 1 1 1 1 1 1 1 . .
+    . . . . 4 . . 4 . . . .
+`, SpriteKind.Player)
+controller.moveSprite(mama, 60, 60)
+scene.cameraFollowSprite(mama)
+info.setScore(0)
+info.setLife(3)
+
+function startLevel(n: number) {
+    level = n
+    sprites.destroyAllSpritesOfKind(SpriteKind.Food)
+    sprites.destroyAllSpritesOfKind(SpriteKind.Found)
+    sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
+    sprites.destroyAllSpritesOfKind(SpriteKind.Goal)
+    tiles.setCurrentTilemap(LEVELS[n])
+    tiles.placeOnRandomTile(mama, NEST)
+    ducklingsLeft = 0
+    for (let spot of tiles.getTilesByType(DUCKSPOT)) {
+        let duckling = sprites.create(img`
+    . . . 5 5 5 . . .
+    . . 5 5 f 5 5 . .
+    . . 5 5 5 5 4 4 .
+    . . . 5 5 5 . . .
+    . 5 5 5 5 5 5 5 .
+    5 5 5 5 5 5 5 5 .
+    . 5 5 5 5 5 5 . .
+    . . 4 . . 4 . . .
+`, SpriteKind.Food)
+        tiles.placeOnTile(duckling, spot)
+        tiles.setTileAt(spot, GRASS)
+        ducklingsLeft += 1
+    }
+    for (let spot of tiles.getTilesByType(MOWERSPOT)) {
+        let mower = sprites.create(img`
+    . . . . . . . f f . . .
+    . . . . . . f f . . . .
+    . . . . . f f . . . . .
+    . 2 2 2 2 2 2 2 2 2 2 .
+    2 2 2 2 2 2 2 2 2 2 2 2
+    2 b b b b b b b b b b 2
+    2 2 2 2 2 2 2 2 2 2 2 2
+    . f f . . . . . . f f .
+    f b b f . . . . f b b f
+    . f f . . . . . . f f .
+`, SpriteKind.Enemy)
+        tiles.placeOnTile(mower, spot)
+        tiles.setTileAt(spot, GRASS)
+        mower.vx = 30 + 15 * n
+        mower.setBounceOnWall(true)
+    }
+    for (let spot of tiles.getTilesByType(MOWERSPOTV)) {
+        let mower = sprites.create(img`
+    . . . . . . . f f . . .
+    . . . . . . f f . . . .
+    . . . . . f f . . . . .
+    . 2 2 2 2 2 2 2 2 2 2 .
+    2 2 2 2 2 2 2 2 2 2 2 2
+    2 b b b b b b b b b b 2
+    2 2 2 2 2 2 2 2 2 2 2 2
+    . f f . . . . . . f f .
+    f b b f . . . . f b b f
+    . f f . . . . . . f f .
+`, SpriteKind.Enemy)
+        tiles.placeOnTile(mower, spot)
+        tiles.setTileAt(spot, GRASS)
+        mower.vy = 30 + 15 * n
+        mower.setBounceOnWall(true)
+    }
+    for (let spot of tiles.getTilesByType(PONDSPOT)) {
+        let pond = sprites.create(img`
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+    7 7 7 7 7 9 9 9 9 9 9 7 7 7 7 7
+    7 7 7 7 9 9 9 9 9 9 9 9 7 7 7 7
+    7 7 7 9 9 8 8 9 8 8 8 9 9 7 7 7
+    7 7 9 9 8 8 9 8 8 8 8 9 9 9 7 7
+    7 9 9 8 8 9 8 8 8 8 9 8 8 9 9 7
+    7 9 9 8 9 8 8 8 8 9 8 8 8 9 9 7
+    7 9 9 9 8 8 8 8 9 8 8 8 8 9 9 7
+    7 9 9 8 8 8 8 9 8 8 8 8 9 9 9 7
+    7 9 9 8 8 8 9 8 8 8 8 9 8 9 9 7
+    7 9 9 8 8 9 8 8 8 8 9 8 8 9 9 7
+    7 7 9 9 9 8 8 8 8 9 8 8 9 9 7 7
+    7 7 7 9 9 8 8 8 9 8 8 9 9 7 7 7
+    7 7 7 7 9 9 9 9 9 9 9 9 7 7 7 7
+    7 7 7 7 7 9 9 9 9 9 9 7 7 7 7 7
+    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+`, SpriteKind.Goal)
+        tiles.placeOnTile(pond, spot)
+        tiles.setTileAt(spot, GRASS)
+    }
+    game.splash("Park " + (n + 1), "Find " + ducklingsLeft + " ducklings")
+    info.startCountdown(60 + 30 * n)
+}
+
+// Found a duckling: it follows you home.
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSprite) {
+    otherSprite.setKind(SpriteKind.Found)
+    otherSprite.setFlag(SpriteFlag.GhostThroughWalls, true)
+    otherSprite.follow(sprite, 50)
+    info.changeScoreBy(1)
+    ducklingsLeft += -1
+    music.play(music.melodyPlayable(music.baDing), music.PlaybackMode.InBackground)
+    if (ducklingsLeft == 0) {
+        openGate()
+    }
+})
+
+// The gate opens once every duckling is found.
+function openGate() {
+    for (let spot of tiles.getTilesByType(GATE)) {
+        tiles.setWallAt(spot, false)
+        tiles.setTileAt(spot, GRASS)
+    }
+    mama.sayText("Gate open!", 1500)
+    music.play(music.melodyPlayable(music.powerUp), music.PlaybackMode.InBackground)
+}
+
+// A mower sends you back to the nest and costs a life.
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
+    info.changeLifeBy(-1)
+    scene.cameraShake(3, 300)
+    music.play(music.melodyPlayable(music.smallCrash), music.PlaybackMode.InBackground)
+    tiles.placeOnRandomTile(sprite, NEST)
+})
+
+// The pond ends park 1. In park 2 it wins the game.
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Goal, function (sprite, otherSprite) {
+    if (level == 0) {
+        startLevel(1)
+    } else {
+        game.over(true)
+    }
+})
+
+startLevel(0)
+</textarea>
+<p class="small">I pasted this into the editor on 24 October 2026. It ran with no errors. It also went to Blocks and back with no errors. The Python file is the editor's own Python version.</p>
+<p class="note">No sign-in is needed to play, build or share. That matters, because most of my campers are under 13. MakeCode keeps projects in the browser, so a cleared camp laptop loses them. The share link is the backup.</p>
+
+<h2 id="inside">What's inside</h2>
+<div class="grid">
+  <div class="card">
+    <h3>Events</h3>
+    <ul class="tight">
+      <li>Duck touches a duckling: it follows you home.</li>
+      <li>Duck touches a mower: lose a life, back to the nest.</li>
+      <li>Duck touches the pond: next park, or you win.</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Variables</h3>
+    <ul class="tight">
+      <li><code>ducklingsLeft</code> counts down. At 0 the gate opens.</li>
+      <li><code>level</code> says which park you are in.</li>
+      <li>Score, lives and the countdown use Arcade's own blocks.</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Tilemap</h3>
+    <ul class="tight">
+      <li>Two parks, 17 by 11 and 22 by 13 tiles.</li>
+      <li>Hedges are walls. The gate is a wall until the code switches it off.</li>
+      <li>Marker tiles place the ducklings, mowers and pond.</li>
+    </ul>
+  </div>
+</div>
+<p>The gate is my favourite bit to teach. One block, "set wall off", changes the maze while you play. Campers gasp when the hedge opens.</p>
+<p class="small">Why is the pond a sprite and not a tile? I tried an "on overlap tile" event with my own tile picture. It broke after a trip to Blocks and back. A sprite does not have that problem.</p>
+
+<h2 id="mixed">Built for mixed ages</h2>
+<ul class="tight">
+  <li>No jumping. Four arrows and that's it. A 9-year-old is playing in 10 seconds.</li>
+  <li>Ducklings follow you. You can see how well you are doing without reading a number.</li>
+  <li>Every park has a clock: 60 seconds, then 90. Turns stay short, so nobody hogs the laptop.</li>
+  <li>Park 2 is the stretch. Mowers move up and down too, and they are faster.</li>
+  <li>The quiet kid gets a job: navigator. They read the maze and call the turns.</li>
+</ul>
+
+<h2 id="playtests">Playtest notes from 2 rounds</h2>
+<p class="note">The campers below are made up, like me. The numbers are the game's real settings in each version.</p>
+<h3>Round 1: version 1, four campers aged 9 to 12</h3>
+<p>Version 1 had no timer. A duckling just vanished when you touched it. Mowers moved at 50.</p>
+<ul class="tight">
+  <li>Note 1. Camper A, aged 9, kept asking, "How many more?" The score only said how many she had.</li>
+  <li>Note 2. Camper B, aged 12, wandered park 1 for 4 minutes. "It's too easy, there's no hurry."</li>
+  <li>Note 3. Both younger campers lost all 3 lives to mowers in the first minute.</li>
+  <li>Note 4. Camper C cheered louder for the duckling sound than for winning.</li>
+</ul>
+<div class="card">
+<p><strong>Changes for version 2</strong></p>
+<ul class="tight">
+  <li>From note 1: ducklings now follow you, and the screen says how many are left.</li>
+  <li>From note 2: a countdown. 60 seconds for park 1, 90 for park 2.</li>
+  <li>From note 3: mowers slowed to 30 in park 1. Park 2 runs at 45.</li>
+  <li>From note 4: nothing. The sound stays.</li>
+</ul>
+</div>
+<h3>Round 2: version 2, four other campers</h3>
+<ul class="tight">
+  <li>Note 1. Ducklings got stuck behind hedges when they followed. Camper D went back for them three times.</li>
+  <li>Note 2. Camper E found every duckling but did not see the gate open. She stood still, puzzled.</li>
+  <li>Note 3. Camper F, aged 10, ran out of time with 1 duckling left. He asked to play again at once.</li>
+</ul>
+<div class="card">
+<p><strong>Changes for version 3, the game above</strong></p>
+<ul class="tight">
+  <li>From note 1: found ducklings now ghost through walls.</li>
+  <li>From note 2: the duck says "Gate open!" and a rising sound plays.</li>
+  <li>From note 3: nothing. "Again!" is the sound of a good timer.</li>
+</ul>
+</div>
+
+<h2 id="starter">Starter project: pick your chilli</h2>
+<p>The camp starter has the parks, the duck and the mowers ready. Three rules are missing. Each one is a card with a chilli level.</p>
+<ul class="tight">
+  <li><span class="chilli mild">Mild</span> Ducklings do nothing. Make them count. Everyone starts here.</li>
+  <li><span class="chilli medium">Medium</span> Mowers do nothing. Make them cost a life.</li>
+  <li><span class="chilli spicy">Spicy</span> The gate never opens. Open it when every duckling is found.</li>
+</ul>
+<div class="row">
+  <a class="btn primary" href="index.html?starter#play">Play the starter</a>
+  <a class="btn" href="starter.html">Starter code and chilli cards</a>
+</div>
+
+<h2 id="jam">Camp jam plan</h2>
+<p>Three mornings, 9:00 to 12:30, in the year-end school holidays. Pairs build a game on the theme "Lost and found". Day 3 ends with an arcade for families.</p>
+<p><a class="btn primary" href="jam.html">Read the 1-page jam plan</a></p>
+
+<h2 id="change">What I would change</h2>
+<p>The mowers go in straight lines. After three plays, older campers know the timing by heart. Then it is a memory game. A mower that turns at random would keep it fresh. It would also make park 1 harder for the 9-year-olds. So I would need an easy setting too.</p>
+<p>The starter has a catch. The spicy card needs the mild card done first, because the gate counts the ducklings. A pair that skips mild gets stuck. I now say so on the card. A better starter would not tie them together.</p>
+
+<h2 id="sources">Sources</h2>
+<ul class="tight small">
+  <li>Screen size, 160 by 120: <a href="https://makecode.com/blog/arcade/01-18-2019">MakeCode blog, January 2019</a>.</li>
+  <li>Events: <a href="https://arcade.makecode.com/reference/sprites/on-overlap">on overlap</a>. Moving: <a href="https://arcade.makecode.com/reference/controller/move-sprite">move sprite</a> and <a href="https://arcade.makecode.com/reference/sprites/sprite/follow">follow</a>.</li>
+  <li>The gate: <a href="https://arcade.makecode.com/reference/tiles/set-wall-at">set wall at</a> and <a href="https://arcade.makecode.com/reference/tiles/get-tiles-by-type">get tiles by type</a>.</li>
+  <li>Mowers: <a href="https://arcade.makecode.com/reference/sprites/sprite/set-bounce-on-wall">set bounce on wall</a>. Timer: <a href="https://arcade.makecode.com/reference/info/start-countdown">start countdown</a>.</li>
+  <li>Share links, copying and sign-in: <a href="https://arcade.makecode.com/share">Sharing projects</a>. Saving in the browser: <a href="https://arcade.makecode.com/save">Saving projects</a>.</li>
+  <li>Year-end school holidays, 21 November to 31 December 2026: <a href="https://www.moe.gov.sg/news/press-releases/20250730-school-terms-and-holidays-for-2026">MOE, School terms and holidays for 2026</a>.</li>
+</ul>
+</main>
+</body>
+</html>

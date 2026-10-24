@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kotak's code: obstacle avoidance in MicroPython, by Mei Ling Tan</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Mei Ling Tan is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<a class="back" href="index.html">Back to Kotak</a>
+<div class="hero">
+  <p class="kicker">Deliverable · code</p>
+  <h1>Kotak's code</h1>
+  <p>Version 3, the final program. MicroPython for the micro:bit V2. The simulator on the main page runs the same steps.</p>
+</div>
+<div class="row">
+  <a class="btnlink" href="kotak.py" download>Download kotak.py</a>
+  <span class="small">Open it in the <a href="https://python.microbit.org/">micro:bit Python Editor</a> and flash it.</span>
+</div>
+
+<h2>Who changes what</h2>
+<p>My P5 pupils don't type this program. I flash it for them. They change only the four numbers at the top, one at a time, and test. That is the whole tuning job, and it fits a club session.</p>
+<div class="card">
+  <ul class="tight">
+    <li><code>STOP_CM</code>: how close is "too close".</li>
+    <li><code>SPEED</code>: how fast Kotak drives. 0 stops it, 25 is about full speed.</li>
+    <li><code>BACK_MS</code>: how long it backs away, in thousandths of a second.</li>
+    <li><code>TURN_MS</code>: how long it turns.</li>
+  </ul>
+  <p>The next two, <code>LEFT_STOP</code> and <code>RIGHT_STOP</code>, come from the trim test. Only the teacher changes them, because a wrong one makes a wheel spin when it should stand still.</p>
+</div>
+
+<h2>The whole program</h2>
+<pre><code># Kotak, the shy cardboard robot. Version 3 (final).
+# Mei Ling&#x27;s P5 coding club. micro:bit V2, MicroPython.
+#
+# It drives forward. When something is close, it stops, backs away,
+# turns a random way, and carries on.
+# Press A to start. Press B to stop.
+
+from microbit import *
+import machine
+import utime
+import random
+
+# ---- Pupils may change these ----
+STOP_CM = 15      # stop when something is this close (cm)
+SPEED = 15        # how fast: 0 is stopped, 25 is about full speed
+BACK_MS = 300     # how long to back away (ms)
+TURN_MS = 500     # how long to turn (ms)
+
+# ---- Only the teacher changes these ----
+LEFT_STOP = 78    # servo value where the left wheel stands still
+RIGHT_STOP = 75   # servo value where the right wheel stands still
+FAR = 400         # what we use when no echo comes back (cm)
+
+TRIG = pin1       # sensor trigger
+ECHO = pin2       # sensor echo
+LEFT = pin8       # left servo signal
+RIGHT = pin16     # right servo signal
+
+# Servos want a pulse every 20 ms.
+LEFT.set_analog_period(20)
+RIGHT.set_analog_period(20)
+
+
+def wheels(left, right):
+    # Plus is forward for each wheel. The right servo faces the other way,
+    # so its number goes down to go forward.
+    LEFT.write_analog(LEFT_STOP + left)
+    RIGHT.write_analog(RIGHT_STOP - right)
+
+
+def ping():
+    # One shout. Returns cm, or -1 if no echo came back in 30 ms.
+    TRIG.write_digital(1)
+    utime.sleep_us(10)
+    TRIG.write_digital(0)
+    t = machine.time_pulse_us(ECHO, 1, 30000)
+    if t &lt; 0:
+        return -1
+    return t / 58
+
+
+def distance():
+    # Shout three times. Ignore the shouts with no echo.
+    # Take the middle answer of the ones left.
+    heard = []
+    for i in range(3):
+        d = ping()
+        if d &gt;= 0:
+            heard.append(d)
+        sleep(60)
+    if len(heard) == 0:
+        return FAR
+    heard.sort()
+    return heard[(len(heard) - 1) // 2]
+
+
+# ---- Main program ----
+wheels(0, 0)
+display.show(Image.ASLEEP)
+while not button_a.was_pressed():
+    sleep(20)
+
+while not button_b.was_pressed():
+    d = distance()                      # sense
+    if d &gt; STOP_CM:                     # decide
+        display.show(Image.HAPPY)
+        wheels(SPEED, SPEED)            # act: carry on
+    else:
+        display.show(Image.SURPRISED)
+        wheels(0, 0)                    # act: stop,
+        sleep(200)
+        wheels(-SPEED, -SPEED)          # back away,
+        sleep(BACK_MS)
+        turn = random.choice([-1, 1])   # and turn left or right
+        wheels(SPEED * turn, -SPEED * turn)
+        sleep(TURN_MS)
+
+wheels(0, 0)
+display.show(Image.ASLEEP)</code></pre>
+
+<h2>How it works, in club words</h2>
+<h3>Sense: <code>ping</code> and <code>distance</code></h3>
+<p><code>ping</code> makes the sensor shout once, a sound too high for us to hear. Then it times how long the echo pin stays on. Divide the microseconds by 58 and you get centimetres. If no echo comes back within 30 ms, it gives -1.</p>
+<p><code>distance</code> shouts three times. It drops the shouts with no echo, sorts the rest, and takes the middle one. If only two came back, it takes the closer one, to be safe. If none came back, the way is clear: 400 cm.</p>
+<p>In club we act this out. Three pupils call out a distance. One calls a silly number. The robot pupil takes the middle one.</p>
+<h3>Decide: one <code>if</code></h3>
+<p>Is the distance more than <code>STOP_CM</code>? Carry on. If not, avoid. The sensor only gives numbers. The <code>if</code> makes the choice.</p>
+<h3>Act: <code>wheels</code></h3>
+<p><code>wheels(left, right)</code> takes two speeds. Plus is forward. The right servo is mounted facing the other way, so for it, forward means a smaller number. The function hides that, so the main program reads like plain steps: stop, back away, turn.</p>
+<h3>The face</h3>
+<p>Happy while driving, surprised when it stops, asleep before A and after B. Pupils can tell what Kotak "thinks" from across the room. It also helps when something is wrong: a surprised face with nothing in front means a wild reading.</p>
+
+<h2>Things that catch teachers out</h2>
+<ul class="tight">
+  <li>Use a sensor that runs on 3 V, like the RCWL-1601. A classic HC-SR04 needs 5 V, and its 5 V echo can damage a micro:bit pin.</li>
+  <li><code>time_pulse_us</code> waits up to 1 second by default. Give it 30 ms, or one missed echo freezes the robot for a second.</li>
+  <li>It returns a negative number when it times out. Check for that before you divide. Version 1 didn't, and turned at nothing.</li>
+  <li>Servos want a pulse every 20 ms, so set the period to 20 first. Then 77 out of 1023 is about 1.5 ms: stop.</li>
+  <li>Only 3 pins can do PWM at once on the micro:bit. Kotak uses 2, one per servo.</li>
+</ul>
+
+<h2>Sources</h2>
+<ul class="tight small">
+  <li><a href="https://microbit-micropython.readthedocs.io/en/v2-docs/machine.html">micro:bit MicroPython: machine</a>: <code>time_pulse_us(pin, pulse_level, timeout_us=1000000)</code>, negative on a timeout.</li>
+  <li><a href="https://microbit-micropython.readthedocs.io/en/v2-docs/pin.html">micro:bit MicroPython: pins</a>: <code>write_analog</code> and <code>set_analog_period</code>.</li>
+  <li><a href="https://microbit-micropython.readthedocs.io/en/v2-docs/utime.html">micro:bit MicroPython: utime</a>: <code>sleep_us</code>.</li>
+  <li><a href="https://www-users.york.ac.uk/~mjf5/roach/Datasheets/HCSR04_Manual.pdf">HC-SR04 user manual</a>: a trigger longer than 10 µs, and distance = time × speed of sound (340 m/s) ÷ 2. That works out to about µs ÷ 58 = cm.</li>
+  <li><a href="https://www.adafruit.com/product/4007">Adafruit: RCWL-1601</a>, powered by 3 V or 5 V, with logic at the same level.</li>
+  <li><a href="https://tech.microbit.org/hardware/edgeconnector/">micro:bit edge connector</a>: PWM on 3 pins at once.</li>
+</ul>
+</main>
+</body>
+</html>

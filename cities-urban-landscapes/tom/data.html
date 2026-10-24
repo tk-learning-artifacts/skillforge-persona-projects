@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How students in each town get to school: Census 2020 data, by Tom Brennan</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="census.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Tom Brennan is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<p class="kicker">Gate to Stop · site analysis, part 2</p>
+<h1>How students in each town get to school</h1>
+<p class="lede">Our counts show one footpath on two days. Open data shows the whole town. I wanted my class to see both. I also wanted them to see what each can't tell them.</p>
+
+<ol class="route" aria-label="Pages in this project">
+  <li><a href="index.html">Site analysis</a></li>
+  <li><a href="data.html" aria-current="page">Open data: how students travel</a></li>
+  <li><a href="feedback.html">Community feedback report</a></li>
+  <li><a href="proposal.html">Redesign and funding</a></li>
+</ol>
+
+<div class="card">
+<p><strong>The dataset</strong></p>
+<p>Resident Students Aged 5 Years and Over by Planning Area of Residence and Usual Mode of Transport to School, Census of Population 2020. It comes from the Singapore Department of Statistics. I downloaded it from <a href="https://data.gov.sg/datasets/d_9eaccc6cc0f257cfd74d5c1ceb0fb663/view">data.gov.sg</a>. The original is <a href="https://tablebuilder.singstat.gov.sg/table/CT/17589">SingStat table 17589</a>. Every number on this page is from it, unchanged.</p>
+</div>
+
+<h2>Compare two towns</h2>
+<p>Pick any two planning areas. The bars show what share of students who live there travel each way.</p>
+<p><label for="area-a">First town</label><br><select id="area-a"></select></p>
+<p><label for="area-b">Second town</label><br><select id="area-b"></select></p>
+<ul class="legend" id="legend" aria-label="Colour key"></ul>
+<div id="stacks"></div>
+<p class="small" id="gaps"></p>
+
+<div class="scroll">
+<table>
+  <caption class="small">Students and share</caption>
+  <thead><tr><th>How they travel</th><th class="num" id="col-a">First</th><th class="num" id="col-b">Second</th><th class="num">Singapore</th></tr></thead>
+  <tbody id="compare"></tbody>
+</table>
+</div>
+<p class="small">I grouped 11 columns into 7. "Car, taxi or private hire car" adds car only to taxi or private hire car only. "Other or mixed" adds rail or bus with other modes, lorry, motorcycle or scooter, and others.</p>
+
+<h2>Rank every town</h2>
+<div class="toggles" role="group" aria-label="What to rank">
+  <button type="button" data-rank="none" aria-pressed="true">No transport</button>
+  <button type="button" data-rank="car" aria-pressed="false">Car or taxi</button>
+  <button type="button" data-rank="bus" aria-pressed="false">Bus only</button>
+</div>
+<p class="stack-name" id="rank-title"></p>
+<div class="bars" id="rank"></div>
+<p class="small">Your two towns are in orange. I left out the dataset's "Others" row.</p>
+
+<h2>What my class found</h2>
+<ul class="tight">
+  <li>In Tampines, 22.2% of students need no transport. Most of them, I'd guess, walk. That is close to Singapore's 23.6%.</li>
+  <li>More than half of Tampines students go by public transport. That is 26.4% bus only, 6.7% MRT or LRT only and 22.2% both.</li>
+  <li>Tampines students rarely go by car: 10.8% car only. In Bukit Timah it is 34.1% car only. Only Tanglin is higher, at 36.4%. The chart above adds taxis too, so its numbers are a little higher.</li>
+  <li>Punggol tops the "no transport" list at 34.7%, then Sengkang at 31.7%.</li>
+</ul>
+<p>Most students in our town need no transport. Most of the rest take a bus for part of the trip. A bad walk to the bus stop hits the most common trips.</p>
+<p>The Bukit Timah numbers started the best argument of the unit. One student guessed it was about who owns a car. Another said some homes are far from any school, so walking is not an option. The data can't settle it. That was the point.</p>
+
+<h2>What this data can't tell you</h2>
+<ul class="tight">
+  <li>It is sorted by where students live, not where they study. A Tampines student may go to school in Bedok.</li>
+  <li>It counts all resident students aged 5 and over. That includes polytechnic and university students, not only school pupils.</li>
+  <li>It is from 2020. Punggol and Tengah have grown since. The census runs once every 10 years.</li>
+  <li>It says nothing about our footpath, heat, or older residents. That is why we counted and asked.</li>
+  <li>Some rows add up to 1 to 3 more or less than their total. I think this is rounding, but the table doesn't say.</li>
+</ul>
+
+<h2>Sources</h2>
+<ul class="tight small">
+  <li>Data: <a href="https://data.gov.sg/datasets/d_9eaccc6cc0f257cfd74d5c1ceb0fb663/view">data.gov.sg, Census 2020 students by planning area and usual mode of transport to school</a>, from the Singapore Department of Statistics.</li>
+  <li>Original table: <a href="https://tablebuilder.singstat.gov.sg/table/CT/17589">SingStat Table Builder, table 17589</a>.</li>
+  <li>Planning areas follow URA's Master Plan 2019, as the dataset notes say.</li>
+</ul>
+</main>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Laser Slot: paper and final mock-ups, by Aisha Rahman</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="proto.css">
+<script src="proto.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Aisha Rahman is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<p><a href="index.html">Back to Laser Slot</a></p>
+<h1><span>Try it</span></h1>
+<p class="lede">Do the three test tasks in the paper version first. Then do them again in the final version.</p>
+
+<nav class="switch" aria-label="Versions">
+  <a href="prototype.html?v=paper" data-v="paper">Paper version (what I tested)</a>
+  <a href="prototype.html" data-v="final">Final version</a>
+</nav>
+
+<div class="layout">
+  <div>
+    <div class="phone-frame" id="frame">
+      <div class="kapp" id="app" role="region" aria-label="Booking mock-up"></div>
+    </div>
+    <p class="small" id="v-note"></p>
+  </div>
+  <aside>
+    <ul class="notes tasks-col" aria-label="Test tasks">
+      <li class="sticky"><strong>Task A</strong><br>Book the laser cutter after school on Thursday.</li>
+      <li class="sticky pink"><strong>Task B</strong><br>You want to cut a clear acrylic sheet. Is it allowed?</li>
+      <li class="sticky blue"><strong>Task C</strong><br>You are sick on Thursday. Cancel your booking.</li>
+    </ul>
+    <p class="small">Try the paper version as a student who has not done the safety session. Then try the final version the same way.</p>
+  </aside>
+</div>
+
+<h2 id="checks"><span class="num">✓</span>Contrast and label checks</h2>
+<div id="check-area">
+  <p>The script below measures the final version's colours in light and dark mode. Then it opens every screen and checks labels, button names and tap sizes.</p>
+  <button type="button" class="big-link" id="run">Run the checks</button>
+  <div id="report" aria-live="polite"></div>
+</div>
+<p class="small">The rules: text needs 4.5:1, or 3:1 if large (<a href="https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html">WCAG 1.4.3</a>). Control edges need 3:1 (<a href="https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html">1.4.11</a>). Inputs need labels (<a href="https://www.w3.org/WAI/WCAG22/Understanding/labels-or-instructions.html">3.3.2</a>). Tap targets need at least 24 by 24 CSS pixels (<a href="https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html">2.5.8</a>). Free and taken slots must not differ by colour alone (<a href="https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html">1.4.1</a>). You can check any pair yourself in the <a href="https://webaim.org/resources/contrastchecker/">WebAIM Contrast Checker</a>.</p>
+<p class="small">The safety rules in the mock-up come from these. PVC gives off hydrogen chloride when cut: <a href="https://www.cmu.edu/ehs/Guidelines/ehs-guideline-laser-cutter-safety-v.11.pdf">Carnegie Mellon EHS</a>. No PVC or foam in school laser cutters, trained staff with learners, extraction on: <a href="https://nasuwt.org.uk/advice/health-safety/laser-cutters-and-3d-printers.html">NASUWT, a UK teachers' union</a>. Never leave a cutter running alone: <a href="https://www.uml.edu/docs/Laser_Cutter_Safety_Guidelines_tcm18-343975.pdf">UMass Lowell</a>. PMMA is acrylic: <a href="https://www.modip.ac.uk/plastics/materials/polymethyl-methacrylate">MoDiP</a>.</p>
+</main>
+</body>
+</html>

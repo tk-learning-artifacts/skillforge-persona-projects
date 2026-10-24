@@ -1,0 +1,108 @@
+/* The booking mock-up. The final app has its own colours, set here and
+   copied into proto.js for the checks. The paper version is pencil on card. */
+.kapp {
+  --k-ink: #1b1f24; --k-ink2: #414a55; --k-muted: #5b6470; --k-ground: #ffffff; --k-surface: #f2f4f7; --k-line: #cfd5dd;
+  --k-brand: #b23a0b; --k-brand-soft: #fdeee6; --k-free: #0e6b3d; --k-free-soft: #e2f4e9;
+  --k-taken: #4b5563; --k-taken-bg: #e6e9ee; --k-danger: #a3271c; --k-danger-soft: #fbe9e7;
+}
+@media (prefers-color-scheme: dark) {
+  .kapp {
+    --k-ink: #eef1f5; --k-ink2: #c4cbd4; --k-muted: #9ea7b3; --k-ground: #14171b; --k-surface: #1e2329; --k-line: #3a424c;
+    --k-brand: #ff9e6e; --k-brand-soft: #3a2216; --k-free: #86dcaa; --k-free-soft: #15301f;
+    --k-taken: #b9c1cc; --k-taken-bg: #2a3038; --k-danger: #ff9d92; --k-danger-soft: #3a1c19;
+  }
+}
+.switch { display: flex; flex-wrap: wrap; gap: 10px; margin: 18px 0; }
+.switch a { display: inline-flex; align-items: center; min-height: 48px; padding: 0 16px; border: 3px solid var(--ink); border-radius: 6px;
+  color: var(--ink); text-decoration: none; font-weight: 700; background: var(--card); }
+.switch a[aria-current="page"] { background: var(--ink); color: var(--board); }
+.layout { display: grid; gap: 20px; grid-template-columns: 1fr; align-items: start; }
+@media (min-width: 820px) { .layout { grid-template-columns: minmax(0, 400px) 1fr; } }
+.tasks-col { grid-template-columns: 1fr; }
+.phone-frame { max-width: 400px; margin: 0 auto; padding: 14px 12px 22px; border-radius: 30px; background: #c9a77a;
+  box-shadow: inset 0 0 0 3px #8a6a40, 0 4px 10px var(--shadow); }
+.phone-frame.final { background: #2b2f36; box-shadow: 0 4px 10px var(--shadow); }
+.kapp { background: var(--k-ground); color: var(--k-ink); border-radius: 18px; min-height: 600px; padding: 14px; font-size: 17px; line-height: 1.5; }
+.kapp h2 { all: unset; display: block; font-size: 1.45em; font-weight: 800; line-height: 1.2; margin: 6px 0 8px; }
+.kapp h2:focus { outline: none; }
+.kapp h2:focus-visible { outline: 3px solid var(--k-brand); outline-offset: 2px; }
+.kapp p { margin: 0 0 10px; }
+.kapp button { font: inherit; cursor: pointer; }
+.kapp .brandbar { display: flex; align-items: center; gap: 8px; font-weight: 800; color: var(--k-brand); margin-bottom: 8px; font-size: 0.95em; }
+.kapp .brandbar svg { width: 22px; height: 22px; }
+.kapp .back { display: block; background: none; border: 0; color: var(--k-brand); font-weight: 700; min-height: 44px; padding: 0; text-decoration: underline; text-underline-offset: 3px; text-align: left; }
+.kapp .primary { display: block; width: 100%; min-height: 54px; border: 0; border-radius: 12px; background: var(--k-brand); color: var(--k-ground); font-weight: 800; margin-top: 12px; }
+.kapp .secondary { display: block; width: 100%; min-height: 50px; border: 2px solid var(--k-brand); border-radius: 12px; background: var(--k-ground); color: var(--k-brand); font-weight: 800; margin-top: 10px; }
+.kapp .muted { color: var(--k-muted); font-size: 0.92em; }
+.kapp .machine { display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; min-height: 72px; padding: 10px 14px; border: 2px solid var(--k-line);
+  border-radius: 14px; background: var(--k-surface); color: var(--k-ink); margin-bottom: 10px; }
+.kapp .machine b { display: block; font-size: 1.1em; }
+.kapp .machine span span { color: var(--k-ink2); font-size: 0.9em; }
+.kapp .machine svg { flex: none; width: 40px; height: 40px; }
+.kapp .booking { border: 2px solid var(--k-free); background: var(--k-free-soft); border-radius: 14px; padding: 12px 14px; margin-bottom: 14px; }
+.kapp .booking .label { font-weight: 800; color: var(--k-free); font-size: 0.9em; }
+.kapp .booking dl { margin: 6px 0; display: grid; grid-template-columns: max-content 1fr; gap: 2px 12px; }
+.kapp .booking dt { font-weight: 700; }
+.kapp .booking dd { margin: 0; }
+.kapp .booking .secondary { border-color: var(--k-danger); color: var(--k-danger); background: transparent; }
+.kapp .confirm-box { border: 2px solid var(--k-danger); background: var(--k-danger-soft); border-radius: 12px; padding: 10px 12px; margin-top: 10px; }
+.kapp .confirm-box p { font-weight: 700; color: var(--k-danger); }
+.kapp .confirm-box .row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.kapp .confirm-box .row button { min-height: 48px; border-radius: 10px; font-weight: 800; }
+.kapp .confirm-box .yes { background: var(--k-danger); color: var(--k-ground); border: 0; }
+.kapp .confirm-box .no { background: var(--k-ground); color: var(--k-ink); border: 2px solid var(--k-ink2); }
+.kapp .day { margin: 10px 0 4px; font-weight: 800; }
+.kapp .slots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.kapp .slot { min-height: 56px; border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-weight: 700; line-height: 1.2; padding: 4px; }
+.kapp .slot small { font-size: 0.8em; font-weight: 800; }
+.kapp button.slot { border: 2px solid var(--k-free); background: var(--k-free-soft); color: var(--k-ink); }
+.kapp button.slot small { color: var(--k-free); }
+.kapp div.slot { border: 2px dashed var(--k-taken); color: var(--k-taken);
+  background: repeating-linear-gradient(135deg, var(--k-taken-bg) 0 8px, var(--k-surface) 8px 16px); }
+.kapp div.slot span { background: var(--k-taken-bg); padding: 0 4px; border-radius: 4px; }
+.kapp div.slot small { background: var(--k-taken-bg); padding: 0 4px; border-radius: 4px; }
+.kapp fieldset { border: 0; padding: 0; margin: 0; }
+.kapp legend { font-weight: 800; font-size: 1.45em; line-height: 1.2; margin: 6px 0 8px; padding: 0; }
+.kapp .choice { display: flex; align-items: center; gap: 12px; min-height: 56px; padding: 8px 12px; border: 2px solid var(--k-line); border-radius: 12px; background: var(--k-surface); margin-bottom: 8px; cursor: pointer; }
+.kapp .choice input { width: 24px; height: 24px; margin: 0; flex: none; accent-color: var(--k-brand); }
+.kapp .choice:has(input:checked) { border-color: var(--k-brand); background: var(--k-brand-soft); }
+.kapp .nope { border-left: 5px solid var(--k-danger); background: var(--k-danger-soft); border-radius: 8px; padding: 10px 12px; margin: 12px 0; }
+.kapp .nope b { color: var(--k-danger); }
+.kapp .nope ul { margin: 4px 0 0; padding-left: 20px; }
+.kapp .err { color: var(--k-danger); font-weight: 700; }
+.kapp .safety-box { border: 2px solid var(--k-ink2); border-radius: 12px; padding: 10px 12px; margin: 12px 0; background: var(--k-surface); }
+.kapp .summary { display: grid; grid-template-columns: max-content 1fr auto; gap: 4px 12px; align-items: center; margin: 8px 0; }
+.kapp .summary dt { font-weight: 700; color: var(--k-ink2); }
+.kapp .summary dd { margin: 0; font-weight: 700; }
+.kapp .summary button { background: none; border: 0; color: var(--k-brand); text-decoration: underline; min-height: 44px; min-width: 44px; font-weight: 700; }
+.kapp .live { min-height: 1.5em; margin-top: 10px; color: var(--k-ink2); font-size: 0.92em; }
+.kapp .sessions { padding-left: 20px; }
+
+/* Paper version: pencil on white card, wobbly boxes */
+.kapp.paper { --k-ink: #222; --k-ink2: #444; --k-muted: #555; --k-ground: #fff; --k-surface: #fff; --k-line: #222; --k-brand: #222;
+  background: #fff linear-gradient(transparent 39px, #e07a7a 39px, #e07a7a 40px, transparent 40px) no-repeat; color: #222; }
+.kapp.paper * { border-radius: 0; }
+.kapp.paper .brandbar { color: #222; }
+.kapp.paper button, .kapp.paper .box { background: #fff; color: #222; border: 2px solid #222; border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px !important; }
+.kapp.paper .primary { border-width: 4px; }
+.kapp.paper .back { border: 0 !important; text-decoration: underline; }
+.kapp.paper .grid { display: grid; grid-template-columns: 40px repeat(5, 1fr); gap: 4px; align-items: center; font-size: 0.85em; }
+.kapp.paper .grid button { min-height: 40px; min-width: 0; padding: 0; }
+.kapp.paper .grid button.taken { background: #9a9a9a; }
+.kapp.paper .grid button[aria-pressed="true"] { background: #fff; outline: 3px solid #222; outline-offset: -6px; }
+.kapp.paper .grid .h { text-align: center; font-weight: 700; }
+.kapp.paper .choice { border: 2px solid #222; background: #fff; }
+.kapp.paper .choice input { accent-color: #222; }
+.kapp.paper label.tick { display: flex; gap: 10px; align-items: center; min-height: 44px; }
+.kapp.paper label.tick input { width: 22px; height: 22px; margin: 0; accent-color: #222; }
+.kapp.paper .err { color: #222; text-decoration: underline wavy; }
+
+/* Check report */
+#report h3 { margin-top: 20px; }
+#report .res { list-style: none; padding: 0; }
+#report .res li { display: grid; grid-template-columns: 64px 1fr; gap: 8px; padding: 8px 0; border-bottom: 1px solid var(--line); }
+#report .pass, #report .fail { font-weight: 800; font-size: 0.9rem; border-radius: 4px; padding: 2px 6px; height: fit-content; text-align: center; color: var(--ink); }
+#report .pass { background: var(--green); }
+#report .fail { background: var(--pink); }
+#report .sw { display: inline-block; width: 1em; height: 1em; border-radius: 3px; border: 1px solid var(--line); vertical-align: -2px; margin-right: 2px; }
+#report .summary { font-weight: 800; font-size: 1.1rem; }
