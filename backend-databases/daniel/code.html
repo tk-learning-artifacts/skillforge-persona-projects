@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trial Day sign-up code and setup script, by Daniel Ong</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Daniel Ong is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<div class="sheet">
+<p><a href="index.html">Back to the app</a></p>
+<h1>The code</h1>
+<p class="lede">Four files. I tested them with Flask 3.1 on Python 3.13. <a href="trial-day-signup.zip" download>Download all four (zip)</a>.</p>
+<div class="card">
+<ul class="tight">
+  <li><a href="#schema">schema.sql</a> makes the three tables.</li>
+  <li><a href="#setup">setup_db.py</a> is the database setup script. It runs schema.sql, adds made-up sign-ups and one teacher login.</li>
+  <li><a href="#app">app.py</a> is the Flask app. Five routes.</li>
+  <li><a href="#template">templates/index.html</a> is the one page. Flask fills it in.</li>
+</ul>
+</div>
+
+<h2 id="run">Run it on a computer with Python</h2>
+<ol class="tight">
+  <li>Unzip the folder. Open a terminal in it.</li>
+  <li><code>pip install flask</code></li>
+  <li><code>python setup_db.py</code>. It asks for a teacher username and password. Make them up.</li>
+  <li><code>flask --app app run --debug</code>, then open <code>http://127.0.0.1:5000</code>.</li>
+</ol>
+
+<h2 id="schema">schema.sql</h2>
+<p>Three tables. The comment says what I took out, and why.</p>
+<div class="file"><div class="file-name">schema.sql</div><pre><code>-- Trial Day sign-up tables. setup_db.py runs this file.
+DROP TABLE IF EXISTS signups;
+DROP TABLE IF EXISTS slots;
+DROP TABLE IF EXISTS teachers;
+
+-- One row for each trial session a CCA runs.
+CREATE TABLE slots (
+  id INTEGER PRIMARY KEY,
+  cca TEXT NOT NULL,
+  time_label TEXT NOT NULL,
+  places INTEGER NOT NULL
+);
+
+-- One row for each student who signs up.
+-- I took out phone number and parent email. The teacher meets them at the session anyway.
+CREATE TABLE signups (
+  id INTEGER PRIMARY KEY,
+  slot_id INTEGER NOT NULL REFERENCES slots(id),
+  first_name TEXT NOT NULL,
+  form_class TEXT NOT NULL
+);
+
+-- Only teachers have logins. Students sign up without one.
+CREATE TABLE teachers (
+  id INTEGER PRIMARY KEY,
+  username TEXT NOT NULL UNIQUE,
+  pw_hash TEXT NOT NULL
+);</code></pre></div>
+
+<h2 id="setup">setup_db.py: the setup script</h2>
+<p>It uses <code>input</code> and <code>getpass</code>, so the teacher password never sits in the code. The last lines make a secret key for Flask's session cookie. Flask needs one before logins work.</p>
+<div class="file"><div class="file-name">setup_db.py</div><pre><code># Makes trial.db from schema.sql and puts in made-up data.
+# Run it in a Bash console:  python3 setup_db.py
+# Careful: running it again wipes everything.
+import getpass
+import os
+import secrets
+import sqlite3
+
+from werkzeug.security import generate_password_hash
+
+folder = os.path.dirname(os.path.abspath(__file__))
+con = sqlite3.connect(os.path.join(folder, "trial.db"))
+
+with open(os.path.join(folder, "schema.sql")) as f:
+    con.executescript(f.read())
+
+slots = [
+    ("Robotics", "Wed 2:30 pm", 6),
+    ("Robotics", "Fri 2:30 pm", 6),
+    ("Infocomm", "Wed 2:30 pm", 8),
+    ("Media Club", "Thu 3:00 pm", 5),
+]
+con.executemany("INSERT INTO slots (cca, time_label, places) VALUES (?, ?, ?)", slots)
+
+# Made-up students. Never put real names in here.
+fake_students = [
+    (1, "Ali", "1E1"),
+    (1, "Bee Lin", "1E3"),
+    (3, "Chandra", "1E2"),
+    (4, "Dev", "1E4"),
+]
+con.executemany(
+    "INSERT INTO signups (slot_id, first_name, form_class) VALUES (?, ?, ?)",
+    fake_students,
+)
+
+# The password is typed in, not written in this file.
+username = input("Teacher username: ").strip().lower()
+password = getpass.getpass("Teacher password (8 or more characters): ")
+if len(password) &lt; 8:
+    raise SystemExit("Too short. Run me again.")
+con.execute(
+    "INSERT INTO teachers (username, pw_hash) VALUES (?, ?)",
+    (username, generate_password_hash(password)),
+)
+
+con.commit()  # I forgot this line once. Nothing saved.
+con.close()
+
+with open(os.path.join(folder, "secret.key"), "w") as f:
+    f.write(secrets.token_hex())
+
+print("Done. Made trial.db and secret.key.")</code></pre></div>
+
+<h2 id="app">app.py</h2>
+<p>The part I had to read three times was the LEFT JOIN with COUNT. A plain JOIN drops a session with no sign-ups at all. So Robotics on Friday vanished from my list until I changed it.</p>
+<div class="file"><div class="file-name">app.py</div><pre><code># Trial Day sign-up: Sec 1 students pick a CCA trial session.
+# One page, made by Flask from templates/index.html.
+import os
+import re
+import sqlite3
+
+from flask import Flask, flash, redirect, render_template, request, session
+from werkzeug.security import check_password_hash
+
+folder = os.path.dirname(os.path.abspath(__file__))
+DB_FILE = os.path.join(folder, "trial.db")
+
+app = Flask(__name__)
+with open(os.path.join(folder, "secret.key")) as f:
+    app.secret_key = f.read().strip()
+
+
+def get_db():
+    con = sqlite3.connect(DB_FILE)
+    con.row_factory = sqlite3.Row
+    return con
+
+
+@app.get("/")
+def home():
+    con = get_db()
+    # LEFT JOIN, so a slot with no sign-ups still shows up, with 0 taken.
+    slots = con.execute(
+        "SELECT slots.id, slots.cca, slots.time_label, slots.places, "
+        "COUNT(signups.id) AS taken "
+        "FROM slots LEFT JOIN signups ON signups.slot_id = slots.id "
+        "GROUP BY slots.id ORDER BY slots.cca, slots.id"
+    ).fetchall()
+    signups = []
+    if "teacher" in session:
+        signups = con.execute(
+            "SELECT signups.id, signups.first_name, signups.form_class, "
+            "slots.cca, slots.time_label "
+            "FROM signups JOIN slots ON slots.id = signups.slot_id "
+            "ORDER BY slots.cca, slots.id, signups.form_class"
+        ).fetchall()
+    con.close()
+    return render_template("index.html", slots=slots, signups=signups)
+
+
+@app.post("/signup")
+def signup():
+    first_name = request.form.get("first_name", "").strip()
+    form_class = request.form.get("form_class", "").strip().upper()
+    slot_id = request.form.get("slot_id", "")
+    if not 1 &lt;= len(first_name) &lt;= 30:
+        flash("Type a first name, 30 letters at most.")
+        return redirect("/")
+    if not re.fullmatch(r"[1-5][A-Z]{0,2}[0-9]{1,2}", form_class):
+        flash("Type your class like 1E2.")
+        return redirect("/")
+
+    con = get_db()
+    slot = con.execute(
+        "SELECT slots.cca, slots.time_label, slots.places, COUNT(signups.id) AS taken "
+        "FROM slots LEFT JOIN signups ON signups.slot_id = slots.id "
+        "WHERE slots.id = ? GROUP BY slots.id",
+        (slot_id,),
+    ).fetchone()
+    if slot is None:
+        flash("Pick a session.")
+    elif slot["taken"] &gt;= slot["places"]:
+        flash(f"Sorry, {slot['cca']} on {slot['time_label']} is full.")
+    else:
+        con.execute(
+            "INSERT INTO signups (slot_id, first_name, form_class) VALUES (?, ?, ?)",
+            (slot_id, first_name, form_class),
+        )
+        con.commit()
+        flash(f"Done! See you at {slot['cca']}, {slot['time_label']}.")
+    con.close()
+    return redirect("/")  # back to the page, so a refresh won't sign up twice
+
+
+@app.post("/login")
+def login():
+    username = request.form.get("username", "").strip().lower()
+    password = request.form.get("password", "")
+    con = get_db()
+    teacher = con.execute(
+        "SELECT username, pw_hash FROM teachers WHERE username = ?", (username,)
+    ).fetchone()
+    con.close()
+    if teacher and check_password_hash(teacher["pw_hash"], password):
+        session["teacher"] = teacher["username"]
+        flash("Logged in. The sign-up list is at the bottom.")
+    else:
+        flash("Wrong username or password.")
+    return redirect("/")
+
+
+@app.post("/logout")
+def logout():
+    session.clear()
+    flash("Logged out.")
+    return redirect("/")
+
+
+@app.post("/remove/&lt;int:signup_id&gt;")
+def remove(signup_id):
+    if "teacher" not in session:
+        return "Teachers only.", 403
+    con = get_db()
+    con.execute("DELETE FROM signups WHERE id = ?", (signup_id,))
+    con.commit()
+    con.close()
+    flash("Removed.")
+    return redirect("/")</code></pre></div>
+
+<h2 id="template">templates/index.html</h2>
+<p>Jinja escapes everything in double curly brackets by itself. So a "name" with HTML in it shows as plain text. I tested it with a fake name full of tags.</p>
+<div class="file"><div class="file-name">templates/index.html</div><pre><code>&lt;!doctype html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+&lt;meta charset="utf-8"&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+&lt;title&gt;CCA Trial Day sign-up&lt;/title&gt;
+&lt;style&gt;
+  body { font: 16px/1.5 system-ui, sans-serif; max-width: 600px; margin: 0 auto; padding: 12px; color-scheme: light dark; }
+  .box { border: 1px solid #8884; border-radius: 10px; padding: 12px; margin: 12px 0; }
+  label { display: block; margin: 6px 0; }
+  input, select, button { font: inherit; min-height: 40px; }
+  .flash { background: #fff3c4; color: #222; padding: 8px 12px; border-radius: 8px; }
+  li { margin: 4px 0; }
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;CCA Trial Day&lt;/h1&gt;
+&lt;p&gt;Pick one trial session. Use a made-up first name for practice.&lt;/p&gt;
+
+{% for message in get_flashed_messages() %}
+  &lt;p class="flash"&gt;{{ message }}&lt;/p&gt;
+{% endfor %}
+
+&lt;div class="box"&gt;
+  &lt;h2&gt;Sessions&lt;/h2&gt;
+  &lt;ul&gt;
+  {% for s in slots %}
+    &lt;li&gt;{{ s.cca }}, {{ s.time_label }}: {{ s.places - s.taken }} of {{ s.places }} places left&lt;/li&gt;
+  {% endfor %}
+  &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;form class="box" method="post" action="/signup"&gt;
+  &lt;h2&gt;Sign up&lt;/h2&gt;
+  &lt;label&gt;First name &lt;input name="first_name" maxlength="30" required&gt;&lt;/label&gt;
+  &lt;label&gt;Class &lt;input name="form_class" placeholder="1E2" maxlength="5" required&gt;&lt;/label&gt;
+  &lt;label&gt;Session
+    &lt;select name="slot_id" required&gt;
+    {% for s in slots %}
+      &lt;option value="{{ s.id }}" {% if s.taken &gt;= s.places %}disabled{% endif %}&gt;
+        {{ s.cca }}, {{ s.time_label }}{% if s.taken &gt;= s.places %} (full){% endif %}
+      &lt;/option&gt;
+    {% endfor %}
+    &lt;/select&gt;
+  &lt;/label&gt;
+  &lt;button&gt;Sign up&lt;/button&gt;
+&lt;/form&gt;
+
+{% if session.teacher %}
+&lt;div class="box"&gt;
+  &lt;h2&gt;Sign-up list&lt;/h2&gt;
+  &lt;form method="post" action="/logout"&gt;&lt;button&gt;Log out {{ session.teacher }}&lt;/button&gt;&lt;/form&gt;
+  &lt;ul&gt;
+  {% for p in signups %}
+    &lt;li&gt;{{ p.cca }}, {{ p.time_label }}: {{ p.first_name }} ({{ p.form_class }})
+      &lt;form method="post" action="/remove/{{ p.id }}" style="display:inline"&gt;&lt;button&gt;Remove&lt;/button&gt;&lt;/form&gt;
+    &lt;/li&gt;
+  {% else %}
+    &lt;li&gt;No sign-ups yet.&lt;/li&gt;
+  {% endfor %}
+  &lt;/ul&gt;
+&lt;/div&gt;
+{% else %}
+&lt;form class="box" method="post" action="/login"&gt;
+  &lt;h2&gt;Teachers&lt;/h2&gt;
+  &lt;label&gt;Username &lt;input name="username" autocomplete="username" required&gt;&lt;/label&gt;
+  &lt;label&gt;Password &lt;input name="password" type="password" autocomplete="current-password" required&gt;&lt;/label&gt;
+  &lt;button&gt;Log in&lt;/button&gt;
+&lt;/form&gt;
+{% endif %}
+&lt;/body&gt;
+&lt;/html&gt;</code></pre></div>
+
+<h2 id="v1">Version 1 of login, kept for teaching</h2>
+<p>This was my first login route. It is not in the zip. Two problems: the password column holds the real password, and the query is glued together from what you type. The username <code>' OR 1=1 --</code> makes the WHERE true for every row. The <code>--</code> hides the password check.</p>
+<div class="file"><div class="file-name">version 1, do not use</div><pre><code>@app.post("/login")
+def login():
+    username = request.form.get("username", "")
+    password = request.form.get("password", "")
+    con = get_db()
+    teacher = con.execute(
+        f"SELECT username FROM teachers WHERE username = '{username}' "
+        f"AND password = '{password}'"
+    ).fetchone()
+    ...</code></pre></div>
+
+<h2 id="host">Put it on PythonAnywhere</h2>
+<p>This goes on my own account. I am over 18, which their terms need. My students don't make accounts.</p>
+<ol class="tight">
+  <li>Make a free account. Open the Web tab and add a new web app.</li>
+  <li>Choose Flask and a Python version. The wizard shows a path for <code>flask_app.py</code>, in a <code>mysite</code> folder. Check it first: the wizard writes over a file with that name.</li>
+  <li>On the Files tab, open <code>mysite</code>. Paste my <code>app.py</code> into <code>flask_app.py</code>. Upload <code>schema.sql</code> and <code>setup_db.py</code>, and <code>index.html</code> into a new <code>templates</code> folder.</li>
+  <li>Open a Bash console. Run <code>cd mysite</code>, then <code>python3 setup_db.py</code>.</li>
+  <li>Back on the Web tab, click Reload. Open your address. It ends in <code>.pythonanywhere.com</code>.</li>
+</ol>
+<p>A free web app stops after one month unless you extend it. There is a button for that on the Web tab. I put a reminder in my calendar.</p>
+
+<h2 id="twin">How the copy on my app page is different</h2>
+<ul class="tight">
+  <li>It is JavaScript, in <a href="server.js">server.js</a>. The routes and SQL are copied from <code>app.py</code>. I checked them side by side.</li>
+  <li>Werkzeug's default hash is scrypt, and browsers can't do scrypt. So the page uses werkzeug's pbkdf2 format instead. Python's <code>check_password_hash</code> reads both.</li>
+  <li>The session lives in your browser's storage, not a signed cookie.</li>
+  <li>Version 1 lives only on the page. Its table, <code>teachers_v1</code>, holds a plain password on purpose.</li>
+</ul>
+
+<h2>Sources</h2>
+<ul class="tight small">
+  <li><a href="https://help.pythonanywhere.com/pages/Flask/">PythonAnywhere: setting up Flask</a>, including the quickstart from the Web tab.</li>
+  <li><a href="https://blog.pythonanywhere.com/121/">PythonAnywhere blog: a database-backed Flask website</a>, which shows the <code>mysite/flask_app.py</code> default and warns that the wizard overwrites a file with that name. It also shows the button that extends a free site, in older wording.</li>
+  <li><a href="https://help.pythonanywhere.com/pages/FreeAccountsFeatures/">PythonAnywhere free account features</a>: one web app, one month expiry.</li>
+  <li><a href="https://www.pythonanywhere.com/pricing/">PythonAnywhere pricing</a>, for the <code>.pythonanywhere.com</code> address.</li>
+  <li>Contract age: clause 5.2 of the <a href="https://www.pythonanywhere.com/terms/">PythonAnywhere terms</a>, and 18 in Singapore from 1 March 2009, per <a href="https://law.nus.edu.sg/sjls/wp-content/uploads/sites/14/2024/07/2028-2010-sjls-dec-328.pdf">Loo Wee Ling, Singapore Journal of Legal Studies, 2010</a>.</li>
+  <li><a href="https://flask.palletsprojects.com/en/stable/quickstart/">Flask Quickstart</a>: templates escape HTML, sessions need a secret key.</li>
+  <li><a href="https://docs.python.org/3/library/sqlite3.html">Python sqlite3</a>: placeholders, and why the f-string login breaks.</li>
+  <li><a href="https://werkzeug.palletsprojects.com/en/stable/utils/">Werkzeug password hashing</a>.</li>
+</ul>
+</div>
+</body>
+</html>

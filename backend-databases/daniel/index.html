@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CCA Trial Day sign-up: a Flask and SQLite app, by Daniel Ong</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="sql-wasm.js" defer></script>
+<script src="sql-wasm-binary.js" defer></script>
+<script src="schema.js" defer></script>
+<script src="server.js" defer></script>
+<script src="twin.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Daniel Ong is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<div class="sheet">
+<h1>CCA Trial Day sign-up</h1>
+<p class="lede">Sec 1 students pick a trial session for a CCA. Teachers log in to see who is coming. One Flask app, one SQLite file, one page.</p>
+<p>I'm Daniel. I have been a trainer for six months, and I learn a lot of this alongside my classes. This is my end project for Backends and Databases. I wanted something small enough that I understand every line. I also kept my mistakes, because they taught me the most.</p>
+<ul class="toc">
+  <li><a href="#try">Try the app</a></li>
+  <li><a href="#wrong">What I got wrong</a></li>
+  <li><a href="code.html">Code and setup script</a></li>
+  <li><a href="unit.html">3-session CCA unit</a></li>
+  <li><a href="#rubric">Rubric check</a></li>
+</ul>
+
+<h2 id="try">Try the app</h2>
+<p>This is my hosted app. One thing to know first: this website can't run Python. So I copied <code>app.py</code> into JavaScript, with the same routes and the same SQL. A real copy of SQLite runs the queries in your browser, using <a href="https://github.com/sql-js/sql.js">sql.js</a>. What you type stays in this browser.</p>
+<div class="sticky">To see the teacher view, log in as <code>mr_ong</code> with the password <code>club-trial-2026</code>. Please use made-up names when you sign up.</div>
+
+<div id="versions" role="group" aria-label="App version">
+  <button type="button" data-v="2" aria-pressed="true">Version 2 (final)</button>
+  <button type="button" data-v="1" aria-pressed="false">Version 1 (my first try)</button>
+  <button type="button" id="reset">Start over</button>
+</div>
+<p id="version-note" aria-live="polite"></p>
+
+<div class="try">
+  <div id="app-frame"><div id="app">Starting the database…</div></div>
+  <div>
+    <div class="happened">
+      <h3>What just happened</h3>
+      <div id="happened" aria-live="polite"><p class="muted">Sign up or log in, and each step shows here.</p></div>
+    </div>
+    <details>
+      <summary>Look inside trial.db</summary>
+      <div class="inside"><div id="t-slots"></div><div id="t-signups"></div><div id="t-teachers"></div></div>
+    </details>
+  </div>
+</div>
+
+<h3>Things to try</h3>
+<ul class="tight">
+  <li>Sign up for Media Club until it is full. The full session is greyed out in the menu, and Flask refuses one more.</li>
+  <li>Type your class as <code>Sec 1</code>. Flask says no. It wants something like <code>1E2</code>.</li>
+  <li>Log in as <code>mr_ong</code>, then open "Look inside trial.db". The teachers table has no password in it. Only a long hash.</li>
+  <li>Switch to version 1. Log in with the username <code>' OR 1=1 --</code> and any password. You are in, without the password. Look at the SQL in "What just happened". Your typing became part of the query.</li>
+  <li>Do the same in version 2. It fails, because the <code>?</code> keeps your typing as plain data.</li>
+</ul>
+
+<h2 id="why-forms">Why forms, not fetch()</h2>
+<p>The module showed fetch() and a JSON API. I tried that first, and I got lost between the page code and the route code. So I went back to plain HTML forms, like the Flask Quickstart. The form posts to Flask. Flask saves, then redirects back to <code>/</code>. Flask builds the whole page from one template. It reloads the page each time, but every step is easy to point at. For my CCA students, that mattered more.</p>
+<p>The redirect fixed a real bug. At first, <code>/signup</code> returned the page straight away. If you pressed refresh, the browser sent the form again. One fake student got signed up three times.</p>
+
+<h2 id="wrong">What I got wrong</h2>
+<div class="mistakes">
+  <div class="sticky"><h3>1. No commit</h3><p>My first INSERT looked fine. After a refresh, the list was empty. Python's sqlite3 opens a transaction for an INSERT, and I never called <code>commit()</code>. Every write route now commits.</p></div>
+  <div class="sticky"><h3>2. A glued-together login</h3><p>Version 1 built the login query with an f-string, and kept passwords as plain text. You can try it above. Version 2 uses <code>?</code> and <code>check_password_hash</code>.</p></div>
+  <div class="sticky"><h3>3. Too much data</h3><p>My first table asked for a phone number and a parent's email. I asked myself what I would use them for. The answer was nothing. The teacher meets the students at the session anyway. Now it is first name, class and session.</p></div>
+  <div class="sticky"><h3>4. Double sign-ups</h3><p>Refreshing after signing up sent the form again. Now every form route ends with a redirect, so a refresh only reloads the page.</p></div>
+</div>
+
+<h2 id="rubric">Rubric check</h2>
+<div class="scroll">
+<table>
+  <tr><th>Rubric line</th><th>How I meet it</th></tr>
+  <tr><td>App reads and saves data correctly</td><td>Sign-ups save, places count down, full sessions close, and teachers can remove a sign-up. Refresh the page: it is all still there.</td></tr>
+  <tr><td>Queries use ? placeholders</td><td>Every query in version 2 that takes a value uses <code>?</code>. Version 1 does not, and that is why it is labelled. "What just happened" shows the filled-in values.</td></tr>
+  <tr><td>Passwords hashed, no real student data</td><td>Teacher passwords are stored with <code>generate_password_hash</code>. Students have no passwords. All names are made up, and the app stores only first name and class.</td></tr>
+  <tr><td>Lessons fit your students and devices</td><td>My <a href="unit.html">unit</a> runs on school Chromebooks with nothing to install and no new accounts. Three 2-hour CCA sessions.</td></tr>
+</table>
+</div>
+
+<h2 id="deliverables">The three deliverables</h2>
+<ul class="tight">
+  <li>Link to my hosted app: <a href="#try">this page</a>. The real Python version goes on PythonAnywhere, using <a href="code.html#host">these steps</a>. I'm an AI persona, so I have no account there, and no live Python copy to link.</li>
+  <li>Code with the database setup script: <a href="code.html">schema.sql, setup_db.py, app.py and the template</a>, plus a zip.</li>
+  <li>3-lesson plan with data rules: <a href="unit.html">three CCA sessions on Chromebooks</a>, with four data rules and how I check them.</li>
+</ul>
+
+<h2 id="change">What I would change</h2>
+<p>My students never write a Flask route. Our managed school Chromebooks can't install Python, and I didn't want them on hosting accounts. So they design tables, write SQL and test my app. Building a route themselves would teach more. Next year I would book the computer lab for session 3.</p>
+<p>The app also trusts whoever signs up. Anyone can sign up a made-up name, or someone else's name. And if two students take the last place at the same moment, both might get in. The code counts first and saves after. I am not sure yet how to fix that in SQLite. If you know, I would like to hear it.</p>
+
+<h2 id="sources">Sources</h2>
+<ul class="tight small">
+  <li>Forms, redirects, templates, flash messages and sessions: <a href="https://flask.palletsprojects.com/en/stable/quickstart/">Flask Quickstart</a>.</li>
+  <li>Placeholders, SQL injection and commit: <a href="https://docs.python.org/3/library/sqlite3.html">Python's sqlite3 docs</a>.</li>
+  <li>Password hashing: <a href="https://werkzeug.palletsprojects.com/en/stable/utils/">Werkzeug utilities</a>.</li>
+  <li>SQLite in the browser: <a href="https://github.com/sql-js/sql.js">sql.js</a>, MIT licence, in <a href="SQLJS-LICENSE.txt">SQLJS-LICENSE.txt</a>.</li>
+  <li>Hosting: <a href="https://help.pythonanywhere.com/pages/FreeAccountsFeatures/">PythonAnywhere free account features</a> and <a href="https://www.pythonanywhere.com/terms/">PythonAnywhere terms</a>.</li>
+</ul>
+</div>
+</body>
+</html>

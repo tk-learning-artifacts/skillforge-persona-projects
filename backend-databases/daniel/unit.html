@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How a sign-up app works: a 3-session CCA unit, by Daniel Ong</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Daniel Ong is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<div class="sheet">
+<p><a href="index.html">Back to the app</a></p>
+<h1>How a sign-up app works</h1>
+<p class="lede">Three CCA sessions. Students follow a sign-up from browser to database. They write SQL and break my version 1 on purpose. Then they design the data for an app of their own.</p>
+
+<div class="card">
+<ul class="tight">
+  <li>Who: 18 Infocomm Club members, Sec 1 and Sec 2. Most have done some Python, a few have not.</li>
+  <li>Time: 3 CCA sessions of 2 hours, one a week. Each has a 10-minute break.</li>
+  <li>Devices: school Chromebooks. Nothing to install.</li>
+  <li>Tools, all with no sign-up: my <a href="index.html#try">app page</a>, <a href="https://sqliteonline.com/">SQL Online IDE</a> set to SQLite, and the Open-Meteo weather API. Students paste their SQL into a class Google Doc to keep it.</li>
+  <li>No hosting accounts. PythonAnywhere's terms need users old enough to sign a contract, which is 18 in Singapore. Only my app goes online.</li>
+  <li>Printouts: request slips for session 1, and the v1 and v2 login code for session 2. Also a design sheet per group.</li>
+</ul>
+</div>
+
+<h2>By the end, students can</h2>
+<ul class="tight">
+  <li>Say what the browser sends, what Flask does and what the database stores when someone signs up.</li>
+  <li>Write SELECT, INSERT and JOIN queries in SQLite.</li>
+  <li>Explain why <code>?</code> placeholders stop the attack that breaks version 1.</li>
+  <li>Choose the fields an app needs, and leave out the rest.</li>
+</ul>
+
+<h2>Success criteria, in student words</h2>
+<ol class="tight">
+  <li>I can tell the story of one sign-up in 4 steps: request, SQL, redirect, page.</li>
+  <li>My SQL makes the tables, adds fake rows and answers 2 questions, one with a JOIN.</li>
+  <li>I can show where version 1 went wrong and how version 2 fixes it.</li>
+  <li>Our design follows our 4 data rules.</li>
+</ol>
+
+<div class="session">
+<h3>Session 1: Follow one sign-up</h3>
+<ol>
+  <li><span class="t">0 to 10</span> Arrive, attendance, Chromebooks out.</li>
+  <li><span class="t">10 to 25</span> Unplugged. Three volunteers play browser, Flask and database. The browser hands over a request slip: "POST /signup, Ali, 1E1, Robotics". Flask writes the SQL on a slip. The database adds a row on the whiteboard. Flask hands back "302: go to /".</li>
+  <li><span class="t">25 to 45</span> Pairs use my app page. They sign up three fake students and fill a session. They copy one "What just happened" story onto their sheet.</li>
+  <li><span class="t">45 to 55</span> A real API. Students open <code>api.open-meteo.com/v1/forecast?latitude=1.29&amp;longitude=103.85&amp;current=temperature_2m</code>. They note the status code in DevTools and 3 JSON keys.</li>
+  <li><span class="t">55 to 65</span> Break.</li>
+  <li><span class="t">65 to 100</span> SQL Online IDE, set to SQLite. Students paste my <code>schema.sql</code>, then write: all sessions; only Robotics; an INSERT for a fake student; the sign-ups ordered by class.</li>
+  <li><span class="t">100 to 115</span> Share. One thing that surprised you. I go first: I forgot commit in my own app.</li>
+  <li><span class="t">115 to 120</span> Pack up. Paste your SQL in the class doc.</li>
+</ol>
+<p class="check">Check: 10 + 15 + 20 + 10 + 10 + 35 + 15 + 5 = 120 minutes.</p>
+</div>
+
+<div class="session">
+<h3>Session 2: JOINs, and breaking version 1</h3>
+<ol>
+  <li><span class="t">0 to 10</span> Arrive. Open last week's SQL from the class doc.</li>
+  <li><span class="t">10 to 40</span> JOINs. First a JOIN of sign-ups with sessions. Then places left, with LEFT JOIN and COUNT. Why does Robotics on Friday vanish with a plain JOIN?</li>
+  <li><span class="t">40 to 55</span> Break version 1. I read the rules out first. Then pairs switch my app to version 1 and log in with <code>' OR 1=1 --</code>. They copy the SQL it built.</li>
+  <li><span class="t">55 to 65</span> Break.</li>
+  <li><span class="t">65 to 85</span> On paper, the v1 and v2 login code side by side. Circle every difference. Then open the teachers table in both versions. What would a leak give away in each?</li>
+  <li><span class="t">85 to 110</span> Groups of 3 pick an app to design: a canteen pre-order, a library, or a sign-up for something else. They list every field and why. Then they cross out one.</li>
+  <li><span class="t">110 to 120</span> Pack up. Design sheets go in the club folder.</li>
+</ol>
+<p class="check">Check: 10 + 30 + 15 + 10 + 20 + 25 + 10 = 120 minutes.</p>
+</div>
+
+<div class="session">
+<h3>Session 3: Build the data for your app</h3>
+<ol>
+  <li><span class="t">0 to 10</span> Arrive. Get your design sheet.</li>
+  <li><span class="t">10 to 45</span> In SQL Online IDE, each group writes CREATE TABLE for their design. They add 5 fake rows, and write 2 queries. One must be a JOIN.</li>
+  <li><span class="t">45 to 60</span> Each group writes 4 data rules for their app, using mine as a model.</li>
+  <li><span class="t">60 to 70</span> Break.</li>
+  <li><span class="t">70 to 95</span> Gallery walk. Groups run another group's SQL and read their rules. They leave 2 sticky notes: one thing that works, one rule that was broken.</li>
+  <li><span class="t">95 to 110</span> Fix one thing from your sticky notes.</li>
+  <li><span class="t">110 to 120</span> Exit ticket: tell the story of one sign-up in 4 steps. Pack up.</li>
+</ol>
+<p class="check">Check: 10 + 35 + 15 + 10 + 25 + 15 + 10 = 120 minutes.</p>
+</div>
+
+<h2 id="rules">Data rules, and how I check them</h2>
+<p>These go up in session 1, before anyone types a name.</p>
+<ol class="tight">
+  <li><strong>Fake names only.</strong> First names from the list I hand out, or made up. Never a classmate. Check: I read every INSERT in the group's SQL in the class doc.</li>
+  <li><strong>No passwords in any table.</strong> If an app needs logins, the column is called <code>pw_hash</code>, and the sample rows say "hash". Check: I search their SQL for "password".</li>
+  <li><strong>Every column has a reason.</strong> One line each on the design sheet, and one field crossed out. Check: I hold the sheet next to their CREATE TABLE. A column with no reason gets a sticky note from me.</li>
+  <li><strong>Nothing that finds a person.</strong> No phone, email, address, NRIC or photo. Check: I read their CREATE TABLE. These words should not be in it.</li>
+</ol>
+<p>And one behaviour rule for session 2. The <code>' OR 1=1 --</code> trick is only for my version 1 page. Trying it on any other site is not a joke. I told our IT team before the session, too.</p>
+
+<h2>How I mark it</h2>
+<p>Each success criterion gets "yes", "nearly" or "not yet", with one comment. Rule breaks are "not yet" until fixed. A group that breaks a data rule fixes it before the gallery walk ends.</p>
+
+<h2>For different students</h2>
+<ul class="tight">
+  <li>New to code: they work with a partner who has done Python. In session 3 they own the design sheet.</li>
+  <li>Done early: add a teachers table with <code>pw_hash</code>, and write the JOIN that shows each teacher's sessions.</li>
+  <li>Struggling with JOIN: draw the two tables on paper, and connect matching ids with a pencil line first.</li>
+</ul>
+
+<h2>Sources</h2>
+<ul class="tight small">
+  <li><a href="https://sqliteonline.com/">SQL Online IDE</a>, runs SQLite in the browser.</li>
+  <li><a href="https://open-meteo.com/en/docs">Open-Meteo API docs</a>, no key needed for non-commercial use.</li>
+  <li><a href="https://www.pythonanywhere.com/terms/">PythonAnywhere terms</a>, clause 5.2.</li>
+  <li>Contract age of 18 in Singapore, from 1 March 2009: <a href="https://law.nus.edu.sg/sjls/wp-content/uploads/sites/14/2024/07/2028-2010-sjls-dec-328.pdf">Loo Wee Ling, Singapore Journal of Legal Studies, 2010</a>.</li>
+</ul>
+</div>
+</body>
+</html>

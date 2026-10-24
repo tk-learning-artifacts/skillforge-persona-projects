@@ -1,0 +1,6 @@
+{
+  "module": "backend-databases",
+  "persona": "daniel",
+  "title": "CCA Trial Day sign-up: my first Flask and SQLite app",
+  "summary": "A form-based sign-up app you can use here, with a step-by-step view of each request and a breakable version 1, the full Flask code and setup script, and a 3-session CCA unit on Chromebooks with four data rules."
+}

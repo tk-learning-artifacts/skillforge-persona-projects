@@ -1,0 +1,630 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Class Library code and setup script, by Rajan Pillai</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Rajan Pillai is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main class="prose">
+<p><a href="index.html">Back to Class Library</a></p>
+<h1>The code<small>Six files. I ran every one with Flask 3.1 and Werkzeug 3.1 on Python 3.13.</small></h1>
+<p class="lede"><a href="class-library.zip" download>Download all six files (zip)</a>. Below, each file in full, in the order you need them.</p>
+
+<div class="scroll">
+<table>
+  <tr><th>File</th><th>What it does</th></tr>
+  <tr><td><a href="#schema">schema.sql</a></td><td>Makes the three tables and the one-open-loan rule.</td></tr>
+  <tr><td><a href="#setup">setup_db.py</a></td><td>The database setup script. Runs schema.sql, adds sample data, makes the secret key.</td></tr>
+  <tr><td><a href="#app">app.py</a></td><td>The Flask API: the page route plus 11 API routes, all SQL with <code>?</code>.</td></tr>
+  <tr><td><a href="#page">static/index.html</a></td><td>The one web page.</td></tr>
+  <tr><td><a href="#js">static/app.js</a></td><td>Talks to the API with fetch().</td></tr>
+  <tr><td><a href="#css">static/style.css</a></td><td>Plain styles, light and dark.</td></tr>
+</table>
+</div>
+
+<h2 id="run">Run it on your own computer</h2>
+<ol class="steps">
+  <li>Unzip the folder. Open a terminal in it.</li>
+  <li>Install Flask: <code>pip install flask</code>.</li>
+  <li>Build the database: <code>python setup_db.py</code>. It asks for a librarian password. Type a made-up one.</li>
+  <li>Start the server: <code>flask --app app run --debug</code>.</li>
+  <li>Open <code>http://127.0.0.1:5000</code>. Log in as <code>librarian</code>.</li>
+  <li>To look inside the database: <code>python -m sqlite3 library.db</code>, then <code>SELECT * FROM loans;</code>.</li>
+</ol>
+<p class="small">Debug mode is for your own machine only. Flask's docs warn that its debugger can run any Python code from the browser.</p>
+
+<h2 id="schema">schema.sql</h2>
+<p>Dates are text in YYYY-MM-DD form. That way, comparing two dates as text gives the right answer. The last line is the part I like most. A unique index with a WHERE clause only counts the rows that match. So a book can have many old loans but only one open one. The database enforces it, not my Python.</p>
+<div class="file"><div class="file-name">schema.sql</div><pre><code>-- Tables for the class library. Run by setup_db.py.
+DROP TABLE IF EXISTS loans;
+DROP TABLE IF EXISTS books;
+DROP TABLE IF EXISTS users;
+
+CREATE TABLE users (
+  id INTEGER PRIMARY KEY,
+  username TEXT NOT NULL UNIQUE,      -- a made-up handle, never a real name
+  pw_hash TEXT NOT NULL,              -- werkzeug hash, never the password
+  is_librarian INTEGER NOT NULL DEFAULT 0
+);
+
+CREATE TABLE books (
+  id INTEGER PRIMARY KEY,
+  title TEXT NOT NULL,
+  author TEXT NOT NULL
+);
+
+CREATE TABLE loans (
+  id INTEGER PRIMARY KEY,
+  user_id INTEGER NOT NULL REFERENCES users(id),
+  book_id INTEGER NOT NULL REFERENCES books(id),
+  due_date TEXT NOT NULL,             -- YYYY-MM-DD, so text order is date order
+  returned_on TEXT                    -- NULL while the book is out
+);
+
+-- A book can be out on only one loan at a time.
+-- The database enforces it, so two clicks at once can't both win.
+CREATE UNIQUE INDEX one_open_loan ON loans(book_id) WHERE returned_on IS NULL;</code></pre></div>
+
+<h2 id="setup">setup_db.py: the database setup script</h2>
+<p>It wipes and rebuilds <code>library.db</code>. The librarian password is typed in, so it is never in the code. The sample readers get random passwords that are never printed. Nobody can log in as them. Their loans are dated from today, so two are always overdue.</p>
+<div class="file"><div class="file-name">setup_db.py</div><pre><code>"""Build library.db from schema.sql and fill it with made-up data.
+
+Run it once from a Bash console:  python3 setup_db.py
+Running it again wipes the database and starts over.
+"""
+import getpass
+import os
+import secrets
+import sqlite3
+from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
+
+from werkzeug.security import generate_password_hash
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+DB = os.path.join(HERE, "library.db")
+KEY = os.path.join(HERE, "secret.key")
+
+BOOKS = [
+    ("Animal Farm", "George Orwell"),
+    ("The Hobbit", "J. R. R. Tolkien"),
+    ("Holes", "Louis Sachar"),
+    ("The Giver", "Lois Lowry"),
+    ("Wonder", "R. J. Palacio"),
+    ("Frankenstein", "Mary Shelley"),
+]
+
+# Made-up readers. Their passwords are random and printed nowhere,
+# so nobody can log in as them. They only exist to own sample loans.
+READERS = ["reader_kite", "reader_moss", "reader_pebble"]
+
+
+def sg_today():
+    return datetime.now(ZoneInfo("Asia/Singapore")).date()
+
+
+def main():
+    password = getpass.getpass("Choose a password for the librarian account: ")
+    if len(password) &lt; 8:
+        raise SystemExit("Use at least 8 characters.")
+
+    con = sqlite3.connect(DB)
+    with open(os.path.join(HERE, "schema.sql")) as f:
+        con.executescript(f.read())
+
+    with con:  # commits at the end of the block
+        con.execute(
+            "INSERT INTO users (username, pw_hash, is_librarian) VALUES (?, ?, 1)",
+            ("librarian", generate_password_hash(password)),
+        )
+        for name in READERS:
+            con.execute(
+                "INSERT INTO users (username, pw_hash) VALUES (?, ?)",
+                (name, generate_password_hash(secrets.token_urlsafe(16))),
+            )
+        con.executemany("INSERT INTO books (title, author) VALUES (?, ?)", BOOKS)
+
+        today = sg_today()
+        sample_loans = [  # (user_id, book_id, days from today)
+            (2, 1, -5),   # overdue
+            (3, 3, -1),   # overdue by a day
+            (3, 4, 9),    # not due yet
+        ]
+        for user_id, book_id, days in sample_loans:
+            due = (today + timedelta(days=days)).isoformat()
+            con.execute(
+                "INSERT INTO loans (user_id, book_id, due_date) VALUES (?, ?, ?)",
+                (user_id, book_id, due),
+            )
+    con.close()
+
+    # Flask signs its session cookie with this key. Keep it out of your code.
+    with open(KEY, "w") as f:
+        f.write(secrets.token_hex())
+    print("Made library.db and secret.key. Log in as 'librarian'.")
+
+
+if __name__ == "__main__":
+    main()</code></pre></div>
+
+<h2 id="app">app.py: the API</h2>
+<p>Things to look for:</p>
+<ul class="tight">
+  <li>Every value from a request reaches SQL through a <code>?</code>. The one f-string adds <code>TODAY</code>, a fixed text I wrote.</li>
+  <li>SQLite's <code>'now'</code> is UTC. Without <code>'+8 hours'</code>, a book due today would turn overdue at 8 a.m. in Singapore, not midnight.</li>
+  <li><code>with db():</code> commits on success and rolls back on an error. Forgetting to commit is the most common bug I see.</li>
+  <li>Login gives the same message for a wrong username and a wrong password. A different message would tell an attacker which usernames exist.</li>
+  <li>The librarian check happens on the server for every librarian route. The page only hides buttons.</li>
+</ul>
+<div class="file"><div class="file-name">app.py</div><pre><code>"""Class library: a small Flask API on SQLite, with logins.
+
+Every query uses ? placeholders. Passwords are stored as werkzeug hashes.
+"""
+import os
+import re
+import sqlite3
+
+from flask import Flask, g, request, session
+from werkzeug.security import check_password_hash, generate_password_hash
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+DB = os.path.join(HERE, "library.db")
+
+# SQLite's 'now' is UTC. Singapore is UTC+8, so shift it, or books
+# go overdue at 8 a.m. instead of midnight. This is our own fixed text,
+# never user input, so it is safe to put into the SQL with an f-string.
+TODAY = "date('now', '+8 hours')"
+
+app = Flask(__name__, static_folder="static", static_url_path="")
+with open(os.path.join(HERE, "secret.key")) as f:
+    app.secret_key = f.read().strip()
+
+
+def db():
+    if "db" not in g:
+        g.db = sqlite3.connect(DB)
+        g.db.row_factory = sqlite3.Row
+        g.db.execute("PRAGMA foreign_keys = ON")
+    return g.db
+
+
+@app.teardown_appcontext
+def close_db(error):
+    con = g.pop("db", None)
+    if con is not None:
+        con.close()
+
+
+def rows(sql, params=()):
+    return [dict(r) for r in db().execute(sql, params).fetchall()]
+
+
+def me():
+    """The logged-in user, or None."""
+    if "user_id" not in session:
+        return None
+    return db().execute(
+        "SELECT id, username, is_librarian FROM users WHERE id = ?",
+        (session["user_id"],),
+    ).fetchone()
+
+
+def error(message, status):
+    return {"error": message}, status
+
+
+@app.get("/")
+def home():
+    return app.send_static_file("index.html")
+
+
+# ---- Accounts ----
+
+@app.post("/api/signup")
+def signup():
+    data = request.get_json(silent=True) or {}
+    username = str(data.get("username", "")).strip().lower()
+    password = str(data.get("password", ""))
+    if not re.fullmatch(r"[a-z0-9_]{3,20}", username):
+        return error("Use 3 to 20 letters, numbers or _.", 400)
+    if len(password) &lt; 8:
+        return error("Use at least 8 characters.", 400)
+    try:
+        with db():
+            cur = db().execute(
+                "INSERT INTO users (username, pw_hash) VALUES (?, ?)",
+                (username, generate_password_hash(password)),
+            )
+    except sqlite3.IntegrityError:
+        return error("That username is taken.", 409)
+    session["user_id"] = cur.lastrowid
+    return {"username": username, "is_librarian": 0}, 201
+
+
+@app.post("/api/login")
+def login():
+    data = request.get_json(silent=True) or {}
+    username = str(data.get("username", "")).strip().lower()
+    password = str(data.get("password", ""))
+    user = db().execute(
+        "SELECT id, username, pw_hash, is_librarian FROM users WHERE username = ?",
+        (username,),
+    ).fetchone()
+    # Same message either way, so nobody learns which usernames exist.
+    if user is None or not check_password_hash(user["pw_hash"], password):
+        return error("Wrong username or password.", 401)
+    session["user_id"] = user["id"]
+    return {"username": user["username"], "is_librarian": user["is_librarian"]}
+
+
+@app.post("/api/logout")
+def logout():
+    session.clear()
+    return {"ok": True}
+
+
+@app.get("/api/me")
+def whoami():
+    user = me()
+    if user is None:
+        return error("Not logged in.", 401)
+    return {"username": user["username"], "is_librarian": user["is_librarian"]}
+
+
+# ---- Books ----
+
+@app.get("/api/books")
+def list_books():
+    return rows(
+        "SELECT b.id, b.title, b.author, l.id IS NOT NULL AS on_loan "
+        "FROM books b LEFT JOIN loans l "
+        "ON l.book_id = b.id AND l.returned_on IS NULL "
+        "ORDER BY b.title"
+    )
+
+
+@app.get("/api/books/&lt;int:book_id&gt;")
+def one_book(book_id):
+    found = rows("SELECT id, title, author FROM books WHERE id = ?", (book_id,))
+    if not found:
+        return error("No book with that id.", 404)
+    return found[0]
+
+
+@app.post("/api/books")
+def add_book():
+    user = me()
+    if user is None or not user["is_librarian"]:
+        return error("Only the librarian can add books.", 403)
+    data = request.get_json(silent=True) or {}
+    title = str(data.get("title", "")).strip()
+    author = str(data.get("author", "")).strip()
+    if not (1 &lt;= len(title) &lt;= 100 and 1 &lt;= len(author) &lt;= 100):
+        return error("Give a title and an author, 100 characters at most.", 400)
+    with db():
+        cur = db().execute(
+            "INSERT INTO books (title, author) VALUES (?, ?)", (title, author)
+        )
+    return {"id": cur.lastrowid, "title": title, "author": author}, 201
+
+
+# ---- Loans ----
+
+@app.get("/api/loans")
+def my_loans():
+    user = me()
+    if user is None:
+        return error("Log in first.", 401)
+    return rows(
+        "SELECT l.id, b.title, l.due_date, "
+        f"l.due_date &lt; {TODAY} AS overdue "
+        "FROM loans l JOIN books b ON b.id = l.book_id "
+        "WHERE l.user_id = ? AND l.returned_on IS NULL "
+        "ORDER BY l.due_date",
+        (user["id"],),
+    )
+
+
+@app.post("/api/loans")
+def borrow():
+    user = me()
+    if user is None:
+        return error("Log in first.", 401)
+    data = request.get_json(silent=True) or {}
+    book_id = data.get("book_id")
+    if not isinstance(book_id, int):
+        return error("Send a book_id number.", 400)
+    if not rows("SELECT id FROM books WHERE id = ?", (book_id,)):
+        return error("No book with that id.", 404)
+    try:
+        with db():
+            cur = db().execute(
+                "INSERT INTO loans (user_id, book_id, due_date) "
+                f"VALUES (?, ?, date({TODAY}, '+14 days'))",
+                (user["id"], book_id),
+            )
+    except sqlite3.IntegrityError:
+        return error("Someone already has that book.", 409)
+    return rows("SELECT id, due_date FROM loans WHERE id = ?", (cur.lastrowid,))[0], 201
+
+
+@app.post("/api/loans/&lt;int:loan_id&gt;/return")
+def give_back(loan_id):
+    user = me()
+    if user is None:
+        return error("Log in first.", 401)
+    with db():
+        cur = db().execute(
+            f"UPDATE loans SET returned_on = {TODAY} "
+            "WHERE id = ? AND returned_on IS NULL AND (user_id = ? OR ? = 1)",
+            (loan_id, user["id"], user["is_librarian"]),
+        )
+    if cur.rowcount == 0:
+        return error("No open loan of yours with that id.", 404)
+    return {"ok": True}
+
+
+@app.get("/api/overdue")
+def overdue():
+    user = me()
+    if user is None or not user["is_librarian"]:
+        return error("Only the librarian can see this.", 403)
+    return rows(
+        "SELECT l.id, u.username, b.title, l.due_date "
+        "FROM loans l "
+        "JOIN users u ON u.id = l.user_id "
+        "JOIN books b ON b.id = l.book_id "
+        f"WHERE l.returned_on IS NULL AND l.due_date &lt; {TODAY} "
+        "ORDER BY l.due_date"
+    )
+
+
+if __name__ == "__main__":
+    app.run(debug=True)</code></pre></div>
+
+<h2 id="page">static/index.html</h2>
+<p>Flask serves this file at <code>/</code>. The page and the API share one origin, so there are no CORS errors.</p>
+<div class="file"><div class="file-name">static/index.html</div><pre><code>&lt;!doctype html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+&lt;meta charset="utf-8"&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+&lt;title&gt;Class Library&lt;/title&gt;
+&lt;link rel="stylesheet" href="/style.css"&gt;
+&lt;script src="/app.js" defer&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div class="lib" id="lib"&gt;
+  &lt;header class="lib-top"&gt;
+    &lt;strong&gt;Class Library&lt;/strong&gt;
+    &lt;span id="who"&gt;Not logged in&lt;/span&gt;
+    &lt;button type="button" id="logout" hidden&gt;Log out&lt;/button&gt;
+  &lt;/header&gt;
+
+  &lt;form class="lib-card" id="auth"&gt;
+    &lt;p class="lib-h"&gt;Log in or sign up&lt;/p&gt;
+    &lt;label&gt;Username &lt;input name="username" autocomplete="username" required&gt;&lt;/label&gt;
+    &lt;label&gt;Password &lt;input name="password" type="password" autocomplete="current-password" required&gt;&lt;/label&gt;
+    &lt;p class="lib-hint"&gt;Made-up names and passwords only.&lt;/p&gt;
+    &lt;div class="lib-row"&gt;
+      &lt;button type="submit" data-action="login"&gt;Log in&lt;/button&gt;
+      &lt;button type="submit" data-action="signup"&gt;Sign up&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/form&gt;
+
+  &lt;section class="lib-card"&gt;
+    &lt;p class="lib-h"&gt;Books&lt;/p&gt;
+    &lt;ul class="lib-list" id="books"&gt;&lt;/ul&gt;
+  &lt;/section&gt;
+
+  &lt;section class="lib-card" id="mine" hidden&gt;
+    &lt;p class="lib-h"&gt;My loans&lt;/p&gt;
+    &lt;ul class="lib-list" id="loans"&gt;&lt;/ul&gt;
+  &lt;/section&gt;
+
+  &lt;section class="lib-card" id="desk" hidden&gt;
+    &lt;p class="lib-h"&gt;Librarian desk&lt;/p&gt;
+    &lt;form id="add-book" class="lib-row"&gt;
+      &lt;input name="title" placeholder="Title" required maxlength="100"&gt;
+      &lt;input name="author" placeholder="Author" required maxlength="100"&gt;
+      &lt;button type="submit"&gt;Add book&lt;/button&gt;
+    &lt;/form&gt;
+    &lt;p class="lib-h"&gt;Overdue&lt;/p&gt;
+    &lt;ul class="lib-list" id="overdue"&gt;&lt;/ul&gt;
+  &lt;/section&gt;
+
+  &lt;p class="lib-msg" id="msg" role="status" aria-live="polite"&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre></div>
+
+<h2 id="js">static/app.js</h2>
+<p>Every bit of text from the database goes into the page with <code>textContent</code>. Never <code>innerHTML</code>. So a book called <code>&lt;script&gt;</code> shows as text.</p>
+<div class="file"><div class="file-name">static/app.js</div><pre><code>// The page side of the Class Library. It only talks to the API with fetch().
+const $ = (id) =&gt; document.getElementById(id);
+let user = null;
+
+async function call(method, path, body) {
+  const res = await fetch(path, {
+    method,
+    headers: body ? { "Content-Type": "application/json" } : {},
+    body: body ? JSON.stringify(body) : undefined,
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || "Something went wrong.");
+  return data;
+}
+
+function say(text, bad) {
+  $("msg").textContent = text;
+  $("msg").className = bad ? "lib-msg bad" : "lib-msg";
+}
+
+function item(text, buttonText, onClick) {
+  const li = document.createElement("li");
+  const span = document.createElement("span");
+  span.textContent = text; // textContent, never innerHTML, for anything typed
+  li.append(span);
+  if (buttonText) {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.textContent = buttonText;
+    b.addEventListener("click", onClick);
+    li.append(b);
+  }
+  return li;
+}
+
+async function showBooks() {
+  const books = await call("GET", "/api/books");
+  $("books").replaceChildren(...books.map((b) =&gt; {
+    const label = `${b.title}, ${b.author}` + (b.on_loan ? " (out)" : "");
+    if (!user || b.on_loan) return item(label);
+    return item(label, "Borrow", () =&gt; borrow(b.id, b.title));
+  }));
+}
+
+async function showLoans() {
+  if (!user) return;
+  const loans = await call("GET", "/api/loans");
+  $("loans").replaceChildren(...(loans.length ? loans.map((l) =&gt;
+    item(`${l.title}, due ${l.due_date}` + (l.overdue ? " (overdue)" : ""), "Return", () =&gt; giveBack(l.id))
+  ) : [item("Nothing borrowed.")]));
+  if (user.is_librarian) {
+    const late = await call("GET", "/api/overdue");
+    $("overdue").replaceChildren(...(late.length ? late.map((l) =&gt;
+      item(`${l.title}: ${l.username}, due ${l.due_date}`, "Mark returned", () =&gt; giveBack(l.id))
+    ) : [item("Nothing overdue.")]));
+  }
+}
+
+function showUser() {
+  $("who").textContent = user ? `Logged in as ${user.username}` : "Not logged in";
+  $("logout").hidden = !user;
+  $("auth").hidden = !!user;
+  $("mine").hidden = !user;
+  $("desk").hidden = !(user &amp;&amp; user.is_librarian);
+}
+
+async function refresh() {
+  showUser();
+  await showBooks();
+  await showLoans();
+}
+
+async function borrow(id, title) {
+  try {
+    const loan = await call("POST", "/api/loans", { book_id: id });
+    say(`Borrowed ${title}. Due ${loan.due_date}.`);
+  } catch (e) { say(e.message, true); }
+  await refresh();
+}
+
+async function giveBack(id) {
+  try {
+    await call("POST", `/api/loans/${id}/return`);
+    say("Returned.");
+  } catch (e) { say(e.message, true); }
+  await refresh();
+}
+
+$("auth").addEventListener("submit", async (e) =&gt; {
+  e.preventDefault();
+  const form = new FormData(e.target);
+  const action = e.submitter ? e.submitter.dataset.action : "login";
+  try {
+    user = await call("POST", `/api/${action}`, {
+      username: form.get("username"),
+      password: form.get("password"),
+    });
+    e.target.reset();
+    say(action === "signup" ? "Account made. You are logged in." : "Logged in.");
+  } catch (err) { say(err.message, true); }
+  await refresh();
+});
+
+$("logout").addEventListener("click", async () =&gt; {
+  await call("POST", "/api/logout");
+  user = null;
+  say("Logged out.");
+  await refresh();
+});
+
+$("add-book").addEventListener("submit", async (e) =&gt; {
+  e.preventDefault();
+  const form = new FormData(e.target);
+  try {
+    const book = await call("POST", "/api/books", { title: form.get("title"), author: form.get("author") });
+    e.target.reset();
+    say(`Added ${book.title}.`);
+  } catch (err) { say(err.message, true); }
+  await refresh();
+});
+
+(async () =&gt; {
+  try { user = await call("GET", "/api/me"); } catch { user = null; }
+  await refresh();
+})();</code></pre></div>
+
+<h2 id="css">static/style.css</h2>
+<div class="file"><div class="file-name">static/style.css</div><pre><code>/* Plain styles for the Class Library page. */
+body { margin: 0; font: 16px/1.5 system-ui, sans-serif; color: #1d232b; background: #f5f6f8; color-scheme: light dark; }
+@media (prefers-color-scheme: dark) { body { color: #e8ecf1; background: #14181d; } }
+.lib { max-width: 640px; margin: 0 auto; padding: 12px; }
+.lib-top { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; }
+.lib-card { border: 1px solid #8a94a344; border-radius: 10px; padding: 12px; margin: 12px 0; }
+.lib-h { font-weight: 700; margin: 0 0 8px; }
+.lib-hint { font-size: 0.9em; opacity: 0.8; margin: 4px 0; }
+.lib label { display: block; margin: 6px 0; }
+.lib input { font: inherit; width: 100%; min-height: 40px; padding: 4px 8px; box-sizing: border-box; }
+.lib button { font: inherit; min-height: 40px; padding: 0 12px; cursor: pointer; }
+.lib-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.lib-row input { flex: 1 1 140px; width: auto; }
+.lib-list { list-style: none; padding: 0; margin: 0; }
+.lib-list li { display: flex; gap: 8px; align-items: center; justify-content: space-between; padding: 6px 0; border-top: 1px solid #8a94a333; }
+.lib-msg.bad { color: #b3261e; }
+@media (prefers-color-scheme: dark) { .lib-msg.bad { color: #ffb4ab; } }</code></pre></div>
+
+<h2 id="host">Put it on PythonAnywhere</h2>
+<p>This is for the teacher's own account, not students'. Their terms ask for contract age, which is 18 in Singapore.</p>
+<ol class="steps">
+  <li>Make a free account. Your app's address will end in <code>.pythonanywhere.com</code>.</li>
+  <li>On the Files tab, make a folder <code>library</code> in your home folder. Upload the six files, with the three page files in <code>library/static</code>.</li>
+  <li>Open a Bash console. Run <code>cd library</code>, then <code>python3 setup_db.py</code>.</li>
+  <li>Make a virtualenv and install Flask in it, as PythonAnywhere's Flask help page shows.</li>
+  <li>On the Web tab, add a new web app. Pick Manual configuration and the same Python version. Enter your virtualenv name.</li>
+  <li>Open the WSGI file from the Web tab. Add your <code>library</code> folder to <code>sys.path</code>. Then add <code>from app import app as application</code>.</li>
+  <li>Click Reload on the Web tab. Open your address.</li>
+</ol>
+<p>Free accounts get one web app, which stops after a month unless you extend it. The Web tab has a button for that. There is also a 512 MiB disk limit, which a class library will never reach.</p>
+<p>The app reads files with full paths built from <code>__file__</code>. On PythonAnywhere the server does not start in your folder. A plain <code>"library.db"</code> would make a new, empty database somewhere else.</p>
+
+<h2 id="twin">How the twin on the app page differs</h2>
+<p>The <a href="index.html#app">app page</a> runs a JavaScript copy of <code>app.py</code>. It is in <a href="server.js">server.js</a>. Here is every difference I know of.</p>
+<ul class="tight">
+  <li>SQL: the same text, run by SQLite inside the browser through <a href="https://github.com/sql-js/sql.js">sql.js</a>. Same placeholders, same index, same date maths.</li>
+  <li>Hashing: the twin uses werkzeug's <code>pbkdf2:sha256:1000000</code> format, because browsers have no scrypt. I checked that <code>check_password_hash</code> in Python accepts a hash the twin made. So a twin user would log in fine in the real app.</li>
+  <li>Sessions: Flask signs a cookie. The twin keeps the user id in your browser's storage. There is nothing to sign, as there is no server to fool.</li>
+  <li>Transactions: sql.js saves every statement at once. Each twin route writes one row, so the result is the same.</li>
+  <li>The page: the twin loads <code>app.js</code> unchanged. Only <code>fetch()</code> is pointed at the twin.</li>
+</ul>
+
+<h2>Sources</h2>
+<ul class="tight small">
+  <li><a href="https://help.pythonanywhere.com/pages/Flask/">PythonAnywhere: setting up Flask</a>, for the virtualenv, WSGI file and <code>application</code> name.</li>
+  <li><a href="https://help.pythonanywhere.com/pages/FreeAccountsFeatures/">PythonAnywhere free account features</a>: 1 web app, 1 month expiry, 512 MiB disk.</li>
+  <li><a href="https://www.pythonanywhere.com/pricing/">PythonAnywhere pricing</a>, for the <code>.pythonanywhere.com</code> address on free accounts.</li>
+  <li><a href="https://blog.pythonanywhere.com/121/">PythonAnywhere blog: a database-backed Flask website</a>, for the button that extends a free site. Its wording is older and says three months.</li>
+  <li>Contract age: clause 5.2 of the <a href="https://www.pythonanywhere.com/terms/">PythonAnywhere terms</a>, and 18 in Singapore from 1 March 2009, per <a href="https://law.nus.edu.sg/sjls/wp-content/uploads/sites/14/2024/07/2028-2010-sjls-dec-328.pdf">Loo Wee Ling, Singapore Journal of Legal Studies, 2010</a>.</li>
+  <li><a href="https://flask.palletsprojects.com/en/stable/quickstart/">Flask Quickstart</a>, for the debugger warning, JSON replies and sessions.</li>
+  <li><a href="https://docs.python.org/3/library/sqlite3.html">Python sqlite3</a>, for placeholders and <code>with con:</code>.</li>
+  <li><a href="https://www.sqlite.org/partialindex.html">SQLite partial indexes</a> and <a href="https://www.sqlite.org/lang_datefunc.html">SQLite date functions</a>.</li>
+  <li><a href="https://werkzeug.palletsprojects.com/en/stable/utils/">Werkzeug password hashing</a>.</li>
+</ul>
+</main>
+</body>
+</html>

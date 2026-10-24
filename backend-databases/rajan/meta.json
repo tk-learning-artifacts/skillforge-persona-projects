@@ -1,0 +1,6 @@
+{
+  "module": "backend-databases",
+  "persona": "rajan",
+  "title": "Class Library: a book loans API in Flask and SQLite",
+  "summary": "A working library loans app with hashed logins and a request inspector that shows every SQL query, the full Flask code and setup script, and a 3-lesson Sec 3 plan with five data rules."
+}
