@@ -26,10 +26,11 @@
 <ul class="toc">
   <li><a href="#demo"><span>01</span>Demo video</a></li>
   <li><a href="#bench"><span>02</span>Test bench: try it yourself</a></li>
-  <li><a href="code.html"><span>03</span>The code, line by line</a></li>
-  <li><a href="tuning.html"><span>04</span>Tuning notes</a></li>
-  <li><a href="build.html"><span>05</span>Build and wiring</a></li>
-  <li><a href="#rubric"><span>06</span>Rubric check</a></li>
+  <li><a href="code.html"><span>Page</span>The code, line by line</a></li>
+  <li><a href="tuning.html"><span>Page</span>Tuning notes</a></li>
+  <li><a href="build.html"><span>Page</span>Build and wiring</a></li>
+  <li><a href="#rubric"><span>04</span>Rubric check</a></li>
+  <li><a href="#reflection"><span>05</span>Reflection</a></li>
 </ul>
 
 <h2 id="demo"><span class="num">01</span>Demo video</h2>
@@ -48,7 +49,7 @@
 </div>
 <p class="small digits" id="demo-clock">0.00 s</p>
 <ul class="chapters" id="demo-chapters" aria-label="Jump to a part of the run"></ul>
-<p class="small">The orange dots are the sensors. A dot fills in when it sees tape. The box in the corner shows both readings (L and R) and the threshold (T).</p>
+<p class="small">The two small dots are the sensors. A dot turns orange when it sees tape. The box in the corner shows both readings (L and R) and the threshold (T).</p>
 <div class="row">
   <button type="button" id="demo-save">Save as a video file</button>
   <span class="small" id="demo-save-note">Records the replay into a file you can share. Works in Chrome and Edge.</span>
@@ -90,8 +91,8 @@
     <label class="field">TURN size: <span class="digits" id="b-turn-v">700</span>
       <input type="range" id="b-turn" min="0" max="1023" step="25" value="700">
     </label>
-    <label class="field">Fixed threshold: <span class="digits" id="b-threshold-v">500</span>
-      <input type="range" id="b-threshold" min="0" max="1023" step="10" value="500">
+    <label class="field">Fixed threshold: <span class="digits" id="b-threshold-v">512</span>
+      <input type="range" id="b-threshold" min="0" max="1023" step="1" value="512">
     </label>
     <label class="field"><span><input type="checkbox" id="b-cal" checked> Calibrate at the start</span>
       <span class="small">The turn can't be bigger than the speed.</span>
@@ -113,7 +114,7 @@
 <p class="live" id="b-live" aria-live="polite"></p>
 <div class="runs" id="b-runs" aria-hidden="true"></div>
 <p class="live" id="b-summary" aria-live="polite"></p>
-<p class="small">Green is a run that finished 3 laps. Red left the track. Each run gets slightly different batteries, a slightly crooked start and noisy sensors. Wobble is how far the robot points away from the tape, on average.</p>
+<p class="small">Green is a run that finished 3 laps. Red did not finish. Each run gets slightly different batteries, a slightly crooked start and noisy sensors. Wobble is how far the robot points away from the tape, on average.</p>
 <p>Try this. Pick version 1 in the hall. Then version 4 in the hall. Then set your own numbers: BASE 1000 and TURN 525. Where does it fly off?</p>
 
 <h2 id="deliverables"><span class="num">03</span>What is in this project</h2>
@@ -138,7 +139,7 @@
 </div>
 
 <h2 id="reflection"><span class="num">05</span>Reflection</h2>
-<p>The big win was calibration. Versions 1 and 2 used one fixed threshold. In the hall, by the windows, the tape read about 560. Our thresholds were 500, then 480. To the robot, the tape had vanished. It drifted off before it even reached the first corner. A 1.6-second sweep at the start fixed every room we tried.</p>
+<p>The big win was calibration. Versions 1 and 2 used one fixed threshold. In the hall, by the windows, the tape read about 460. Our thresholds were 512, then 543. To the robot, the tape had vanished. It drifted off before it even reached the first corner. A 1.6-second sweep at the start fixed every room we tried.</p>
 <p>The surprise was the turn size. Halving it made the robot smooth, and I was pleased. Then the test showed 4 runs in 20 sliding off, three of them at the S-bend. Smooth is not the same as reliable. We had to go back up to a middle value, then raise both numbers together for speed.</p>
 <p>Testing under pressure helped. Twenty runs feels slow, but one good lap proves nothing. Version 2 looked perfect for its first 8 runs.</p>
 
@@ -146,7 +147,7 @@
 <ul class="tight">
   <li>One run in 60 still left the track, at corner 4 in the hall. Our speed is close to the edge. At a real competition I would drop BASE by 50 and take the safer lap.</li>
   <li>Two sensors can't tell "centred" from "lost". Once both sensors miss the tape, the robot drives straight on. A third sensor in the middle would fix that.</li>
-  <li>The calibration fails if you start the robot off the tape. It shows a cross, but a Sec 1 student won't know why. I would scroll "PUT ME ON THE LINE" instead.</li>
+  <li>The calibration fails if you start the robot off the tape. It shows a cross, but a new student won't know why. I would scroll "PUT ME ON THE LINE" instead.</li>
   <li>This is on-off steering. The robot only knows left, right or straight. Proportional steering, where the turn grows with the error, would be smoother at speed. That is the next unit.</li>
 </ul>
 

@@ -51,16 +51,17 @@
   const LENGTH = TRACK.length * STEP;
 
   // Rooms. The readings are made up, shaped like our team's logs.
+  // Black tape reflects less light, so it reads HIGH. Window light lowers every reading.
   const ROOMS = {
-    cca: { name: 'CCA room, ceiling lights', floor: 780, tape: 180, noise: 14 },
-    hall: { name: 'Hall, next to the windows', floor: 910, tape: 560, noise: 22 },
-    dim: { name: 'Dim corner of the store room', floor: 470, tape: 90, noise: 12 }
+    cca: { name: 'CCA room, ceiling lights', floor: 243, tape: 843, noise: 14 },
+    hall: { name: 'Hall, next to the windows', floor: 113, tape: 463, noise: 22 },
+    dim: { name: 'Dim corner of the store room', floor: 553, tape: 933, noise: 12 }
   };
 
-  // The three versions in the tuning notes. Duty numbers are out of 1023.
+  // The four versions in the tuning notes. Duty numbers are out of 1023.
   const VERSIONS = {
-    1: { name: 'Version 1', base: 700, turn: 700, threshold: 500, calibrate: false },
-    2: { name: 'Version 2', base: 700, turn: 350, threshold: 480, calibrate: false },
+    1: { name: 'Version 1', base: 700, turn: 700, threshold: 512, calibrate: false },
+    2: { name: 'Version 2', base: 700, turn: 350, threshold: 543, calibrate: false },
     3: { name: 'Version 3', base: 700, turn: 525, threshold: 0, calibrate: true },
     4: { name: 'Version 4 (final)', base: 900, turn: 700, threshold: 0, calibrate: true }
   };
@@ -127,7 +128,7 @@
     const p = sensorPos(s, sideSign);
     const d = lineDist(p[0], p[1], s.idx);
     const f = Math.max(0, Math.min(1, (TAPE_HALF + SPOT - d) / (2 * SPOT)));
-    const raw = s.room.floor * (1 - f) + s.room.tape * f + gauss(s.rand) * s.room.noise;
+    const raw = s.room.floor * (1 - f) + s.room.tape * f - gauss(s.rand) * s.room.noise;
     return Math.max(0, Math.min(1023, Math.round(raw)));
   }
 
@@ -146,7 +147,7 @@
       else {
         s.cmdL = 0; s.cmdR = 0;
         if (s.hi - s.lo < 150) { s.done = true; s.result = 'calibration failed'; s.rule = 'calibration failed'; return; }
-        s.threshold = Math.round((s.lo + s.hi) / 2);
+        s.threshold = Math.floor((s.lo + s.hi) / 2); // like (low + high) // 2 in Python
         s.phase = 'settle';
         s.rule = 'threshold set to ' + s.threshold;
       }
@@ -158,8 +159,8 @@
       return;
     }
     const v = s.v;
-    s.darkL = s.readL < s.threshold;
-    s.darkR = s.readR < s.threshold;
+    s.darkL = s.readL > s.threshold;
+    s.darkR = s.readR > s.threshold;
     const before = s.rule;
     if (s.darkL && !s.darkR) { s.cmdL = v.base - v.turn; s.cmdR = v.base; s.rule = 'line under left: steer left'; }
     else if (s.darkR && !s.darkL) { s.cmdL = v.base; s.cmdR = v.base - v.turn; s.rule = 'line under right: steer right'; }

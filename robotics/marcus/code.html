@@ -25,7 +25,7 @@
 <pre><code># Two-sensor line follower, version 4 (final).
 # Marcus Lee&#x27;s robotics CCA, for the micro:bit V2 in MicroPython.
 #
-# Sensors: two TCRT5000 reflectance boards, analog out. Black tape reads LOW.
+# Sensors: two TCRT5000 reflectance boards, analog out. Black tape reads HIGH.
 # Motors: a DRV8833 dual H-bridge, powered by its own 4 x AA pack.
 # Press A to calibrate and go. Press B at any time to stop.
 
@@ -64,7 +64,7 @@ def drive(left, right):
 
 def calibrate():
     # Sweep both sensors across the tape: left, right, then back to the middle.
-    # Returns the midpoint of the darkest and lightest readings, or None.
+    # Returns the midpoint of the highest and lowest readings, or None.
     low, high = 1023, 0
     for left, right, ms in ((-SPIN, SPIN, 400), (SPIN, -SPIN, 800), (-SPIN, SPIN, 400)):
         drive(left, right)
@@ -83,8 +83,8 @@ def calibrate():
 def follow(threshold):
     # Sense, decide, act, until B is pressed.
     while not button_b.was_pressed():
-        left_dark = LEFT_EYE.read_analog() &lt; threshold
-        right_dark = RIGHT_EYE.read_analog() &lt; threshold
+        left_dark = LEFT_EYE.read_analog() &gt; threshold
+        right_dark = RIGHT_EYE.read_analog() &gt; threshold
         if left_dark and not right_dark:
             drive(BASE - TURN, BASE)    # tape under the left sensor: steer left
         elif right_dark and not left_dark:
@@ -131,17 +131,17 @@ while True:
 <h2><span class="num">03</span>The parts students get wrong</h2>
 <h3>Why only two PWM pins</h3>
 <p>The DRV8833 needs two inputs per motor, so four in all. But the micro:bit can run PWM on only 3 pins at once. A fourth one switches another off. So <code>set_motor</code> sends PWM to one pin of each pair and holds the other at 0. To reverse, it swaps them. We never use more than two PWM pins.</p>
-<h3>Why "below the threshold" means tape</h3>
-<p>Our sensor boards give a low number over black tape and a high number over the light floor. Some boards work the other way round. Show the raw numbers on the screen before you trust this line.</p>
+<h3>Why "above the threshold" means tape</h3>
+<p>Each sensor shines infrared light down and measures what bounces back. A light floor bounces a lot back, and the board gives a low number. Black tape soaks the light up, so it reads high. Most TCRT5000 boards work this way. A few work the other way round. Show the raw numbers on the screen before you trust this line.</p>
 <h3>Why the threshold is not a fixed number</h3>
-<p>The tape read about 180 in our CCA room and about 560 by the hall windows. No single number works in both. <code>calibrate</code> takes the darkest and lightest readings it sees during the sweep, and uses the halfway point. If the two are less than 150 apart, it isn't over the tape. It shows a cross and waits.</p>
+<p>The tape read about 840 in our CCA room and about 460 by the hall windows. No single number works in both. <code>calibrate</code> takes the highest and lowest readings it sees during the sweep, and uses the halfway point. If the two are less than 150 apart, it isn't over the tape. It shows a cross and waits.</p>
 <h3>Why nothing happens when both sensors see black</h3>
 <p>On a sharp corner, both sensors can sit on the tape for a moment. Both "steer" rules would fight. So the code keeps doing whatever it did last, which is usually the turn it was already making.</p>
 <h3>Why button B is checked every loop</h3>
 <p>B is the stop button. <code>was_pressed</code> remembers a press, so a quick tap is never missed. The battery switch is the second stop, and the one we teach first.</p>
 
 <h2><span class="num">04</span>What changed from version 1</h2>
-<p>Version 1 was 35 lines. It had a fixed <code>THRESHOLD = 500</code> and no <code>calibrate</code>. BASE and TURN were both 700, so the inside wheel stopped dead on every turn. The <a href="tuning.html">tuning notes</a> show each change and the test that drove it.</p>
+<p>Version 1 was 35 lines. It had a fixed <code>THRESHOLD = 512</code> and no <code>calibrate</code>. BASE and TURN were both 700, so the inside wheel stopped dead on every turn. The <a href="tuning.html">tuning notes</a> show each change and the test that drove it.</p>
 
 <h2><span class="num">05</span>Sources</h2>
 <ul class="tight small">

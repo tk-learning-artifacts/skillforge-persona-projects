@@ -4,7 +4,7 @@
   --paper: #fbfaf6; --card: #f2f0e8; --route: #1f6f4a; --route-soft: #dcefe4;
   --warn: #a8461a; --warn-soft: #f7e3d6; --block: #e3e0d6; --road: #c9c6bc; --tree: #6f9e6b;
   --shade: rgba(31, 111, 74, 0.18); --bar-a: #1f6f4a; --bar-b: #a8461a;
-  --m1: #1f6f4a; --m2: #3b82a6; --m3: #7a5aa6; --m4: #a8461a; --m5: #c2972f; --m6: #8a8f8c;
+  --m1: #1f6f4a; --m2: #3b82a6; --m3: #7a5aa6; --m4: #a8461a; --m5: #c2972f; --m6: #8a8f8c; --m7: #dcefe4;
   color-scheme: light dark;
 }
 @media (prefers-color-scheme: dark) {
@@ -13,7 +13,7 @@
     --paper: #141816; --card: #1e2421; --route: #6fd19b; --route-soft: #183327;
     --warn: #f0a07a; --warn-soft: #3a2218; --block: #2c332f; --road: #3b423e; --tree: #5d8f5a;
     --shade: rgba(111, 209, 155, 0.18); --bar-a: #6fd19b; --bar-b: #f0a07a;
-    --m1: #6fd19b; --m2: #7cc3e6; --m3: #b9a0e6; --m4: #f0a07a; --m5: #e6c56a; --m6: #a7aca9;
+    --m1: #6fd19b; --m2: #7cc3e6; --m3: #b9a0e6; --m4: #f0a07a; --m5: #e6c56a; --m6: #a7aca9; --m7: #d9d4c4;
   }
 }
 * { box-sizing: border-box; }

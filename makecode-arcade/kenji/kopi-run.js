@@ -83,10 +83,11 @@
     bot.vx = 0; bot.vy = 0;
     trail = [];
   }
-  function loseLife(why) {
+  // Like the MakeCode code: a crow hit shakes the screen, a canal fall does not.
+  // The starter's crow and canal blocks have no sound or shake yet.
+  function loseLife(why, shake) {
     life -= 1;
-    e.shake = 0.3;
-    e.play(SOUND.crash);
+    if (!STARTER) { if (shake) e.shake = 0.3; e.play(SOUND.crash); }
     say(why + ' Lives left: ' + Math.max(life, 0) + '.');
     hud();
     if (life <= 0) { gameOver(false); return; }
@@ -136,7 +137,7 @@
         say('Crow scared off. Plus 3.');
         hud();
       } else {
-        loseLife('A crow got you.');
+        loseLife('A crow got you.', true);
       }
     });
     if (state === 'over') return;

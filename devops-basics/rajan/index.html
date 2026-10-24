@@ -77,7 +77,7 @@
   <rect class="box" x="70" y="494" width="200" height="56" rx="10"/><text x="170" y="518" text-anchor="middle">Live site</text><text class="sub" x="170" y="537" text-anchor="middle">owner.github.io/repo</text>
 </svg>
 <div class="prose">
-<p>The workflow file has two jobs. The <code>check</code> job runs <code>node tools/check-site.mjs</code> on every pull request and every push to main. The <code>deploy</code> job runs only on main, and only after <code>check</code> passes. I started from GitHub's "Static HTML" starter workflow. Then I added the check job in front. You can read the whole file on the <a href="template.html#deploy">template page</a>.</p>
+<p>The workflow file has two jobs. The <code>check</code> job runs <code>node tools/check-site.mjs</code> on every pull request and every push to main. The <code>deploy</code> job runs only on main, and only after <code>check</code> passes. I started from GitHub's "Static HTML" starter workflow. Then I added the check job in front. I also moved the one-deploy-at-a-time rule onto the deploy job. At the top of the file, it would also queue pull request checks. A queued check can be cancelled, and then the merge stays blocked. You can read the whole file on the <a href="template.html#deploy">template page</a>.</p>
 <p>The check needs nothing installed. GitHub's Ubuntu runners already come with Node.js. It fails a pull request when:</p>
 <ul class="tight">
   <li>a page has no title, or more or fewer than one main heading;</li>
@@ -151,7 +151,7 @@
   <li><b>Require status checks to pass before merging</b>, with <code>check</code> added. A red check greys out the merge.</li>
   <li><b>Block force pushes</b> and <b>Restrict deletions</b>. Both are on by default. Nobody can rewrite or delete main.</li>
 </ul>
-<p>I leave myself, the admin, out of the bypass list. If I can skip the rules, I will, the day the bell is about to ring. Then my students learn that the rules are for show.</p>
+<p>I leave myself, the admin, out of the bypass list. If I can skip the rules, I will, when the bell is about to ring. Then my students learn that the rules are for show.</p>
 <p>The template page on GitHub's docs doesn't say rulesets are copied to a new repository. So my guide sets the ruleset on each team copy. It takes about two minutes a team.</p>
 </div>
 
@@ -177,6 +177,7 @@
   <li>Pages needs a public repository on GitHub Free: <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site">Creating a GitHub Pages site</a>. Limits: <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/github-pages-limits">GitHub Pages limits</a>.</li>
   <li>Rulesets on public repositories with GitHub Free: <a href="https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/about-rulesets">About rulesets</a>. Rule names: <a href="https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/available-rules-for-rulesets">Available rules for rulesets</a>.</li>
   <li>Authors can't approve their own pull requests: <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/approving-a-pull-request-with-required-reviews">Approving a pull request with required reviews</a>.</li>
+  <li>Pending runs in one concurrency group cancel each other: <a href="https://docs.github.com/en/actions/concepts/workflows-and-actions/concurrency">Concurrency</a>. Action versions that run on Node 24: <a href="https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/">GitHub changelog on Node 20</a>.</li>
   <li>Node.js on the Ubuntu runner: <a href="https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2404-Readme.md">runner-images, Ubuntu 24.04</a>.</li>
   <li>Template repositories: <a href="https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-template-repository">Creating a template repository</a>.</li>
   <li>github.dev: <a href="https://docs.github.com/en/codespaces/the-githubdev-web-based-editor">The github.dev web-based editor</a>.</li>

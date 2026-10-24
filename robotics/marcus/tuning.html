@@ -31,18 +31,18 @@
 <p>Why 20 runs? Because one good lap proves nothing. Version 2 finished its first 8 runs. It still failed 4 of 20.</p>
 
 <h2><span class="num">02</span>Sensor readings by room</h2>
-<p>Before any code, we put the robot on the floor and on the tape and read the raw numbers off the screen. 0 to 1023, where black reads low.</p>
+<p>Before any code, we put the robot on the floor and on the tape and read the raw numbers off the screen. 0 to 1023, where black reads high.</p>
 <div class="scroll">
 <table>
   <thead><tr><th>Room</th><th class="n">Floor</th><th class="n">Tape</th><th class="n">Halfway</th><th>Note</th></tr></thead>
   <tbody>
-    <tr><td>CCA room, ceiling lights</td><td class="n">about 780</td><td class="n">about 180</td><td class="n">480</td><td>Where we practise.</td></tr>
-    <tr><td>Hall, next to the windows</td><td class="n">about 910</td><td class="n">about 560</td><td class="n">735</td><td>Everything reads higher, and the tape reads above 500.</td></tr>
-    <tr><td>Dim corner of the store room</td><td class="n">about 470</td><td class="n">about 90</td><td class="n">280</td><td>The floor now reads below 480.</td></tr>
+    <tr><td>CCA room, ceiling lights</td><td class="n">about 243</td><td class="n">about 843</td><td class="n">543</td><td>Where we practise.</td></tr>
+    <tr><td>Hall, next to the windows</td><td class="n">about 113</td><td class="n">about 463</td><td class="n">288</td><td>Sunlight makes everything read lower. The tape reads below 512.</td></tr>
+    <tr><td>Dim corner of the store room</td><td class="n">about 553</td><td class="n">about 933</td><td class="n">743</td><td>The floor now reads above 512.</td></tr>
   </tbody>
 </table>
 </div>
-<p>Look at the last column. No single threshold works in all three rooms. A threshold of 500 calls the hall's tape "floor" and the dim corner's floor "tape".</p>
+<p>Look at the last column. No single threshold works in all three rooms. A threshold of 512 calls the hall's tape "floor" and the dim corner's floor "tape".</p>
 <p>Sensor height matters too. The TCRT5000 datasheet gives a peak operating distance of 2.5 mm. We mount ours a few millimetres off the floor and check it with a coin as a spacer. Too high and the gap between tape and floor shrinks.</p>
 
 <h2><span class="num">03</span>The four versions</h2>
@@ -50,8 +50,8 @@
 <table>
   <thead><tr><th>Version</th><th class="n">BASE</th><th class="n">TURN</th><th>Threshold</th><th>CCA room</th><th>Hall</th><th>Dim corner</th></tr></thead>
   <tbody>
-    <tr><td>1</td><td class="n">700</td><td class="n">700</td><td>500, a guess</td><td class="ok">20/20<br>13.74 s<br>wobble 2.9</td><td class="bad">0/20</td><td class="bad">0/20</td></tr>
-    <tr><td>2</td><td class="n">700</td><td class="n">350</td><td>480, from the CCA log</td><td class="mid">16/20<br>13.83 s<br>wobble 2.2</td><td class="bad">0/20</td><td class="bad">0/20</td></tr>
+    <tr><td>1</td><td class="n">700</td><td class="n">700</td><td>512, a guess</td><td class="ok">20/20<br>13.76 s<br>wobble 2.9</td><td class="bad">0/20</td><td class="bad">0/20</td></tr>
+    <tr><td>2</td><td class="n">700</td><td class="n">350</td><td>543, from the CCA log</td><td class="mid">16/20<br>13.83 s<br>wobble 2.2</td><td class="bad">0/20</td><td class="bad">0/20</td></tr>
     <tr><td>3</td><td class="n">700</td><td class="n">525</td><td>calibrated</td><td class="ok">20/20<br>13.65 s<br>wobble 2.4</td><td class="ok">20/20<br>13.70 s</td><td class="ok">20/20<br>13.67 s</td></tr>
     <tr><td>4 (final)</td><td class="n">900</td><td class="n">700</td><td>calibrated</td><td class="ok">20/20<br>11.03 s<br>wobble 3.8</td><td class="mid">19/20<br>11.08 s</td><td class="ok">20/20<br>11.00 s</td></tr>
   </tbody>
@@ -60,13 +60,13 @@
 <p class="small">Times are the average lap. BASE and TURN are out of 1023. The inside wheel runs at BASE minus TURN.</p>
 
 <h3>Version 1: does it go round at all?</h3>
-<p>BASE 700 and TURN 700, so the inside wheel stops dead on every turn. Threshold 500, halfway up the scale. A guess.</p>
+<p>BASE 700 and TURN 700, so the inside wheel stops dead on every turn. Threshold 512, halfway up the scale. A guess.</p>
 <ul class="tight">
   <li>CCA room: 20 of 20. It works, but it twitches. Wobble 2.9 degrees.</li>
-  <li>Hall: 0 of 20. The tape reads about 560, above 500, so the robot never sees it. It drifts off on the first straight.</li>
-  <li>Dim corner: 0 of 20. The floor reads about 470, below 500, so both sensors always see "tape". The robot keeps its last command and crawls off.</li>
+  <li>Hall: 0 of 20. The tape reads about 463, below 512, so the robot never sees it. It drifts off on the first straight.</li>
+  <li>Dim corner: 0 of 20. The floor reads about 553, above 512, so both sensors nearly always see "tape". The robot keeps its last command. It sits still, or crawls off.</li>
 </ul>
-<p><strong>Change for version 2:</strong> halve TURN to 350, to stop the twitching. And take the threshold from our CCA readings, 480, not a guess.</p>
+<p><strong>Change for version 2:</strong> halve TURN to 350, to stop the twitching. And take the threshold from our CCA readings, 543, not a guess.</p>
 
 <h3>Version 2: smooth, but not reliable</h3>
 <ul class="tight">
@@ -77,7 +77,7 @@
 
 <h3>Version 3: works everywhere</h3>
 <ul class="tight">
-  <li>20 of 20 in all three rooms. The thresholds it found: 487 in the CCA room, 745 in the hall, 286 in the dim corner.</li>
+  <li>20 of 20 in all three rooms. The thresholds it found: about 530 in the CCA room, 270 in the hall and 730 in the dim corner.</li>
   <li>Lap about 13.7 s. Reliable. Also slow for a competition.</li>
 </ul>
 <p><strong>Change for version 4:</strong> speed. A speed sweep, below.</p>

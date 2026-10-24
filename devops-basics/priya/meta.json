@@ -2,5 +2,5 @@
   "module": "devops-basics",
   "persona": "priya",
   "title": "Pilot first: Starter Bank, a team repository run with trainers",
-  "summary": "A team site built by three trainers through 5 real pull requests, with an unchanged Pages workflow, a template repository, a cohort planner that checks ages and fits sessions, and a 1-page guide for a Sec 1 to 3 CCA."
+  "summary": "A team site built by three trainers through 5 real pull requests, with GitHub's starter Pages workflow, a template repository, a cohort planner that checks ages and fits sessions, and a 1-page guide for a Sec 1 to 3 CCA."
 }

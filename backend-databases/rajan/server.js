@@ -192,12 +192,13 @@ const Server = (() => {
     let out = null;
     for (const [verb, pattern, fn] of ROUTES) {
       const m = path.match(pattern);
-      if (!m) continue;
-      if (verb !== method) { out = out || error("Method not allowed.", 405); continue; }
+      if (!m || verb !== method) continue;
       out = await fn(m, data || {});
       break;
     }
-    out = out || error("Not found.", 404);
+    // Flask serves the static folder at /, and that route takes any GET.
+    // So an unknown GET is a 404, and an unknown POST is a 405.
+    out = out || (method === "GET" ? error("Not found.", 404) : error("Method not allowed.", 405));
     save();
     return { ...out, sql: trace };
   }

@@ -154,7 +154,7 @@ if __name__ == "__main__":
 <h2 id="app">app.py: the API</h2>
 <p>Things to look for:</p>
 <ul class="tight">
-  <li>Every value from a request reaches SQL through a <code>?</code>. The one f-string adds <code>TODAY</code>, a fixed text I wrote.</li>
+  <li>Every value from a request reaches SQL through a <code>?</code>. The only f-strings add <code>TODAY</code>, a fixed text I wrote.</li>
   <li>SQLite's <code>'now'</code> is UTC. Without <code>'+8 hours'</code>, a book due today would turn overdue at 8 a.m. in Singapore, not midnight.</li>
   <li><code>with db():</code> commits on success and rolls back on an error. Forgetting to commit is the most common bug I see.</li>
   <li>Login gives the same message for a wrong username and a wrong password. A different message would tell an attacker which usernames exist.</li>
@@ -610,6 +610,7 @@ body { margin: 0; font: 16px/1.5 system-ui, sans-serif; color: #1d232b; backgrou
   <li>Hashing: the twin uses werkzeug's <code>pbkdf2:sha256:1000000</code> format, because browsers have no scrypt. I checked that <code>check_password_hash</code> in Python accepts a hash the twin made. So a twin user would log in fine in the real app.</li>
   <li>Sessions: Flask signs a cookie. The twin keeps the user id in your browser's storage. There is nothing to sign, as there is no server to fool.</li>
   <li>Transactions: sql.js saves every statement at once. Each twin route writes one row, so the result is the same.</li>
+  <li>Errors: Flask sends its 404 and 405 as HTML pages. The twin sends them as JSON, with the same status codes.</li>
   <li>The page: the twin loads <code>app.js</code> unchanged. Only <code>fetch()</code> is pointed at the twin.</li>
 </ul>
 

@@ -19,7 +19,7 @@
 
 <div class="prose">
 <p>I'm Priya. I plan courses for a team of trainers. My question for this brief: could every trainer on my team run it? With any group, on a school network?</p>
-<p>So I made choices for the team, not for one expert. Everything happens in the GitHub website. Nobody installs anything or learns a second editor. The deploy workflow is GitHub's own Static HTML starter, unchanged. The only gate is a human one: a ruleset that needs one approval on every pull request.</p>
+<p>So I made choices for the team, not for one expert. Everything happens in the GitHub website. Nobody installs anything or learns a second editor. The deploy workflow is GitHub's own Static HTML starter. I only updated its action versions. The only gate is a human one: a ruleset that needs one approval on every pull request.</p>
 </div>
 
 <h2 id="deliverables"><span class="wk">Stops on the map</span>The four deliverables</h2>
@@ -96,7 +96,7 @@
 <div class="prose">
 <ul class="tight">
   <li><b>The GitHub website only.</b> The pencil edits a file. "Commit changes" lets you make a new branch, then "Propose changes" opens the pull request. One tool means one set of screenshots for my trainers.</li>
-  <li><b>The starter workflow, unchanged.</b> In Settings, Pages, a trainer picks GitHub Actions. The template already holds GitHub's Static HTML workflow. If it breaks, GitHub's own docs match it line for line.</li>
+  <li><b>The starter workflow, almost unchanged.</b> In Settings, Pages, a trainer picks GitHub Actions. The template already holds GitHub's Static HTML workflow. GitHub's copy still names action versions that run on Node 20. GitHub has moved its runners off Node 20. So I changed three version numbers and nothing else. If it breaks, GitHub's own docs still match it step for step.</li>
   <li><b>A ruleset with one rule.</b> "Require a pull request before merging", with 1 approval. The author can't approve their own. Rulesets are free on public repositories with GitHub Free.</li>
   <li><b>Public repositories.</b> GitHub Pages on a free account needs one. So the site and the history are public. The rules on names and emails matter more.</li>
   <li><b>Template, not fork.</b> A repository made from a template starts with one commit. Students get a clean start and none of my history.</li>
@@ -120,7 +120,7 @@
 
 <h2 id="sources"><span class="wk">Sources</span>Checked against</h2>
 <ul class="tight small">
-  <li>The workflow, copied unchanged: <a href="https://github.com/actions/starter-workflows/blob/main/pages/static.yml">actions/starter-workflows, pages/static.yml</a>.</li>
+  <li>The workflow, copied with newer action versions: <a href="https://github.com/actions/starter-workflows/blob/main/pages/static.yml">actions/starter-workflows, pages/static.yml</a>. Runners moving off Node 20: <a href="https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/">GitHub changelog</a>.</li>
   <li>Pages needs a public repository on GitHub Free: <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site">Creating a GitHub Pages site</a>. Limits: <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/github-pages-limits">GitHub Pages limits</a>.</li>
   <li>Rulesets on public repositories with GitHub Free: <a href="https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/about-rulesets">About rulesets</a>. Rule names: <a href="https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/available-rules-for-rulesets">Available rules for rulesets</a>.</li>
   <li>Authors can't approve their own: <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/approving-a-pull-request-with-required-reviews">Approving a pull request with required reviews</a>.</li>

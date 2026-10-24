@@ -235,7 +235,12 @@
   }
 
   $('scenario').addEventListener('change', reset);
-  $('ruleset').addEventListener('change', function () { S.ruleset = $('ruleset').checked; render(); });
+  $('ruleset').addEventListener('change', function () {
+    S.ruleset = $('ruleset').checked;
+    render();
+    // Keep the verdict in step with the switch after a failed check.
+    if (S.check === 'fail' && !S.merged) verdict(S.ruleset ? 'The check failed. The merge button stays grey while the ruleset is on.' : 'The check failed. With the ruleset off, nothing stops a merge.', 'bad');
+  });
   $('b-run').addEventListener('click', runCheck);
   $('b-fix').addEventListener('click', function () {
     S.fixed = true;

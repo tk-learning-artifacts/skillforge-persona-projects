@@ -49,7 +49,7 @@ var CENSUS =
     { key: 'mrtbus', label: 'MRT or LRT and bus', colour: 'var(--m1)', cols: [4] },
     { key: 'car', label: 'Car, taxi or private hire car', colour: 'var(--m4)', cols: [6, 7] },
     { key: 'van', label: 'Chartered bus or van', colour: 'var(--m5)', cols: [8] },
-    { key: 'none', label: 'No transport needed', colour: 'var(--route-soft)', cols: [12] },
+    { key: 'none', label: 'No transport needed', colour: 'var(--m7)', cols: [12] },
     { key: 'other', label: 'Other or mixed', colour: 'var(--m6)', cols: [5, 9, 10, 11] }
   ];
   function row(name) { return CENSUS.filter(function (r) { return r[0] === name; })[0]; }

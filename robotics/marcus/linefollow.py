@@ -1,7 +1,7 @@
 # Two-sensor line follower, version 4 (final).
 # Marcus Lee's robotics CCA, for the micro:bit V2 in MicroPython.
 #
-# Sensors: two TCRT5000 reflectance boards, analog out. Black tape reads LOW.
+# Sensors: two TCRT5000 reflectance boards, analog out. Black tape reads HIGH.
 # Motors: a DRV8833 dual H-bridge, powered by its own 4 x AA pack.
 # Press A to calibrate and go. Press B at any time to stop.
 
@@ -40,7 +40,7 @@ def drive(left, right):
 
 def calibrate():
     # Sweep both sensors across the tape: left, right, then back to the middle.
-    # Returns the midpoint of the darkest and lightest readings, or None.
+    # Returns the midpoint of the highest and lowest readings, or None.
     low, high = 1023, 0
     for left, right, ms in ((-SPIN, SPIN, 400), (SPIN, -SPIN, 800), (-SPIN, SPIN, 400)):
         drive(left, right)
@@ -59,8 +59,8 @@ def calibrate():
 def follow(threshold):
     # Sense, decide, act, until B is pressed.
     while not button_b.was_pressed():
-        left_dark = LEFT_EYE.read_analog() < threshold
-        right_dark = RIGHT_EYE.read_analog() < threshold
+        left_dark = LEFT_EYE.read_analog() > threshold
+        right_dark = RIGHT_EYE.read_analog() > threshold
         if left_dark and not right_dark:
             drive(BASE - TURN, BASE)    # tape under the left sensor: steer left
         elif right_dark and not left_dark:

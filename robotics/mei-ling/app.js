@@ -289,7 +289,7 @@
       if (sim.done) {
         playing = false;
         el('p-watch').textContent = 'Watch again';
-        el('p-live').textContent = 'One minute: ' + sim.stops + ' stops, ' + sim.spooky + ' of them for nothing, and ' + sim.bumps + ' bumps.';
+        el('p-live').textContent = 'One minute: ' + sim.stops + ' stops, ' + sim.spooky + ' of them for nothing, and ' + sim.bumps + (sim.bumps === 1 ? ' bump.' : ' bumps.');
         return;
       }
       requestAnimationFrame(tick);
@@ -322,7 +322,7 @@
         const cell = cells[seed - 1];
         cell.textContent = r.bumps;
         cell.className = r.bumps === 0 ? 'good' : r.bumps <= 2 ? 'meh' : 'bad';
-        cell.title = 'Run ' + seed + ': ' + r.bumps + ' bumps, ' + r.spooky + ' stops for nothing';
+        cell.title = 'Run ' + seed + ': ' + r.bumps + (r.bumps === 1 ? ' bump, ' : ' bumps, ') + r.spooky + (r.spooky === 1 ? ' stop for nothing' : ' stops for nothing');
         seed++;
         if (seed <= 20) { setTimeout(next, 0); return; }
         const avg = (k) => res.reduce((a, x) => a + x[k], 0) / res.length;

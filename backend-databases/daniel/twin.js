@@ -128,7 +128,7 @@
 
   function setVersion(v) {
     Server.setVersion(v);
-    for (const b of document.querySelectorAll("#versions button")) b.setAttribute("aria-pressed", String(Number(b.dataset.v) === v));
+    for (const b of document.querySelectorAll("#versions button[data-v]")) b.setAttribute("aria-pressed", String(Number(b.dataset.v) === v));
     $("version-note").textContent = v === 1
       ? "Version 1: my first login. Plain passwords, and the SQL is glued together from what you type. Try the username ' OR 1=1 -- with any password."
       : "Version 2: the final app. Hashed passwords and ? placeholders everywhere.";
@@ -147,7 +147,7 @@
       e.preventDefault();
       submit(e.target);
     });
-    for (const b of document.querySelectorAll("#versions button")) {
+    for (const b of document.querySelectorAll("#versions button[data-v]")) {
       b.addEventListener("click", () => setVersion(Number(b.dataset.v)));
     }
     $("reset").addEventListener("click", async () => {

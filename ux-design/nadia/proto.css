@@ -32,6 +32,8 @@
 .task .tick { flex: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
   min-width: 76px; min-height: 48px; border: 0; border-left: 1px solid var(--line); background: none; color: var(--ink-2); font-weight: 700; font-size: 0.8em; padding: 6px; }
 .task .tick .box { width: 1.6em; height: 1.6em; min-width: 28px; min-height: 28px; border: 3px solid var(--ink-2); border-radius: 7px; display: grid; place-items: center; font-size: 20px; line-height: 1; }
+/* The row clips its corners, so the focus ring sits inside the button */
+.task .open:focus-visible, .task .tick:focus-visible { outline-offset: -5px; border-radius: 12px; }
 .task.is-done { background: var(--done-soft); border-color: var(--done); }
 .task.is-done .what { text-decoration: line-through; text-decoration-thickness: 2px; }
 .task.is-done .tick { color: var(--done); }
@@ -39,6 +41,7 @@
 /* Version 1: a small tick box with no words, and abbreviated days */
 .v1 .task .due { background: none; color: #b3261e; padding-left: 0; }
 .v1 .task .due.later { color: var(--muted); }
+@media (prefers-color-scheme: dark) { .v1 .task .due { color: #ff8a80; } }
 .v1 .task .tick { min-width: 44px; border-left: 0; }
 .v1 .task .tick .box { width: 20px; height: 20px; border-width: 2px; font-size: 14px; }
 .v1 .task .tick { padding: 0; width: 20px; min-width: 20px; height: 20px; min-height: 20px; align-self: center; margin-right: 14px; }

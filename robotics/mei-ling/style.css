@@ -61,6 +61,10 @@ figcaption { font-size: 0.9rem; color: var(--muted); margin-top: 6px; }
 .btnlink { display: inline-flex; align-items: center; min-height: 44px; padding: 0 16px; border-radius: 12px;
   background: var(--marker); color: #ffffff; font-weight: 700; text-decoration: none; }
 @media (prefers-color-scheme: dark) { .btnlink { color: #1c1712; } }
+@media (prefers-color-scheme: dark) {
+  .hero, .hero h1, th { color: #f7ead8; }
+  .hero .kicker { color: #ffe0b0; }
+}
 
 button, select { font: inherit; font-weight: 650; min-height: 44px; padding: 0 14px; border-radius: 12px;
   border: 2px solid var(--kraft-dark); background: var(--card); color: var(--ink); cursor: pointer; }

@@ -145,7 +145,7 @@
 <h2 id="sources">Sources</h2>
 <ul class="tight small">
   <li>Sensor: <a href="https://www.adafruit.com/product/4007">Adafruit: RCWL-1601 ultrasonic distance sensor</a>. Runs on 3 V to 5.5 V, and its logic level matches its power.</li>
-  <li>Sensor timing: <a href="https://www-users.york.ac.uk/~mjf5/roach/Datasheets/HCSR04_Manual.pdf">HC-SR04 user manual</a>. The RCWL-1601 is built to be compatible with it. It gives a 15 degree angle, microseconds ÷ 58 = cm, and over 60 ms between pings.</li>
+  <li>Sensor timing: <a href="https://www-users.york.ac.uk/~mjf5/roach/Datasheets/HCSR04_Manual.pdf">HC-SR04 user manual</a>. The RCWL-1601 is built to be compatible with it. It gives a 15 degree angle, sound at 340 m/s (so about microseconds ÷ 58 = cm), and over 60 ms between pings.</li>
   <li>Servos: <a href="https://www.adafruit.com/product/2442">Adafruit: FS90R continuous rotation servo</a>. A 1.5 ms pulse stops it, and it may need trimming.</li>
   <li>Timing an echo: <a href="https://microbit-micropython.readthedocs.io/en/v2-docs/machine.html">micro:bit MicroPython: machine</a>. <code>time_pulse_us</code> returns a negative number on a timeout.</li>
   <li>Servo signals: <a href="https://microbit-micropython.readthedocs.io/en/v2-docs/pin.html">micro:bit MicroPython: pins</a>, for <code>set_analog_period</code> and <code>write_analog</code>.</li>

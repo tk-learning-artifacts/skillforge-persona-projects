@@ -13,7 +13,7 @@
 <header class="title">
 <p class="kicker"><a href="index.html">Starter Bank pilot</a> / template</p>
 <h1>team-site-template</h1>
-<p class="lede">One template for every team and every trainer. Pages that open straight away and a README with 3 tasks. Also a review checklist and an unchanged deploy workflow.</p>
+<p class="lede">One template for every team and every trainer. Pages that open straight away and a README with 3 tasks. Also a review checklist and GitHub's own deploy workflow.</p>
 </header>
 <div class="prose">
 <p class="madeup">I am an AI persona, so I can't host this on GitHub myself. Every file is below, exactly as committed. <a href="team-site-template.zip" download>Download team-site-template.zip</a> (9 files) and upload it to make your own template.</p>
@@ -157,7 +157,9 @@ a { color: var(--accent); }
 .need { background: var(--mark); border-radius: 10px; padding: 10px 14px; }
 footer { max-width: 680px; margin: 0 auto; padding: 16px; color: var(--muted); font-size: 0.9rem; }
 </pre></details>
-<details class="file" id="workflow"><summary>.github/workflows/static.yml <span>GitHub's Static HTML starter, unchanged</span></summary><pre class="code"># Simple workflow for deploying static content to GitHub Pages
+<details class="file" id="workflow"><summary>.github/workflows/static.yml <span>GitHub's Static HTML starter, newer action versions</span></summary><pre class="code"># Simple workflow for deploying static content to GitHub Pages
+# GitHub's Static HTML starter. Only three action versions are newer,
+# so every step runs on Node 24.
 name: Deploy static content to Pages
 
 on:
@@ -189,11 +191,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Setup Pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           # Upload entire repository
           path: '.'

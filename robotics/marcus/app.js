@@ -120,7 +120,7 @@
         if (s.lap < s.laps) chapters.push({ t: s.t, label: 'Lap ' + (s.lap + 1) });
       }
       if (s.t >= next) {
-        frames.push({ t: s.t, x: s.x, y: s.y, h: s.h, darkL: s.readL < s.threshold && s.phase === 'run', darkR: s.readR < s.threshold && s.phase === 'run',
+        frames.push({ t: s.t, x: s.x, y: s.y, h: s.h, darkL: s.readL > s.threshold && s.phase === 'run', darkR: s.readR > s.threshold && s.phase === 'run',
           readL: s.readL, readR: s.readR, threshold: s.threshold, rule: s.rule, phase: s.phase, lap: s.lap,
           lapT: s.phase === 'run' ? s.t - s.lapStart : 0, times: s.lapTimes.slice() });
         next += 1 / 30;
@@ -256,7 +256,7 @@
       const custom = ver.value === 'custom';
       const v = S.VERSIONS[custom ? 4 : +ver.value];
       [base, turn, thr, cal].forEach((c) => (c.disabled = !custom));
-      if (!custom) { base.value = v.base; turn.value = v.turn; cal.checked = v.calibrate; thr.value = v.threshold || 500; }
+      if (!custom) { base.value = v.base; turn.value = v.turn; cal.checked = v.calibrate; thr.value = v.threshold || 512; }
       thr.disabled = !custom || cal.checked;
       el('b-base-v').textContent = base.value;
       el('b-turn-v').textContent = Math.min(+turn.value, +base.value);
@@ -275,7 +275,7 @@
       live.textContent = 'In this room the floor reads about ' + r.floor + ' and the tape about ' + r.tape + '.';
     }
     function draw() {
-      const st = Object.assign({}, sim, { darkL: sim.phase === 'run' && sim.readL < sim.threshold, darkR: sim.phase === 'run' && sim.readR < sim.threshold });
+      const st = Object.assign({}, sim, { darkL: sim.phase === 'run' && sim.readL > sim.threshold, darkR: sim.phase === 'run' && sim.readR > sim.threshold });
       drawScene(ctx, st, trail, {
         lines: [
           (sim.phase === 'run' ? 'LAP ' + (sim.t - sim.lapStart).toFixed(2) : sim.phase.toUpperCase()),
@@ -336,7 +336,9 @@
           const wob = ok.reduce((a, x) => a + x.wobble, 0) / ok.length;
           text += ' Average lap ' + mean.toFixed(2) + ' s, from ' + Math.min(...laps).toFixed(2) + ' to ' + Math.max(...laps).toFixed(2) + ' s. Wobble ' + wob.toFixed(1) + ' degrees.';
         }
-        if (fails) text += ' ' + fails + ' left the track.';
+        const off = results.filter((x) => x.result === 'off the track').length;
+        if (off) text += ' ' + off + ' left the track.';
+        if (fails - off) text += ' ' + (fails - off) + ' stalled and hit the 40 s limit.';
         el('b-summary').textContent = text;
         btn.disabled = false;
       }

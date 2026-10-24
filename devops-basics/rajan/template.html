@@ -31,7 +31,7 @@
   <li>Click <b>Use this template</b>, then <b>Create a new repository</b>. Name it like <code>stall-board-t1</code>. Make it public. GitHub Pages on a free account needs that.</li>
   <li>The new repository starts with a single commit. Students don't see the template's history.</li>
   <li><b>Settings</b>, <b>Pages</b>: set the source to <b>GitHub Actions</b>. The workflow is already in the repository.</li>
-  <li><b>Settings</b>, <b>Rules</b>, <b>Rulesets</b>: make a branch ruleset for the default branch. Turn on "Require a pull request before merging", with 1 required approval. Turn on "Require status checks to pass", with <code>check</code>. Leave the bypass list empty.</li>
+  <li><b>Settings</b>, <b>Rules</b>, <b>Rulesets</b>: make a branch ruleset for the default branch. Turn on "Require a pull request before merging", with 1 required approval. Turn on "Require status checks to pass before merging", with <code>check</code>. Leave the bypass list empty.</li>
   <li><b>Settings</b>, <b>Collaborators</b>: add the 4 students' accounts.</li>
   <li><b>Issues</b>: open one "Stall page" issue per student. Add one for the search box, as a stretch task.</li>
 </ol>
@@ -51,7 +51,7 @@ Every change goes through a pull request. When a pull request is merged, the sit
 2. Settings &gt; Pages &gt; Source: **GitHub Actions**.
 3. Settings &gt; Rules &gt; Rulesets &gt; New branch ruleset. Target the default branch. Turn on:
    - Require a pull request before merging, with 1 required approval
-   - Require status checks to pass, and add the check called `check`
+   - Require status checks to pass before merging, and add the check called `check`
    - Block force pushes and Restrict deletions (on by default)
 4. Settings &gt; Collaborators: add each student's account. Students must be 13 or older.
 5. Open one issue per task below and assign one student to each.
@@ -95,21 +95,16 @@ on:
     branches: [main]
   workflow_dispatch:
 
+# The check only needs to read the code.
 permissions:
   contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
 
 jobs:
   check:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Check the site
         run: node tools/check-site.mjs
 
@@ -117,17 +112,27 @@ jobs:
     # Pull requests are only checked. Only main is deployed.
     if: github.event_name != 'pull_request'
     needs: check
+    # Only the deploy job may publish the site.
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    # One deploy at a time. The group is on this job, not the whole workflow,
+    # so pull request checks never wait behind a deploy or get cancelled.
+    concurrency:
+      group: "pages"
+      cancel-in-progress: false
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Setup Pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: '.'
       - name: Deploy to GitHub Pages
@@ -311,7 +316,7 @@ Add a link to it in the list on `index.html`.
   <li>#4 Add the mixed rice stall page, for amber-heron</li>
   <li>#5 Stretch: add a search box to the home page, for whoever finishes first</li>
 </ul>
-<p>Tasks 2 and 3, review a teammate and fix a red check, happen inside the pull requests. You can see them on the <a href="prs.html">pull requests page</a>.</p>
+<p>Task 2 is reviewing a teammate. Task 3 is fixing a red check. Both happen inside the pull requests. You can see them on the <a href="prs.html">pull requests page</a>.</p>
 <p><a href="index.html">Back to Stall Board</a></p>
 </div>
 </main>
