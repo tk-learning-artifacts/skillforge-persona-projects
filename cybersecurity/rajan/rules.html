@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ground rules for our CTF: ethics and the law, by Rajan Pillai</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Rajan Pillai is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<p class="noprint"><a href="ctf.html">Back to the challenge board</a> · <a href="index.html">Project home</a> · <button type="button" id="print">Print as a poster</button></p>
+<h1><span class="prompt">$</span> cat rules.txt</h1>
+<p class="lede">Ground rules for Sec 3 Computing. They apply in this lesson, in CCA and at home.</p>
+
+<h2>The six rules</h2>
+<ol class="steps">
+  <li><strong>Attack only what you have permission to attack.</strong> Today that is the six challenges on this site and its files. Nothing else. Not the school network, not a classmate's laptop, not a real website.</li>
+  <li><strong>Permission comes from the owner.</strong> The school owns the school network. A friend can't give you permission for their parent's Wi-Fi. If you can't name the owner who said yes, you don't have permission.</li>
+  <li><strong>Never share, guess or use someone else's password or one-time code.</strong> That includes a friend who offers. If someone gives you their password, tell me. They need to change it.</li>
+  <li><strong>If you find a real weakness by accident, stop.</strong> Don't try it again to "make sure". Write down what you saw and tell me. I will pass it to the school's IT staff.</li>
+  <li><strong>Meaning well is not a defence.</strong> The law asks whether you had permission. It does not ask why you did it.</li>
+  <li><strong>Keep answers inside your pair until the bell.</strong> Help by asking questions, not by reading out flags.</li>
+</ol>
+
+<h2>What the law says</h2>
+<p>Singapore's <a href="https://sso.agc.gov.sg/Act/CMA1993">Computer Misuse Act 1993</a> makes it an offence to get into a computer, program or data without permission. That is section 3.</p>
+<ul class="tight">
+  <li>A first conviction under section 3 can bring a fine of up to $5,000, up to 2 years in jail, or both.</li>
+  <li>A second conviction can bring up to $10,000, up to 3 years, or both.</li>
+  <li>If the access causes damage, the maximum goes higher.</li>
+  <li>Other sections cover changing data, blocking a service and sharing passwords or access codes for an unlawful purpose.</li>
+</ul>
+<p>Practice sites like this one, or <a href="https://picoctf.org/">picoCTF</a>, are legal because their owners invite you to attack them. picoCTF's terms say it is for students aged 13 or older, and students under 18 need a parent's or guardian's consent.</p>
+<p class="small">This is a summary for a class, not legal advice. The official text on Singapore Statutes Online is the one that counts.</p>
+
+<h2>Three cases to sort</h2>
+<p>Allowed, or not allowed? Say who would have to give permission.</p>
+<ol class="steps">
+  <li>Your friend says, "My password is my cat's name. Bet you can't guess it." You guess it, log in, then log out at once.</li>
+  <li>You read the code of the challenge board on this site to see how it checks flags.</li>
+  <li>You notice the school printer's settings page opens with no password. You change nothing.</li>
+</ol>
+<details class="card">
+<summary><strong>Answers</strong></summary>
+<ol class="steps">
+  <li>Not allowed. A dare is not permission to log in. Only the account owner can let you in, and "bet you can't" is not that.</li>
+  <li>Allowed. I own the site and I said yes, in writing, at the top of the board.</li>
+  <li>Stop there. Opening a page you found by chance is not the problem. Going further would be. Tell me, and I tell the IT staff. That is rule 4.</li>
+</ol>
+</details>
+
+<h2>If a student boasts about guessing a password</h2>
+<p>This is for teachers. It happens most terms.</p>
+<ol class="steps">
+  <li>I stay calm and ask what they did, in private. Boasting usually means they don't know it was wrong.</li>
+  <li>I point to rule 3 and the law. I don't threaten. I explain that permission is the whole difference.</li>
+  <li>If a real account was used, the owner changes the password. I tell the school's IT staff and follow the school's discipline process.</li>
+  <li>I give the student a legal place to practise, like the challenges here or picoCTF if they are 13 or older and have consent.</li>
+</ol>
+
+<div class="card">
+<h3>The flag for challenge 1</h3>
+<p>You read to the end. That is the habit. Your flag is <code>sf{permission_first}</code></p>
+</div>
+
+<h2>Sources</h2>
+<ul class="tight small">
+  <li>The Act: <a href="https://sso.agc.gov.sg/Act/CMA1993">Computer Misuse Act 1993, Singapore Statutes Online</a>.</li>
+  <li>Section 3 penalties for a first offence: <a href="https://www.police.gov.sg/media-room/news/20220901_former_bank_officer_charged_with_offences_under_the_computer_misuse_act">Singapore Police Force news release, 1 September 2022</a>. Repeat offence: the Act's text, as reproduced in <a href="https://law1a.nus.edu.sg/asli/pdf/WPS001.pdf">this NUS law working paper</a>.</li>
+  <li>Age and consent: <a href="https://picoctf.com/terms.html">picoCTF Terms of Use</a>.</li>
+</ul>
+<script src="print.js" defer></script>
+</main>
+</body>
+</html>

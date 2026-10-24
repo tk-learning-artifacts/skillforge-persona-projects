@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson plan: a 60-minute mini CTF for Sec 3 Computing, by Rajan Pillai</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Rajan Pillai is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<p><a href="index.html">Back to the project</a></p>
+<h1><span class="prompt">$</span> lesson-plan</h1>
+<p class="lede">One 60-minute lesson. Pairs work through six challenges on one laptop, after a 5-minute talk on the law.</p>
+
+<div class="card">
+<ul class="tight">
+  <li>Class: 28 Sec 3 Computing students, in 14 pairs. They are 15 years old.</li>
+  <li>Room: the computer lab. One laptop or Chromebook per pair, and the projector.</li>
+  <li>Accounts: none. The board runs in the browser. Scores stay on the device.</li>
+  <li>Before this lesson: they have met the Caesar cipher and know what a URL is.</li>
+  <li>Printouts: 14 <a href="sheet.html">flag logs</a>, 14 <a href="rules.html">rules sheets</a>, 2 printouts of the club page source.</li>
+</ul>
+</div>
+
+<h2><span class="prompt">#</span> By the end, students can</h2>
+<ul class="tight">
+  <li>Say what makes an attack legal or illegal in Singapore, in one sentence: permission from the owner.</li>
+  <li>Read the real hostname of a link, including the <code>@</code> trick and lookalike letters.</li>
+  <li>Explain why a Caesar cipher falls to brute force, and why Base64 is not encryption.</li>
+  <li>Explain why anything sent to a browser is not secret.</li>
+  <li>Make a passphrase that meets current NIST guidance.</li>
+</ul>
+
+<h2><span class="prompt">#</span> Success criteria</h2>
+<ol class="steps">
+  <li>I can name who gives permission, for this site and for the school network.</li>
+  <li>I solved at least 3 flags and wrote the steps for each.</li>
+  <li>I can explain one fix: for challenge 4 or challenge 5.</li>
+</ol>
+
+<h2><span class="prompt">#</span> The day before</h2>
+<ol class="steps">
+  <li>Open the board on a student laptop, on the school network. Check it loads.</li>
+  <li>Check <a href="https://gchq.github.io/CyberChef/">CyberChef</a> loads. If the filter blocks it, challenge 3 still works with the shift tool. For challenge 4, skip it and give every pair its 150 points.</li>
+  <li>Try <kbd>Ctrl</kbd> + <kbd>U</kbd> on a school Chromebook. Some managed devices block view source. If yours do, print the club page source.</li>
+  <li>Clear the board on every laptop with "Clear this device".</li>
+</ol>
+
+<h2><span class="prompt">#</span> Timings</h2>
+<ol class="steps">
+  <li><strong>0 to 4 min. Settle.</strong> Pairs sit at a laptop and open the board. They type a pair name, never a real name. Hand out the flag log.</li>
+  <li><strong>4 to 9 min. The law talk.</strong> I read the script below. No slides. Then I point at the rules sheet on each desk.</li>
+  <li><strong>9 to 14 min. Rules and challenge 1 together.</strong> Pairs read the rules page to the end and submit flag 1. We sort the three cases on that page by show of hands. I ask a pair to say who could give permission in each case.</li>
+  <li><strong>14 to 44 min. CTF in pairs.</strong> The driver types, the navigator reads and writes the flag log. They swap every 10 minutes, on my call. I walk the room. I answer questions with a question. At 34 minutes I say: "If you are stuck, take a hint. A hint costs 20 points. Sitting still costs more."</li>
+  <li><strong>44 to 52 min. Walkthrough.</strong> One pair explains challenge 2 on the projector. I explain challenge 5 and ask: how would you fix the club page? Answer we want: keep the secret on the server and never send it.</li>
+  <li><strong>52 to 57 min. Flag log and exit ticket.</strong> Pairs finish their steps. Each student writes two lines on the back: one difference between encoding and encryption, and who gives permission on the school network.</li>
+  <li><strong>57 to 60 min. Pack up.</strong> I note each pair's score. Pairs click "Clear this device" and log out.</li>
+</ol>
+<p class="small">Check: 4 + 5 + 5 + 30 + 8 + 5 + 3 = 60 minutes.</p>
+
+<h2><span class="prompt">#</span> The 5-minute law talk</h2>
+<div class="card">
+<p>"Today you will attack six challenges. That sounds like hacking, and it is. So first, the one idea that decides whether hacking is a skill or a crime: permission."</p>
+<p>"In Singapore, the Computer Misuse Act says you may not get into a computer, an account or data without permission from the owner. A first offence can mean a fine of up to five thousand dollars, up to two years in jail, or both. That is the law for adults and for students."</p>
+<p>"Notice what the law does not ask. It does not ask if you meant well. It asks: did the owner say yes? 'I was only testing' is not a yes."</p>
+<p>"Today I am the owner. I wrote this site. I give you permission to attack its six challenges and to read its code. That is all. The school network belongs to the school. Your classmate's account belongs to your classmate. Real websites belong to someone else."</p>
+<p>"Two more things. If someone gives you their password, tell me, so they can change it. If you stumble on a real weakness anywhere, stop and tell me. Don't try it again to make sure. Security people call that responsible disclosure. It is what the good ones do."</p>
+<p>"Questions? Then open the rules page. Challenge 1 is reading it to the end."</p>
+</div>
+<p class="small">About 220 words. Read at a steady pace, it takes about 2 minutes. The rest of the 5 minutes is for questions.</p>
+
+<h2><span class="prompt">#</span> For different students</h2>
+<ul class="tight">
+  <li>Stuck at the start: begin with challenge 3. The shift tool gives quick feedback, and a first flag lifts the mood.</li>
+  <li>Not confident reading English: the hints are short. The navigator can read them aloud.</li>
+  <li>Finished early: write a challenge 7 on paper for another pair. Use a Caesar shift you choose, or a fake link with a lookalike domain. Give it an answer key.</li>
+  <li>The pair that wants to go further: picoCTF's General Skills problems, at home. Only if they are 13 or older and a parent agrees, as picoCTF's terms ask.</li>
+</ul>
+
+<h2><span class="prompt">#</span> Safety and law checks</h2>
+<ul class="tight">
+  <li>No accounts, no personal data. The board stores only a pair name and scores, on the device.</li>
+  <li>Every link in challenge 2 is plain text, not clickable. The IP address is from a block kept for examples, so it reaches no real server.</li>
+  <li>Challenge 6 asks for a made-up passphrase. I say it aloud: never type a real password into any checker.</li>
+  <li>The only thing students attack is this site, which I own and opened to them.</li>
+</ul>
+
+<h2><span class="prompt">#</span> How I check learning</h2>
+<p>The flag log counts, not the score. A flag with no steps gets no credit on the log, because a flag can be copied. I mark each of the three success criteria as "yes", "nearly" or "not yet". The exit ticket tells me who still thinks Base64 is a lock.</p>
+
+<h2>Sources</h2>
+<ul class="tight small">
+  <li>The law: <a href="https://sso.agc.gov.sg/Act/CMA1993">Computer Misuse Act 1993</a>, with penalties confirmed by the <a href="https://www.police.gov.sg/media-room/news/20220901_former_bank_officer_charged_with_offences_under_the_computer_misuse_act">Singapore Police Force</a>.</li>
+  <li>picoCTF age and consent: <a href="https://picoctf.com/terms.html">picoCTF Terms of Use</a>.</li>
+  <li>Example IP addresses: <a href="https://www.rfc-editor.org/rfc/rfc5737">RFC 5737, address blocks reserved for documentation</a>.</li>
+  <li>Passphrase rules: <a href="https://pages.nist.gov/800-63-4/sp800-63b.html">NIST SP 800-63B</a>.</li>
+</ul>
+</main>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Six Flags Before the Bell: a mini CTF for Sec 3 Computing, by Rajan Pillai</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Rajan Pillai is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<h1><span class="prompt">$</span> Six Flags Before the Bell</h1>
+<p class="lede">A 60-minute capture-the-flag (CTF) lesson for Sec 3 Computing. Pairs solve six challenges in the browser, after a 5-minute talk on the law.</p>
+<p>I'm Rajan. I wrote software for a living, and now I teach programming to secondary students. This is my end project for the Cybersecurity Basics module. The challenge board is the real thing. Play it as a student would.</p>
+<p><a class="start" href="ctf.html">Open the challenge board</a></p>
+
+<ul class="toc">
+  <li><a href="lesson.html"><b>Lesson plan</b><span>60 minutes, with timings and the law talk script</span></a></li>
+  <li><a href="ctf.html"><b>Challenge list</b><span>The live board: six flags, 750 points</span></a></li>
+  <li><a href="sheet.html"><b>Flag log</b><span>The printable student sheet</span></a></li>
+  <li><a href="rules.html"><b>Ground rules</b><span>Ethics and the Computer Misuse Act</span></a></li>
+  <li><a href="answers.html"><b>Answer key</b><span>Walkthroughs, for teachers</span></a></li>
+  <li><a href="#reflection"><b>Reflection</b><span>How it went, and what I'd change</span></a></li>
+</ul>
+
+<h2><span class="prompt">#</span> The six challenges</h2>
+<p>Each one is small, and each one is about how something really works. I wanted students to leave with six facts they can explain, not six tricks.</p>
+<div class="scroll">
+<table>
+  <thead><tr><th>#</th><th>Challenge</th><th>Points</th><th>What it teaches</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>Read the rules</td><td>50</td><td>Permission makes it legal</td></tr>
+    <tr><td>2</td><td>Where does this link go?</td><td>100</td><td>Reading a hostname from the right</td></tr>
+    <tr><td>3</td><td>Caesar's homework</td><td>100</td><td>Few keys means brute force wins</td></tr>
+    <tr><td>4</td><td>Encoded is not encrypted</td><td>150</td><td>Base64 has no key</td></tr>
+    <tr><td>5</td><td>The club page</td><td>150</td><td>The browser gets everything you send</td></tr>
+    <tr><td>6</td><td>Build a passphrase</td><td>200</td><td>Length beats symbols</td></tr>
+  </tbody>
+</table>
+</div>
+<p>Five challenges attack something. The last one defends. I want the lesson to end on the defender's side.</p>
+
+<h2><span class="prompt">#</span> Why I built my own instead of using picoCTF</h2>
+<p>picoCTF is excellent, and my CCA uses it. For a whole class, three things pushed me to a board of my own.</p>
+<ul class="tight">
+  <li>Consent. <a href="https://picoctf.com/terms.html">picoCTF's terms</a> say it is for students aged 13 or older. Students under 18 need a parent's or guardian's consent. That is fine, but collecting 28 forms takes two weeks.</li>
+  <li>Time. Account setup eats the first 15 minutes of a 60-minute lesson.</li>
+  <li>Fit. Many of picoCTF's General Skills problems ask you to use a Linux terminal. My Sec 3s have not used one yet. Every challenge here works in a browser tab.</li>
+</ul>
+<p>Students who want more can go to picoCTF at home, with consent. The lesson plan says so.</p>
+
+<h2 id="reflection"><span class="prompt">#</span> How it went</h2>
+<p class="note">My class and its results are made up, like me. The challenges, flags and facts are real.</p>
+<p>All 14 pairs got flags 1 and 3. Eleven pairs got 4 or more. Two pairs finished all six with 12 minutes left and wrote a challenge 7 for each other. The median score was 470 out of 750.</p>
+<p>The talk landed better than I expected. The three cases did the work. A student argued that guessing a friend's password "on a dare" was fine. Another student answered him before I could: "A dare isn't a yes."</p>
+<p>Three things went wrong.</p>
+<ul class="tight">
+  <li>Challenge 2 was too hard for where I put it. Most pairs picked link 1 and burned 10 minutes. I underrated how new "read a hostname from the right" is. They need a worked example first.</li>
+  <li>View source was blocked on six Chromebooks. My printouts saved challenge 5, but those pairs never saw the real page source. That was the point of it.</li>
+  <li>Two pairs started at challenge 6 and stalled. Defending is harder when you have not attacked yet. The order matters more than I told them.</li>
+</ul>
+
+<h2><span class="prompt">#</span> Against the rubric</h2>
+<ul class="tight">
+  <li><strong>Facts are correct.</strong> Every fact has a source on the page where it appears. The law figures come from the Act's text and a police news release.</li>
+  <li><strong>Activities are safe and legal.</strong> Students attack only my site, which I open to them in writing. No accounts, no personal data. The links in challenge 2 can't be clicked, and the IP address reaches no real server.</li>
+  <li><strong>Fits students' age and level.</strong> Mostly. Challenges 1, 3 and 4 suit Sec 3. Challenge 2 needs a worked example first, as I found out.</li>
+  <li><strong>Students practise, not just listen.</strong> 30 of the 60 minutes are hands on keyboards. The talk is 5 minutes.</li>
+  <li><strong>Reflection names changes.</strong> See the next section.</li>
+</ul>
+
+<h2><span class="prompt">#</span> What I would change</h2>
+<ol class="steps">
+  <li>Do one lookalike link together on the projector before the CTF. Then challenge 2 is practice, not a wall.</li>
+  <li>Test view source on the actual school devices a week before, not the day before. Ask IT to allow it for the lab, or rebuild challenge 5 so the source is shown inside the page.</li>
+  <li>Lock challenge 6 until a pair has two flags. Attack first, then defend.</li>
+</ol>
+<p>One limitation I can't fix in a browser: the board checks flags on the device. A pair that reads my code could work some flags out without solving them. That is challenge 5's lesson again. A real CTF checks flags on a server. I chose no accounts and no server over a cheat-proof board, and the flag log is my check instead.</p>
+
+<h2>Sources</h2>
+<ul class="tight small">
+  <li>Each page lists its own sources at the bottom.</li>
+  <li>The law: <a href="https://sso.agc.gov.sg/Act/CMA1993">Computer Misuse Act 1993</a> and the <a href="https://www.police.gov.sg/media-room/news/20220901_former_bank_officer_charged_with_offences_under_the_computer_misuse_act">Singapore Police Force, 1 September 2022</a>.</li>
+  <li>picoCTF age and consent: <a href="https://picoctf.com/terms.html">picoCTF Terms of Use</a>.</li>
+  <li>Passphrases: <a href="https://pages.nist.gov/800-63-4/sp800-63b.html">NIST SP 800-63B</a>.</li>
+  <li>Base64: <a href="https://www.rfc-editor.org/rfc/rfc4648">RFC 4648</a>. URLs: <a href="https://www.rfc-editor.org/rfc/rfc3986#section-3.2.1">RFC 3986</a>. Example addresses: <a href="https://www.rfc-editor.org/rfc/rfc5737">RFC 5737</a>.</li>
+</ul>
+</main>
+</body>
+</html>

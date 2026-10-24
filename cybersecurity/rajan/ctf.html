@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Six Flags Before the Bell: the challenge board, by Rajan Pillai</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="ctf.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Rajan Pillai is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<p><a href="index.html">Back to the project</a></p>
+<h1><span class="prompt">$</span> six-flags --before-the-bell</h1>
+<p class="lede">Six challenges. Each one hides a flag that looks like <code>sf{something}</code>. Find it, type it in, score the points.</p>
+<p class="note">You may attack these six challenges and this site's own files, including its code. I own the site and I give you permission. That permission stops at this site. Read the <a href="rules.html">ground rules</a> first. Challenge 1 makes sure you do.</p>
+
+<div class="card">
+  <div class="team">
+    <div>
+      <label for="team">Pair name (no real names)</label>
+      <input type="text" id="team" maxlength="24" autocomplete="off" placeholder="for example Table 7">
+    </div>
+    <button type="button" id="reset">Clear this device</button>
+  </div>
+  <div class="score" aria-live="polite">
+    <span>Score <strong id="points">0</strong> / 750</span>
+    <span>Flags <strong id="count">0</strong> / 6</span>
+    <span>Time <strong id="clock">0:00</strong></span>
+  </div>
+  <p class="small">Scores stay on this device only. Nothing is sent anywhere. A hint costs 20 points. The clock starts at your first flag attempt.</p>
+</div>
+
+<details class="chal" data-id="1" data-pts="50">
+  <summary><span class="t">1. Read the rules</span> <span class="pts">50 pts</span></summary>
+  <div class="body">
+    <p>Every real CTF starts with rules. The people who run it say what you may attack and what you may not. Read ours to the end.</p>
+    <p><a href="rules.html">Open the ground rules</a></p>
+    <div class="hint" hidden><p>The flag is in the last box on the rules page.</p></div>
+  </div>
+</details>
+
+<details class="chal" data-id="2" data-pts="100">
+  <summary><span class="t">2. Where does this link go?</span> <span class="pts">100 pts</span></summary>
+  <div class="body">
+    <p>A message arrives in your class chat. Merlion Bank is made up. Pretend its real site is <code>merlionbank.com.sg</code>. The links below are plain text, so you can't click them. Good. Read them instead.</p>
+    <div class="chat">
+      <p class="from">Unknown number, 9:41 pm</p>
+      <p>Your Merlion Bank account is locked. Log in within 1 hour to unlock it. Use any of these mirror links:</p>
+      <ol>
+        <li>https://merlionbank.com.sg.account-verify.net/login</li>
+        <li>https://www.merlionbank-sg.com/login</li>
+        <li>https://merlionbank.com.sg@203.0.113.7/login</li>
+        <li>https://www.rnerlionbank.com.sg/login</li>
+        <li>https://login.merlionbank.com.sg/reset</li>
+      </ol>
+    </div>
+    <p>Only one link goes to a server Merlion Bank controls. The flag is that link's hostname, wrapped as <code>sf{hostname}</code>.</p>
+    <p class="small">The message is still a scam, by the way. A real bank would not send "mirror links". The point is that you can read where a link goes before you tap it.</p>
+    <div class="hint" hidden><p>Find the hostname: it sits after <code>//</code> and before the next <code>/</code>. Anything before an <code>@</code> is not the host. Then read the hostname from the right. The owner is the last two or three parts, like <code>example.com.sg</code>. Look closely at every letter.</p></div>
+  </div>
+</details>
+
+<details class="chal" data-id="3" data-pts="100">
+  <summary><span class="t">3. Caesar's homework</span> <span class="pts">100 pts</span></summary>
+  <div class="body">
+    <p>I found this note on a desk. Every letter has been moved along the alphabet by the same amount. I don't know the amount.</p>
+    <p class="cipher" id="ciphertext">TLLA TL HMALY JJH. AOL MSHN PZ ZM{AYF_HSS_25_RLFZ}</p>
+    <p>Use <a href="https://gchq.github.io/CyberChef/">CyberChef</a>: drag in ROT13, then change Amount. Or use the shift tool here.</p>
+    <div class="card">
+      <label for="shift">Shift back by <span id="shift-n">0</span></label>
+      <input type="range" id="shift" min="0" max="25" value="0">
+      <p class="cipher" id="shifted" aria-live="polite"></p>
+    </div>
+    <p class="small">There are only 25 shifts to try. Trying every key is called a brute-force attack. Real ciphers have so many keys that this would take longer than anyone can wait.</p>
+    <div class="hint" hidden><p>A short word repeats at the start: <code>TL</code>. Two-letter words in English are few. Watch for "ME" or "IS" as you slide.</p></div>
+  </div>
+</details>
+
+<details class="chal" data-id="4" data-pts="150">
+  <summary><span class="t">4. Encoded is not encrypted</span> <span class="pts">150 pts</span></summary>
+  <div class="body">
+    <p>A student "hid" the flag so nobody could read it. Here it is:</p>
+    <p class="cipher">c2Z7ZW5jb2RlZF9pc19ub3RfZW5jcnlwdGVkfQ==</p>
+    <p>There is no key. Name the format, decode it, and you have the flag. <a href="https://gchq.github.io/CyberChef/">CyberChef</a> will do it in one step if you pick the right operation.</p>
+    <div class="hint" hidden><p>Only letters, digits, and <code>==</code> at the end. That padding is a giveaway for Base64. In CyberChef, use "From Base64".</p></div>
+  </div>
+</details>
+
+<details class="chal" data-id="5" data-pts="150">
+  <summary><span class="t">5. The club page</span> <span class="pts">150 pts</span></summary>
+  <div class="body">
+    <p>The made-up Coding Club put up a page. The leader says the flag is "hidden where students can't see it".</p>
+    <p><a href="club.html">Open the club page</a></p>
+    <p>Look at what the browser received, not only what it shows.</p>
+    <div class="hint" hidden><p>On a laptop, press <kbd>Ctrl</kbd> + <kbd>U</kbd> (<kbd>Cmd</kbd> + <kbd>Option</kbd> + <kbd>U</kbd> on a Mac) to view the page source. Search it with <kbd>Ctrl</kbd> + <kbd>F</kbd> for <code>sf{</code>. If view source is blocked on your school device, put your hand up. I have a printout.</p></div>
+  </div>
+</details>
+
+<details class="chal" data-id="6" data-pts="200">
+  <summary><span class="t">6. Build a passphrase the checker accepts</span> <span class="pts">200 pts</span></summary>
+  <div class="body">
+    <p>Now defend. Two of its checks come from NIST, the US standards body. The others are mine. Make up a passphrase that passes every check, and the checker gives you the flag.</p>
+    <p class="note">Make one up for this lesson. Never type a password you really use, here or on any checker.</p>
+    <label for="pass">Made-up passphrase</label>
+    <input type="text" id="pass" maxlength="80" spellcheck="false" autocomplete="off">
+    <ul class="checks" id="checks" aria-live="polite"></ul>
+    <p class="result" id="pass-result" aria-live="polite"></p>
+    <p class="small">The checker runs in your browser. Nothing you type leaves this page or is saved.</p>
+    <div class="hint" hidden><p>Pick three or four words that have nothing to do with each other, like things on your desk. Put a dash between them. Don't use your name, your pair name or the word "password".</p></div>
+  </div>
+</details>
+
+<template id="chal-tools">
+  <div class="flagrow">
+    <input type="text" class="flag" placeholder="sf{...}" spellcheck="false" autocomplete="off">
+    <button type="button" class="primary submit">Submit</button>
+    <button type="button" class="get-hint">Hint (-20)</button>
+  </div>
+  <p class="msg" aria-live="polite"></p>
+</template>
+
+<h2><span class="prompt">#</span> When you finish</h2>
+<p>Fill in the <a href="sheet.html">flag log</a> with your steps for each flag. A flag with no steps scores nothing on the sheet. Then try one more: how would you fix challenge 5 so the club page really keeps a secret?</p>
+<p class="small">Teachers: the walkthroughs are on the <a href="answers.html">answer key</a> page.</p>
+</main>
+</body>
+</html>
