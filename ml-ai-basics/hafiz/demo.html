@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Demo video and 60-minute Sec 3 lesson: testing an SMS spam model, by Hafiz Ismail</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Hafiz Ismail is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<p class="back"><a href="index.html">Back to 99% accurate, half the scams missed</a></p>
+<header class="mast">
+  <p class="tag">Deliverable 2 · demo video</p>
+  <h1>The demo, on video</h1>
+  <p class="lede">A 52-second screen recording. An old spam text, a new job scam, the audit, the Singlish test, and what 3 extra examples change.</p>
+</header>
+
+<video class="video" controls preload="none" playsinline poster="demo-poster.jpg" aria-describedby="transcript-note">
+  <source src="demo.mp4" type="video/mp4">
+  Your browser cannot play this video. The transcript below has every caption.
+</video>
+<p class="small" id="transcript-note">No sound. The captions are in the picture, and the full transcript is below. It is a real recording of <a href="index.html">the demo page</a>, and every score in it is the model's own.</p>
+
+<h2><span class="n">··</span> Transcript</h2>
+<ol class="tight">
+  <li>Title: 99% accurate, half the scams missed. A spam model trained on 5,574 real texts, tested on 2025-style scams.</li>
+  <li>The "Try the model" box. Caption: The model was trained on real texts from a 2012 collection.</li>
+  <li>An old UK prize text is checked: over 99.9%. The word list shows "[long number]", "claim", "prize" and "£" pushing toward spam.</li>
+  <li>A 2025-style job scam is checked: 6.3%, "Looks normal". Caption: "Job" was in 34 normal texts and no spam.</li>
+  <li>The test results: 144 caught, 6 missed, 3 false alarms, 962 left alone. Caption: 99.2% right. Calling everything normal scores 86.5%.</li>
+  <li>The audit runs on 20 made-up messages. Caption: It caught 5 of 10 scams. Job, investment and Singpass scams got through.</li>
+  <li>The Singlish table. Caption: The same bill scam in Singlish: 99.6% drops to 5.6%.</li>
+  <li>"Add my 3 job scams" is pressed. The audit re-runs. Caption: Now 6 of 10. The job scam is caught. The other misses did not move.</li>
+  <li>End: Accurate on what data?</li>
+</ol>
+
+<h2><span class="n">··</span> Where the demo fits: a 60-minute Sec 3 lesson</h2>
+<p class="made-up">My class is made up, like me. The timings are planned for a real 60-minute lesson.</p>
+<div class="panel">
+<ul class="tight">
+  <li>Who: 36 Sec 3 students in 18 pairs. They know what a model and training data are from an earlier lesson.</li>
+  <li>Devices: one Chromebook per pair, with the demo page open. No accounts, no sign-in.</li>
+  <li>Printout: one audit sheet per pair, with 8 blank rows: message, really, score, right or wrong.</li>
+  <li>Goal: students can say why a 99% score can mislead, and name one group a model could fail.</li>
+</ul>
+</div>
+<ol class="timeline">
+  <li><b>0 to 5 min.</b> Hook. "A scam filter is 99% accurate. Would you trust it on your mum's phone?" Hands up, yes or no. Keep the count on the board.</li>
+  <li><b>5 to 15 min.</b> Before anyone sees the model, each pair writes 4 scam and 4 normal texts on the audit sheet. Rules: made up, no real names, numbers or links. This is their test set.</li>
+  <li><b>15 to 25 min.</b> Pairs try the model with the sample buttons. I show the test table and ask: what would "always say normal" score? Someone works out 86.5%.</li>
+  <li><b>25 to 40 min.</b> Pairs type in their own 8 texts and fill in the sheet. Then they press "Run the audit" and compare with mine. Each pair reports caught, missed and false alarms.</li>
+  <li><b>40 to 50 min.</b> Pairs pick one scam it missed. They add 3 new made-up examples to fix it. Then they write the same scam a new way and test again. Did it learn the idea or the words?</li>
+  <li><b>50 to 57 min.</b> Class talk. The Singlish table goes on the screen. Who supplied the data? Who would this model protect least? Then the real defences: the SMS Sender ID Registry, and ScamShield's 1799 helpline.</li>
+  <li><b>57 to 60 min.</b> Exit ticket: "A 99% score is only as good as… because…". Second vote on the hook question.</li>
+</ol>
+<p class="small">Check: 5 + 10 + 10 + 15 + 10 + 7 + 3 = 60 minutes.</p>
+
+<h2><span class="n">··</span> For adult learners</h2>
+<p>I run the same activity in my evening class for working adults, in 45 minutes. I drop the paper sheet and use a shared spreadsheet. Adults go straight to "who built this data?", so the class talk takes longer.</p>
+
+<h2><span class="n">··</span> Sources</h2>
+<ul class="small src">
+  <li>Scam types: <a href="https://www.police.gov.sg/Media-Hub/Police-Life/2026/02/Scams-and-Cybercrime-Fell-by-Almost-a-Quarter-in-2025">Singapore Police Force, February 2026</a>.</li>
+  <li>Sender ID Registry: <a href="https://www.imda.gov.sg/-/media/imda/images/content/news-and-events/press-releases/enhanced-measures-against-scam-sms/factsheet-on-full-sms-sender-id-registry-regime.pdf">IMDA factsheet</a>.</li>
+  <li>ScamShield helpline 1799: <a href="https://www.scamshield.gov.sg/check-for-scams/scamshield-helpline/">ScamShield</a>.</li>
+</ul>
+</main>
+</body>
+</html>

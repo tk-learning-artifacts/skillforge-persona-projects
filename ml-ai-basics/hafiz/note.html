@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Teacher note: the SMS spam model demo, by Hafiz Ismail</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Hafiz Ismail is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<p class="back noprint"><a href="index.html">Back to 99% accurate, half the scams missed</a> · This note prints on one A4 page. <button type="button" id="print">Print</button></p>
+<div class="sheet">
+<h1>Teacher note: the SMS spam model demo</h1>
+<p>For a 60-minute Sec 3 lesson, or a 45-minute adult class. By Hafiz Ismail.</p>
+<div class="two">
+<div>
+<h2>What it is</h2>
+<p>A web page with a naive Bayes spam model. It was trained on 4,459 real texts from the SMS Spam Collection. Students check made-up messages, see which words pushed the score, audit it and add their own training examples.</p>
+<h2>Scope: what it is for</h2>
+<ul>
+  <li>Training data, labels and features: here the features are words.</li>
+  <li>Testing on unseen data, and why a score needs a baseline.</li>
+  <li>How bias comes from who supplied the data.</li>
+  <li>Why a few new examples fix words, not ideas.</li>
+</ul>
+<p>It is not a scam checker. Never tell students to trust its answer on a real message.</p>
+<h2>How it works</h2>
+<p>It counts how often each word appeared in spam and in normal texts. For a new message, it adds up each known word's push. Unknown words count for nothing. It does not read meaning or check links.</p>
+</div>
+<div>
+<h2>What it gets wrong</h2>
+<ul>
+  <li>99.2% right on 1,115 unseen texts from the same collection. But "always normal" already scores 86.5%.</li>
+  <li>It caught 5 of my 10 made-up 2025-style scams. Job, investment and chatty scams got through.</li>
+  <li>Singlish lowers the score: one bill scam fell from 99.6% to 5.6%. Most normal texts were Singaporean. Most spam came from a UK forum.</li>
+  <li>The collection dates from 2011. Spam has changed since.</li>
+</ul>
+<h2>Safety and privacy</h2>
+<ul>
+  <li>No accounts. Nothing typed leaves the browser.</li>
+  <li>Students type made-up messages only. Never paste a real text: it may hold a name, number or link.</li>
+  <li>Never open the links in a real scam text. The links in my audit are made up.</li>
+  <li>I removed rude words and first names from the model file.</li>
+  <li>If a student is worried about a real message: ScamShield helpline, 1799.</li>
+</ul>
+<h2>If it goes wrong</h2>
+<p>A student's fix "works" on one message only? That is the lesson. Ask them to write the scam a new way and test again.</p>
+</div>
+</div>
+<p class="small">Sources: SMS Spam Collection, UCI Machine Learning Repository (doi:10.24432/C5CC84); ScamShield, scamshield.gov.sg. Checked 24 October 2026.</p>
+</div>
+<script src="print.js" defer></script>
+</main>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Demo video and 90-minute club plan: Sun, Fish or House?, by Mei Ling Tan</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Mei Ling Tan is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<p class="back"><a href="index.html">Back to Sun, Fish or House?</a></p>
+<p class="kicker">Deliverable 2 · demo video</p>
+<h1>The demo, on video</h1>
+<p class="lede">A 44-second screen recording of the doodle trainer. A fish, a tall house that fools it, then the 15-drawing test before and after my fix.</p>
+
+<video class="video" controls preload="none" playsinline poster="demo-poster.jpg" aria-describedby="transcript-note">
+  <source src="demo.mp4" type="video/mp4">
+  Your browser cannot play this video. The transcript below has every caption.
+</video>
+<p class="small" id="transcript-note">No sound. The captions are in the picture, and the transcript is below. It is a real recording of <a href="index.html#try">the trainer</a>. The drawings were made by moving the mouse with a script, so the lines are very neat.</p>
+
+<h2>Transcript</h2>
+<ol class="tight">
+  <li>Title: Sun, Fish or House? A doodle classifier for my P5 coding club.</li>
+  <li>The trainer with version 1 loaded. Caption: Version 1 knows 36 drawings: 12 suns, 12 fish, 12 houses. No camera, no log-in.</li>
+  <li>A fish is drawn. The small box shows it as 20 × 20 squares. Guess shows Fish 100%, and 5 fish as the closest drawings.</li>
+  <li>A tall, thin house is drawn. Guess shows Sun 80%, House 20%. Caption: It says sun, and it is 80% sure. Sure is not the same as right.</li>
+  <li>The 15-drawing test runs: 13 of 15. The sun with no rays and the tall house are marked wrong. Caption: Both misses are shapes it was never taught.</li>
+  <li>Version 2 is loaded: 6 more drawings, 3 tall houses and 3 plain suns. The test runs again: 15 of 15. The two fixed drawings show 60%.</li>
+  <li>End: Teach it, test it on new drawings, then fix the data.</li>
+</ol>
+
+<h2>Where the demo fits: a 90-minute club session</h2>
+<div class="made-up">My club is made up, like me. The timings are planned for a real after-school club.</div>
+<div class="card">
+<ul class="tight">
+  <li>Who: 20 pupils from Primary 5 and 6, in 10 pairs.</li>
+  <li>Devices: 10 school laptops with any browser. One teacher laptop on the projector, with a webcam.</li>
+  <li>Accounts: none for pupils. Nobody signs in to anything.</li>
+  <li>Printouts: 10 test sheets. Each has 5 empty boxes for "what we drew, what it said, how sure".</li>
+  <li>Goal: pupils can say what training data, labels and features are. They can show one drawing that fools the model, and say why.</li>
+</ul>
+</div>
+<ol class="timeline">
+  <li><b>0 to 10 min.</b> Settle and log in to the school laptops. Open the doodle trainer. If a laptop won't start, that pair joins the next one. The page works with 3 pupils too.</li>
+  <li><b>10 to 20 min.</b> Unplugged warm-up. I hold up 6 drawings on paper and ask "sun, fish or house?" Then a sun with no rays. Some say moon. We talk: how did you decide?</li>
+  <li><b>20 to 35 min.</b> Pairs press "Run the test" on version 1. Each pair finds the 2 wrong ones and writes why they think it went wrong. Then they tap each one to see its 5 closest drawings.</li>
+  <li><b>35 to 55 min.</b> Pairs press "Start empty". Each partner adds 4 drawings of each thing, so 8 per class. Then pairs swap laptops. They draw 5 new things for the other pair's model and fill in the test sheet.</li>
+  <li><b>55 to 65 min.</b> Break, away from screens.</li>
+  <li><b>65 to 80 min.</b> I show Teachable Machine on the projector. I train 3 classes with things from my table: a ruler, an eraser, a water bottle. Only the objects go on camera, never faces. Pupils call out new things to try, like a pencil case. I close the tab at the end without saving.</li>
+  <li><b>80 to 87 min.</b> Talk. Pupils match the four words to what they did: training data, label, features, overfitting. Then: "When was it sure and wrong?"</li>
+  <li><b>87 to 90 min.</b> Pack up. Exit line on a sticky note: "My model got confused when…"</li>
+</ol>
+<p class="small">Check: 10 + 10 + 15 + 20 + 10 + 15 + 7 + 3 = 90 minutes.</p>
+
+<h2>What I watch for</h2>
+<ul class="tight">
+  <li>The early finisher: ask them to fool their own model on purpose, then fix it with 2 drawings.</li>
+  <li>The quiet pupil: they can be the "tester" in the pair. Testing is the real job here.</li>
+  <li>Pupils who say "it knows": I ask "what does it see?" and point at the 20 × 20 squares.</li>
+</ul>
+
+<h2>Sources</h2>
+<ul class="small">
+  <li>Teachable Machine trains in the browser tab and sends samples to no server unless you save to Drive: <a href="https://teachablemachine.withgoogle.com/faq">Teachable Machine FAQ</a>, checked 24 October 2026.</li>
+</ul>
+</main>
+</body>
+</html>
