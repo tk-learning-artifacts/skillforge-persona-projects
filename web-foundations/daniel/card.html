@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Task card: build your own Scam or not? page, by Daniel Ong</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="print.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Daniel Ong is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<p class="noprint"><a href="starter.html">Back to the starter</a>. This card prints on one A4 page. <button type="button" id="print">Print</button></p>
+<article class="taskcard">
+<h1>Build your own Scam or not? page</h1>
+<p>Your page has 2 message cards. Finish it in 3 TODOs, then publish it and send the link to a partner. Time: about 25 minutes.</p>
+
+<h2>TODO 1 · HTML · index.html</h2>
+<div class="task">
+<p>Add a third message card. Make up the message. Never use a real phone number, name or link.</p>
+<p>Hint: copy one whole <code>&lt;article&gt;</code>, from its opening tag to <code>&lt;/article&gt;</code>. Change the message, <code>data-answer</code> ("scam" or "safe") and <code>data-clue</code>.</p>
+</div>
+
+<h2>TODO 2 · CSS · style.css</h2>
+<div class="task">
+<p>Put the cards side by side on a laptop. Stack them on a phone.</p>
+<p>Hint: inside <code>.cards { }</code> write <code>display: flex;</code> and <code>gap: 16px;</code>. Then add a media query: <code>@media (max-width: 600px) { .cards { flex-direction: column; } }</code></p>
+</div>
+
+<h2>TODO 3 · JavaScript · script.js</h2>
+<div class="task">
+<p>When a button is clicked, say if the choice was right. Show the clue and update the score.</p>
+<p>Hint: use <code>if (choice === answer) { ... } else { ... }</code>. Change the page with <code>feedback.textContent = 'Correct! ' + card.dataset.clue;</code></p>
+</div>
+
+<h2>Nothing changed? Check these first</h2>
+<ul class="boxes">
+  <li>Did you commit? Then wait a minute and refresh your Pages link.</li>
+  <li>Is every <code>{</code> closed with a <code>}</code>? Count them.</li>
+  <li>Did you spell it <code>textContent</code>, with a capital C? JavaScript cares about capitals.</li>
+</ul>
+
+<h2>Done? Extensions</h2>
+<ul class="boxes">
+  <li>Make the score say "out of 3". Use <code>cards.length</code> so it still works with 4 cards.</li>
+  <li>Stop people answering twice: set <code>button.disabled = true</code> on both buttons after a click.</li>
+  <li>Run WAVE on your live link. Fix every error it shows.</li>
+</ul>
+
+<h2>Publishing rules</h2>
+<ul class="boxes">
+  <li>No real names, yours or anyone else's.</li>
+  <li>No school name, class or photo of a person.</li>
+  <li>Only pictures you made yourself.</li>
+</ul>
+</article>
+</main>
+</body>
+</html>

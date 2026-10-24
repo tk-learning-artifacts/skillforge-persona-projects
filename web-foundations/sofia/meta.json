@@ -1,0 +1,6 @@
+{
+  "module": "web-foundations",
+  "persona": "sofia",
+  "title": "Code Breakers HQ: a secret codes website for my holiday camp",
+  "summary": "A 3-page camp website with a working Caesar wheel and a Morse lamp, published on GitHub Pages. It has redrawn WAVE panels for the draft and the fixed site, and a 3-TODO agent page starter with a mixed-age task card."
+}

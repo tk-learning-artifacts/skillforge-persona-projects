@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Scam or not?</title>
+  <link rel="stylesheet" href="../../../kit/note.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Daniel Ong is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+  <header>
+    <h1>Scam or not?</h1>
+    <p>Read each message. Is it a scam?</p>
+  </header>
+  <main>
+    <p id="score">Score: 0</p>
+    <div class="cards">
+      <article class="card" data-answer="scam" data-clue="Hurry, a strange link and a payment.">
+        <h2>SMS from SG-Parcel</h2>
+        <p>Your parcel is held. Pay $1.50 within 2 hours: parcel-sg-help.example/pay</p>
+        <button data-choice="scam">Scam</button>
+        <button data-choice="safe">Looks safe</button>
+        <p class="feedback"></p>
+      </article>
+      <article class="card" data-answer="safe" data-clue="No money, no secrets, no hurry.">
+        <h2>Chat from a classmate</h2>
+        <p>The CCA slides are in the same class folder as last week.</p>
+        <button data-choice="scam">Scam</button>
+        <button data-choice="safe">Looks safe</button>
+        <p class="feedback"></p>
+      </article>
+      <!-- TODO 1 (HTML): Add a third card here. Copy the article above,
+           then write your own made-up message, answer and clue. -->
+    </div>
+  </main>
+  <footer>
+    <p>Made by a Sec 2 student. All messages are made up.</p>
+  </footer>
+</body>
+</html>

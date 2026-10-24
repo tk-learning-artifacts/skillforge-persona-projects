@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scam or Not? A cyber wellness quiz site for Sec 2, by Daniel Ong</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Daniel Ong is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<p class="kicker">Learning log · Web Foundations end project</p>
+<h1>Scam or Not?</h1>
+<p class="lede">A 3-page website for my Sec 2 class. It teaches 4 signs of a scam, tests them with a 6-message quiz, and says where to get help in Singapore.</p>
+<p>I'm Daniel. I have been a trainer for six months, and I learn alongside my classes. I teach a Sec 2 coding class. This term our school asked us to link one unit to cyber wellness. Scams felt like the topic my students would care about most. So I built the site I wanted to show them, and then turned it into their starter.</p>
+<p class="small">My class and colleague are made up, like me. The site, the facts on it and the WAVE fixes are real. Every scam message on the site is made up.</p>
+
+<ul class="toc">
+  <li><a href="#live">1. The live site</a></li>
+  <li><a href="#wave">2. WAVE before and after</a></li>
+  <li><a href="#starter">3. Starter and task card</a></li>
+  <li><a href="#rubric">Rubric check</a></li>
+  <li><a href="#change">What I'd change</a></li>
+  <li><a href="#sources">Sources</a></li>
+</ul>
+
+<h2 id="live">1. The live site</h2>
+<div class="live">
+  <strong>Live link</strong>
+  <a href="https://tk-learning-artifacts.github.io/skillforge-persona-projects/web-foundations/daniel/site/">tk-learning-artifacts.github.io/skillforge-persona-projects/web-foundations/daniel/site/</a>
+</div>
+<p>It is published free with GitHub Pages. Try it on your phone first, because that is where my students will open it. The three pages:</p>
+<ul class="pages">
+  <li><a href="site/index.html">Spot the signs</a><br>The 4 signs as cards, the ACT reminder, and two numbers from the police.</li>
+  <li><a href="site/quiz.html">Scam or not?</a><br>The JavaScript feature. Six made-up messages. Pick Scam or Looks safe, and get a clue each time.</li>
+  <li><a href="site/help.html">Get help</a><br>What to do if a message worries you, the 1799 helpline, and what to do if you already paid.</li>
+</ul>
+
+<h3>How it meets the brief</h3>
+<ul class="tight">
+  <li>At least 2 linked pages: there are 3. The same header nav is on each page, and the current page is marked with <code>aria-current="page"</code>.</li>
+  <li>A flexbox layout that works on phones: the sign cards and the ACT cards sit in a row with <code>display: flex</code>. A media query at 600 px switches them to <code>flex-direction: column</code>, and wraps the nav. I did it the way the module's card layout task teaches, so my students see the same pattern.</li>
+  <li>1 JavaScript feature: the quiz. It finds the messages with <code>querySelectorAll</code>, adds two buttons to each, and listens with <code>addEventListener</code>. It writes the clue and the score with <code>textContent</code>. The score line uses <code>aria-live</code>, so a screen reader reads out each new score.</li>
+</ul>
+
+<div class="sticky">
+<h3>Three things that confused me</h3>
+<ul class="tight">
+  <li>I assumed CodePen was fine for school. Its terms say its services are not for anyone under 18. My students use GitHub instead, which allows 13 and over.</li>
+  <li>My quiz checked <code>data-answer="true"</code> against <code>true</code> and never matched. <code>dataset</code> values are always strings. Now I use the words "scam" and "safe".</li>
+  <li>I thought scams were mostly an older people's problem. The police's 2024 numbers say 70.9% of victims were under 50. That fact went on the home page.</li>
+</ul>
+</div>
+
+<h2 id="wave">2. WAVE before and after</h2>
+<p>My first draft had 15 errors and 9 contrast errors across two pages. That shocked me, because the page looked fine to me. I kept the draft online, unchanged:</p>
+<ul class="tight">
+  <li>First draft: <a href="before/index.html">Spot the signs</a> and <a href="before/quiz.html">the quiz</a>.</li>
+  <li>WAVE on the live draft: <a href="https://wave.webaim.org/report#/https://tk-learning-artifacts.github.io/skillforge-persona-projects/web-foundations/daniel/before/index.html">signs draft</a>, <a href="https://wave.webaim.org/report#/https://tk-learning-artifacts.github.io/skillforge-persona-projects/web-foundations/daniel/before/quiz.html">quiz draft</a>.</li>
+  <li>WAVE on the fixed site: <a href="https://wave.webaim.org/report#/https://tk-learning-artifacts.github.io/skillforge-persona-projects/web-foundations/daniel/site/quiz.html">quiz</a>.</li>
+</ul>
+<p class="card">These are redrawn summaries, not screenshots. An AI made this project and could not open the WAVE extension. Each summary counts what WAVE's published error rules find in that file, checked in Chrome. WAVE's own count may differ a little. Open the links above and compare.</p>
+
+<h3>Before</h3>
+<div class="wave">
+  <figure>
+    <figcaption>before/index.html</figcaption>
+    <div class="nums"><div class="bad"><b>6</b>Errors</div><div class="bad"><b>5</b>Contrast errors</div></div>
+    <ul>
+      <li>4 × Missing alternative text</li>
+      <li>1 × Linked image missing alternative text</li>
+      <li>1 × Broken skip link</li>
+      <li>5 × Very low contrast</li>
+    </ul>
+  </figure>
+  <figure>
+    <figcaption>before/quiz.html</figcaption>
+    <div class="nums"><div class="bad"><b>9</b>Errors</div><div class="bad"><b>4</b>Contrast errors</div></div>
+    <ul>
+      <li>6 × Missing form label</li>
+      <li>1 × Empty button</li>
+      <li>1 × Linked image missing alternative text</li>
+      <li>1 × Broken skip link</li>
+      <li>4 × Very low contrast</li>
+    </ul>
+  </figure>
+</div>
+
+<h3>After</h3>
+<div class="wave">
+  <figure>
+    <figcaption>site/index.html</figcaption>
+    <div class="nums"><div class="ok"><b>0</b>Errors</div><div class="ok"><b>0</b>Contrast errors</div></div>
+  </figure>
+  <figure>
+    <figcaption>site/quiz.html</figcaption>
+    <div class="nums"><div class="ok"><b>0</b>Errors</div><div class="ok"><b>0</b>Contrast errors</div></div>
+  </figure>
+  <figure>
+    <figcaption>site/help.html</figcaption>
+    <div class="nums"><div class="ok"><b>0</b>Errors</div><div class="ok"><b>0</b>Contrast errors</div></div>
+  </figure>
+</div>
+
+<h3>What I fixed</h3>
+<ol class="fixes">
+  <li>Missing alternative text (4). The four sign icons had no alt. Each card's heading already says the sign, so the icons now have <code>alt=""</code>.
+    <span class="who">Helps screen reader users, who no longer hear four file names.</span></li>
+  <li>Linked image missing alternative text (2). The logo was an image link with no words. The link now holds the words "Scam or Not?", and the icon is hidden from screen readers.
+    <span class="who">Helps screen reader users know the link goes home.</span></li>
+  <li>Broken skip link (2). My skip link pointed to <code>#content</code>, but the main tag had <code>id="main"</code>. One typo, on every page. It now points to <code>#main</code>.
+    <span class="who">Helps keyboard users jump past the nav.</span></li>
+  <li>Missing form label (6). The draft quiz used radio buttons with the words Scam and Safe beside them, not tied to them. I swapped them for two real buttons per message, which need no label. Each answer now gets its clue straight away, not after a Check button.
+    <span class="who">Helps screen reader users, and anyone tapping on a small phone screen.</span></li>
+  <li>Empty button (1). The Start again button was only a circular arrow icon. It now says "Start again".
+    <span class="who">Helps everyone. Two colleagues guessed it meant refresh the page.</span></li>
+  <li>Very low contrast (9). My pale grey captions and timestamps were 2.3 to 1 on white. White text on my mint button was 1.67 to 1. WAVE wants 4.5 to 1. Captions now use dark grey at 9.14 to 1. The button is deep green with white text at 6.42 to 1. I checked the dark mode colours too.
+    <span class="who">Helps students with low vision, and anyone reading in sunlight.</span></li>
+</ol>
+
+<h3>Keyboard-only test</h3>
+<ul class="tight">
+  <li>The first Tab shows the skip link. Enter jumps to the main content.</li>
+  <li>Tab reaches each Scam and Looks safe button in order. Space or Enter picks one.</li>
+  <li>After an answer, both buttons are disabled, so Tab moves on to the next message.</li>
+  <li>Start again moves focus back to the first message, so you don't have to tab back up.</li>
+  <li>The 1799 number is a phone link, so it can be tapped or reached with Tab.</li>
+</ul>
+
+<h2 id="starter">3. Starter project and task card</h2>
+<p>Students build their own Scam or not? page. The starter has 2 message cards and 3 TODOs: a third card in HTML, the flexbox layout in CSS, and the answer check in JavaScript. They copy it from a GitHub template repository, edit it in github.dev and publish it on GitHub Pages.</p>
+<ul class="pages">
+  <li><a href="starter.html">The starter</a><br>The 3 files, how students copy and publish them, my 60-minute lesson and the answer key.</li>
+  <li><a href="starter/index.html">Run the starter</a><br>See what students start with: cards in a column and buttons that do nothing yet.</li>
+  <li><a href="card.html">The task card</a><br>One A4 page with a hint per TODO, a bug checklist, 3 extensions and publishing rules.</li>
+</ul>
+
+<h2 id="rubric">Rubric check</h2>
+<ul class="tight">
+  <li>Site works on phone and laptop: checked at 360 px and 1200 px, in light and dark mode. No sideways scrolling. Every button is at least 44 px tall.</li>
+  <li>Uses semantic HTML throughout: header, nav, main and footer on every page. Signs and steps are lists. The quiz messages are an ordered list, and each set of buttons is a labelled group.</li>
+  <li>No WAVE errors left: 0 errors and 0 contrast errors on all 3 pages, by WAVE's rules. Please run WAVE on the live links to confirm.</li>
+  <li>Starter tasks fit your students' level: TODO 1 everyone can do, TODO 2 adds one new idea, TODO 3 is a short if and else. My colleague test changed the task card twice.</li>
+</ul>
+
+<h2 id="change">What I'd change</h2>
+<p>The quiz has 4 scams and 2 safe messages. A student who presses Scam every time scores 4 out of 6. I only noticed when I tried to break my own quiz. Next time I'd balance it, 3 and 3, and shuffle the order.</p>
+<p>github.dev has no preview, so each change means commit, wait and refresh. That slow loop hurts beginners most. I'd also like a way to publish that doesn't put a student's GitHub username in the web address. Some students pick usernames close to their real names.</p>
+
+<h2 id="sources">Sources</h2>
+<ul class="tight small">
+  <li>2024 scam cases (51,501) and victims under 50 (70.9%): <a href="https://www.police.gov.sg/Media-Hub/Police-Life/2025/02/Five-Things-You-Should-Know-about-the-Annual-Scams-and-Cybercrime-Brief-2024">Singapore Police Force, Annual Scams and Cybercrime Brief 2024</a>. Government officials never ask you to transfer money over a phone call: the same page's banner.</li>
+  <li>Job scams among the top five scam types in 2023: <a href="https://www.police.gov.sg/media-hub/police-life/2024/02/three-things-you-should-know-about-the-annual-scams-and-cybercrime-brief-2023">Singapore Police Force, Annual Scams and Cybercrime Brief 2023</a>.</li>
+  <li>ScamShield Helpline 1799, open 24/7, +65 6869 1799 from overseas, connects to seven banks, cannot make police reports: <a href="https://www.scamshield.gov.sg/check-for-scams/scamshield-helpline/">ScamShield helpline page</a>.</li>
+  <li>ACT (Add, Check, Tell), launched January 2023: <a href="https://www.scamshield.gov.sg/get-involved/i-can-act-campaign/">I can ACT against scams</a>.</li>
+  <li>CodePen is "not available to minors (under 18 years of age)": <a href="https://blog.codepen.io/documentation/terms-of-service/">CodePen Terms of Service</a>.</li>
+  <li>GitHub accounts are for ages 13 and up: <a href="https://docs.github.com/en/site-policy/github-terms/github-terms-of-service">GitHub Terms of Service</a>.</li>
+  <li>Template repositories and Use this template: <a href="https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template">GitHub Docs, creating a repository from a template</a>.</li>
+  <li>github.dev opens with the full stop key and cannot run code: <a href="https://docs.github.com/en/codespaces/the-githubdev-web-based-editor">GitHub Docs, the github.dev web-based editor</a>.</li>
+  <li>Pages on a free account needs a public repository, and changes can take up to 10 minutes: <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site">GitHub Docs, creating a GitHub Pages site</a>.</li>
+  <li><code>dataset</code> values are strings: <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset">MDN, HTMLElement dataset</a>.</li>
+  <li>WAVE error types and the 4.5 to 1 contrast rule: <a href="https://wave.webaim.org/api/docs?format=html">WAVE API documentation, WebAIM</a>.</li>
+  <li>The .example web addresses are kept for examples: <a href="https://www.rfc-editor.org/rfc/rfc2606">RFC 2606, reserved top level DNS names</a>.</li>
+</ul>
+</main>
+</body>
+</html>

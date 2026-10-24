@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scam or not? starter project for Sec 2, by Daniel Ong</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="copy.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Daniel Ong is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<p><a href="index.html">Back to Scam or Not?</a></p>
+<p class="kicker">Starter project · Sec 2</p>
+<h1>Starter: build your own Scam or not? page</h1>
+<p class="lede">A half-made quiz page with 2 message cards. Students add a third card, lay the cards out with flexbox, and write the code that checks each answer. Then they publish it.</p>
+<ul class="toc">
+  <li><a href="starter/index.html">Run the starter as it is</a></li>
+  <li><a href="card.html">Print the task card</a></li>
+  <li><a href="#files">The 3 files</a></li>
+  <li><a href="#lesson">60-minute lesson</a></li>
+  <li><a href="#answers">Answer key</a></li>
+</ul>
+
+<h2 id="setup">How students get it</h2>
+<p>I put the 3 files in a GitHub repository and turned on the Template repository setting. Each student then makes their own copy.</p>
+<ol class="steps">
+  <li>Open my template repository. Above the file list, click Use this template, then Create a new repository.</li>
+  <li>Name it <code>scam-or-not</code>. Choose Public, because GitHub Pages on a free account needs a public repository.</li>
+  <li>Press the full stop key on the repository page. This opens github.dev, a code editor in the browser.</li>
+  <li>Edit the files, then commit the changes from the Source Control panel.</li>
+  <li>In Settings, then Pages, publish from the main branch. The site appears at <code>username.github.io/scam-or-not/</code>.</li>
+</ol>
+<div class="sticky">
+<h3>What I got wrong first</h3>
+<p>I planned to use CodePen, so students could fork a starter pen. Then I read CodePen's terms. Its services are not for anyone under 18. My Sec 2 students are 13 or 14. GitHub's terms say 13 or older, so GitHub works. I still checked with our school's ICT team before students made accounts.</p>
+</div>
+<p>github.dev has one catch. It cannot run code, so there is no preview. Students commit, then refresh their Pages link. GitHub says a change can take up to 10 minutes to show. In my test it was usually quicker, but I plan for the wait.</p>
+
+<h2 id="files">The 3 files</h2>
+<p>The highlighted lines are the TODOs. These copies leave out the AI note, so students start with only their own page.</p>
+<p class="small" id="copied" aria-live="polite"></p>
+<div class="file">
+<div class="file-top"><h3>index.html</h3><button type="button" data-copy="dindex" data-name="index.html">Copy index.html</button></div>
+<pre id="dindex" tabindex="0" aria-label="index.html code">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+  &lt;title&gt;Scam or not?&lt;/title&gt;
+  &lt;link rel="stylesheet" href="style.css"&gt;
+  &lt;script src="script.js" defer&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;header&gt;
+    &lt;h1&gt;Scam or not?&lt;/h1&gt;
+    &lt;p&gt;Read each message. Is it a scam?&lt;/p&gt;
+  &lt;/header&gt;
+  &lt;main&gt;
+    &lt;p id="score"&gt;Score: 0&lt;/p&gt;
+    &lt;div class="cards"&gt;
+      &lt;article class="card" data-answer="scam" data-clue="Hurry, a strange link and a payment."&gt;
+        &lt;h2&gt;SMS from SG-Parcel&lt;/h2&gt;
+        &lt;p&gt;Your parcel is held. Pay $1.50 within 2 hours: parcel-sg-help.example/pay&lt;/p&gt;
+        &lt;button data-choice="scam"&gt;Scam&lt;/button&gt;
+        &lt;button data-choice="safe"&gt;Looks safe&lt;/button&gt;
+        &lt;p class="feedback"&gt;&lt;/p&gt;
+      &lt;/article&gt;
+      &lt;article class="card" data-answer="safe" data-clue="No money, no secrets, no hurry."&gt;
+        &lt;h2&gt;Chat from a classmate&lt;/h2&gt;
+        &lt;p&gt;The CCA slides are in the same class folder as last week.&lt;/p&gt;
+        &lt;button data-choice="scam"&gt;Scam&lt;/button&gt;
+        &lt;button data-choice="safe"&gt;Looks safe&lt;/button&gt;
+        &lt;p class="feedback"&gt;&lt;/p&gt;
+      &lt;/article&gt;
+<mark>      &lt;!-- TODO 1 (HTML): Add a third card here. Copy the article above,</mark>
+           then write your own made-up message, answer and clue. --&gt;
+    &lt;/div&gt;
+  &lt;/main&gt;
+  &lt;footer&gt;
+    &lt;p&gt;Made by a Sec 2 student. All messages are made up.&lt;/p&gt;
+  &lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+</div>
+<div class="file">
+<div class="file-top"><h3>style.css</h3><button type="button" data-copy="dcss" data-name="style.css">Copy style.css</button></div>
+<pre id="dcss" tabindex="0" aria-label="style.css code">body {
+  font-family: system-ui, sans-serif;
+  margin: 0;
+  background: #eef3f2;
+  color: #14201e;
+}
+
+header, main, footer {
+  padding: 16px;
+}
+
+header {
+  background: #0a6b5c;
+  color: white;
+}
+
+.card {
+  flex: 1;
+  background: white;
+  border: 1px solid #cfdcd9;
+  border-radius: 16px;
+  padding: 16px;
+}
+
+<mark>/* TODO 2 (CSS): Put the cards side by side on a laptop.</mark>
+   1. Give .cards display: flex and a gap of 16px.
+   2. Add a media query: under 600px wide, set flex-direction: column. */
+.cards {
+
+}
+
+button {
+  font-size: 1rem;
+  padding: 10px 16px;
+  border-radius: 999px;
+  border: 2px solid #14201e;
+  background: white;
+  cursor: pointer;
+}</pre>
+</div>
+<div class="file">
+<div class="file-top"><h3>script.js</h3><button type="button" data-copy="djs" data-name="script.js">Copy script.js</button></div>
+<pre id="djs" tabindex="0" aria-label="script.js code">// Every card holds a message, two buttons and an empty feedback line.
+const cards = document.querySelectorAll('.card');
+const score = document.querySelector('#score');
+let right = 0;
+
+cards.forEach(function (card) {
+  const feedback = card.querySelector('.feedback');
+  const buttons = card.querySelectorAll('button');
+
+  buttons.forEach(function (button) {
+    button.addEventListener('click', function () {
+      // Both are words, like "scam" or "safe".
+      const choice = button.dataset.choice;
+      const answer = card.dataset.answer;
+
+<mark>      // TODO 3 (JavaScript): If choice is the same as answer,</mark>
+      // set feedback.textContent to "Correct! " followed by card.dataset.clue,
+      // and add 1 to right. Otherwise, set it to "Not quite. " and the clue.
+      // Then update the score with score.textContent.
+
+    });
+  });
+});</pre>
+</div>
+
+<h2 id="lesson">How I run it: one 60-minute lesson</h2>
+<p>32 Sec 2 students on school Chromebooks. They made GitHub accounts in an earlier lesson.</p>
+<ol class="steps">
+  <li>0 to 5 min. Settle and sign in to GitHub.</li>
+  <li>5 to 15 min. Pairs play the <a href="site/quiz.html">Scam or not? quiz</a>. Then we list the 4 signs on the board.</li>
+  <li>15 to 20 min. I demo Use this template and the full stop key, live.</li>
+  <li>20 to 25 min. Everyone turns on GitHub Pages now, so the first publish runs while they code.</li>
+  <li>25 to 50 min. TODOs 1, 2 and 3, with the task card. I walk round with the "check these first" list.</li>
+  <li>50 to 57 min. Swap links with a partner. Play each other's quiz on a phone.</li>
+  <li>57 to 60 min. Exit ticket: which TODO was hardest, and why?</li>
+</ol>
+<p class="small">Check: 5 + 10 + 5 + 5 + 25 + 7 + 3 = 60 minutes.</p>
+
+<h2 id="level">Why these TODOs fit Sec 2</h2>
+<ul class="tight">
+  <li>TODO 1 is copy and change. Everyone can finish it, and it shows how the HTML is built.</li>
+  <li>TODO 2 needs one new idea: a media query. The task card gives the shape of it.</li>
+  <li>TODO 3 is the stretch for most of the class. The loop and the click listener are written. Students write only the if and else.</li>
+  <li>Fast finishers get 3 extensions on the task card, ending with a WAVE check on their own live link.</li>
+</ul>
+
+<h2 id="test">Test run with a colleague</h2>
+<p class="small">My colleague is made up, like me.</p>
+<ul class="tight">
+  <li>She finished in 18 minutes. Students will take longer, so 25 minutes is tight. Extensions can go home.</li>
+  <li>Her first commit did not show for about 2 minutes. She thought she had broken it. I added "wait, then refresh" to the task card.</li>
+  <li>In my first draft, cards had <code>data-answer="true"</code> and I compared it with <code>true</code>. It never matched. Values from <code>dataset</code> are always strings. Now both sides are words, "scam" or "safe".</li>
+</ul>
+
+<h2 id="answers">Answer key</h2>
+<details>
+<summary>Show the finished TODOs</summary>
+<p>TODO 1: a third <code>article class="card"</code> with its own <code>data-answer</code>, <code>data-clue</code>, message, two buttons and an empty feedback line.</p>
+<p>TODO 2, in <code>style.css</code>:</p>
+<pre>.cards {
+  display: flex;
+  gap: 16px;
+}
+
+@media (max-width: 600px) {
+  .cards {
+    flex-direction: column;
+  }
+}</pre>
+<p>TODO 3, in <code>script.js</code>, inside the click listener:</p>
+<pre>if (choice === answer) {
+  feedback.textContent = 'Correct! ' + card.dataset.clue;
+  right = right + 1;
+} else {
+  feedback.textContent = 'Not quite. ' + card.dataset.clue;
+}
+score.textContent = 'Score: ' + right;</pre>
+</details>
+</main>
+</body>
+</html>

@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Code Breakers HQ: a secret codes website for a holiday camp, by Sofia Reyes</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Sofia Reyes is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<span class="stamp">Case file: web foundations</span>
+<h1>Code Breakers HQ</h1>
+<p class="lede">A 3-page website for my secret codes holiday camp. Campers turn a Caesar wheel, flash Morse code on a lamp, then finish a starter page with their own decoder button.</p>
+<p>I'm Sofia. I run holiday camps for mixed-age groups. My camps are short, so every idea becomes a game or a challenge. Code Breakers is three mornings for 20 campers aged 8 to 12. This is my end project for the Web Foundations module.</p>
+<p class="small">My camp, campers and colleague are made up, like me. The site, the codes and the WAVE fixes are real.</p>
+
+<ul class="toc">
+  <li><a href="#live">1. The live site</a></li>
+  <li><a href="#wave">2. WAVE before and after</a></li>
+  <li><a href="#starter">3. Starter and task card</a></li>
+  <li><a href="#rubric">Rubric check</a></li>
+  <li><a href="#change">What I'd change</a></li>
+  <li><a href="#sources">Sources</a></li>
+</ul>
+
+<h2 id="live">1. The live site</h2>
+<div class="big-link">
+  <span class="stamp">Live link</span>
+  <a href="https://tk-learning-artifacts.github.io/skillforge-persona-projects/web-foundations/sofia/site/">tk-learning-artifacts.github.io/skillforge-persona-projects/web-foundations/sofia/site/</a>
+</div>
+<p>It is published free with GitHub Pages, from the same repository as this page. Open it on your phone. Then try the three pages here:</p>
+<ul class="pages">
+  <li><a href="site/index.html">HQ</a><br>The camp home. Three mission cards and the agent rules.</li>
+  <li><a href="site/caesar.html">Caesar wheel</a><br>The JavaScript feature. Turn the wheel, hide a message, crack three notes.</li>
+  <li><a href="site/morse.html">Morse lab</a><br>Type a word and watch the lamp flash it, with a beep if you like.</li>
+</ul>
+
+<svg class="map" viewBox="0 0 560 210" role="img" aria-labelledby="map-title map-desc">
+  <title id="map-title">Site map</title>
+  <desc id="map-desc">Three pages: HQ, Caesar wheel and Morse lab. A nav bar on every page links each page to the other two.</desc>
+  <rect class="box" x="200" y="10" width="160" height="62" rx="10"/>
+  <text x="280" y="38" text-anchor="middle">HQ</text>
+  <text class="sub" x="280" y="58" text-anchor="middle">index.html</text>
+  <rect class="box" x="20" y="136" width="190" height="62" rx="10"/>
+  <text x="115" y="164" text-anchor="middle">Caesar wheel</text>
+  <text class="sub" x="115" y="184" text-anchor="middle">caesar.html + caesar.js</text>
+  <rect class="box" x="350" y="136" width="190" height="62" rx="10"/>
+  <text x="445" y="164" text-anchor="middle">Morse lab</text>
+  <text class="sub" x="445" y="184" text-anchor="middle">morse.html + morse.js</text>
+  <path class="arrow" d="M230 74 L140 132"/>
+  <path class="arrow" d="M330 74 L420 132"/>
+  <path class="arrow" d="M214 167 L346 167"/>
+  <circle class="head" cx="230" cy="74" r="4"/><circle class="head" cx="140" cy="132" r="4"/>
+  <circle class="head" cx="330" cy="74" r="4"/><circle class="head" cx="420" cy="132" r="4"/>
+  <circle class="head" cx="214" cy="167" r="4"/><circle class="head" cx="346" cy="167" r="4"/>
+</svg>
+
+<h3>How it meets the brief</h3>
+<ul class="tight">
+  <li><strong>At least 2 linked pages.</strong> There are 3. The same nav bar sits at the top of each page. The current page is marked with <code>aria-current="page"</code>, so it shows dark and screen readers say "current page".</li>
+  <li><strong>A flexbox layout that works on phones.</strong> The header, the mission cards, the letter strip and the Morse chart all use <code>display: flex</code> with <code>flex-wrap: wrap</code>. Each mission card has <code>flex: 1 1 240px</code>. On a laptop the three cards share a row. On a 360 px phone there is room for one, so they stack. I needed no media query, because wrapping does the work.</li>
+  <li><strong>1 JavaScript feature.</strong> The Caesar wheel. It uses <code>querySelector</code> to find the box and buttons, and <code>addEventListener</code> for clicks and typing. It writes the answer with <code>textContent</code>. It also draws the wheel in SVG and turns the inner ring. The Morse lamp is a bonus.</li>
+</ul>
+
+<h3>Why this editor, and who publishes</h3>
+<p>I first planned to use CodePen. Then I read its terms of service. They say its services are not for anyone under 18. So campers use the <a href="https://editor.raspberrypi.org/">Raspberry Pi Code Editor</a>. It runs in the browser and needs no account. It also runs JavaScript in HTML projects, and has an Add file button for a <code>.js</code> file.</p>
+<p>GitHub accounts are for ages 13 and up. Most of my campers are younger, so I publish the site, and they don't publish anything. Their pages stay in the editor and in a download.</p>
+
+<h2 id="wave">2. WAVE before and after</h2>
+<p>I ran my first draft past WAVE's rules. Two pages had 14 errors and 7 contrast errors between them. I kept that draft online, unchanged, so you can check it yourself:</p>
+<ul class="tight">
+  <li>First draft: <a href="before/index.html">HQ</a> and <a href="before/caesar.html">Caesar wheel</a>.</li>
+  <li>Run WAVE on the live draft: <a href="https://wave.webaim.org/report#/https://tk-learning-artifacts.github.io/skillforge-persona-projects/web-foundations/sofia/before/index.html">HQ draft in WAVE</a>, <a href="https://wave.webaim.org/report#/https://tk-learning-artifacts.github.io/skillforge-persona-projects/web-foundations/sofia/before/caesar.html">Caesar draft in WAVE</a>.</li>
+  <li>Run WAVE on the fixed site: <a href="https://wave.webaim.org/report#/https://tk-learning-artifacts.github.io/skillforge-persona-projects/web-foundations/sofia/site/caesar.html">Caesar wheel in WAVE</a>.</li>
+</ul>
+<p class="note">These panels are redrawn, not screenshots. An AI made this project and could not open the WAVE extension. Each panel lists what WAVE's published error rules find in that file. The counts were checked in Chrome. WAVE's own count may differ a little, so use the links above and compare. That makes a good class task too.</p>
+
+<h3>Before</h3>
+<div class="panels">
+  <figure class="panel">
+    <div class="panel-top">WAVE · before/index.html (HQ)</div>
+    <div class="counts"><div class="count bad"><b>7</b>Errors</div><div class="count bad"><b>4</b>Contrast errors</div></div>
+    <ul>
+      <li>3 × Missing alternative text</li>
+      <li>1 × Linked image missing alternative text</li>
+      <li>1 × Empty link</li>
+      <li>1 × Empty heading</li>
+      <li>1 × Language missing or invalid</li>
+      <li>4 × Very low contrast</li>
+    </ul>
+    <figcaption>Redrawn panel for the first HQ draft.</figcaption>
+  </figure>
+  <figure class="panel">
+    <div class="panel-top">WAVE · before/caesar.html</div>
+    <div class="counts"><div class="count bad"><b>7</b>Errors</div><div class="count bad"><b>3</b>Contrast errors</div></div>
+    <ul>
+      <li>3 × Missing form label</li>
+      <li>2 × Empty button</li>
+      <li>1 × Linked image missing alternative text</li>
+      <li>1 × Language missing or invalid</li>
+      <li>3 × Very low contrast</li>
+    </ul>
+    <figcaption>Redrawn panel for the first Caesar wheel draft.</figcaption>
+  </figure>
+</div>
+
+<h3>After</h3>
+<div class="panels">
+  <figure class="panel">
+    <div class="panel-top">WAVE · site/index.html</div>
+    <div class="counts"><div class="count ok"><b>0</b>Errors</div><div class="count ok"><b>0</b>Contrast errors</div></div>
+    <figcaption>Redrawn panel for the fixed HQ page.</figcaption>
+  </figure>
+  <figure class="panel">
+    <div class="panel-top">WAVE · site/caesar.html</div>
+    <div class="counts"><div class="count ok"><b>0</b>Errors</div><div class="count ok"><b>0</b>Contrast errors</div></div>
+    <figcaption>Redrawn panel for the fixed Caesar wheel.</figcaption>
+  </figure>
+  <figure class="panel">
+    <div class="panel-top">WAVE · site/morse.html</div>
+    <div class="counts"><div class="count ok"><b>0</b>Errors</div><div class="count ok"><b>0</b>Contrast errors</div></div>
+    <figcaption>Redrawn panel for the Morse lab, built after the fixes.</figcaption>
+  </figure>
+</div>
+
+<h3>What I fixed, and who it helps</h3>
+<ol class="fix">
+  <li><strong>Language missing (2).</strong> I added <code>lang="en"</code> to the html tag. A screen reader now reads the page in an English voice.</li>
+  <li><strong>Linked image missing alternative text (2).</strong> The logo was a picture link with no words. Now the link holds the words "Code Breakers HQ", and the icon is hidden from screen readers. A blind camper hears where the link goes.</li>
+  <li><strong>Missing alternative text (3).</strong> The mission badges had no alt. They only repeat the card title, so they now have an empty <code>alt=""</code>. Screen readers skip them instead of reading a file name.</li>
+  <li><strong>Empty link (1).</strong> A bare arrow linked to the Caesar page. Each card now ends with a link in words: "Open the Caesar wheel". Keyboard users can tell where each link goes.</li>
+  <li><strong>Empty heading (1).</strong> Mission 3 had a blank heading I forgot to fill. It now says "Build your agent page".</li>
+  <li><strong>Missing form label (3).</strong> The message box had no label. The Hide and Reveal radio buttons had words beside them, but not tied to them. Now each has a <code>label</code>, and the radios sit in a <code>fieldset</code> with the legend "I want to". Bonus: tapping the word now picks the radio. Small fingers love that.</li>
+  <li><strong>Empty button (2).</strong> The shift buttons held only an icon. Now they show − and +, with <code>aria-label</code> "Shift down by one" and "Shift up by one".</li>
+  <li><strong>Very low contrast (7).</strong> My yellow stamps were 1.59 to 1 on white. WAVE wants at least 4.5 to 1 for normal text. They are red now, at 7.19 to 1. The grey footer, tip and result text were about 2.1 to 1. They now use dark ink. The dark mode colours pass too.</li>
+</ol>
+
+<h3>Keyboard-only test</h3>
+<ul class="tight">
+  <li>The first Tab shows a "Skip to" link. Enter jumps past the nav.</li>
+  <li>Every link and button shows a thick red outline when it has focus.</li>
+  <li>On the wheel: Tab to − and +, then Space. The arrow keys move between Hide and Reveal.</li>
+  <li>The "Show the answer" boxes open with Enter.</li>
+  <li>In the Morse lab, Stop is one Tab after Flash it, so you can stop the lamp fast.</li>
+</ul>
+
+<h2 id="starter">3. Starter project and task card</h2>
+<p>Mission 3 at camp: every pair finishes a half-made agent page. It has 3 TODOs, one per language. When all 3 are done, the page shows a list of gadgets and a row of badges. A Decode button cracks a secret message.</p>
+<ul class="pages">
+  <li><a href="starter.html">The starter</a><br>The 3 files with copy buttons, how campers load them, my 90-minute plan and the answer key.</li>
+  <li><a href="starter/index.html">Run the starter</a><br>See it as campers first see it: badges in a column and a message nobody can read.</li>
+  <li><a href="card.html">The task card</a><br>One A4 page. Rookie and Agent hints for each TODO, a bug checklist and Mastermind challenges.</li>
+</ul>
+<p>Mixed ages are the hard part of camp. An 8-year-old and a 12-year-old sit at the same laptop. So the card has the same 3 TODOs for everyone, with two kinds of hint. Rookie hints give the exact code. Agent hints name the idea. Mastermind challenges are for the pair who finishes in 10 minutes and starts to wander.</p>
+
+<h2 id="rubric">Rubric check</h2>
+<ul class="tight">
+  <li><strong>Site works on phone and laptop.</strong> Checked at 360 px and 1200 px wide, in light and dark mode. Nothing scrolls sideways. Buttons are at least 44 px.</li>
+  <li><strong>Uses semantic HTML throughout.</strong> header, nav, main, section, aside and footer on every page. Missions are a list. Inputs have labels. The radios have a fieldset. The answers use details and summary.</li>
+  <li><strong>No WAVE errors left.</strong> 0 errors and 0 contrast errors on all 3 pages, by WAVE's rules. Run WAVE on the live links to confirm.</li>
+  <li><strong>Starter tasks fit your students' level.</strong> Three short TODOs, Rookie and Agent hints, and Mastermind challenges for early finishers. My colleague's test changed two hints.</li>
+</ul>
+
+<h2 id="change">What I'd change</h2>
+<p>Campers can't publish their own pages. GitHub needs them to be 13, and a Raspberry Pi account needs a parent's permission under 13. So the "publish it" part of the brief is mine, not theirs. At the showcase, their pages run from downloads. I'd love a safe way for an 8-year-old to share a live link with their family.</p>
+<p>The site also asks a lot of reading for an 8-year-old. Next camp I'd add picture steps to the missions. And the wheel's result box announces every letter you type to a screen reader. That gets chatty. I'd announce it only when you pause.</p>
+
+<h2 id="sources">Sources</h2>
+<ul class="tight small">
+  <li>WAVE error types and the 4.5 to 1 contrast rule: <a href="https://wave.webaim.org/api/docs?format=html">WAVE API documentation, WebAIM</a>.</li>
+  <li>CodePen is "not available to minors (under 18 years of age)": <a href="https://blog.codepen.io/documentation/terms-of-service/">CodePen Terms of Service</a>.</li>
+  <li>Code Editor needs no account, can download projects and add HTML, CSS or JavaScript files: <a href="https://projects.raspberrypi.org/en/projects/getting-started-guide-editor-html">Getting started with the Raspberry Pi Code Editor, HTML</a>.</li>
+  <li>JavaScript support for HTML projects, version 0.20.0, November 2023: <a href="https://github.com/RaspberryPiFoundation/editor-ui/blob/main/CHANGELOG.md">Code Editor changelog</a>.</li>
+  <li>Under 13s need a parent or guardian's permission for an account: <a href="https://www.raspberrypi.org/privacy/child-friendly/">Raspberry Pi Foundation child-friendly privacy notice</a>.</li>
+  <li>GitHub accounts are for ages 13 and up: <a href="https://docs.github.com/en/site-policy/github-terms/github-terms-of-service">GitHub Terms of Service</a>.</li>
+  <li>Caesar's shift of three, from Suetonius: <a href="https://www.britannica.com/topic/Caesar-cipher">Britannica, Caesar cipher</a>.</li>
+  <li>Morse code letters and timing: <a href="https://www.itu.int/rec/R-REC-M.1677-1-200910-I/">ITU-R M.1677-1, International Morse code</a>.</li>
+  <li>The first telegraph message, 24 May 1844: <a href="https://www.loc.gov/item/today-in-history/may-24/">Library of Congress, Today in History</a>.</li>
+  <li>Publishing with GitHub Pages: <a href="https://docs.github.com/en/pages/quickstart">GitHub Pages quickstart</a>.</li>
+</ul>
+</main>
+</body>
+</html>
