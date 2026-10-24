@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Now and Next board with a visual timer, for the class screen, by Nadia Hussain</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="options.js" defer></script>
+<script src="board.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Nadia Hussain is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<div class="options" role="region" aria-label="Reading options">
+  <div class="grp" data-default="normal"><span class="lbl">Text</span><button type="button" data-opt="size" data-val="normal">A</button><button type="button" data-opt="size" data-val="large">A+</button><button type="button" data-opt="size" data-val="larger">A++</button></div>
+  <div class="grp" data-default="normal"><span class="lbl">Spacing</span><button type="button" data-opt="spacing" data-val="normal">Normal</button><button type="button" data-opt="spacing" data-val="wide">Wide</button></div>
+  <div class="grp" data-default="auto"><span class="lbl">Background</span><button type="button" data-opt="ground" data-val="auto">Auto</button><button type="button" data-opt="ground" data-val="cream">Cream</button><button type="button" data-opt="ground" data-val="white">White</button><button type="button" data-opt="ground" data-val="dark">Dark</button></div>
+</div>
+<main>
+<div class="hide-big">
+<p><a href="index.html">Back to the project</a></p>
+<h1>Now and Next board</h1>
+<p class="lede">Put this on the class screen. It shows what we're doing now, what comes next, and how much time is left.</p>
+<p>The time shows three ways: a shrinking circle, numbers, and words at the 2-minute mark. The chime is off until you turn it on. My 60-minute lesson is loaded. Change the steps below to fit yours. Your changes stay on this device.</p>
+</div>
+
+<div class="nn">
+  <div class="nn-card now">
+    <p class="tag">NOW</p>
+    <div id="now-icon"></div>
+    <p class="word" id="now-word"></p>
+    <div class="nn-timer">
+      <svg viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="92" fill="none" stroke="currentColor" stroke-opacity="0.25" stroke-width="4"/><path id="pie" d="" style="fill: var(--blue)"/></svg>
+      <span class="digits" id="digits" role="timer" aria-label="Time left in this step">0:00</span>
+    </div>
+  </div>
+  <div class="nn-card next">
+    <p class="tag">NEXT</p>
+    <div id="next-icon"></div>
+    <p class="word" id="next-word"></p>
+    <p class="nn-warn" id="warn"></p>
+  </div>
+</div>
+<p class="small" id="live" aria-live="polite"></p>
+
+<div class="nn-controls">
+  <button type="button" class="go" id="start">Start</button>
+  <button type="button" id="prev">Back a step</button>
+  <button type="button" id="next">Next step</button>
+  <button type="button" id="restart">Start over</button>
+  <button type="button" id="sound" aria-pressed="false">Chime: off</button>
+  <button type="button" id="big" aria-pressed="false">Big screen: off</button>
+  <button type="button" id="fast" aria-pressed="false" class="hide-big">Try it fast: off</button>
+</div>
+
+<div class="hide-big">
+<h2>The steps</h2>
+<p>Each step has a picture, a few words and its minutes. Keep the words short: a pupil should read them in one look.</p>
+<ol class="plan-list" id="plan" aria-label="Lesson steps"></ol>
+<p class="small" id="total"></p>
+<div class="nn-controls">
+  <button type="button" id="add">Add a step</button>
+  <button type="button" id="mine">Load my 60-minute lesson</button>
+</div>
+
+<h2>How I use it</h2>
+<ul class="tight">
+  <li>We read Now and Next together at the start, with the class saying the words.</li>
+  <li>At 2 minutes, I also hold up two fingers. Pupils who aren't looking still get the warning.</li>
+  <li>If the plan changes, I change the board first, then tell the class. A change on the board is easier to take than a surprise.</li>
+  <li>Try it fast runs one minute in two seconds. Use it to try the board out, not in class.</li>
+</ul>
+<p class="small">The board never flashes. Flashing lights can be hard for some pupils. So the warning is a steady orange box with words.</p>
+</div>
+</main>
+</body>
+</html>

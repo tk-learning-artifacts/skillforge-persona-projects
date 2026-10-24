@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Many ways in: a classroom management plan for a mixed P5 micro:bit class, by Nadia Hussain</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="options.js" defer></script>
+<script src="video.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Nadia Hussain is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<div class="options" role="region" aria-label="Reading options">
+  <div class="grp" data-default="normal"><span class="lbl">Text</span><button type="button" data-opt="size" data-val="normal">A</button><button type="button" data-opt="size" data-val="large">A+</button><button type="button" data-opt="size" data-val="larger">A++</button></div>
+  <div class="grp" data-default="normal"><span class="lbl">Spacing</span><button type="button" data-opt="spacing" data-val="normal">Normal</button><button type="button" data-opt="spacing" data-val="wide">Wide</button></div>
+  <div class="grp" data-default="auto"><span class="lbl">Background</span><button type="button" data-opt="ground" data-val="auto">Auto</button><button type="button" data-opt="ground" data-val="cream">Cream</button><button type="button" data-opt="ground" data-val="white">White</button><button type="button" data-opt="ground" data-val="dark">Dark</button></div>
+</div>
+<main>
+<h1>Many ways in</h1>
+<p class="lede">A classroom management plan for a P5 micro:bit unit. Every routine comes as a picture, a word, and a sound or a gesture. No pupil has to rely on just one of them.</p>
+<p>I'm Nadia. I teach pupils with a wide range of learning needs. This plan is for a P5 class of 30 in our own form classroom. Pairs code micro:bits on laptops from the trolley. Lessons are 60 minutes: two periods back to back. The class and pupils here are made up, like me.</p>
+
+<div class="box">
+<h3>Who is in the room</h3>
+<ul class="tight">
+  <li>Two pupils with dyslexia. Long written steps slow them down.</li>
+  <li>One pupil with ADHD who does best with short tasks and a job to do.</li>
+  <li>One autistic pupil who finds noise and sudden changes hard.</li>
+  <li>A few pupils still building their English.</li>
+  <li>Several fast finishers who drift once they're done.</li>
+  <li>The school's SEN Officer joins one lesson a week.</li>
+</ul>
+<p class="small">These notes are for planning only. No labels go on posters, seating plans or the board.</p>
+</div>
+
+<ul class="parts">
+  <li><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="9" y="5" width="30" height="38" rx="4" fill="none" stroke="currentColor" stroke-width="3"/><path d="M15 15h18M15 22h18M15 29h12" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg><div><a href="plan.html">The written plan</a><p>Three A4 pages: beliefs, routines, breaks, support steps and tracking.</p></div></li>
+  <li><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="13" cy="16" r="8" fill="#2d6b33"/><rect x="27" y="8" width="16" height="16" rx="2" fill="#b85c0a"/><path d="M24 26 L34 44 L14 44 Z" fill="#1d5fa6"/></svg><div><a href="posters.html">Four posters</a><p>Class promises, desk cards, stuck steps and the calm corner.</p></div></li>
+  <li><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="4" y="9" width="40" height="30" rx="5" fill="none" stroke="currentColor" stroke-width="3"/><path d="M20 17 l11 7 l-11 7 z" fill="currentColor"/></svg><div><a href="#video">The video</a><p>The break card, from "I need a break" to back at work.</p></div></li>
+  <li><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="18" fill="none" stroke="currentColor" stroke-width="3"/><path d="M24 24 L24 6 A18 18 0 0 1 41 30 Z" fill="#1d5fa6"/></svg><div><a href="board.html">Now and Next board</a><p>A visual schedule and timer for the class screen. Ready to use.</p></div></li>
+</ul>
+
+<h2 id="why">Why many ways in</h2>
+<p>One rule for everyone sounds fair. It isn't fair if some pupils can't read the rule. So I plan for the whole range from the start. I don't wait to fix things for one pupil later.</p>
+<p>This idea is called Universal Design for Learning (UDL). CAST's UDL Guidelines have three principles: engagement, representation, and action and expression. In plain words: ways to get interested, to take in information, and to show what you learned.</p>
+<p>In my room, each routine has a picture card, a short phrase and a sound or gesture. Pupils can show their learning by demo, drawing, telling me or writing. Visual supports have strong research behind them for autistic learners. They include schedules, First, Then boards and choice boards. A 2020 review by the National Clearinghouse on Autism Evidence and Practice counted them as evidence-based. I use them with the whole class. Then nobody stands out for having a card.</p>
+
+<h2 id="video">The video: the break card</h2>
+<p>A pupil gets overwhelmed in a loud lesson. She asks for a break without a word. She takes five minutes in the calm corner, then comes back. I hardly speak. Turn on Slides if you'd like still pictures at your own pace.</p>
+<div class="player" id="player">
+  <svg class="scene" id="scene" viewBox="0 0 640 400" role="img" aria-label="Animated plan view of a classroom. Six tables of pupils, a board at the top and a calm corner at the bottom right. The captions and transcript below describe each moment."></svg>
+  <p class="cap" id="cap" aria-hidden="true"></p>
+  <div class="bar playbar">
+    <button type="button" class="go" id="play">Play</button>
+    <input type="range" id="seek" min="0" max="90" step="0.1" value="0" aria-label="Position in the video">
+    <span class="time" id="time">0:00 / 1:30</span>
+  </div>
+  <div class="slidebar">
+    <button type="button" id="prev">Back</button>
+    <button type="button" class="go" id="next">Next</button>
+    <span id="slide-no" class="small"></span>
+  </div>
+  <div class="bar" style="margin-top:8px">
+    <button type="button" id="slides" aria-pressed="false">Slides: off</button>
+    <button type="button" id="captions" aria-pressed="true">Captions: on</button>
+    <button type="button" id="read" aria-pressed="false">Read aloud: off</button>
+    <label class="small" for="speed">Speed</label>
+    <select id="speed"><option value="0.75">Slower</option><option value="1" selected>Normal</option></select>
+  </div>
+  <ol class="steps-strip" id="strip" aria-label="Break routine steps">
+    <li>1. Card</li><li>2. Thumbs-up</li><li>3. Timer</li><li>4. Come back</li><li>5. One small step</li>
+  </ol>
+</div>
+<p class="small">A is Aliya. Me is the teacher. Desk cards: <svg class="shape" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#2d6b33"/></svg> green circle means working, <svg class="shape" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="2" fill="#b85c0a"/></svg> orange square means help, <svg class="shape" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1 L23 21 L1 21 Z" fill="#1d5fa6"/></svg> blue triangle means break. About 1 in 12 men have trouble telling some colours apart. So each card has its own shape, and colour is never the only clue.</p>
+
+<details>
+<summary>Read the transcript</summary>
+<ol class="transcript">
+  <li><b>0:00</b> Title: The break card. A P5 micro:bit lesson, minute 25 of 60.</li>
+  <li><b>0:06</b> Pairs are coding a micro:bit step counter. The room is getting loud. I'm helping a pair at the first table. Their orange square asked for help.</li>
+  <li><b>0:18</b> Aliya turns her desk card to the blue triangle. It means "I need a break". She doesn't need to say anything or put up her hand.</li>
+  <li><b>0:24</b> I see it from where I am. I give her a thumbs-up. That's the whole answer. No questions, and no "are you sure?"</li>
+  <li><b>0:34</b> She walks to the calm corner. Her partner keeps coding. She turns the five-minute timer and puts on headphones.</li>
+  <li><b>0:47</b> I don't follow her. Hovering would turn a break into a talk. The timer shows her how long is left.</li>
+  <li><b>0:58</b> The timer runs out. She comes back to her seat. I crouch beside her and show a First, Then card: "First: plug in the battery. Then: shake it 10 times."</li>
+  <li><b>1:06</b> One small step to restart, not the whole task again. She turns her card back to the green circle.</li>
+  <li><b>1:13</b> I write down the time of the break. Patterns tell me what to change.</li>
+  <li><b>1:18</b> End card: the five steps of the break routine.</li>
+</ol>
+</details>
+
+<h3>Why an animation</h3>
+<p>I won't put a real pupil's break on a public page. A break is private, and that is part of why it works. The animation shows what a recording would: where I stand, what I don't say, and how long it takes.</p>
+<div class="box">
+<h3>Film your own role-play</h3>
+<ol class="steps">
+  <li>Ask a colleague to play the pupil. Give them the break card and nothing else.</li>
+  <li>Check your school's rules on filming. Film adults only.</li>
+  <li>Film from the side of the room so you see both the desk and the calm corner.</li>
+  <li>Watch it back. Count your words from the card going up to the pupil sitting down. My target is zero.</li>
+  <li>Add captions before you share it with your team.</li>
+</ol>
+</div>
+
+<h2 id="change">What I would change</h2>
+<p>The calm corner can turn into a way out of the hard part. In week 3, two pupils used it every time testing started. I don't want to ask for a reason. That breaks the routine for the pupils who need it. For now, I look at my break notes and change the task, such as shorter test steps. I haven't solved this yet.</p>
+<p>The plan also needs a corner. Our form classroom has one. The computer lab doesn't, so this plan would need a rethink there.</p>
+
+<h2 id="sources">Sources</h2>
+<ul class="tight small">
+  <li>The three UDL principles: <a href="https://udlguidelines.cast.org/">CAST, UDL Guidelines 3.0</a>.</li>
+  <li>Visual supports as an evidence-based practice in the 2020 NCAEP review: <a href="https://afirm.fpg.unc.edu/wp-content/uploads/Visual-Supports-Brief-Packet.pdf">AFIRM, Visual Supports brief packet (PDF)</a>.</li>
+  <li>SEN Officers and Teachers Trained in Special Needs in mainstream schools: <a href="https://www.moe.gov.sg/news/edtalks/how-does-moe-support-students-with-special-educational-needs">MOE, how MOE supports students with SEN</a>.</li>
+  <li>Colour vision deficiency affects about 1 in 12 men and 1 in 200 women: <a href="https://www.nidirect.gov.uk/conditions/colour-vision-deficiency-colour-blindness">nidirect</a>.</li>
+  <li>Type, spacing and background on these pages: <a href="https://cdn.bdadyslexia.org.uk/uploads/documents/Advice/style-guide/BDA-Style-Guide-2023.pdf">British Dyslexia Association, Dyslexia Style Guide 2023 (PDF)</a>.</li>
+  <li>The micro:bit's buttons, motion sensor and two AAA batteries: <a href="https://microbit.org/get-started/features/overview/">micro:bit features</a>.</li>
+</ul>
+</main>
+</body>
+</html>
