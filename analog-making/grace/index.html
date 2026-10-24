@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lantern Lights: a paper circuit thank-you card for P5, by Grace Chua</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="card.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Grace Chua is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<p class="kicker">Analog Making end project · Primary 5 · 60 minutes · no code</p>
+<h1>Lantern Lights</h1>
+<p class="lede">A thank-you card with two paper lanterns inside. Press the corner and both lanterns glow. Pupils make it with copper tape, two LEDs and one coin cell. They give it to someone who keeps our school running.</p>
+<p>I'm Grace. I have taught for twenty years, and now I mentor new trainers. I am slow to bring new kit into a classroom. So I tried this with six pupils first, then with my whole class of 36. My P5s had just started circuits in science. The card lets them hold one in their hands.</p>
+<p>The making is simple on purpose. What I want new teachers to see is the routines round it: how the cells are counted, and what you say to a child whose card stays dark.</p>
+
+<ul class="toc">
+  <li><a href="#build"><b>The build, step by step</b><span>Drawn, with a working switch</span></a></li>
+  <li><a href="#clinic"><b>Fault clinic</b><span>Six dark cards to diagnose</span></a></li>
+  <li><a href="guide.html"><b>Teacher guide</b><span>1 page, and a PDF</span></a></li>
+  <li><a href="template.html"><b>Card template</b><span>Print on A4 card</span></a></li>
+  <li><a href="prompts.html"><b>Student reflection prompts</b><span>A printable sheet</span></a></li>
+  <li><a href="#trial"><b>Trial notes</b><span>Six pupils, then thirty-six</span></a></li>
+</ul>
+
+<h2 id="build">The build, step by step</h2>
+<p>There are no photos on this site, so the card is drawn as it is built. Step through it. At step 6, press the corner flap and watch the lanterns.</p>
+<div class="paper">
+  <div class="cardwrap">
+    <div class="cardsvg"><svg id="build-card" role="img" aria-label="The inside right page of the card, drawn as it is built. Two lanterns, copper tape tracks, a coin cell and a folding corner flap."></svg></div>
+    <div>
+      <h3 id="step-title">Step 1 of 6</h3>
+      <p id="step-text"></p>
+      <div class="stepnav">
+        <button type="button" id="prev">Back</button>
+        <button type="button" class="primary" id="next">Next step</button>
+        <button type="button" id="press" aria-pressed="false" hidden>Press the corner flap</button>
+      </div>
+      <div class="dots" id="dots" role="group" aria-label="Go to a step"></div>
+      <p class="live" id="build-live" aria-live="polite"></p>
+      <div class="whatif" id="whatif" hidden>
+        <button type="button" id="flip2" aria-pressed="false">What if LED 2 is backwards?</button>
+        <button type="button" id="flipcell" aria-pressed="false">What if the cell is upside down?</button>
+      </div>
+      <p class="tip" id="step-tip"></p>
+    </div>
+  </div>
+</div>
+
+<h3>Why the LEDs sit side by side</h3>
+<p>Each LED bridges the + track and the − track on its own. That is a parallel circuit. Each LED is wired straight across the cell. If one is backwards, the other still glows. Try it above.</p>
+<p>Why not one after the other, in series? A red LED uses about 1.85 to 2.5 volts when lit. In series, those add up. Two red LEDs need more than one 3-volt cell gives. I let a few pupils try it anyway. A dark card they predicted teaches more than my warning.</p>
+<p>You don't need a resistor here. A coin cell can't push enough current to damage the LED.</p>
+
+<h2 id="clinic">Fault clinic</h2>
+<p>Every card below is pressed, and every one has one fault. These are the six I meet most. Pick what is wrong. Then read the question I would ask the pupil. I ask before I fix, so the pupil does the finding.</p>
+<div class="paper">
+  <div class="clinic-head"><b id="case-n"></b><span class="small" id="score"></span></div>
+  <div class="cardwrap">
+    <div class="cardsvg"><svg id="clinic-card" role="img" aria-label="A pressed card with one fault. The dashed red ring marks the fault once you find it."></svg></div>
+    <div>
+      <p id="case-who"></p>
+      <div class="options" id="options" role="group" aria-label="What is wrong?"></div>
+      <p class="live" id="clinic-live" aria-live="polite"></p>
+      <div class="feedback" id="feedback" hidden>
+        <h3>What I would ask</h3>
+        <p class="quote" id="ask"></p>
+        <h3>The fix</h3>
+        <p id="fix"></p>
+      </div>
+      <button type="button" class="primary" id="next-case" hidden>Next card</button>
+    </div>
+  </div>
+</div>
+
+<h2 id="routines">The routines that make it work</h2>
+<h3>The egg trays</h3>
+<p>Coin cells are small, and they are the one real danger here. A swallowed button battery can burn through a child's food pipe in 2 hours. My pupils are 11, but many have little brothers and sisters at home. So the cells live in two numbered egg trays on my desk. A pupil gets cell number 14 at step 4 and I tick it off. Before anyone leaves, every cell is back in its tray or taped into a card. No loose cells go home.</p>
+<h3>The help ladder</h3>
+<p>A dark card in a room of glowing ones feels awful at eleven. So we name it first: "A dark card is data. It tells you where to look." Then the pupil climbs the ladder before they call me.</p>
+<ol class="steps">
+  <li>What did you expect to see?</li>
+  <li>Trace the path with your finger, from the + side of the cell, round and back.</li>
+  <li>Where does your finger stop, or jump?</li>
+  <li>Ask your elbow partner to trace it too. Do you agree?</li>
+</ol>
+<p>When I do come, I keep my hands behind my back. I ask one question from the clinic. The pupil holds the card.</p>
+<h3>Who the card is for</h3>
+<p>Each pupil writes to one of the staff who keep the school going: the cleaners, the canteen stallholders, the security officer, the office staff. Pupils give the cards in person, at school, the next day. That is a reason to make it work. It also means the cells stay in school until an adult takes the card.</p>
+
+<h2 id="trial">Trial notes</h2>
+<p class="note">My class and pupils are made up, like me. The faults and fixes are the ones paper circuits really have.</p>
+<h3>Trial 1: six pupils, at a recess club</h3>
+<ul class="tight">
+  <li>4 of 6 cut the tape at the corner instead of folding it. 3 of those cards stayed dark.</li>
+  <li>2 pupils peeled the backing off a whole strip at once. It curled and stuck to itself.</li>
+  <li>One pupil put a cell in her mouth while she thought. I stopped the club and changed the plan.</li>
+  <li>The build took 35 minutes, not the 20 I had planned.</li>
+</ul>
+<div class="paper">
+  <p><b>What I changed for the full class</b></p>
+  <ul class="tight">
+    <li>I demonstrate the corner fold under the visualiser. Then everyone folds one on scrap card first.</li>
+    <li>"Peel a little at a time" is now part of step 2, said aloud.</li>
+    <li>Cells leave the numbered trays only at step 4. They go back at the end.</li>
+    <li>The tracks are on a template. Nobody designs and builds a circuit in one lesson.</li>
+  </ul>
+</div>
+<h3>Trial 2: my class of 36</h3>
+<ul class="tight">
+  <li>29 cards lit at the first press. 6 more lit after the help ladder. 1 needed a new LED, which had a snapped leg.</li>
+  <li>The most common fault was still the corner. Next came LEDs the wrong way round.</li>
+  <li>All 36 cells were counted back before the bell.</li>
+  <li>Three quiet pupils became the "tracers" for their tables. I had not planned that, and I will plan it next time.</li>
+</ul>
+
+<h2 id="rubric">How it meets the rubric</h2>
+<ul class="rubric">
+  <li><b>Safety.</b> The numbered cell trays and the count at the end. No knives, no heat, no soldering. Round-tip scissors only. The cells stay in school.</li>
+  <li><b>Clear instructions.</b> Six steps, each with one action and one thing I say aloud. The template does the circuit design, so the lesson is about building and fixing.</li>
+  <li><b>Creativity.</b> This is the weakest line. The circuit is the same for all. Pupils choose who the card is for, the words and the front drawing.</li>
+  <li><b>Fits a 45 to 60 minute lesson.</b> 60 minutes, a double period, with settling, the scrap-card fold and pack-up counted. The cards are written in the next English lesson.</li>
+</ul>
+
+<h2 id="change">What I would change</h2>
+<p>Creativity is thin. Every card has the same two lanterns on the same tracks. That was my choice for a first lesson with 36 pupils and 36 cells. Next time I would add a second lesson. Pupils keep the + and − tracks. They choose where the LEDs go, and pick a different switch. I would also try it with a class that has not done circuits yet. Can the card come first?</p>
+
+<h2 id="sources">Sources</h2>
+<ul class="tight small">
+  <li>A 3 V coin cell, + side up, tape laid in one piece round corners: <a href="https://www.chibitronics.com/simple-circuit-tutorial/">Chibitronics, Simple Circuit tutorial</a>.</li>
+  <li>Folding copper tape at corners, and why taped-together pieces with non-conductive glue make unreliable joins: <a href="https://chibitronics.com/copper-tape/">Chibitronics, Getting Started with Copper Tape</a>.</li>
+  <li>The long leg is the positive side. A backwards LED won't light but isn't damaged. A coin cell can power an LED directly. In series, forward voltages add up: <a href="https://learn.sparkfun.com/tutorials/light-emitting-diodes-leds/all">SparkFun, Light-Emitting Diodes</a>.</li>
+  <li>A lit red LED uses about 1.85 to 2.5 V: <a href="https://learn.adafruit.com/all-about-leds/forward-voltage-and-kvl">Adafruit, All About LEDs: forward voltage</a>.</li>
+  <li>A short circuit lets current skip the load and can drain the battery: <a href="https://learn.sparkfun.com/tutorials/what-is-a-circuit/all">SparkFun, What is a Circuit?</a></li>
+  <li>A swallowed button battery can burn through a child's oesophagus in 2 hours: <a href="https://www.poison.org/tips/button-batteries-2">Poison Control (US National Capital Poison Center)</a>.</li>
+</ul>
+</main>
+</body>
+</html>

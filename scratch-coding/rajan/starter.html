@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Soft Landing starter project and task card for Sec 2, by Rajan Pillai</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="print.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Rajan Pillai is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<div class="noprint">
+<p><a href="index.html">Back to Soft Landing</a></p>
+<p class="label">Starter project</p>
+<h1>Soft Landing: the starter</h1>
+<p class="lede">The lander, the pad and the reactions are built. The physics is missing. Students add it in 3 tasks.</p>
+<div class="row">
+  <a class="btn primary" href="soft-landing-starter.sb3" download>Download the starter (.sb3)</a>
+  <button type="button" id="print">Print the task card</button>
+</div>
+
+<h2>What the starter has</h2>
+<ul class="tight">
+  <li>All sprites, costumes and sounds. The pad moves to a random spot on each green flag.</li>
+  <li>The setup blocks: gravity, thrust, speed y and fuel are set. Monitors show speed y, fuel and best.</li>
+  <li>The flight loop, with steering and "change y by speed y" already in it.</li>
+  <li>The "when I receive landed" and "when I receive crashed" scripts. Nothing broadcasts them yet.</li>
+  <li>A Puff clone script that nothing calls. That is the stretch task.</li>
+  <li>A comment in the code for each task.</li>
+</ul>
+<p>Press the green flag on the starter and nothing seems to happen. The lander hangs at the top. Speed y stays at 0, so "change y by speed y" moves it 0 steps every frame. I start the lesson there, with the question: what is the loop doing right now?</p>
+
+<h3>The Lander's code in the starter</h3>
+<div class="scripts"><div class="sb-script"><div class="sb-block sb-hat sb-events">when <span class="sb-flag" aria-label="green flag">⚑</span> clicked</div><div class="sb-block sb-stack sb-variables">set <span class="sb-menu sb-var">gravity</span> to <span class="sb-text">-0.05</span></div><div class="sb-block sb-stack sb-variables">set <span class="sb-menu sb-var">thrust</span> to <span class="sb-text">0.15</span></div><div class="sb-block sb-stack sb-variables">set <span class="sb-menu sb-var">speed y</span> to <span class="sb-text">0</span></div><div class="sb-block sb-stack sb-variables">set <span class="sb-menu sb-var">fuel</span> to <span class="sb-text">80</span></div><div class="sb-block sb-stack sb-looks">switch costume to <span class="sb-menu">lander</span></div><div class="sb-block sb-stack sb-looks">say <span class="sb-text"></span></div><div class="sb-block sb-stack sb-motion">go to x: <span class="sb-rep sb-operators">pick random <span class="sb-num">-180</span> to <span class="sb-num">180</span></span> y: <span class="sb-num">150</span></div><div class="sb-cblock sb-control"><div class="sb-line">repeat until <span class="sb-bool sb-operators"><span class="sb-bool sb-sensing">touching <span class="sb-menu">Pad</span> ?</span> or <span class="sb-bool sb-sensing">touching <span class="sb-menu">Ground</span> ?</span></span></div><div class="sb-mouth"><div class="sb-cblock sb-control"><div class="sb-line">if <span class="sb-bool sb-sensing">key <span class="sb-menu">left arrow</span> pressed?</span> then</div><div class="sb-mouth"><div class="sb-block sb-stack sb-motion">change x by <span class="sb-num">-2</span></div></div><div class="sb-foot"></div></div><div class="sb-cblock sb-control"><div class="sb-line">if <span class="sb-bool sb-sensing">key <span class="sb-menu">right arrow</span> pressed?</span> then</div><div class="sb-mouth"><div class="sb-block sb-stack sb-motion">change x by <span class="sb-num">2</span></div></div><div class="sb-foot"></div></div><div class="sb-block sb-stack sb-motion">change y by <span class="sb-rep sb-variables">speed y</span></div></div><div class="sb-foot"></div></div></div>
+<div class="sb-script"><div class="sb-block sb-hat sb-events">when I receive <span class="sb-menu">landed</span></div><div class="sb-block sb-stack sb-sound">start sound <span class="sb-menu">chime</span></div><div class="sb-block sb-stack sb-looks">say <span class="sb-rep sb-operators">join <span class="sb-text">Landed. Fuel left: </span> <span class="sb-rep sb-variables">fuel</span></span></div><div class="sb-cblock sb-control"><div class="sb-line">if <span class="sb-bool sb-operators"><span class="sb-rep sb-variables">fuel</span> > <span class="sb-rep sb-variables">best</span></span> then</div><div class="sb-mouth"><div class="sb-block sb-stack sb-variables">set <span class="sb-menu sb-var">best</span> to <span class="sb-rep sb-variables">fuel</span></div></div><div class="sb-foot"></div></div></div>
+<div class="sb-script"><div class="sb-block sb-hat sb-events">when I receive <span class="sb-menu">crashed</span></div><div class="sb-block sb-stack sb-looks">switch costume to <span class="sb-menu">wreck</span></div><div class="sb-block sb-stack sb-sound">start sound <span class="sb-menu">crash</span></div><div class="sb-block sb-stack sb-looks">say <span class="sb-rep sb-operators">join <span class="sb-text">Crashed at speed </span> <span class="sb-rep sb-operators">round <span class="sb-rep sb-variables">speed y</span></span></span></div></div></div>
+
+<h2>Why these tasks, in this order</h2>
+<ul class="tight">
+  <li>Task 1 makes one variable change another. Students can watch the speed y monitor count down.</li>
+  <li>Task 2 adds a condition with "and". The fuel check is the part students forget.</li>
+  <li>Task 3 moves a decision outside the loop. It also connects to broadcasts that already exist.</li>
+  <li>Each task can be tested on its own before the next one starts.</li>
+</ul>
+</div>
+
+<section class="taskcard" aria-label="Task card">
+<h2>Soft Landing: task card</h2>
+<p>Remix the starter from the class studio. Work on your own. Test after every task: click the stage, then press the green flag.</p>
+<div class="tasks">
+<div class="task">
+<h3>Task 1: Gravity</h3>
+<p>Click the Lander. In the repeat until loop, put this block above "change y by speed y":</p>
+<div class="scripts"><div class="sb-script"><div class="sb-cblock sb-control"><div class="sb-line">repeat until <span class="sb-bool sb-operators"><span class="sb-bool sb-sensing">touching <span class="sb-menu">Pad</span> ?</span> or <span class="sb-bool sb-sensing">touching <span class="sb-menu">Ground</span> ?</span></span></div><div class="sb-mouth"><div class="sb-block sb-stack sb-variables">change <span class="sb-menu sb-var">speed y</span> by <span class="sb-rep sb-variables">gravity</span></div><div class="sb-block sb-stack sb-motion">change y by <span class="sb-rep sb-variables">speed y</span></div></div><div class="sb-foot"></div></div></div></div>
+<p class="hint">Predict first. Write down what the speed y monitor will do after 1 second. Then test.</p>
+<p><strong>Done when:</strong> the lander falls faster and faster, and stops at the ground.</p>
+</div>
+
+<div class="task">
+<h3>Task 2: Thrust</h3>
+<p>Under your gravity block, add an if block. Use "and" from Operators:</p>
+<div class="scripts"><div class="sb-script"><div class="sb-block sb-stack sb-variables">change <span class="sb-menu sb-var">speed y</span> by <span class="sb-rep sb-variables">gravity</span></div><div class="sb-cblock sb-control"><div class="sb-line">if <span class="sb-bool sb-operators"><span class="sb-bool sb-sensing">key <span class="sb-menu">up arrow</span> pressed?</span> and <span class="sb-bool sb-operators"><span class="sb-rep sb-variables">fuel</span> > <span class="sb-text">0</span></span></span> then</div><div class="sb-mouth"><div class="sb-block sb-stack sb-variables">change <span class="sb-menu sb-var">speed y</span> by <span class="sb-rep sb-variables">thrust</span></div><div class="sb-block sb-stack sb-variables">change <span class="sb-menu sb-var">fuel</span> by <span class="sb-num">-1</span></div></div><div class="sb-foot"></div></div></div></div>
+<p class="hint">Hint: "key up arrow pressed?" is in Sensing. Drag the orange "thrust" variable into "change speed y by".</p>
+<p><strong>Done when:</strong> the up arrow slows the fall, and fuel stops at 0.</p>
+</div>
+
+<div class="task">
+<h3>Task 3: The verdict</h3>
+<p>After the repeat until loop, not inside it, add this if-else:</p>
+<div class="scripts"><div class="sb-script"><div class="sb-cblock sb-control"><div class="sb-line">if <span class="sb-bool sb-operators"><span class="sb-bool sb-sensing">touching <span class="sb-menu">Pad</span> ?</span> and <span class="sb-bool sb-operators"><span class="sb-rep sb-variables">speed y</span> > <span class="sb-text">-2</span></span></span> then</div><div class="sb-mouth"><div class="sb-block sb-stack sb-events">broadcast <span class="sb-menu">landed</span></div></div><div class="sb-line">else</div><div class="sb-mouth"><div class="sb-block sb-stack sb-events">broadcast <span class="sb-menu">crashed</span></div></div><div class="sb-foot"></div></div></div></div>
+<p class="hint">Why outside? Inside the loop it would run every frame. You want it once, at touchdown.</p>
+<p><strong>Done when:</strong> a slow landing chimes and a fast one crashes.</p>
+</div>
+
+<div class="task">
+<h3>Stretch: Exhaust and a better crash</h3>
+<p>Add "create clone of Puff" inside your thrust if block:</p>
+<div class="scripts"><div class="sb-script"><div class="sb-cblock sb-control"><div class="sb-line">if <span class="sb-bool sb-operators"><span class="sb-bool sb-sensing">key <span class="sb-menu">up arrow</span> pressed?</span> and <span class="sb-bool sb-operators"><span class="sb-rep sb-variables">fuel</span> > <span class="sb-text">0</span></span></span> then</div><div class="sb-mouth"><div class="sb-block sb-stack sb-variables">change <span class="sb-menu sb-var">speed y</span> by <span class="sb-rep sb-variables">thrust</span></div><div class="sb-block sb-stack sb-variables">change <span class="sb-menu sb-var">fuel</span> by <span class="sb-num">-1</span></div><div class="sb-block sb-stack sb-control">create clone of <span class="sb-menu">Puff</span></div></div><div class="sb-foot"></div></div></div></div>
+<p>Then: miss the pad gently and read the crash bubble. Make it say "Missed the pad" instead.</p>
+</div>
+</div>
+</section>
+
+<div class="noprint">
+<h2>I tested the card on a colleague</h2>
+<p class="made-up">The colleague and the timings are made up, like me.</p>
+<p>A physics teacher tried the starter in the lab. She has used Scratch twice. I said nothing until she finished.</p>
+<ul class="tight">
+  <li>Task 1 took 6 minutes. I had guessed 2. She looked for gravity in the Motion blocks first. I added the picture of the block to the card.</li>
+  <li>Her first gravity block went below "change y by speed y". It still worked. She asked whether the order matters. It does, a little. The lander moves one frame later. That became a discussion question in the lesson.</li>
+  <li>Task 2 took 10 minutes. She left out "fuel &gt; 0" and flew forever. The card's "done when" line now checks that fuel stops at 0.</li>
+  <li>Task 3 took 8 minutes. She put the if-else inside the loop. While flying, the lander is not on the pad. So it broadcast "crashed" every frame from the very first frame. I added the "Why outside?" line.</li>
+</ul>
+<p>I underrated task 1. A student who has never seen a variable change another variable needs time there. In the lesson I now demo it first.</p>
+</div>
+</main>
+</body>
+</html>

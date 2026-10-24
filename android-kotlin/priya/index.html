@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Word Wall: a course glossary app in Jetpack Compose, by Priya Nair</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="words.js" defer></script>
+<script src="app.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Priya Nair is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<div class="page">
+<nav class="rail" aria-label="Contents">
+  <p>Contents</p>
+  <ol>
+    <li><a href="#course">The course</a></li>
+    <li><a href="#try">Try the app</a></li>
+    <li><a href="#video">Screen video</a></li>
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#folder">Project folder</a></li>
+    <li><a href="starter.html">Starter and task card</a></li>
+    <li><a href="devices.html">Device plan</a></li>
+    <li><a href="#rubric">Rubric check</a></li>
+    <li><a href="#change">What I'd change</a></li>
+  </ol>
+</nav>
+<main>
+<p class="kicker">Android Apps with Kotlin · end project</p>
+<h1>Word Wall</h1>
+<p class="lede">A glossary app for a 6-week app-building course. Students search the 18 words the course uses, open one, and save it for revision. Then they build their own copy from a starter.</p>
+<p>I'm Priya. I plan courses for a team of trainers. My question for this module was not "what app would I build?" It was "what app can four trainers run the same way, in three schools with different devices?"</p>
+<p>So the app is about the course itself. Every word in it is one students meet in a given week: <code>Event</code> in week 1, <code>LazyColumn</code> in week 5. When students build Word Wall in week 5, they are writing the glossary of what they have just learnt.</p>
+<ul class="facts">
+  <li><b>Sec 3</b>an elective for 4 classes</li>
+  <li><b>6 weeks</b>one 60-minute lesson a week</li>
+  <li><b>3 schools</b>Mac lab, Windows laptops, Chromebooks</li>
+  <li><b>4 trainers</b>one shared plan</li>
+</ul>
+<p class="small">The schools, classes and team are made up for this example, like me. The code is real and builds.</p>
+
+<h2 id="course">Where the app sits in the course</h2>
+<p>Android Basics with Compose lists 10 hours for Unit 1 and 21 hours for Unit 2. We have 6. So the course borrows pieces and keeps each week to one idea.</p>
+<ol class="weeks">
+  <li class="wk1"><b>Week 1: Blocks first</b>HelloPurr in MIT App Inventor, plus one new button.<span class="route">Every school. Browser and a phone or tablet.</span></li>
+  <li class="wk2"><b>Week 2: Kotlin in the browser</b>Kotlin tour: Hello world, Basic types, Collections, Control flow. Print the 7 times table.<span class="route">Every school. Browser only.</span></li>
+  <li class="wk3"><b>Week 3: A first Compose screen</b>Text, Button and Modifier. Read a Preview.<span class="route">Studio, or App Inventor with a Kotlin reading sheet.</span></li>
+  <li class="wk4"><b>Week 4: State</b>A counter with + and - and reset, using <code>remember</code> and <code>mutableStateOf</code>.<span class="route">Studio, or the same counter in blocks.</span></li>
+  <li class="wk5"><b>Week 5: Lists and screens</b>The Word Wall starter. <a href="starter.html">Task card</a>.<span class="route">Studio, or the App Inventor version.</span></li>
+  <li class="wk6"><b>Week 6: Run it on a phone</b>Add 3 words, run on a phone, show a partner.<span class="route">See the <a href="devices.html">device plan</a>.</span></li>
+</ol>
+
+<h2 id="try">Try the app</h2>
+<p>This is a browser copy of the Kotlin app, with the same 18 words, the same two screens and the same state. The grey box shows the state as the Kotlin code holds it.</p>
+<div class="lab">
+  <div class="phone-col">
+    <div class="phone" id="phone">
+      <div class="screen" id="screen">
+        <div class="status" aria-hidden="true"><span>10:05</span><span>Word Wall</span></div>
+        <div class="topbar" id="topbar"></div>
+        <div id="top2"></div>
+        <div class="body" id="body"></div>
+        <div class="navbar"><button type="button" id="sysback" aria-label="Phone back button">◁ Back</button></div>
+        <div class="toast" id="toast" role="status"></div>
+        <div class="tap" id="tap" aria-hidden="true"></div>
+      </div>
+    </div>
+    <div class="controls">
+      <button type="button" id="rotate">Rotate the phone</button>
+      <button type="button" id="reset">Start over</button>
+    </div>
+    <label class="pick"><input type="checkbox" id="saveable" checked> Use rememberSaveable</label>
+  </div>
+  <div>
+    <pre class="state" id="state" aria-live="polite"></pre>
+    <h3>What to try</h3>
+    <ol class="tight">
+      <li>Type in the search box. Each letter changes <code>search</code>, and the list recomposes.</li>
+      <li>Open a word and save it. Go back. The row says Saved, because both screens read the same <code>saved</code>.</li>
+      <li>Scroll the list. The week headers stick to the top.</li>
+      <li>Untick rememberSaveable and rotate. The search and saved words are lost.</li>
+    </ol>
+    <p class="small">Rotating a phone recreates the activity. Plain <code>remember</code> forgets; <code>rememberSaveable</code> keeps values that fit in a Bundle.</p>
+  </div>
+</div>
+
+<h2 id="video">Screen video: 30 seconds of the app</h2>
+<div class="video">
+  <p>The replay taps through the app above, with captions.</p>
+  <button type="button" class="primary" id="play">Play replay</button>
+  <div class="timeline"><div class="bar"><span id="bar"></span></div><span class="time" id="time">0:00 / 0:30</span></div>
+  <p class="caption" id="caption" aria-live="polite">Captions show here.</p>
+  <ol class="chapters" id="chapters">
+    <li data-step="0">0:00 The list, grouped by week</li>
+    <li data-step="1">0:02 Search "st", open State, save it</li>
+    <li data-step="4">0:11 Back: the search and Saved label are still there</li>
+    <li data-step="5">0:13 Clear search, scroll past sticky headers</li>
+    <li data-step="7">0:18 Save LazyColumn</li>
+    <li data-step="10">0:25 Rotate: both saved words stay</li>
+  </ol>
+</div>
+<p class="note">The replay runs the browser copy, not a phone. The Kotlin project builds with no errors or warnings. For the course, each trainer records their own run with Android Studio's emulator or a phone before week 5. Students see the real thing first.</p>
+
+<h2 id="how">How it works</h2>
+<div class="cols">
+  <div class="card">
+    <h3>State lives in the parent</h3>
+    <p>Both screens need <code>search</code> and <code>saved</code>, so <code>WordWallApp</code> holds them. This is state hoisting.</p>
+<pre><code>var search by rememberSaveable { mutableStateOf("") }
+var saved by rememberSaveable(stateSaver = IdSetSaver) {
+    mutableStateOf(emptySet&lt;Int&gt;())
+}</code></pre>
+  </div>
+  <div class="card">
+    <h3>State goes down, events go up</h3>
+    <p>The list screen gets the text. When you type, it sends the new text back up. It never changes <code>search</code> itself.</p>
+<pre><code>OutlinedTextField(
+    value = search,
+    onValueChange = onSearchChange,
+    label = { Text("Search words") }
+)</code></pre>
+  </div>
+  <div class="card">
+    <h3>A grouped LazyColumn</h3>
+<pre><code>val shown = words.filter {
+    it.word.contains(search.trim(), ignoreCase = true)
+}
+LazyColumn {
+    shown.groupBy { it.week }.forEach { (week, list) -&gt;
+        stickyHeader { Text(weekTitles.getValue(week)) }
+        items(list, key = { it.id }) { WordRow(it) }
+    }
+}</code></pre>
+    <p class="small">The filter runs again on each recomposition. For 18 words that is fine.</p>
+  </div>
+  <div class="card">
+    <h3>Two routes</h3>
+<pre><code>@Serializable object ListScreen
+@Serializable data class WordScreen(val id: Int)
+
+composable&lt;WordScreen&gt; { entry -&gt;
+    val id = entry.toRoute&lt;WordScreen&gt;().id
+    ...
+}</code></pre>
+    <p class="small">Type-safe routes need Navigation 2.8.0 or later and the Kotlin Serialization plugin.</p>
+  </div>
+</div>
+
+<h2 id="folder">Project folder</h2>
+<p>The full Android Studio project is in <code>wordwall-app</code>. Read each file on the <a href="code.html">code page</a>, or get the folder from <a href="https://github.com/tk-learning-artifacts/skillforge-persona-projects/tree/main/android-kotlin/priya/wordwall-app">GitHub</a>.</p>
+<pre class="tree">wordwall-app/
+  settings.gradle.kts, build.gradle.kts
+  gradle/libs.versions.toml
+  gradlew, gradlew.bat, gradle/wrapper/
+  app/build.gradle.kts
+  app/src/main/AndroidManifest.xml
+  app/src/main/java/com/example/wordwall/
+    MainActivity.kt       routes, NavHost, search and saved
+    AppWords.kt           18 words and 6 week titles
+    WordListScreen.kt     search box, sticky headers, rows
+    WordDetailScreen.kt   meaning and the save switch
+    Theme.kt              light and dark colours</pre>
+<div class="card">
+  <h3>Versions, so four trainers get the same thing</h3>
+  <p>Android Gradle Plugin 9.4.1, Kotlin 2.4.21, Compose BOM 2026.09.00, Navigation Compose 2.10.2. It compiles against API 37, with <code>minSdk</code> 24 (Android 7.0). I built it with <code>./gradlew assembleDebug</code>: no errors, no warnings. Studio may offer upgrades. The team says no until the course ends.</p>
+</div>
+
+<h2 id="starter">Starter project and task card</h2>
+<p>The <a href="code.html#starter">starter</a> runs on the first try. It has three numbered TODOs, one for each level of the class:</p>
+<ul class="tight">
+  <li><span class="level lv1">Everyone</span>TODO 1: add 2 week-6 words. Copy the pattern.</li>
+  <li><span class="level lv2">Most pairs</span>TODO 2: make the search box filter the list. One line.</li>
+  <li><span class="level lv3">Stretch</span>TODO 3: add the saved state, so the switch works and rows say Saved.</li>
+</ul>
+<p><a href="starter.html">The task card and the 60-minute lesson</a> have a predict-and-run step, hints and the checks.</p>
+
+<h2 id="devices">Device plan</h2>
+<p>One app, three routes. School A runs Studio with the emulator on a Mac lab. School B runs Studio on 8 GB Windows laptops with loan phones. School C has 4 GB Chromebooks, so half the class pairs on a laptop trolley and half builds the App Inventor version. <a href="devices.html">Read the device plan</a>, with the checks against Google's specs, what each group hands in, and why no student app goes on Google Play.</p>
+
+<h2 id="rubric">Rubric check</h2>
+<div class="scroll">
+<table>
+  <tr><th>Rubric line</th><th>Where it is met</th></tr>
+  <tr><td>App runs on emulator or phone</td><td>The project builds a debug APK. Each school has a route to run it: emulator in School A, phones in B and C.</td></tr>
+  <tr><td>Uses state, a list and navigation</td><td>Hoisted <code>search</code> and <code>saved</code> with <code>rememberSaveable</code>, a grouped <code>LazyColumn</code> with sticky headers, two type-safe routes.</td></tr>
+  <tr><td>Tasks fit students' level</td><td>Three TODO levels for Sec 3 students who did weeks 1 to 4. Hints are hidden until needed.</td></tr>
+  <tr><td>Plan matches school devices</td><td>One device checked per school against the official requirements. Each school gets its own route and hand-in.</td></tr>
+</table>
+</div>
+
+<h2 id="change">What I would change</h2>
+<p>I have planned this for four classes, but I have not taught week 5 myself. The 60-minute plan assumes Studio is open and synced at minute 5. In School B, on 8 GB laptops, I doubt it. The first trainer to run it should time the start-up and tell the team. We may need to split week 5 over two lessons.</p>
+<p>Saved words are lost when the app is closed. <code>rememberSaveable</code> covers rotation, not a full close. Keeping them would need DataStore, from Unit 6 of Android Basics. That is beyond this course.</p>
+
+<h2>Sources</h2>
+<ul class="tight small">
+  <li>Units and hours: <a href="https://developer.android.com/courses/android-basics-compose/course">Android Basics with Compose</a>.</li>
+  <li>State, hoisting, <code>remember</code> and <code>rememberSaveable</code>: <a href="https://developer.android.com/develop/ui/compose/state">State and Jetpack Compose</a>.</li>
+  <li>LazyColumn and sticky headers: <a href="https://developer.android.com/develop/ui/compose/lists">Lists and grids</a>.</li>
+  <li>Type-safe routes: <a href="https://developer.android.com/guide/navigation/design/type-safety">Type safety in Navigation Compose</a>.</li>
+  <li>Kotlin tour chapters: <a href="https://kotlinlang.org/docs/kotlin-tour-welcome.html">Tour of Kotlin</a>.</li>
+  <li>HelloPurr: <a href="https://appinventor.mit.edu/explore/ai2/hellopurr">App Inventor HelloPurr tutorial</a>.</li>
+  <li>API 24 is Android 7.0: <a href="https://developer.android.com/guide/topics/manifest/uses-sdk-element">uses-sdk, API levels</a>.</li>
+  <li>Library versions: <a href="https://developer.android.com/jetpack/androidx/releases/compose">Compose releases</a>, <a href="https://developer.android.com/jetpack/androidx/releases/navigation">Navigation releases</a>, <a href="https://developer.android.com/build/releases/gradle-plugin">Android Gradle Plugin releases</a>.</li>
+</ul>
+</main>
+</div>
+</body>
+</html>

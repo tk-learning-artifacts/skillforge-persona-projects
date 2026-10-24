@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The sentinel: a micro:bit light logger for empty classrooms, by Marcus Lee</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="sentinel.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Marcus Lee is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<header class="band">
+  <p class="kicker"><a href="index.html">Power Down Cup</a> · build page</p>
+  <h1>The sentinel</h1>
+  <p>A micro:bit in a cardboard hood. It sits on a cupboard and logs the light level every minute for 4 hours. Three versions, two failed tests, one that works.</p>
+</header>
+
+<h2>Parts, per room</h2>
+<ul class="tight">
+  <li>1 micro:bit V2. The data logging blocks and the speaker need V2.</li>
+  <li>1 battery pack for 2 AAA batteries, with batteries.</li>
+  <li>1 cardboard tube, about 10 cm long, with a slot cut for the micro:bit.</li>
+  <li>Blu-tack, and a label with the room and "Please don't move me".</li>
+  <li>We made 9: one per room and a spare.</li>
+</ul>
+<div class="card">
+<p><b>Safety.</b> A teacher cuts the slots with a craft knife on a cutting mat. Students use scissors only. A teacher puts each sentinel on top of the cupboard. Nobody stands on chairs or tables. Nothing is wired to the room's power, and nobody opens a switchboard or touches anything but the wall switches.</p>
+</div>
+
+<h2>Where it goes</h2>
+<svg class="diagram" viewBox="0 0 480 330" role="img" aria-labelledby="dg-t dg-d">
+  <title id="dg-t">Side view of a classroom corner with the sentinel</title>
+  <desc id="dg-d">The micro:bit stands in a cardboard tube on top of a cupboard. The tube points up at the nearest ceiling light. A window is on the far side. The tube blocks most of the daylight from the side.</desc>
+  <rect x="0" y="0" width="480" height="330" rx="14" fill="var(--surface)"/>
+  <line x1="20" y1="40" x2="460" y2="40" stroke="currentColor" stroke-width="3"/>
+  <text x="24" y="30">ceiling</text>
+  <rect x="150" y="40" width="120" height="14" rx="3" fill="var(--warn-soft)" stroke="currentColor" stroke-width="2"/>
+  <text x="278" y="74">light fitting</text>
+  <rect x="400" y="80" width="56" height="150" fill="none" stroke="currentColor" stroke-width="2"/>
+  <line x1="428" y1="80" x2="428" y2="230" stroke="currentColor" stroke-width="1.5"/>
+  <text x="378" y="256">window</text>
+  <g stroke="var(--cup)" stroke-width="2" stroke-dasharray="6 5">
+    <line x1="398" y1="120" x2="250" y2="185"/>
+    <line x1="398" y1="160" x2="250" y2="205"/>
+  </g>
+  <text x="282" y="132" fill="var(--cup)">daylight</text>
+  <g stroke="var(--save)" stroke-width="2">
+    <line x1="200" y1="56" x2="205" y2="168"/>
+    <line x1="215" y1="56" x2="212" y2="168"/>
+  </g>
+  <rect x="80" y="210" width="190" height="100" fill="none" stroke="currentColor" stroke-width="3"/>
+  <text x="110" y="272">cupboard</text>
+  <rect x="190" y="170" width="38" height="40" fill="var(--ground)" stroke="currentColor" stroke-width="3"/>
+  <rect x="198" y="182" width="22" height="22" fill="var(--save-soft)" stroke="var(--save)" stroke-width="2"/>
+  <text x="24" y="180">tube hood</text>
+  <line x1="122" y1="175" x2="188" y2="184" stroke="currentColor" stroke-width="1.5"/>
+  <text x="24" y="214">micro:bit</text>
+  <line x1="110" y1="208" x2="196" y2="196" stroke="currentColor" stroke-width="1.5"/>
+</svg>
+<p>The hood points the LED screen up at the light fitting. Daylight from the side mostly hits cardboard. The micro:bit reads light with some of its LEDs, so the screen must stay dark while it logs.</p>
+
+<h2>The code (MakeCode, JavaScript view)</h2>
+<p>Add the <code>datalogger</code> extension first. The micro:bit has no clock. So the log counts minutes from when the last one out presses A.</p>
+<pre><code>// Power Down Cup sentinel, version 3
+let threshold = 45     // set from your calibration day
+let silent = true      // true in baseline weeks, false in cup weeks
+let started = false
+let minute = 0
+
+datalogger.includeTimestamp(FlashLogTimeStampFormat.None)
+datalogger.setColumnTitles("minute", "light", "lightsOn")
+input.lightLevel()     // the first reading is always 0, so throw it away
+
+input.onButtonPressed(Button.A, function () {
+    if (started) {
+        return
+    }
+    started = true
+    let now = input.lightLevel()
+    if (!silent &amp;&amp; now &gt; threshold) {
+        basic.showIcon(IconNames.No)       // lights still on
+        music.playTone(880, music.beat(BeatFraction.Whole))
+    } else {
+        basic.showIcon(IconNames.Yes)
+    }
+    basic.pause(2000)
+    basic.clearScreen()  // a lit screen would spoil the readings
+})
+
+datalogger.onLogFull(function () {
+    basic.showIcon(IconNames.Sad)
+})
+
+loops.everyInterval(60000, function () {
+    if (!started || minute &gt;= 240) {
+        return
+    }
+    minute += 1
+    let light = input.lightLevel()
+    datalogger.log(
+        datalogger.createCV("minute", minute),
+        datalogger.createCV("light", light),
+        datalogger.createCV("lightsOn", light &gt; threshold ? 1 : 0)
+    )
+})</code></pre>
+<p>Next morning, a CCA member plugs the micro:bit into a laptop. The <code>MY_DATA</code> file on the MICROBIT drive opens in a browser and exports the table. They add up the <code>lightsOn</code> column, then press reset for the next day. Flashing new code hides the old log, so copy the data first.</p>
+
+<h2>Calibrate it: find the threshold</h2>
+<p>This is the test we ran in session 2, as a simulation. One afternoon, 2 pm to 6 pm. The green bands show when the lights were really on. That was 70 minutes after class, and 15 minutes when the cleaner came. That is 85 minutes. Move the threshold. Orange marks show minutes the sentinel gets wrong.</p>
+<div class="seg" role="group" aria-label="Weather">
+  <button type="button" data-day="sunny" aria-pressed="true">Sunny day</button>
+  <button type="button" data-day="cloudy" aria-pressed="false">Cloudy day</button>
+  <button type="button" id="hood" aria-pressed="false">Hood: off</button>
+</div>
+<div class="controls">
+  <div><label for="th">Threshold (0 to 250): <output id="th-out">100</output></label>
+    <input type="range" id="th" min="0" max="250" step="1" value="100"></div>
+</div>
+<svg class="chart" id="sim" role="img" aria-labelledby="sim-t"><title id="sim-t">Light reading each minute from 2 pm to 6 pm, with the threshold as a dashed line</title></svg>
+<div class="totals">
+  <div class="total"><b class="num" id="s-true">85</b><span>minutes really on</span></div>
+  <div class="total"><b class="num" id="s-counted"></b><span>minutes the sentinel counts</span></div>
+  <div class="total"><b class="num" id="s-wrong"></b><span>minutes wrong</span></div>
+</div>
+<p class="live" id="sim-live" aria-live="polite"></p>
+<p class="small">The readings are made up but follow the same pattern as our tests. Your rooms will have their own numbers. That is why you calibrate each one.</p>
+<div class="card">
+<p><b>Challenge.</b> With the hood off, find one threshold that works on both the sunny and the cloudy day. Then turn the hood on and try again.</p>
+</div>
+
+<h2>Three versions</h2>
+<div class="ver">
+<h3>Version 1: no hood, threshold 100</h3>
+<p>Logged from power-on, every minute. Two rooms, three days. A CCA member sat in each room for the first hour and wrote down when the lights were really on.</p>
+<ul class="tight">
+  <li>Test note 1. In 3A, by the window, a sunny afternoon counted as lights on for nearly 3 hours. The lights were off after 1:10.</li>
+  <li>Test note 2. On a cloudy day, threshold 100 missed the lights completely in 3C.</li>
+  <li>Test note 3. Logging from power-on meant working out when school ended for each room. We got it wrong twice.</li>
+</ul>
+</div>
+<div class="ver">
+<h3>Version 2: hood, button A, threshold set per room</h3>
+<ul class="tight">
+  <li>From notes 1 and 2: the cardboard hood. Daylight now moves the reading a little, and the lights move it a lot.</li>
+  <li>From note 3: someone presses A as the last one out. Minute 1 is when the room is empty. In the baseline weeks it's the CCA member in that class. In the cup, it's the power captain.</li>
+  <li>Each room got its own threshold. We read it with the lights on, then off, on one cloudy and one sunny day. We picked a number in the middle.</li>
+  <li>New problem: in a two-week trial in 4 rooms, we forgot to press A on 6 of 40 days. Those days are lost.</li>
+</ul>
+</div>
+<div class="ver final">
+<h3>Version 3: the nudge</h3>
+<ul class="tight">
+  <li>From the forgotten presses: pressing A now gives feedback. A tick if the lights are off. A cross and a beep if not.</li>
+  <li>Captains liked the tick. Forgotten presses fell to 1 of 80 days in the cup weeks. That day, the 3 pm patrol pressed A, and we added the 60 minutes it missed as "lights on". That is the worst case.</li>
+  <li>The catch: the beep is part of the treatment. So in the baseline weeks, <code>silent</code> stays true.</li>
+</ul>
+</div>
+
+<h2>Sources</h2>
+<ul class="tight small">
+  <li><a href="https://makecode.microbit.org/reference/datalogger">MakeCode datalogger reference</a>: the blocks, and that they need a micro:bit V2.</li>
+  <li><a href="https://microbit.org/get-started/user-guide/data-logging/">micro:bit data logging guide</a>: the MY_DATA file, timestamps from the last reset, and what happens to the log when you flash new code.</li>
+  <li><a href="https://makecode.microbit.org/reference/input/light-level">MakeCode light level</a>: light is read with the LED screen, from 0 to 255, and the first reading is 0.</li>
+</ul>
+<p><a href="index.html">Back to Power Down Cup</a></p>
+</main>
+</body>
+</html>

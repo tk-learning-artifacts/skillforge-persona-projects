@@ -1,0 +1,704 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Word Wall: every file in the project, by Priya Nair</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Priya Nair is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<p><a href="index.html">Back to the project</a></p>
+<h1>Word Wall: every file in the project</h1>
+<p>The whole Android Studio project, file by file. The Gradle wrapper scripts and jar are in the folder but not shown here. Get the folder from <a href="https://github.com/tk-learning-artifacts/skillforge-persona-projects/tree/main/android-kotlin/priya">GitHub</a>.</p>
+<p><a href="#starter">Jump to the starter</a></p>
+<h2 id="app">The finished app: wordwall-app</h2>
+<section class="file"><h3>app/src/main/java/com/example/wordwall/AppWords.kt</h3><pre><code>package com.example.wordwall
+
+// One word from the course. week is the week students first meet it.
+data class AppWord(
+    val id: Int,
+    val word: String,
+    val week: Int,
+    val meaning: String,
+    val inOurApp: String
+)
+
+val weekTitles = mapOf(
+    1 to "Week 1: Blocks first",
+    2 to "Week 2: Kotlin in the browser",
+    3 to "Week 3: A first Compose screen",
+    4 to "Week 4: State",
+    5 to "Week 5: Lists and screens",
+    6 to "Week 6: Run it on a phone"
+)
+
+val appWords = listOf(
+    AppWord(1, "Component", 1,
+        "A part of an App Inventor app, such as a Button, Label or Sound.",
+        "HelloPurr has a Button with the kitty picture and a Sound for the meow."),
+    AppWord(2, "Event", 1,
+        "Something that happens, such as a tap, that the app can respond to.",
+        "The when Button1.Click block runs when someone taps the kitty."),
+    AppWord(3, "Companion", 1,
+        "The MIT AI2 Companion app. It shows your App Inventor app live on a phone or tablet.",
+        "Scan the code on screen and your app opens in the Companion."),
+    AppWord(4, "val and var", 2,
+        "Two ways to store a value in Kotlin. A val can't change. A var can.",
+        "val total = 12 stays 12. var score = 0 can go up."),
+    AppWord(5, "Function", 2,
+        "A named block of code you can run again. In Kotlin it starts with fun.",
+        "fun main() is where a Kotlin program starts."),
+    AppWord(6, "List", 2,
+        "An ordered group of values, such as listOf(\"cell\", \"atom\").",
+        "Our app keeps all 18 words in one list."),
+    AppWord(7, "Composable", 3,
+        "A Kotlin function marked @Composable that describes part of the screen.",
+        "WordRow is a composable. It draws one word in the list."),
+    AppWord(8, "Modifier", 3,
+        "Settings you chain onto a composable, such as padding, size or what a tap does.",
+        "Modifier.clickable makes a row open the word."),
+    AppWord(9, "Preview", 3,
+        "A composable marked @Preview. Android Studio draws it without running the app.",
+        "We check the list in the preview before we run it."),
+    AppWord(10, "State", 4,
+        "A value that can change while the app runs. When it changes, the screen updates.",
+        "The words you saved for revision are state."),
+    AppWord(11, "remember", 4,
+        "Keeps a value when the screen is redrawn. rememberSaveable also keeps it when the phone rotates.",
+        "The search box text uses rememberSaveable."),
+    AppWord(12, "Recomposition", 4,
+        "Compose running your composables again because the state they read has changed.",
+        "Type one letter in search and the list recomposes."),
+    AppWord(13, "LazyColumn", 5,
+        "A scrolling list that only builds the rows you can see.",
+        "This list of 18 words is a LazyColumn."),
+    AppWord(14, "Navigation", 5,
+        "Moving from one screen to another. Navigation Compose keeps a back stack of screens.",
+        "Tap a word to go to its screen. Back takes you to the list."),
+    AppWord(15, "Route", 5,
+        "The name of a screen that you navigate to. It can carry data, such as an id.",
+        "WordScreen(id = 15) is the route for this word."),
+    AppWord(16, "Emulator", 6,
+        "A pretend Android phone that runs on your computer.",
+        "It needs more memory, so some school laptops use a real phone instead."),
+    AppWord(17, "USB debugging", 6,
+        "A setting in Developer options that lets Android Studio install apps over a cable.",
+        "Tap Build number seven times to see Developer options."),
+    AppWord(18, "APK", 6,
+        "Android Package: the file that installs an app on an Android phone.",
+        "Android Studio builds an APK each time you press Run.")
+)</code></pre></section>
+<section class="file"><h3>app/src/main/java/com/example/wordwall/MainActivity.kt</h3><pre><code>package com.example.wordwall
+
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.Saver
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
+import kotlinx.serialization.Serializable
+
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContent {
+            WordWallTheme {
+                WordWallApp()
+            }
+        }
+    }
+}
+
+// Routes for the two screens.
+@Serializable
+object ListScreen
+
+@Serializable
+data class WordScreen(val id: Int)
+
+private val IdSetSaver = Saver&lt;Set&lt;Int&gt;, IntArray&gt;(
+    save = { it.toIntArray() },
+    restore = { it.toSet() }
+)
+
+@Composable
+fun WordWallApp() {
+    val navController = rememberNavController()
+
+    // Both screens need these, so they live in the parent.
+    // rememberSaveable keeps them when the phone rotates.
+    var search by rememberSaveable { mutableStateOf("") }
+    var saved by rememberSaveable(stateSaver = IdSetSaver) { mutableStateOf(emptySet&lt;Int&gt;()) }
+
+    NavHost(navController = navController, startDestination = ListScreen) {
+        composable&lt;ListScreen&gt; {
+            WordListScreen(
+                words = appWords,
+                search = search,
+                onSearchChange = { search = it },
+                saved = saved,
+                onWordClick = { navController.navigate(WordScreen(it.id)) }
+            )
+        }
+        composable&lt;WordScreen&gt; { entry -&gt;
+            val word = appWords.first { it.id == entry.toRoute&lt;WordScreen&gt;().id }
+            WordDetailScreen(
+                word = word,
+                isSaved = word.id in saved,
+                onSavedChange = { on -&gt; saved = if (on) saved + word.id else saved - word.id },
+                onBack = { navController.popBackStack() }
+            )
+        }
+    }
+}</code></pre></section>
+<section class="file"><h3>app/src/main/java/com/example/wordwall/Theme.kt</h3><pre><code>package com.example.wordwall
+
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
+
+private val Light = lightColorScheme(
+    primary = Color(0xFF0B6E69),
+    secondary = Color(0xFF7A4A00),
+    background = Color(0xFFFFFFFF),
+    surface = Color(0xFFFFFFFF)
+)
+
+private val Dark = darkColorScheme(
+    primary = Color(0xFF6FD3C9),
+    secondary = Color(0xFFF2C27A),
+    background = Color(0xFF111816),
+    surface = Color(0xFF111816)
+)
+
+@Composable
+fun WordWallTheme(content: @Composable () -&gt; Unit) {
+    MaterialTheme(
+        colorScheme = if (isSystemInDarkTheme()) Dark else Light,
+        content = content
+    )
+}</code></pre></section>
+<section class="file"><h3>app/src/main/java/com/example/wordwall/WordDetailScreen.kt</h3><pre><code>package com.example.wordwall
+
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Switch
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TopAppBar
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun WordDetailScreen(
+    word: AppWord,
+    isSaved: Boolean,
+    onSavedChange: (Boolean) -&gt; Unit,
+    onBack: () -&gt; Unit
+) {
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text(weekTitles.getValue(word.week)) },
+                navigationIcon = { TextButton(onClick = onBack) { Text("&lt; List") } }
+            )
+        }
+    ) { inner -&gt;
+        Column(
+            modifier = Modifier
+                .padding(inner)
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            Text(word.word, style = MaterialTheme.typography.headlineLarge)
+            Text(word.meaning, style = MaterialTheme.typography.titleMedium)
+            Text("In our app", style = MaterialTheme.typography.labelLarge)
+            Text(word.inOurApp)
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Switch(checked = isSaved, onCheckedChange = onSavedChange)
+                Text("  Save for revision")
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun WordDetailPreview() {
+    WordWallTheme {
+        WordDetailScreen(appWords[9], isSaved = true, onSavedChange = {}, onBack = {})
+    }
+}</code></pre></section>
+<section class="file"><h3>app/src/main/java/com/example/wordwall/WordListScreen.kt</h3><pre><code>package com.example.wordwall
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ListItem
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun WordListScreen(
+    words: List&lt;AppWord&gt;,
+    search: String,
+    onSearchChange: (String) -&gt; Unit,
+    saved: Set&lt;Int&gt;,
+    onWordClick: (AppWord) -&gt; Unit
+) {
+    // Work out what to show from the state we were given.
+    val shown = words.filter { it.word.contains(search.trim(), ignoreCase = true) }
+    val byWeek = shown.groupBy { it.week }
+
+    Scaffold(
+        topBar = { TopAppBar(title = { Text("Word Wall") }) }
+    ) { inner -&gt;
+        Column(Modifier.padding(inner)) {
+            // State goes down (value), events go up (onValueChange).
+            OutlinedTextField(
+                value = search,
+                onValueChange = onSearchChange,
+                label = { Text("Search words") },
+                singleLine = true,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 8.dp)
+            )
+            Text(
+                text = "${shown.size} words · ${saved.size} saved for revision",
+                style = MaterialTheme.typography.labelLarge,
+                modifier = Modifier.padding(horizontal = 16.dp)
+            )
+            LazyColumn {
+                byWeek.forEach { (week, weekWords) -&gt;
+                    stickyHeader(key = "week-$week") {
+                        Text(
+                            text = weekTitles.getValue(week),
+                            style = MaterialTheme.typography.titleSmall,
+                            color = MaterialTheme.colorScheme.onSecondaryContainer,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(MaterialTheme.colorScheme.secondaryContainer)
+                                .padding(horizontal = 16.dp, vertical = 6.dp)
+                        )
+                    }
+                    items(weekWords, key = { it.id }) { word -&gt;
+                        WordRow(word, isSaved = word.id in saved, onClick = { onWordClick(word) })
+                    }
+                }
+                if (shown.isEmpty()) {
+                    item {
+                        Text("No word matches \"$search\".", Modifier.padding(16.dp))
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun WordRow(word: AppWord, isSaved: Boolean, onClick: () -&gt; Unit) {
+    ListItem(
+        headlineContent = { Text(word.word) },
+        supportingContent = { Text(word.meaning, maxLines = 1) },
+        trailingContent = { if (isSaved) Text("Saved") },
+        modifier = Modifier.clickable(onClick = onClick)
+    )
+}
+
+@Preview(showBackground = true)
+@Composable
+fun WordListPreview() {
+    WordWallTheme {
+        WordListScreen(appWords, search = "", onSearchChange = {}, saved = setOf(10), onWordClick = {})
+    }
+}</code></pre></section>
+<section class="file"><h3>app/src/main/AndroidManifest.xml</h3><pre><code>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;manifest xmlns:android="http://schemas.android.com/apk/res/android"&gt;
+    &lt;application
+        android:label="@string/app_name"
+        android:theme="@android:style/Theme.Material.Light.NoActionBar"&gt;
+        &lt;activity
+            android:name=".MainActivity"
+            android:exported="true"&gt;
+            &lt;intent-filter&gt;
+                &lt;action android:name="android.intent.action.MAIN" /&gt;
+                &lt;category android:name="android.intent.category.LAUNCHER" /&gt;
+            &lt;/intent-filter&gt;
+        &lt;/activity&gt;
+    &lt;/application&gt;
+&lt;/manifest&gt;</code></pre></section>
+<section class="file"><h3>app/src/main/res/values/strings.xml</h3><pre><code>&lt;resources&gt;
+    &lt;string name="app_name"&gt;Word Wall&lt;/string&gt;
+&lt;/resources&gt;</code></pre></section>
+<section class="file"><h3>app/build.gradle.kts</h3><pre><code>plugins {
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlin.serialization)
+}
+
+android {
+    namespace = "com.example.wordwall"
+    compileSdk = 37
+
+    defaultConfig {
+        applicationId = "com.example.wordwall"
+        minSdk = 24
+        targetSdk = 37
+        versionCode = 1
+        versionName = "1.0"
+    }
+
+    buildFeatures {
+        compose = true
+    }
+}
+
+dependencies {
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.ui.tooling.preview)
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.kotlinx.serialization.core)
+    debugImplementation(libs.androidx.compose.ui.tooling)
+}</code></pre></section>
+<section class="file"><h3>build.gradle.kts</h3><pre><code>plugins {
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.kotlin.compose) apply false
+    alias(libs.plugins.kotlin.serialization) apply false
+}</code></pre></section>
+<section class="file"><h3>gradle/libs.versions.toml</h3><pre><code>[versions]
+agp = "9.4.1"
+kotlin = "2.4.21"
+composeBom = "2026.09.00"
+activityCompose = "1.13.0"
+navigationCompose = "2.10.2"
+serialization = "1.12.0"
+
+[libraries]
+androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
+androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
+kotlinx-serialization-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-core", version.ref = "serialization" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }</code></pre></section>
+<section class="file"><h3>gradle/wrapper/gradle-wrapper.properties</h3><pre><code>distributionBase=GRADLE_USER_HOME
+distributionPath=wrapper/dists
+distributionUrl=https\://services.gradle.org/distributions/gradle-9.8.2-bin.zip
+networkTimeout=10000
+retries=0
+retryBackOffMs=500
+validateDistributionUrl=true
+zipStoreBase=GRADLE_USER_HOME
+zipStorePath=wrapper/dists</code></pre></section>
+<section class="file"><h3>settings.gradle.kts</h3><pre><code>pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+rootProject.name = "WordWall"
+include(":app")</code></pre></section>
+<h2 id="starter">The starter: wordwall-starter</h2>
+<p>The starter is the app with three parts taken out, one per TODO level. Only the files that differ are shown, with the TODO lines marked. It builds and runs as it is: the list shows, search does nothing yet, and the switch does nothing yet.</p>
+<section class="file"><h3>app/src/main/java/com/example/wordwall/AppWords.kt</h3><pre><code>package com.example.wordwall
+
+// One word from the course. week is the week students first meet it.
+data class AppWord(
+    val id: Int,
+    val word: String,
+    val week: Int,
+    val meaning: String,
+    val inOurApp: String
+)
+
+val weekTitles = mapOf(
+    1 to "Week 1: Blocks first",
+    2 to "Week 2: Kotlin in the browser",
+    3 to "Week 3: A first Compose screen",
+    4 to "Week 4: State",
+    5 to "Week 5: Lists and screens",
+    6 to "Week 6: Run it on a phone"
+)
+
+val appWords = listOf(
+    AppWord(1, "Component", 1,
+        "A part of an App Inventor app, such as a Button, Label or Sound.",
+        "HelloPurr has a Button with the kitty picture and a Sound for the meow."),
+    AppWord(2, "Event", 1,
+        "Something that happens, such as a tap, that the app can respond to.",
+        "The when Button1.Click block runs when someone taps the kitty."),
+    AppWord(3, "Companion", 1,
+        "The MIT AI2 Companion app. It shows your App Inventor app live on a phone or tablet.",
+        "Scan the code on screen and your app opens in the Companion."),
+    AppWord(4, "val and var", 2,
+        "Two ways to store a value in Kotlin. A val can't change. A var can.",
+        "val total = 12 stays 12. var score = 0 can go up."),
+    AppWord(5, "Function", 2,
+        "A named block of code you can run again. In Kotlin it starts with fun.",
+        "fun main() is where a Kotlin program starts."),
+    AppWord(6, "List", 2,
+        "An ordered group of values, such as listOf(\"cell\", \"atom\").",
+        "Our app keeps all 18 words in one list."),
+    AppWord(7, "Composable", 3,
+        "A Kotlin function marked @Composable that describes part of the screen.",
+        "WordRow is a composable. It draws one word in the list."),
+    AppWord(8, "Modifier", 3,
+        "Settings you chain onto a composable, such as padding, size or what a tap does.",
+        "Modifier.clickable makes a row open the word."),
+    AppWord(9, "Preview", 3,
+        "A composable marked @Preview. Android Studio draws it without running the app.",
+        "We check the list in the preview before we run it."),
+    AppWord(10, "State", 4,
+        "A value that can change while the app runs. When it changes, the screen updates.",
+        "The words you saved for revision are state."),
+    AppWord(11, "remember", 4,
+        "Keeps a value when the screen is redrawn. rememberSaveable also keeps it when the phone rotates.",
+        "The search box text uses rememberSaveable."),
+    AppWord(12, "Recomposition", 4,
+        "Compose running your composables again because the state they read has changed.",
+        "Type one letter in search and the list recomposes."),
+    AppWord(13, "LazyColumn", 5,
+        "A scrolling list that only builds the rows you can see.",
+        "This list of 18 words is a LazyColumn."),
+    AppWord(14, "Navigation", 5,
+        "Moving from one screen to another. Navigation Compose keeps a back stack of screens.",
+        "Tap a word to go to its screen. Back takes you to the list."),
+    AppWord(15, "Route", 5,
+        "The name of a screen that you navigate to. It can carry data, such as an id.",
+        "WordScreen(id = 15) is the route for this word."),
+    AppWord(16, "Emulator", 6,
+        "A pretend Android phone that runs on your computer.",
+        "It needs more memory, so some school laptops use a real phone instead.")
+<mark>    // TODO 1 (everyone): add 2 words from Week 6 here.</mark>
+    // Copy the AppWord above. Give each one a new id: 17 and 18.
+)</code></pre></section>
+<section class="file"><h3>app/src/main/java/com/example/wordwall/MainActivity.kt</h3><pre><code>package com.example.wordwall
+
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.Saver
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
+import kotlinx.serialization.Serializable
+
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContent {
+            WordWallTheme {
+                WordWallApp()
+            }
+        }
+    }
+}
+
+// Routes for the two screens.
+@Serializable
+object ListScreen
+
+@Serializable
+data class WordScreen(val id: Int)
+
+private val IdSetSaver = Saver&lt;Set&lt;Int&gt;, IntArray&gt;(
+    save = { it.toIntArray() },
+    restore = { it.toSet() }
+)
+
+@Composable
+fun WordWallApp() {
+    val navController = rememberNavController()
+
+    // Both screens need these, so they live in the parent.
+    // rememberSaveable keeps them when the phone rotates.
+    var search by rememberSaveable { mutableStateOf("") }
+<mark>    // TODO 3 (stretch): make a saved Set&lt;Int&gt; here, like search above.</mark>
+    // Use rememberSaveable(stateSaver = IdSetSaver). Then use it below.
+
+    NavHost(navController = navController, startDestination = ListScreen) {
+        composable&lt;ListScreen&gt; {
+            WordListScreen(
+                words = appWords,
+                search = search,
+                onSearchChange = { search = it },
+                saved = emptySet(),
+                onWordClick = { navController.navigate(WordScreen(it.id)) }
+            )
+        }
+        composable&lt;WordScreen&gt; { entry -&gt;
+            val word = appWords.first { it.id == entry.toRoute&lt;WordScreen&gt;().id }
+            WordDetailScreen(
+                word = word,
+                isSaved = false,
+                onSavedChange = { on -&gt;
+<mark>                    // TODO 3 (stretch): add word.id to saved, or take it away.</mark>
+                },
+                onBack = { navController.popBackStack() }
+            )
+        }
+    }
+}</code></pre></section>
+<section class="file"><h3>app/src/main/java/com/example/wordwall/WordListScreen.kt</h3><pre><code>package com.example.wordwall
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ListItem
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun WordListScreen(
+    words: List&lt;AppWord&gt;,
+    search: String,
+    onSearchChange: (String) -&gt; Unit,
+    saved: Set&lt;Int&gt;,
+    onWordClick: (AppWord) -&gt; Unit
+) {
+    // Work out what to show from the state we were given.
+<mark>    // TODO 2 (most pairs): keep only the words that contain search.</mark>
+    // Hint: words.filter { ... } and contains(..., ignoreCase = true)
+    val shown = words
+    val byWeek = shown.groupBy { it.week }
+
+    Scaffold(
+        topBar = { TopAppBar(title = { Text("Word Wall") }) }
+    ) { inner -&gt;
+        Column(Modifier.padding(inner)) {
+            // State goes down (value), events go up (onValueChange).
+            OutlinedTextField(
+                value = search,
+                onValueChange = onSearchChange,
+                label = { Text("Search words") },
+                singleLine = true,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 8.dp)
+            )
+            Text(
+                text = "${shown.size} words · ${saved.size} saved for revision",
+                style = MaterialTheme.typography.labelLarge,
+                modifier = Modifier.padding(horizontal = 16.dp)
+            )
+            LazyColumn {
+                byWeek.forEach { (week, weekWords) -&gt;
+                    stickyHeader(key = "week-$week") {
+                        Text(
+                            text = weekTitles.getValue(week),
+                            style = MaterialTheme.typography.titleSmall,
+                            color = MaterialTheme.colorScheme.onSecondaryContainer,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(MaterialTheme.colorScheme.secondaryContainer)
+                                .padding(horizontal = 16.dp, vertical = 6.dp)
+                        )
+                    }
+                    items(weekWords, key = { it.id }) { word -&gt;
+                        WordRow(word, isSaved = word.id in saved, onClick = { onWordClick(word) })
+                    }
+                }
+                if (shown.isEmpty()) {
+                    item {
+                        Text("No word matches \"$search\".", Modifier.padding(16.dp))
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun WordRow(word: AppWord, isSaved: Boolean, onClick: () -&gt; Unit) {
+    ListItem(
+        headlineContent = { Text(word.word) },
+        supportingContent = { Text(word.meaning, maxLines = 1) },
+        trailingContent = { if (isSaved) Text("Saved") },
+        modifier = Modifier.clickable(onClick = onClick)
+    )
+}
+
+@Preview(showBackground = true)
+@Composable
+fun WordListPreview() {
+    WordWallTheme {
+        WordListScreen(appWords, search = "", onSearchChange = {}, saved = setOf(10), onWordClick = {})
+    }
+}</code></pre></section>
+</main>
+</body>
+</html>

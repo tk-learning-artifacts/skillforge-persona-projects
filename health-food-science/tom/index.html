@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Water First: a sugar, price and canteen programme for Sec 2, by Tom Brennan</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="checker.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Tom Brennan is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<header class="hero">
+<p class="kicker">Health and Food Science: end project</p>
+<h1>Water <span class="water">First</span></h1>
+<p class="lede">A four-lesson programme for one Sec 2 class. Students read drink labels and test sugar with a sinking can. They check the canteen against the school rules. Then they run a two-week campaign to make water the easy choice.</p>
+</header>
+
+<p>I'm Tom. I teach sustainability and social topics through projects. Most health lessons end with "make better choices". I wanted students to ask a harder question too. Who sets the choices in the first place? The drink fridge, the price list and the shop outside the gate all decide what is easy.</p>
+<p>The audience is one Sec 2 Food and Consumer Education (FCE) class of 36 students. We met for four 60-minute lessons in the food room, then ran the campaign in the canteen for two weeks.</p>
+
+<ul class="toc">
+  <li><a href="#checker">Drink checker</a></li>
+  <li><a href="lessons.html">The 4 lessons</a></li>
+  <li><a href="demo.html">Sinking can demo</a></li>
+  <li><a href="results.html">Assessment results</a></li>
+  <li><a href="sheet.html">Student sheet</a></li>
+  <li><a href="#rubric">Rubric check</a></li>
+</ul>
+
+<h2 id="why">Why drinks</h2>
+<p>The numbers come from Singapore's own surveys. They are about adults, but our students are the next adults.</p>
+<div class="facts">
+  <div class="fact"><span class="big">56 g</span><p>Average sugar a Singapore adult ate each day in 2022. It was 60 g in 2018.</p></div>
+  <div class="fact"><span class="big">52%</span><p>Share of that sugar from sugar-sweetened drinks. They are the single biggest source.</p></div>
+  <div class="fact blue"><span class="big">50 g</span><p>WHO's limit for free sugars: under 10% of energy, or about 50 g a day. Under 5% is better still.</p></div>
+  <div class="fact blue"><span class="big">7.1% to 4.6%</span><p>Median sugar in packaged drinks here, from 2017 to 2023.</p></div>
+</div>
+<p>The last number is the one I start with. Sugar in packaged drinks fell as the rules changed what is on the shelf. MOH links this fall to the Nutri-Grade labels and the ban on grade D ads. Nobody asked people to find more willpower. That is a public health idea, and students can try it at school scale.</p>
+
+<h2 id="checker">Try it: the drink checker</h2>
+<p>Students use this in lesson 1 with real packs. Type in what the label says, or pick an example. The example drinks are made up. Real labels differ, so check your own.</p>
+<div class="tool">
+  <div class="presets" id="presets" role="group" aria-label="Example drinks"></div>
+  <div class="fields">
+    <div><label for="f-ml">Pack size (ml)</label><input id="f-ml" type="number" min="0" step="10" inputmode="decimal"></div>
+    <div><label for="f-sugar">Sugar per 100 ml (g)</label><input id="f-sugar" type="number" min="0" step="0.1" inputmode="decimal"></div>
+    <div><label for="f-fat">Saturated fat per 100 ml (g)</label><input id="f-fat" type="number" min="0" step="0.1" inputmode="decimal"></div>
+    <div><label for="f-price">Price ($)</label><input id="f-price" type="number" min="0" step="0.1" inputmode="decimal"></div>
+  </div>
+  <label class="tick"><input type="checkbox" id="f-sweet"> Has a sweetener, like aspartame or stevia</label>
+  <div class="out">
+    <div class="grade" id="grade" role="img" aria-label="Nutri-Grade">?</div>
+    <div>
+      <p><strong id="o-sugar"></strong></p>
+      <p id="o-who"></p>
+      <p id="o-price"></p>
+    </div>
+  </div>
+  <div class="spoons" id="spoons" aria-hidden="true"></div>
+  <p class="small">Each dot is one teaspoon of 5 g, as in the module task. WHO puts 50 g at about 12 teaspoons, so closer to 4 g each. Treat spoon counts as rough.</p>
+  <ul class="verdicts" id="verdicts" aria-label="Rule checks"></ul>
+  <p id="live" aria-live="polite" style="position:absolute;left:-9999px"></p>
+</div>
+<p class="small">How it grades: sugar and saturated fat each get a grade, and the drink takes the poorer one. Grade A needs 1 g sugar or less and no sweetener, so a diet drink tops out at B. The last check uses the school limit for freshly made drinks. Packaged drinks in schools must also carry the Healthier Choice Symbol or meet its rules. This tool does not check that.</p>
+<p><strong>Try this:</strong> load the cola, then the diet cola. Which one could a school canteen sell? Neither. One has too much sugar. The other has a sweetener.</p>
+
+<h2 id="curriculum">The curriculum</h2>
+<p>The full plan, with timings for each 60-minute lesson, is on the <a href="lessons.html">lessons page</a>. Here is the shape of it.</p>
+<h3>Learning outcomes</h3>
+<p>By the end, each student can:</p>
+<ol class="tight">
+  <li>Find sugar per 100 ml on a drink label and work out its Nutri-Grade.</li>
+  <li>Turn the sugar in one pack into grams and teaspoons.</li>
+  <li>Explain why a can of cola sinks in water and a diet cola floats.</li>
+  <li>State two rules for drinks sold in school canteens.</li>
+  <li>Plan one change to the canteen and say how they would measure it, and who it might leave out.</li>
+</ol>
+<p>Outcomes 1, 2 and 4 come from the 2024 Lower Secondary FCE syllabus. It asks students to explain "Choose water" and "Limit intake of sugar" from My Healthy Plate. It also asks them to interpret food labels. Outcome 5 links to its parts on budget and needs and wants.</p>
+<h3>The four lessons</h3>
+<ul class="timeline">
+  <li><span class="t">Lesson 1</span><span><strong>Read the drink.</strong> Pre-quiz. Students grade 10 real packs with the checker and spoon out the sugar of 3 of them.</span></li>
+  <li><span class="t">Lesson 2</span><span><strong>The sinking can.</strong> A fair test: cola and diet cola in a tank of water. Then weigh them. Why does sugar make the can sink?</span></li>
+  <li><span class="t">Lesson 3</span><span><strong>Who sets the choice?</strong> Read the national numbers. Check our canteen against the Healthy Meals in Schools rules. Map prices at the shops near school.</span></li>
+  <li><span class="t">Lesson 4</span><span><strong>Plan the nudge.</strong> Groups pitch one change. The class votes. Post-quiz.</span></li>
+  <li><span class="t">Weeks 4 to 6</span><span><strong>Run it.</strong> Students count drink sales for a week. Then the winning plan runs for two weeks, with the canteen vendor's agreement, and they count again.</span></li>
+</ul>
+
+<h2 id="demo">The food science demo</h2>
+<p>Two sealed cans go into a tank of water. Same brand, same size. One sinks and one floats. Students then weigh both cans, and spoon out the sugar the label says is in the cola. They see the sugar before they read about it. The <a href="demo.html">demo page</a> has the method, the diagram, the safety steps and our results.</p>
+<div class="safety">
+<h3>Safety in one line each</h3>
+<ul class="tight">
+  <li>No tasting. Cans stay sealed. No drinks or food leave the food room.</li>
+  <li>No glass. The tank is plastic. Two people carry it, and only when it is empty.</li>
+  <li>Spills get wiped at once. A wet floor near the sink is the real hazard.</li>
+</ul>
+</div>
+
+<h2 id="assessment">Assessment results</h2>
+<p>I used three measures. A 6-question quiz before and after. A count of drink sales at the stall for one week before and one week during the campaign. And a short survey on where students buy drinks. The <a href="results.html">results page</a> has all of it.</p>
+<p class="made-up">My class and their numbers are made up, like me. The quiz, the method and the rules they test are real.</p>
+<div class="facts">
+  <div class="fact blue"><span class="big">1.4 to 4.3</span><p>Mean quiz score out of 6, before and after.</p></div>
+  <div class="fact blue"><span class="big">15% to 22%</span><p>Water's share of drinks sold at the stall, before and during the campaign.</p></div>
+  <div class="fact"><span class="big">14 of 36</span><p>Students who buy a drink outside school on most days. The campaign never reached those drinks.</p></div>
+</div>
+
+<h2 id="rubric">How it meets the rubric</h2>
+<ul class="tight">
+  <li><strong>Accurate, current content.</strong> Every rule comes from HPB, MOH or WHO pages I checked in October 2026. The school rules are HPB's guidelines dated 30 July 2026. Each source is linked below.</li>
+  <li><strong>Clear learning outcomes.</strong> Five outcomes, each tested by at least one quiz question or the campaign plan.</li>
+  <li><strong>Safe, well-managed activities.</strong> No tasting in the demo, sealed cans, no glass, and a named job for spills. The canteen work only went ahead with the vendor's and the school's agreement.</li>
+  <li><strong>Suits the audience.</strong> Sec 2 students buy their own drinks with their own money. So the lessons use their drinks, their canteen and their prices.</li>
+</ul>
+
+<h2 id="change">What I would change</h2>
+<p>The campaign moved water from 15% to 22% of stall sales. That looks good, but I can't tell how much is real. There was no second class or school to compare with. Some students may just have bought their sweet drink at the minimart instead. Fourteen students already do that most days. Next time I would also count for a week after the campaign ends. And I would ask a nearby class to keep a drink diary, as a comparison.</p>
+<p>I would also cut lesson 3. It tries to do the national data, the canteen rules and the price map in one hour. The price map needs its own lesson.</p>
+
+<h2 id="sources">Sources</h2>
+<ul class="tight small">
+  <li>Nutri-Grade cut-offs, labels and the ban on grade D ads: <a href="https://www.healthhub.sg/programmes/nutrition-hub/nutri-grade-mark">HealthHub, Nutri-Grade</a>.</li>
+  <li>Sugar intake of 60 g in 2018 and 56 g in 2022, and 52% from sugary drinks: <a href="https://www.moh.gov.sg/newsroom/national-health-surveys-highlight-need-to-focus-on-healthy-diets-and-lifestyles/">MOH, 27 September 2023</a>, and <a href="https://www.hpb.gov.sg/docs/default-source/pdf/nns-2022-report.pdf">HPB, National Nutrition Survey 2022 report</a>.</li>
+  <li>Median sugar in packaged drinks, 7.1% in 2017 and 4.6% in 2023: <a href="https://www.moh.gov.sg/newsroom/effectiveness-of-nutri-grade-measures-and-advertising-restrictions/">MOH, reply on Nutri-Grade, 6 November 2025</a>.</li>
+  <li>Free sugars under 10% of energy, about 50 g or 12 level teaspoons: <a href="https://www.who.int/news-room/fact-sheets/detail/healthy-diet">WHO, Healthy diet fact sheet</a>.</li>
+  <li>School canteen drink rules: <a href="https://www.hpb.gov.sg/schools/school-programmes/healthy-meals-in-schools-programme/">HPB, Healthy Meals in Schools Programme</a>, and its <a href="https://isomer-user-content.by.gov.sg/484/78574d2b-ff82-40a1-8aec-818311d87a0d/Healthy%20Meals%20in%20School%20Programme%20V3.0%20Guidelines_20260730_Final.pdf">guidelines, updated 30 July 2026</a>.</li>
+  <li>FCE learning outcomes: <a href="https://www.moe.gov.sg/api/media/5043d88c-2ba8-41f4-9661-d27e273e1414/2024-Lower-Secondary-Food-and-Consumer-Education-Syllabus.pdf">MOE, 2024 Lower Secondary FCE syllabus</a>.</li>
+  <li>The sinking can investigation: <a href="https://edu.rsc.org/primary-science/dissolving-density-and-sugary-drinks/4013615.article">Royal Society of Chemistry, Heavy sugar</a>.</li>
+</ul>
+</main>
+</body>
+</html>

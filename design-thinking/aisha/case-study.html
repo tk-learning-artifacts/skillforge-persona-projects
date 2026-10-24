@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Case study: the Cool-Down Dock, by Aisha Rahman</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="case.css">
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Aisha Rahman is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main class="case">
+<p class="noprint small"><a href="index.html">Back to the full project</a> · <a href="case-study.pdf">Download this page as a PDF</a></p>
+<header>
+  <p class="kicker">Design thinking case study · one loop · Sec 1 makerspace</p>
+  <h1>The Cool-Down Dock</h1>
+  <p class="by">Aisha Rahman, design and making teacher. A cardboard and micro:bit V2 stand. It shows when a glue gun has had time to cool.</p>
+</header>
+
+<div class="cols">
+<section>
+  <h2>1 Empathise</h2>
+  <p>I interviewed our technician and two Sec 1 students about the last pack-up. I expected guns left switched on. They were unplugged. The technician still finds two or three hot guns in the tray after most lessons.</p>
+  <p class="quote">"I hold my hand near the tip to feel if it's cold. It's hard to tell." Student A</p>
+  <p>Cool-melt guns don't fix it: Bostik lists its cool-melt gun at 125 to 135°C.</p>
+
+  <h2>2 Define</h2>
+  <p class="st">Sec 1 makers packing up need to see when a glue gun is safe to put away, because a hot gun looks the same as a cold one.</p>
+  <p class="st">How might we make a glue gun's heat visible at pack-up?</p>
+
+  <h2>3 Ideate</h2>
+  <p>20 sticky notes in 15 minutes, in four themes: routines, materials, signals, wild ones. We picked two. Unplug 10 minutes before the bell (free, starts now). A dock that counts down the cooling time (the one to prototype). Assumption to test: <em>if students can see the time left, they will wait.</em></p>
+  <p>Idea 14, measuring the tip, died fast. The micro:bit's temperature sensor is inside its processor and reads roughly the air. So we time the cooling instead.</p>
+
+  <h2>What the loop changed</h2>
+  <ul>
+    <li><strong>The problem.</strong> From "students leave guns on" to "hot and cold guns look the same".</li>
+    <li><strong>The signal.</strong> From a number hidden under the gun to lights you read at a glance.</li>
+    <li><strong>The trigger.</strong> From light, which anything can change, to the gun's own weight.</li>
+    <li><strong>My habit.</strong> I now ask about the last pack-up, not what students would like.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>4 Prototype and 5 Test</h2>
+  <p><strong>Version 1</strong>, 90 minutes: the micro:bit under a hole in a card cradle. Darkness starts a 10-minute count.</p>
+  <p>Three testers, one new to the project. I only watched.</p>
+  <ul>
+    <li>"Where's the timer?" The gun covered the display.</li>
+    <li>A hand, or the lights going off, started the empty dock.</li>
+    <li>Lifting early gave no warning.</li>
+  </ul>
+  <svg viewBox="0 0 300 120" role="img" aria-label="Version 2 side view: foil pads under the floor, micro:bit tilted up on the front, nozzle on a tile.">
+    <rect width="300" height="120" rx="8" fill="#FFFFFF"/>
+    <rect x="0" y="100" width="300" height="20" fill="#9A7B56"/>
+    <rect x="8" y="92" width="50" height="8" fill="#D9DDE0" stroke="#6B737A"/>
+    <rect x="54" y="72" width="170" height="28" fill="#D8B98C" stroke="#7A5A35" stroke-width="2"/>
+    <rect x="90" y="88" width="100" height="4" fill="#F2A23A"/>
+    <path d="M70 58 H200 v14 H70 Z M70 60 L36 64 L36 70 L70 72 Z" fill="#4C6B8A" stroke="#22364A" stroke-width="2"/>
+    <path d="M224 100 L248 46 L256 49 L234 100 Z" fill="#D8B98C" stroke="#7A5A35" stroke-width="2"/>
+    <rect x="238" y="52" width="12" height="22" transform="rotate(24 244 63)" fill="#FF3B24"/>
+    <g font-family="Segoe UI, system-ui, sans-serif" font-size="12" fill="#15211F">
+      <text x="8" y="16">tile</text><text x="96" y="16">foil pads under the floor</text><text x="226" y="34">display</text>
+      <path d="M14 20 V88 M140 20 V86 M246 38 V48" stroke="#55625F"/>
+    </g>
+  </svg>
+  <p><strong>Version 2</strong>, from the notes: the gun's weight presses two foil pads. Hands and lights can't start it. The display moved to the front. 25 lights drain like a battery, then a tick and a beep. Lifting early: a cross and two low beeps.</p>
+  <p>Retest, same three people: all waited for the tick. The technician could read it at 2 m, not from the door.</p>
+
+  <h2>Next loop</h2>
+  <p>Docks send their state by radio to one micro:bit at the door. First, test whether early unplugging alone is enough. Then test version 2 in a real pack-up with 20 students.</p>
+</section>
+</div>
+
+<footer>
+  <p>Students, technician and quotes are made up. Sources: Bostik glue gun temperatures (diy.bostik.com); micro:bit sensors and features (microbit.org); MakeCode light level and pin is pressed (makecode.microbit.org). Full project and links: tk-learning-artifacts.github.io/skillforge-persona-projects/design-thinking/aisha/</p>
+</footer>
+</main>
+</body>
+</html>

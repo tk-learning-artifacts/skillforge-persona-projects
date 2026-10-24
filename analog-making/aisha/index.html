@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Otter Dive: a one-cam cardboard automaton for Sec 1, by Aisha Rahman</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="sim.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Aisha Rahman is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<p class="tag">Analog Making end project · Sec 1 · 60 minutes · no code</p>
+<h1>Otter Dive</h1>
+<p class="lede">A cardboard box with a crank on the side. Turn it, and an otter rises slowly out of a wave. Then it dives in one snap. One snail cam does all of it.</p>
+<p>I'm Aisha. I run the makerspace at my school. My Sec 1 classes make this in one 60-minute lesson, in pairs. They pick the creature and the cam. The otter is my demo. NParks believes smooth-coated otters came back to mainland Singapore in the 1990s. They mainly eat fish. So a diving otter is a story every pupil already knows.</p>
+
+<ul class="toc">
+  <li><a href="#sim"><b>Turn the crank</b><span>The build, running, with a graph</span></a></li>
+  <li><a href="#build"><b>Build record</b><span>8 drawn frames, step by step</span></a></li>
+  <li><a href="guide.html"><b>Teacher guide</b><span>1 page, also as a <span lang="en">PDF</span></span></a></li>
+  <li><a href="template.html"><b>Cutting template</b><span>True size, print on A4 card</span></a></li>
+  <li><a href="prompts.html"><b>Student reflection prompts</b><span>A printable sheet</span></a></li>
+  <li><a href="#tryout"><b>Try-out notes</b><span>What broke, and what I changed</span></a></li>
+</ul>
+
+<h2 id="sim">Turn the crank</h2>
+<p>This is the build, running. It uses the real sizes from the template. The front wall is off, so you can see the cam. Pick a cam, then turn the crank. Drag the crank handle, use the arrow keys on it, or press the button.</p>
+<div class="board">
+  <div class="sim">
+    <div class="stage"><svg id="stage" role="img" aria-label="Side view of the box. A cam on the axle pushes a stick up, and the otter on top rises above a wave."></svg></div>
+    <div>
+      <div class="camset" role="group" aria-label="Choose a cam">
+        <button type="button" data-cam="round">Round, off centre</button>
+        <button type="button" data-cam="egg">Egg</button>
+        <button type="button" data-cam="snail">Snail</button>
+      </div>
+      <p id="story"></p>
+      <div class="controls">
+        <svg id="dial" width="96" height="96" tabindex="0" role="slider" aria-label="Crank handle. Arrow keys turn it." aria-valuemin="0" aria-valuemax="359" aria-valuenow="0"></svg>
+        <button type="button" class="primary" id="play" aria-pressed="false">Turn the crank</button>
+        <button type="button" id="dir">Direction: clockwise</button>
+        <button type="button" id="reset">Reset</button>
+      </div>
+      <div class="readouts">
+        <div><b id="r-height">0</b><span>foot height, mm above the axle</span></div>
+        <div><b id="r-travel">0</b><span>travel in one turn, mm</span></div>
+        <div><b id="r-turns">0</b><span>turns so far</span></div>
+      </div>
+      <p class="live" id="live" aria-live="polite"></p>
+      <svg id="graph" class="graph" role="img" aria-label="Graph of foot height against turns of the crank. The shaded band is the travel."></svg>
+    </div>
+  </div>
+</div>
+<p class="small">Try this with your class. Turn the snail cam 3 full turns. Count the dives. Then turn it the other way and see what happens. Their cardboard version will travel a little less than the number here. Ask them why.</p>
+
+<h2 id="build">Build record</h2>
+<p>This site shows no photos. So the build is drawn, frame by frame, like a stop-motion film. The simulator above is the moving version. Sizes are in millimetres.</p>
+<ol class="frames">
+  <li>
+    <svg viewBox="0 0 220 140" role="img" aria-label="A long cardboard strip with four panels marked by dashed score lines, and a narrow glue tab at one end.">
+      <rect x="8" y="46" width="204" height="50" class="s-board"/>
+      <path d="M58 46v50 M108 46v50 M158 46v50 M200 46v50" class="s-score"/>
+      <text x="22" y="76" class="s-text">floor</text><text x="70" y="76" class="s-text">wall</text><text x="122" y="76" class="s-text">top</text><text x="170" y="76" class="s-text">wall</text>
+      <text x="8" y="30" class="s-muted">375 × 90 mm strip, 4 panels + tab</text>
+      <text x="8" y="120" class="s-muted">Teacher pre-cuts and pre-scores</text>
+    </svg>
+    <p>The kit. I cut and score the strips before the lesson. Pupils never touch a craft knife.</p>
+  </li>
+  <li>
+    <svg viewBox="0 0 220 140" role="img" aria-label="The strip folded into a square tube, with masking tape across the joint.">
+      <path d="M70 40 L150 40 L150 120 L70 120 Z" class="s-board"/>
+      <path d="M70 40 L90 22 L170 22 L150 40 M170 22 L170 102 L150 120" class="s-board-2"/>
+      <rect x="64" y="70" width="14" height="40" fill="var(--tape)" opacity="0.9"/>
+      <text x="8" y="134" class="s-muted">Fold on the score lines, tape the tab</text>
+    </svg>
+    <p>Fold on the dashed lines into a square tube. Tape the tab along its whole length.</p>
+  </li>
+  <li>
+    <svg viewBox="0 0 220 140" role="img" aria-label="One wall of the box with a hole 35 millimetres above the floor, and a short straw pushed into it.">
+      <rect x="50" y="20" width="110" height="100" class="s-board"/>
+      <line x1="105" y1="120" x2="105" y2="80" class="s-ink" stroke-dasharray="3 3"/>
+      <text x="112" y="104" class="s-muted">35 mm</text>
+      <circle cx="105" cy="78" r="7" class="s-board-2"/>
+      <rect x="99" y="72" width="12" height="12" rx="3" fill="var(--water-soft)" stroke="var(--water)" stroke-width="2"/>
+      <text x="8" y="136" class="s-muted">Same height on both walls</text>
+    </svg>
+    <p>Poke an axle hole 35 mm up each wall. Push in 15 mm of straw. That is the bearing.</p>
+  </li>
+  <li>
+    <svg viewBox="0 0 220 140" role="img" aria-label="A snail-shaped cam cut from card, two layers stuck together, with the axle hole marked.">
+      <path d="M110 70 m15 0 a15 15 0 0 1 -14 15 a19 19 0 0 1 -21 -16 a24 24 0 0 1 22 -27 a29 29 0 0 1 28 28 l-15 0 z" class="s-cam" transform="translate(0 4)"/>
+      <circle cx="110" cy="74" r="3" class="s-inkfill"/>
+      <text x="8" y="130" class="s-muted">2 layers of card, glued, for grip</text>
+    </svg>
+    <p>Cut the cam from the template. Glue two layers so it grips the skewer.</p>
+  </li>
+  <li>
+    <svg viewBox="0 0 220 140" role="img" aria-label="Front view of the tube with a skewer passing through both walls and the cam in the middle.">
+      <rect x="40" y="20" width="140" height="100" class="s-board-2"/>
+      <line x1="20" y1="85" x2="200" y2="85" class="s-ink" stroke-width="4"/>
+      <rect x="102" y="55" width="16" height="60" rx="3" class="s-cam"/>
+      <rect x="100" y="80" width="20" height="10" fill="var(--tape)" opacity="0.6"/>
+      <text x="8" y="134" class="s-muted">Wall, cam, wall. Tape a flag each side.</text>
+    </svg>
+    <p>Push the skewer through a wall, the cam and the other wall. A tape flag each side stops the cam sliding.</p>
+  </li>
+  <li>
+    <svg viewBox="0 0 220 140" role="img" aria-label="A flat wooden stirrer with a round card foot glued to its lower end, pushed up through a slot in the top of the box.">
+      <rect x="40" y="40" width="140" height="80" class="s-board-2"/>
+      <rect x="104" y="12" width="12" height="96" fill="#c9a26b" stroke="var(--ink)" stroke-width="2"/>
+      <rect x="85" y="104" width="50" height="6" rx="2" class="s-board"/>
+      <rect x="100" y="36" width="20" height="8" class="s-inkfill"/>
+      <text x="8" y="134" class="s-muted">Flat stirrer in a slot cannot spin</text>
+    </svg>
+    <p>Glue the 30 mm foot to a flat coffee stirrer. Slide it up through the slot in the top.</p>
+  </li>
+  <li>
+    <svg viewBox="0 0 220 140" role="img" aria-label="The otter character fixed to the top of the stirrer, half hidden behind a wave card glued to the front of the box.">
+      <rect x="50" y="90" width="120" height="40" class="s-board-2"/>
+      <g transform="translate(110 52) scale(1.6)"><path d="M-9 15 C-11 2 -9 -8 -4 -12 L4 -12 C9 -8 11 2 9 15 Z" class="s-otter"/><ellipse cx="0" cy="-15" rx="7.5" ry="6.5" class="s-otter"/><circle cx="-3" cy="-16.5" r="1.1" class="s-inkfill"/><circle cx="3" cy="-16.5" r="1.1" class="s-inkfill"/></g>
+      <path d="M50 90 L50 62 Q60 54 70 62 Q80 70 90 62 Q100 54 110 62 Q120 70 130 62 Q140 54 150 62 Q160 70 170 62 L170 90 Z" class="s-water"/>
+      <text x="8" y="16" class="s-muted">Character on top, wave in front</text>
+    </svg>
+    <p>Tape the creature to the top of the stirrer. Glue the wave card to the front.</p>
+  </li>
+  <li>
+    <svg viewBox="0 0 220 140" role="img" aria-label="A card crank arm on the end of the axle with a straw handle, a curved arrow showing one-way turning, and a ruler beside the otter.">
+      <rect x="40" y="30" width="110" height="100" class="s-board-2"/>
+      <rect x="140" y="70" width="60" height="16" rx="8" class="s-cam"/>
+      <rect x="186" y="48" width="10" height="26" rx="3" fill="var(--water-soft)" stroke="var(--water)" stroke-width="2"/>
+      <path d="M150 52 a30 30 0 0 1 40 -6" class="s-ink" marker-end="url(#ah)"/>
+      <defs><marker id="ah" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="currentColor"/></marker></defs>
+      <rect x="14" y="20" width="16" height="100" class="s-board"/>
+      <path d="M14 30h8 M14 40h5 M14 50h8 M14 60h5 M14 70h8 M14 80h5 M14 90h8 M14 100h5 M14 110h8" class="s-ink" stroke-width="1"/>
+      <text x="46" y="20" class="s-muted">Draw the "this way" arrow</text>
+    </svg>
+    <p>Add the crank arm and a straw handle. Draw the "this way" arrow. Turn 3 times and measure the travel.</p>
+  </li>
+</ol>
+
+<h2 id="deliverables">The other parts</h2>
+<div class="board">
+  <h3>Teacher guide</h3>
+  <p>One page: materials for 16 pairs, prep, the 60-minute run, pitfalls and fixes, and safety. Read it as a <a href="guide.html">web page</a>, or <a href="guide.pdf">download the PDF</a> to print.</p>
+  <h3>Cutting template</h3>
+  <p>Three cams, the foot, the crank arm, the wave and the otter. All are true size. <a href="template.html">Print it on A4 card</a> at 100%, not "fit to page".</p>
+  <h3>Student reflection prompts</h3>
+  <p><a href="prompts.html">Six prompts</a> on one sheet. Two in class, the rest as homework. The first two take 5 minutes.</p>
+</div>
+
+<h2 id="tryout">Try-out notes</h2>
+<p class="warn">My classes are made up, like me. The sizes, the cams and the fixes are real cardboard behaviour.</p>
+<h3>Version 1, with Sec 1 class A</h3>
+<ul class="tight">
+  <li>Pupils cut their own frames from big sheets. The lesson ran to 72 minutes.</li>
+  <li>5 of 16 cams slipped on the skewer. The crank turned. The cam did not.</li>
+  <li>The follower was a round skewer in a straw. Otters spun round and faced the wall.</li>
+  <li>3 pairs turned the snail cam backwards. It jammed, and one cam tore.</li>
+  <li>Pupils measured 11 to 13 mm of travel. The simulator said 14.</li>
+</ul>
+<div class="panel">
+  <p><b>What I changed for version 2</b></p>
+  <ul class="tight">
+    <li>I pre-cut and pre-score every frame. That saved about 12 minutes.</li>
+    <li>Cams are two layers of card, with a tape flag either side. No more slipping.</li>
+    <li>The follower is now a flat coffee stirrer in a slot. A flat stick can't spin.</li>
+    <li>Every box gets a "this way" arrow by the crank. A snail cam only turns one way.</li>
+    <li>The travel gap is now a question, not a problem. The foot is card, and card squashes.</li>
+  </ul>
+</div>
+<h3>Version 2, with Sec 1 class B</h3>
+<ul class="tight">
+  <li>14 of 16 pairs had a working automaton by minute 45. The other 2 did by minute 50.</li>
+  <li>The glue gun station had a queue of 6 pairs at minute 22.</li>
+  <li>The stories got better once pupils picked their own cam. One pair made a hornbill that pecks, with the egg cam.</li>
+</ul>
+
+<h2 id="rubric">How it meets the rubric</h2>
+<div class="rubric">
+  <div><b>Safety</b>I do all knife work before the lesson. Skewer tips are snipped flat. Hot glue stays at one station on a silicone mat, with a tap nearby. The guide says what to do for a burn.</div>
+  <div><b>Clear instructions</b>The guide fits on one page. Each frame of the build record is one action. The template is true size, with every hole marked.</div>
+  <div><b>Creativity</b>The otter is only my demo. Pairs choose their own creature and pick the cam that fits its story.</div>
+  <div><b>Fits a 45 to 60 minute lesson</b>The plan is 60 minutes, pack-up included. Version 2 ran on time because I pre-cut the frames.</div>
+</div>
+
+<h2 id="change">What I would change</h2>
+<p>One cam gives one movement. That limits the story. A diving otter is fine, but it can't wave or turn its head. Next term I'll add a second lesson with two cams on one axle. Travel is also small, about 14 mm. A short lever on top would double it, but that adds 10 minutes. And two glue guns for 16 pairs is not enough. I'd add a third, or switch to PVA and pegs for the cams.</p>
+
+<h2 id="sources">Sources</h2>
+<ul class="tight small">
+  <li>Snail cams lift slowly, drop suddenly and only turn one way. Turned backwards, the follower jams on the step: <a href="https://www.robives.com/?p=2665">Rob Ives, "Cam design"</a>.</li>
+  <li>Smooth-coated otters returned to mainland Singapore in the 1990s and mainly eat fish: <a href="https://biodiversitysg.nparks.gov.sg/our-biodiversity/mammals/other-mammals/smooth-coated-otter/">NParks, Biodiversity of Singapore: Smooth-coated Otter</a>.</li>
+  <li>Burn first aid, cool running water for 20 minutes: <a href="https://www.kkh.com.sg/publications/patient-care/critical-to-perform-first-aid-immediately-after-sustaining-a-burn">KK Women's and Children's Hospital</a>.</li>
+  <li>Ideas for creatures and movements: <a href="https://cabaret.co.uk/automata/">Cabaret Mechanical Theatre, automata gallery</a>.</li>
+</ul>
+</main>
+</body>
+</html>

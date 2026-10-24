@@ -1,0 +1,54 @@
+.settings { display: flex; flex-wrap: wrap; gap: 14px 24px; margin: 16px 0 20px; }
+.set { display: flex; flex-direction: column; gap: 6px; }
+.set-label { font-weight: 700; font-size: 0.95rem; color: var(--ink-2); }
+.seg { display: flex; flex-wrap: wrap; gap: 8px; }
+.seg button[aria-checked="true"], .seg button[aria-pressed="true"] { background: var(--ink); color: var(--ground); border-color: var(--ink); }
+.seg button[aria-pressed="true"]::before { content: "\2713"; }
+.stage, .done { background: var(--surface); border: 2px solid var(--line); border-radius: 20px; padding: 18px; }
+.progress { margin: 0; font-weight: 700; color: var(--muted); font-size: 0.95rem; }
+.item { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 12px 0 18px; }
+.item-pic { width: 132px; height: 132px; border-radius: 28px; background: var(--card); border: 2px solid var(--line);
+  display: grid; place-items: center; color: var(--ink); }
+.item-pic .icon { width: 104px; height: 104px; }
+h2.item-name { margin: 12px 0 0; font-size: 1.6rem; }
+h2.item-name::before { display: none; }
+.bins { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.bins button { flex-direction: column; min-height: 140px; padding: 12px 6px; border-width: 3px; border-radius: 18px; text-align: center; line-height: 1.25; }
+.bins button .key { font-size: 0.8rem; color: var(--muted); font-weight: 700; }
+.bins button .bname { font-size: 1rem; }
+.bins button .bsub { font-size: 0.8rem; font-weight: 400; color: var(--ink-2); }
+.bins .b-blue { border-color: var(--blue); background: var(--blue-soft); color: var(--blue); }
+.bins .b-general { border-color: var(--grey); background: var(--grey-soft); color: var(--grey); border-style: dashed; }
+.bins .b-elsewhere { border-color: var(--plum); background: var(--plum-soft); color: var(--plum); border-style: double; border-width: 5px; }
+.bins button .bname, .bins button .bsub { color: var(--ink); }
+.bins button[disabled] { opacity: 0.45; cursor: default; }
+.bins button.picked { opacity: 1; outline: 4px solid var(--ink); outline-offset: 2px; }
+.feedback { margin-top: 16px; background: var(--card); border-radius: 16px; padding: 14px 16px; border: 2px solid var(--line); }
+.feedback.yes { border-color: var(--good); }
+.feedback.no { border-color: var(--warn); }
+.verdict { font-weight: 800; font-size: 1.2rem; margin: 0; }
+.feedback.yes .verdict { color: var(--good); }
+.feedback.no .verdict { color: var(--warn); }
+.score { font-size: 1.4rem; font-weight: 800; }
+.missed { list-style: none; padding: 0; display: grid; gap: 8px; }
+.missed li { display: flex; gap: 12px; align-items: center; background: var(--card); border-radius: 12px; padding: 8px 12px; border: 2px solid var(--line); }
+.missed .icon { width: 44px; height: 44px; }
+.row { display: flex; flex-wrap: wrap; gap: 10px; }
+.live { min-height: 1.5em; }
+body.big .item-name { font-size: 2.1rem; }
+body.big .bins button .bname { font-size: 1.2rem; }
+body.big .bins button .bsub { font-size: 1rem; }
+body.big .feedback p { font-size: 1.25rem; }
+@media (max-width: 420px) {
+  .bins { gap: 6px; }
+  .bins button { min-height: 128px; padding: 10px 2px; }
+  .bins button .bname { font-size: 0.74rem; }
+  .bins .b-elsewhere { border-width: 4px; }
+  .bins button .bsub { font-size: 0.72rem; }
+  .bins .icon { width: 44px; height: 44px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .item-pic { transition: transform 0.2s; }
+  .item-pic.pop { transform: scale(1.06); }
+}
+.done h2 { margin-top: 0; }

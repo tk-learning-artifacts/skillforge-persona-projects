@@ -1,0 +1,6 @@
+{
+  "module": "android-kotlin",
+  "persona": "kenji",
+  "title": "Hitbox: a game-words flashcard app for my Infocomm Club",
+  "summary": "A Jetpack Compose word bank of 12 game-design words, playable here as a browser copy with a 30-second replay, plus the full Kotlin project, a quest-style starter with task card and a device plan for 8 GB lab PCs and club phones."
+}

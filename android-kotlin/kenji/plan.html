@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hitbox device plan for a school Infocomm Club, by Kenji Watanabe</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Kenji Watanabe is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<p><a href="index.html">Back to Hitbox</a></p>
+<h1>Device plan: Studio on the lab PCs, the app on club phones</h1>
+<p class="lede">For a club of 20 Sec 2 and Sec 3 members, two hours on Friday afternoons, in the school computer lab.</p>
+<p class="note">The club, the lab PC and the phones are made up for this example. The system requirements are Google's, checked in October 2026. Do this check with your own lab.</p>
+
+<h2 data-n="01">Step 1: check one lab PC</h2>
+<p>I opened Settings, then System, then About on one lab PC. Then I held it against the <a href="https://developer.android.com/studio/install">Android Studio system requirements for Windows</a>.</p>
+<div class="scroll">
+<table>
+  <tr><th>Item</th><th>Our lab PC</th><th>Studio only</th><th>Studio with the emulator</th></tr>
+  <tr><td>Operating system</td><td>Windows 11, 64-bit</td><td>Yes: needs 64-bit Windows 10 or later</td><td>Yes</td></tr>
+  <tr><td>RAM</td><td>8 GB</td><td>Yes, just: 8 GB is the minimum</td><td>No: needs 16 GB</td></tr>
+  <tr><td>Processor</td><td>Intel Core i5-8500 (8th gen)</td><td>Yes: 8th gen Core i5 is the minimum</td><td>Yes</td></tr>
+  <tr><td>Free disk space</td><td>60 GB on an SSD</td><td>Yes: needs 8 GB</td><td>Yes: needs 16 GB</td></tr>
+  <tr><td>Graphics</td><td>Built into the processor</td><td>Yes: none needed</td><td>No: needs a GPU with 4 GB of video memory</td></tr>
+</table>
+</div>
+<p>So the emulator is out. RAM and graphics both fail. Studio alone just passes.</p>
+
+<h2 data-n="02">Step 2: pick the route</h2>
+<div class="grid2">
+  <div class="card"><h3>Studio with the emulator</h3><p>Not on these PCs. I tried it once on 8 GB: the emulator took minutes to boot and Studio froze while it ran.</p></div>
+  <div class="card"><h3>Studio with a phone: our route</h3><p>Studio runs on the PCs. The app runs on a phone over a USB cable. The PC does not have to pretend to be a phone, so 8 GB is enough.</p></div>
+  <div class="card"><h3>App Inventor in the browser</h3><p>Our backup. A member whose PC fails that day builds the same word list in App Inventor, and tests it on a club phone with the Companion app.</p></div>
+  <div class="card"><h3>The Preview pane</h3><p>While a pair waits for a phone, they check their screens in Studio's Preview. It draws a composable without running the app.</p></div>
+</div>
+
+<h2 data-n="03">Step 3: phones</h2>
+<ul class="tight">
+  <li>The club owns 6 Android phones. 10 pairs share them, so a pair runs, tests and hands the phone on. Most testing is quick.</li>
+  <li>Developer options are on. You tap Build number seven times in Settings, then turn on USB debugging. I do this once, before term.</li>
+  <li>USB, not Wi-Fi. Wireless debugging needs Android 11 or newer, and the school Wi-Fi may block it. Cables just work.</li>
+  <li>Members never plug in their own phones. USB debugging lets a computer install apps and read logs. I don't want that on a personal phone with their accounts and photos. The club phones have no personal accounts on them.</li>
+  <li>After the term, I turn USB debugging off on all 6.</li>
+</ul>
+
+<h2 data-n="04">Step 4: what I ask IT to do, the week before</h2>
+<ol class="tight">
+  <li>Install Android Studio and its SDK on all 20 PCs.</li>
+  <li>Install the USB driver, if the phones need one. On Windows, some phones need their maker's driver for adb.</li>
+  <li>Open the starter project once on each PC and let Gradle sync. The first sync downloads the libraries. That way the club doesn't wait for 20 downloads at once.</li>
+  <li>Let student accounts save in one project folder, and let Studio run adb.</li>
+</ol>
+
+<h2 data-n="05">Step 5: the starter session, 120 minutes</h2>
+<div class="scroll">
+<table>
+  <tr><th>Time</th><th>What happens</th></tr>
+  <tr><td>0 to 10 min</td><td>Log in. Pairs open <code>hitbox-starter</code>. Phones and cables go out, one phone per two pairs at first.</td></tr>
+  <tr><td>10 to 20 min</td><td>I show the finished app on the projector, then the replay on this page. Step 0 on the task card: predict, then run.</td></tr>
+  <tr><td>20 to 30 min</td><td>Quest 1. Everyone runs it once on a phone. I fix any phone that is not found.</td></tr>
+  <tr><td>30 to 45 min</td><td>Quest 2. Swap who types.</td></tr>
+  <tr><td>45 to 55 min</td><td>Break.</td></tr>
+  <tr><td>55 to 80 min</td><td>Boss quest. I teach state hoisting at the board for 5 minutes first, with the "state goes down, events go up" picture.</td></tr>
+  <tr><td>80 to 100 min</td><td>Stretch: add 3 words from your own game. Pairs playtest each other's word lists.</td></tr>
+  <tr><td>100 to 110 min</td><td>Hand in. Each pair copies their project folder to the club drive, with a screenshot of Known 3 of 15 or better.</td></tr>
+  <tr><td>110 to 120 min</td><td>Phones back and counted. Cables coiled. One line each on the board: what was hardest?</td></tr>
+</table>
+</div>
+<p class="small">Check: 10 + 10 + 10 + 15 + 10 + 25 + 20 + 10 + 10 = 120 minutes.</p>
+
+<h2 data-n="06">If something breaks</h2>
+<ul class="tight">
+  <li>Phone not found: try another cable first. Some cables only charge. Then check that USB debugging is on and that someone accepted the debugging prompt on the phone. It asks to trust this computer.</li>
+  <li>Gradle sync fails: the PC was missed in the pre-sync. That pair joins a neighbour today.</li>
+  <li>Studio freezes: close other programs. Chrome with 20 tabs and Studio on 8 GB do not mix.</li>
+  <li>Half the PCs fail: everyone switches to App Inventor for the day. Same word list, same two screens. The Kotlin waits a week.</li>
+</ul>
+
+<h2>Where this fits in the club term</h2>
+<ol class="tight">
+  <li>Week 1: the Kotlin tour in the browser. Nothing to install.</li>
+  <li>Week 2: a Compose counter, run on a club phone.</li>
+  <li>Week 3: this starter session.</li>
+  <li>Week 4: members add their own game's words and playtest each other's apps.</li>
+</ol>
+
+<h2>Sources</h2>
+<ul class="tight small">
+  <li>System requirements and the ChromeOS note: <a href="https://developer.android.com/studio/install">Install Android Studio</a>.</li>
+  <li>USB and Wi-Fi debugging, Android 11 for Wi-Fi, Windows USB drivers: <a href="https://developer.android.com/studio/run/device">Run apps on a hardware device</a>.</li>
+  <li>Tap Build number seven times: <a href="https://developer.android.com/studio/debug/dev-options">Configure on-device developer options</a>.</li>
+  <li>App Inventor Companion and school Wi-Fi: <a href="https://appinventor.mit.edu/explore/ai2/setup">App Inventor setup</a>.</li>
+  <li>Previews: <a href="https://developer.android.com/develop/ui/compose/tooling/previews">Preview your UI with composable previews</a>.</li>
+</ul>
+</main>
+</body>
+</html>

@@ -1,0 +1,37 @@
+/* The 1-page case study: a planning sheet with a five-mode band down the side. */
+.case { max-width: 1000px; }
+.case header { display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: end; border-bottom: 2px solid var(--accent); padding-bottom: 8px; }
+.case header h1 { margin: 2px 0; }
+.case header p { margin: 0; color: var(--ink-2); }
+.case .meta { text-align: right; font-size: 0.85rem; color: var(--muted); }
+.rows { margin-top: 10px; }
+.row { display: grid; grid-template-columns: 120px 1fr; gap: 14px; padding: 8px 0; border-bottom: 1px solid var(--line); }
+.row h2 { margin: 0; padding: 0; border: 0; font-size: 1.1rem; color: var(--accent); }
+.row h2 small { display: block; font: 600 0.75rem/1.3 system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--muted); }
+.row p, .row li { margin: 3px 0; }
+.row ul { margin: 3px 0; padding-left: 18px; }
+.row .st { font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif; background: var(--accent-soft); padding: 4px 8px; border-radius: 6px; }
+.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.mini { display: grid; grid-template-columns: 6em 1fr; gap: 4px 8px; align-items: center; font-size: 0.9rem; }
+.mini .b { height: 12px; border-radius: 3px; background: var(--plum); }
+.mini .b.g { background: var(--green); }
+.case footer { margin-top: 8px; font-size: 0.8rem; color: var(--muted); }
+@media (max-width: 640px) {
+  .case header { grid-template-columns: 1fr; }
+  .case .meta { text-align: left; }
+  .row { grid-template-columns: 1fr; gap: 4px; }
+  .pair { grid-template-columns: 1fr; }
+}
+@media print {
+  @page { size: A4; margin: 11mm 12mm; }
+  :root { --ink: #1b1f3b; --ink-2: #3d4366; --muted: #5d6385; --line: #d9dcec; --ground: #fff; --accent: #4b3fa8; --accent-soft: #e8e5fb; --plum: #8a2f6b; --green: #1d6b45; }
+  body { background: #fff; color: #1b1f3b; font-size: 9.4pt; line-height: 1.36; }
+  .ai-note { font-size: 8.5pt; padding: 4px 8px; }
+  .noprint { display: none; }
+  main.case { max-width: none; padding: 6px 0 0; }
+  .case header h1 { font-size: 19pt; }
+  .row { grid-template-columns: 92px 1fr; gap: 10px; padding: 6px 0; }
+  .row h2 { font-size: 11pt; }
+  .pair { grid-template-columns: 1fr 1fr; }
+  .case footer { font-size: 7.6pt; }
+}

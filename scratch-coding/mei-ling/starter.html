@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blue Bin Catch starter project and task card for P5, by Mei Ling Tan</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="print.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Mei Ling Tan is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<p class="noprint"><a href="index.html">Back to Blue Bin Catch</a></p>
+<div class="noprint">
+<h1>The starter project</h1>
+<p class="lede">A half-finished Blue Bin Catch for pairs of P5 pupils. The pictures, sounds and buttons are done. The pupils make the game work.</p>
+<div class="row">
+  <a class="btn primary" href="blue-bin-catch-starter.sb3" download>Download the starter (.sb3)</a>
+  <button type="button" id="print">Print the task card</button>
+</div>
+
+<h2>What is already done</h2>
+<ul class="tight">
+  <li>All 7 item costumes, the bin, the backdrops, and the pop and buzz sounds.</li>
+  <li>The bin follows the mouse or a finger.</li>
+  <li>The Start button, and the score and time left variables.</li>
+  <li>The Item sprite already makes clones. Each clone picks a costume and appears at the top.</li>
+  <li>The "game over" scripts are ready. Nothing sends "game over" yet. That is task 3.</li>
+  <li>A yellow note in the code for each task. Task 1's blocks sit loose beside the script.</li>
+</ul>
+<p>Before task 1, press the green flag and Start. Rubbish piles up along the top and never falls. I left it like that on purpose. Pupils see the problem before they fix it.</p>
+
+<h3>The starter's code, before the tasks</h3>
+<p class="sprite-name">Item</p>
+<div class="scripts"><div class="sb-script"><div class="sb-block sb-hat sb-events">when <span class="sb-flag" aria-label="green flag">⚑</span> clicked</div><div class="sb-block sb-stack sb-looks">hide</div></div>
+<div class="sb-script"><div class="sb-block sb-hat sb-events">when I receive <span class="sb-menu">start game</span></div><div class="sb-cblock sb-control"><div class="sb-line">forever</div><div class="sb-mouth"><div class="sb-block sb-stack sb-control">create clone of <span class="sb-menu">myself</span></div><div class="sb-block sb-stack sb-control">wait <span class="sb-rep sb-operators">pick random <span class="sb-num">0.5</span> to <span class="sb-num">1.2</span></span> seconds</div></div><div class="sb-foot"></div></div></div>
+<div class="sb-script"><div class="sb-block sb-hat sb-control">when I start as a clone</div><div class="sb-block sb-stack sb-looks">switch costume to <span class="sb-rep sb-operators">pick random <span class="sb-num">1</span> to <span class="sb-num">7</span></span></div><div class="sb-block sb-stack sb-motion">go to x: <span class="sb-rep sb-operators">pick random <span class="sb-num">-210</span> to <span class="sb-num">210</span></span> y: <span class="sb-num">170</span></div><div class="sb-block sb-stack sb-looks">show</div></div>
+<div class="sb-script"><div class="sb-block sb-hat sb-events">when I receive <span class="sb-menu">game over</span></div><div class="sb-block sb-stack sb-control">stop <span class="sb-menu">other scripts in sprite</span></div><div class="sb-block sb-cap sb-control">delete this clone</div></div>
+<div class="sb-script"><div class="sb-cblock sb-control"><div class="sb-line">repeat until <span class="sb-bool sb-operators"><span class="sb-rep sb-motion">y position</span> < <span class="sb-text">-170</span></span></div><div class="sb-mouth"></div><div class="sb-foot"></div></div></div>
+<div class="sb-script"><div class="sb-block sb-stack sb-motion">change y by <span class="sb-num">-4</span></div></div>
+<div class="sb-script"><div class="sb-block sb-cap sb-control">delete this clone</div></div></div>
+<p class="sprite-name">Stage</p>
+<div class="scripts"><div class="sb-script"><div class="sb-block sb-hat sb-events">when <span class="sb-flag" aria-label="green flag">⚑</span> clicked</div><div class="sb-block sb-stack sb-looks">switch backdrop to <span class="sb-menu">title</span></div><div class="sb-block sb-stack sb-variables">set <span class="sb-menu sb-var">score</span> to <span class="sb-text">0</span></div><div class="sb-block sb-stack sb-variables">set <span class="sb-menu sb-var">time left</span> to <span class="sb-text">30</span></div></div>
+<div class="sb-script"><div class="sb-block sb-hat sb-events">when I receive <span class="sb-menu">start game</span></div><div class="sb-block sb-stack sb-looks">switch backdrop to <span class="sb-menu">play</span></div><div class="sb-block sb-stack sb-variables">set <span class="sb-menu sb-var">score</span> to <span class="sb-text">0</span></div><div class="sb-block sb-stack sb-variables">set <span class="sb-menu sb-var">time left</span> to <span class="sb-text">30</span></div></div></div>
+<p class="small">The Bin and Start sprites are the same as in the <a href="index.html#code">finished game</a>.</p>
+
+<h2>Why these 3 tasks</h2>
+<p>My club meets for 90 minutes. Pairs need 10 to 15 minutes for each task. The tasks go from snapping to building:</p>
+<ul class="tight">
+  <li>Task 1 is a loop. The blocks are given. Pupils only put them in order.</li>
+  <li>Task 2 is an if block and a variable. Pupils find the blocks, with a picture to copy.</li>
+  <li>Task 3 is a countdown and a broadcast. It puts loops, variables and events together.</li>
+  <li>The stretch adds the recycling rule. That needs if-else and costume numbers.</li>
+</ul>
+</div>
+
+<section class="taskcard" aria-label="Task card">
+<h2>Blue Bin Catch: task card</h2>
+<p>Work in pairs. Swap the iPad or mouse at each whistle. Press the green flag, then Start, to test after every task.</p>
+
+<div class="tasks">
+<div class="task">
+<h3>Task 1: Make the rubbish fall</h3>
+<p>Click the Item sprite. Find the 3 loose blocks. Snap them under "show" in the clone script, like this:</p>
+<div class="scripts"><div class="sb-script"><div class="sb-block sb-stack sb-looks">show</div><div class="sb-cblock sb-control"><div class="sb-line">repeat until <span class="sb-bool sb-operators"><span class="sb-rep sb-motion">y position</span> < <span class="sb-text">-170</span></span></div><div class="sb-mouth"><div class="sb-block sb-stack sb-motion">change y by <span class="sb-num">-4</span></div></div><div class="sb-foot"></div></div><div class="sb-block sb-cap sb-control">delete this clone</div></div></div>
+<p class="hint">Hint: "repeat until" keeps going until the item reaches the bottom. Then the clone deletes itself.</p>
+<p class="tick">Check: rubbish falls and disappears at the bottom.</p>
+</div>
+
+<div class="task">
+<h3>Task 2: Catch it and score</h3>
+<p>Inside "repeat until", under "change y by -4", add an if block:</p>
+<div class="scripts"><div class="sb-script"><div class="sb-block sb-stack sb-motion">change y by <span class="sb-num">-4</span></div><div class="sb-cblock sb-control"><div class="sb-line">if <span class="sb-bool sb-sensing">touching <span class="sb-menu">Bin</span> ?</span> then</div><div class="sb-mouth"><div class="sb-block sb-stack sb-variables">change <span class="sb-menu sb-var">score</span> by <span class="sb-num">1</span></div><div class="sb-block sb-stack sb-sound">start sound <span class="sb-menu">pop</span></div><div class="sb-block sb-cap sb-control">delete this clone</div></div><div class="sb-foot"></div></div></div></div>
+<p class="hint">Hint: "touching" is in Sensing (light blue). Pick Bin from its menu. "change score by 1" is in Variables (orange).</p>
+<p class="tick">Check: catch something and the score goes up 1.</p>
+</div>
+
+<div class="task">
+<h3>Task 3: Stop after 30 seconds</h3>
+<p>Click the Stage. Add a countdown under "set time left to 30":</p>
+<div class="scripts"><div class="sb-script"><div class="sb-block sb-stack sb-variables">set <span class="sb-menu sb-var">time left</span> to <span class="sb-text">30</span></div><div class="sb-cblock sb-control"><div class="sb-line">repeat until <span class="sb-bool sb-operators"><span class="sb-rep sb-variables">time left</span> = <span class="sb-text">0</span></span></div><div class="sb-mouth"><div class="sb-block sb-stack sb-control">wait <span class="sb-num">1</span> seconds</div><div class="sb-block sb-stack sb-variables">change <span class="sb-menu sb-var">time left</span> by <span class="sb-num">-1</span></div></div><div class="sb-foot"></div></div><div class="sb-block sb-stack sb-events">broadcast <span class="sb-menu">game over</span></div><div class="sb-block sb-stack sb-looks">switch backdrop to <span class="sb-menu">end</span></div></div></div>
+<p class="hint">Hint: the "=" block is in Operators (green). Drop the orange "time left" block into its left side. Type 0 on the right.</p>
+<p class="tick">Check: time left stops at 0, and all rubbish vanishes.</p>
+</div>
+
+<div class="task">
+<h3>Stretch: Only recyclables score</h3>
+<p>Right now a tissue scores a point too. Costumes 1 to 4 can be recycled. Costumes 5 to 7 can't. Change your if block so the wrong items take a point away:</p>
+<div class="scripts"><div class="sb-script"><div class="sb-cblock sb-control"><div class="sb-line">if <span class="sb-bool sb-sensing">touching <span class="sb-menu">Bin</span> ?</span> then</div><div class="sb-mouth"><div class="sb-cblock sb-control"><div class="sb-line">if <span class="sb-bool sb-operators"><span class="sb-rep sb-looks">costume <span class="sb-menu">number</span></span> < <span class="sb-text">5</span></span> then</div><div class="sb-mouth"><div class="sb-block sb-stack sb-variables">change <span class="sb-menu sb-var">score</span> by <span class="sb-num">1</span></div><div class="sb-block sb-stack sb-sound">start sound <span class="sb-menu">pop</span></div></div><div class="sb-line">else</div><div class="sb-mouth"><div class="sb-block sb-stack sb-variables">change <span class="sb-menu sb-var">score</span> by <span class="sb-num">-1</span></div><div class="sb-block sb-stack sb-sound">start sound <span class="sb-menu">buzz</span></div></div><div class="sb-foot"></div></div><div class="sb-block sb-cap sb-control">delete this clone</div></div><div class="sb-foot"></div></div></div></div>
+<p class="hint">Hint: "costume number" is in Looks (purple), at the bottom.</p>
+<p class="tick">Still faster? Make the rubbish fall faster when time left is under 10.</p>
+</div>
+</div>
+</section>
+
+<div class="noprint">
+<h2>I tested the card on a colleague</h2>
+<p class="made-up">The colleague and the pupils here are made up, like me.</p>
+<p>A science teacher who had never used Scratch tried the card on an iPad. I watched and said nothing.</p>
+<ul class="tight">
+  <li>Task 1 took her 4 minutes. She put "delete this clone" inside the loop first. The rubbish vanished straight away. She moved it out on her own.</li>
+  <li>Task 2 took 9 minutes. She could not find "touching". The hint said "Sensing" but not the colour. I added "(light blue)" to every hint.</li>
+  <li>Task 3 took 12 minutes. She typed "time left" into the "=" block as words. Then it never stopped. I added the line "Drop the orange time left block".</li>
+  <li>She did not try the stretch. She said the costume numbers were "a bit magic". So the stretch now says which numbers are which.</li>
+</ul>
+<p>The first version of the card also had a fourth task, a high score. Nobody got near it. I cut it.</p>
+</div>
+</main>
+</body>
+</html>

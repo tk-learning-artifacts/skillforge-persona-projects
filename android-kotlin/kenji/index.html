@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hitbox: a game-words app in Jetpack Compose, by Kenji Watanabe</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="words.js" defer></script>
+<script src="app.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Kenji Watanabe is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<header class="hero">
+  <p class="tag">Android Apps with Kotlin · end project</p>
+  <h1>Hitbox</h1>
+  <p class="lede">A flashcard app for game-design words, built in Kotlin with Jetpack Compose. You say the meaning, check it, and earn a star.</p>
+  <ul class="toc">
+    <li><a href="#try">Try the app</a></li>
+    <li><a href="#video">Screen video</a></li>
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#folder">Project folder</a></li>
+    <li><a href="card.html">Starter and task card</a></li>
+    <li><a href="plan.html">Device plan</a></li>
+  </ul>
+</header>
+
+<p>I'm Kenji. I make games for a living and teach game design part-time. On Fridays I help run a school Infocomm Club: 20 Sec 2 and Sec 3 members, two hours a week.</p>
+<p>Next term the club makes games. When they playtest, they need shared words. "It feels bad" is not feedback. "The hitbox is bigger than the sprite" is. So my app is a word bank of 12 game words, and it works like a game: a goal, a check, and a reward.</p>
+
+<h2 id="try" data-n="01">Try the app</h2>
+<p>This is a browser copy of the Kotlin app. Same words, same two screens, same state. Tap a word, say the meaning out loud, then check yourself.</p>
+<div class="lab">
+  <div class="phone-wrap">
+    <div class="phone" id="phone">
+      <div class="screen" id="screen">
+        <div class="status" aria-hidden="true"><span>9:41</span><span>Hitbox</span></div>
+        <div class="topbar" id="topbar"></div>
+        <div class="body" id="body" aria-live="polite"></div>
+        <div class="navbar"><button type="button" id="sysback" aria-label="Phone back button">◁ Back</button></div>
+        <div class="toast" id="toast" role="status"></div>
+        <div class="tap" id="tap" aria-hidden="true"></div>
+      </div>
+    </div>
+    <div class="controls">
+      <button type="button" id="rotate">Rotate the phone</button>
+      <button type="button" id="reset">Start over</button>
+    </div>
+    <label class="switch"><input type="checkbox" id="saveable" checked> Use rememberSaveable for known</label>
+  </div>
+  <div>
+    <p><strong>The state right now</strong>, as the Kotlin code sees it:</p>
+    <pre class="log" id="log" aria-live="polite"></pre>
+    <p>Three things to try:</p>
+    <ol class="tight">
+      <li>Mark 2 words as known. Watch <code>known</code> change, and the stars on the list.</li>
+      <li>Open a word and press Show meaning. Then rotate. <code>revealed</code> survives, because it uses <code>rememberSaveable</code> too.</li>
+      <li>Untick the box, then rotate. Your stars vanish. That is what plain <code>remember</code> does when the activity is recreated.</li>
+    </ol>
+    <p class="small">The rotate button acts out what Android does: rotation recreates the activity. Navigation keeps you on the same screen either way.</p>
+  </div>
+</div>
+
+<h2 id="video" data-n="02">Screen video: 30 seconds of the app</h2>
+<div class="video">
+  <p>Press play. The replay taps through the app above, with captions. It shows the list, both screens, the back button, and state surviving a rotation.</p>
+  <button type="button" class="primary" id="play">Play replay</button>
+  <div class="timeline"><div class="track"><span id="track"></span></div><span class="time" id="time">0:00 / 0:30</span></div>
+  <p class="caption" id="caption" aria-live="polite">Captions show here.</p>
+  <ol class="chapters" id="chapters">
+    <li data-step="0">0:00 The list of 12 words</li>
+    <li data-step="1">0:02 Open "Core loop", show the meaning, mark it known</li>
+    <li data-step="4">0:11 Open "Hitbox", mark it "Not yet"</li>
+    <li data-step="7">0:19 Open "Cooldown", mark it known</li>
+    <li data-step="10">0:25 Rotate: both stars stay</li>
+  </ol>
+</div>
+<p class="note">This replay drives the browser copy, not a phone. The Kotlin project builds with no errors or warnings, and it is the same app. To record it on a real phone, run it from Android Studio, then use <code>adb shell screenrecord /sdcard/demo.mp4</code>. It saves an MP4 and stops by itself at three minutes.</p>
+
+<h2 id="how" data-n="03">How it works: state, a list and two screens</h2>
+<div class="grid2">
+  <div class="card">
+    <h3>State: two kinds</h3>
+    <p><code>known</code> is the set of words you know. Both screens need it, so it lives in their parent, <code>HitboxApp</code>. That is state hoisting.</p>
+<pre><code>var known by rememberSaveable(stateSaver = KnownSaver) {
+    mutableStateOf(emptySet&lt;Int&gt;())
+}</code></pre>
+    <p>A Set can't go in a Bundle, so a small <code>Saver</code> stores it as an <code>IntArray</code>.</p>
+    <p><code>revealed</code> only matters on the detail screen, so it stays there. Not everything needs hoisting.</p>
+  </div>
+  <div class="card">
+    <h3>A list that only builds what you see</h3>
+<pre><code>LazyColumn {
+    items(words, key = { it.id }) { word -&gt;
+        ListItem(
+            headlineContent = { Text(word.term) },
+            trailingContent = {
+                Text(if (word.id in known) "★" else "☆")
+            },
+            modifier = Modifier.clickable {
+                onWordClick(word)
+            }
+        )
+    }
+}</code></pre>
+    <p>The list reads <code>known</code> but never changes it. A tap goes up as <code>onWordClick</code>. State goes down, events go up.</p>
+  </div>
+  <div class="card">
+    <h3>Two screens with type-safe routes</h3>
+<pre><code>@Serializable object WordList
+@Serializable data class WordDetail(val id: Int)
+
+NavHost(navController, startDestination = WordList) {
+    composable&lt;WordList&gt; { ... }
+    composable&lt;WordDetail&gt; { entry -&gt;
+        val id = entry.toRoute&lt;WordDetail&gt;().id
+        ...
+    }
+}</code></pre>
+    <p>Each route is a Kotlin class. If you pass the wrong type, it won't compile. Back pops the stack with <code>popBackStack()</code>.</p>
+  </div>
+  <div class="card">
+    <h3>The game part</h3>
+    <ul class="tight">
+      <li>Goal: get all 12 stars.</li>
+      <li>Rule: say it before you check. Honour system, like a card game.</li>
+      <li>Feedback: a star, the counter, and the progress bar move at once.</li>
+      <li>Levels: each word is tagged Level 1, 2 or 3, so newer members start easy.</li>
+    </ul>
+    <p>The examples come from games the club knows: Super Mario Bros., Pac-Man, Minecraft, MakeCode Arcade, and my own <a href="../../game-design/kenji/">Prime Smash</a>.</p>
+  </div>
+</div>
+
+<h2 id="folder" data-n="04">Project folder</h2>
+<p>The full Android Studio project is in this folder. Read every file on the <a href="code.html">code page</a>, or get it from GitHub: <a href="https://github.com/tk-learning-artifacts/skillforge-persona-projects/tree/main/android-kotlin/kenji/hitbox-app">hitbox-app on GitHub</a>.</p>
+<pre class="tree">hitbox-app/
+  settings.gradle.kts
+  build.gradle.kts
+  gradle/libs.versions.toml      versions in one place
+  gradlew, gradlew.bat, gradle/wrapper/
+  app/build.gradle.kts
+  app/src/main/AndroidManifest.xml
+  app/src/main/res/values/strings.xml
+  app/src/main/java/com/example/hitbox/
+    MainActivity.kt      routes, NavHost, the known state
+    Words.kt             the 12 words
+    WordListScreen.kt    LazyColumn and the counter
+    WordDetailScreen.kt  show meaning, I knew it, Not yet
+    Theme.kt             light and dark colours</pre>
+<div class="card">
+  <h3>Run it</h3>
+  <ol class="tight">
+    <li>Download the folder from GitHub. Open <code>hitbox-app</code> in Android Studio with File, then Open.</li>
+    <li>Wait for the Gradle sync. The first one downloads the libraries, so do it on good Wi-Fi.</li>
+    <li>Pick the emulator or a phone with USB debugging on. Press Run.</li>
+  </ol>
+  <p class="small">Built with Android Gradle Plugin 9.4.1, Kotlin 2.4.21, Compose BOM 2026.09.00 and Navigation Compose 2.10.2. It compiles against API 37. <code>minSdk</code> is 24, so it installs on Android 7.0 and newer. I checked it with <code>./gradlew assembleDebug</code>: it built with no errors and no warnings.</p>
+</div>
+
+<h2 id="starter" data-n="05">Starter project and task card</h2>
+<p>The <a href="code.html#starter">starter</a> is the same app with 3 parts removed. It still runs on the first try. The words show, but taps do nothing and stars never appear. Each gap has a numbered TODO comment, written as a quest.</p>
+<ul class="tight">
+  <li>Quest 1: show each word's meaning on the list. One line, copy the pattern above it.</li>
+  <li>Quest 2: make a tap open the detail screen. One line with <code>navigate</code>.</li>
+  <li>Boss quest: add the <code>known</code> state so stars stick, even after a rotation.</li>
+</ul>
+<p><a href="card.html">Open the one-page task card</a>. It has the hints behind folds and a stretch goal.</p>
+
+<h2 id="plan" data-n="06">Device plan</h2>
+<p>Our lab PCs have 8 GB of RAM. That is Studio's minimum, but the emulator needs 16 GB. So the club runs Studio on the PCs and the app on 6 club phones over USB. Members never plug in their own phones. <a href="plan.html">Read the full device plan</a>, with the lab check, a fallback and a timed CCA session.</p>
+
+<h2 id="rubric" data-n="07">Checking it against the rubric</h2>
+<div class="scroll">
+<table>
+  <tr><th>Rubric line</th><th>Where it is met</th></tr>
+  <tr><td>App runs on emulator or phone</td><td>The project builds a debug APK with no errors. The browser copy and replay show it working. The plan sets up 6 phones for the club.</td></tr>
+  <tr><td>Uses state, a list and navigation</td><td><code>known</code> and <code>revealed</code> with <code>rememberSaveable</code>, a <code>LazyColumn</code>, and two type-safe routes in a <code>NavHost</code>.</td></tr>
+  <tr><td>Tasks fit students' level</td><td>Three quests, from one copied line to one new idea. Members already did the Kotlin tour and a Compose counter.</td></tr>
+  <tr><td>Plan matches school devices</td><td>Built from a check of one lab PC against Google's system requirements. Phones over USB, because the emulator won't run well on 8 GB.</td></tr>
+</table>
+</div>
+
+<h2 id="change" data-n="08">What I would change</h2>
+<p>Your stars vanish when you close the app. <code>rememberSaveable</code> covers rotation, not a full close. Saving for good needs DataStore or Room, which is Unit 6 of Android Basics with Compose. That is too much for this club term, but it is the first thing I'd add.</p>
+<p>The honour system is also weak. A member can tap "I knew it" every time and get 12 stars in a minute. A real game would check the answer, maybe with 3 choices. I left that out to keep the code short enough for a starter.</p>
+
+<h2 id="sources">Sources</h2>
+<ul class="tight small">
+  <li>State, <code>remember</code>, <code>rememberSaveable</code> and savers: <a href="https://developer.android.com/develop/ui/compose/state">State and Jetpack Compose</a>.</li>
+  <li>LazyColumn only builds visible items: <a href="https://developer.android.com/develop/ui/compose/lists">Lists and grids</a>.</li>
+  <li>Type-safe routes since Navigation 2.8.0: <a href="https://developer.android.com/guide/navigation/design/type-safety">Type safety in Kotlin DSL and Navigation Compose</a>.</li>
+  <li>Recording the screen: <a href="https://developer.android.com/tools/adb">Android Debug Bridge (adb), Record a video</a>.</li>
+  <li>API 24 is Android 7.0: <a href="https://developer.android.com/guide/topics/manifest/uses-sdk-element">uses-sdk, API levels</a>.</li>
+  <li>Units and hours: <a href="https://developer.android.com/courses/android-basics-compose/course">Android Basics with Compose</a>.</li>
+  <li>Library versions: <a href="https://developer.android.com/jetpack/androidx/releases/compose">Compose releases</a>, <a href="https://developer.android.com/jetpack/androidx/releases/navigation">Navigation releases</a>, <a href="https://developer.android.com/build/releases/gradle-plugin">Android Gradle Plugin releases</a>.</li>
+  <li>Super Mario Bros. flagpole and Super Mushroom: <a href="https://en.wikipedia.org/wiki/Super_Mario_Bros.">Super Mario Bros.</a></li>
+  <li>Pac-Man ghosts turn blue after a power pellet: <a href="https://en.wikipedia.org/wiki/Pac-Man">Pac-Man</a>.</li>
+  <li>Minecraft beds set your spawn point: <a href="https://minecraft.wiki/w/Bed">Minecraft Wiki, Bed</a>.</li>
+</ul>
+</main>
+</body>
+</html>

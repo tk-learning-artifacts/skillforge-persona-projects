@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hitbox starter: task card for the Infocomm Club, by Kenji Watanabe</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Kenji Watanabe is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<p class="noprint"><a href="index.html">Back to Hitbox</a> · <a href="code.html#starter">See the starter code</a></p>
+<h1>Task card: finish Hitbox</h1>
+<p class="small noprint">One page when printed. Pairs share one PC. Swap who types after each quest.</p>
+
+<div class="taskcard">
+  <p><strong>Goal.</strong> Finish a word app. Tap a word to open it. Mark it known and a star stays, even when the phone turns.</p>
+  <p><strong>You get:</strong> the <code>hitbox-starter</code> project. It runs, but it is broken in 3 places. Look for <code>// TODO</code>. Android Studio lists them all in View, Tool Windows, TODO.</p>
+
+  <div class="quest">
+    <h3>Step 0: Predict, then run (5 min)</h3>
+    <p>Read <code>WordListScreen.kt</code>. Write down what you think the list will show. Then press Run. Were you right? What is missing?</p>
+  </div>
+
+  <div class="quest">
+    <h3>Quest 1: show the meaning (5 min)</h3>
+    <p>Each row shows only the word. Make it show the meaning under it.</p>
+    <p class="small">Test: every row has a grey line of text under the word.</p>
+  </div>
+
+  <div class="quest">
+    <h3>Quest 2: open the word (10 min)</h3>
+    <p>Tapping a word does nothing. Make it open the detail screen for that word. The back button should bring you back.</p>
+    <p class="small">Test: tap "Sprite". The next screen says Sprite at the top.</p>
+  </div>
+
+  <div class="quest boss">
+    <h3>Boss quest: make stars stick (20 min)</h3>
+    <p>"I knew it" does nothing yet. Add a <code>known</code> state in <code>HitboxApp</code>. Pass it to both screens. Update it when the player answers.</p>
+    <p class="small">Test: mark 2 words known. The counter says Known 2 of 12. Rotate the phone. Still 2.</p>
+  </div>
+
+  <div class="quest">
+    <h3>Stretch: make it yours</h3>
+    <p>Add 3 words from the game your pair is planning. Or add a "Level 1 only" button that filters the list.</p>
+  </div>
+
+  <h3>Hints (open one only when stuck)</h3>
+  <details><summary>Hint for Quest 1</summary><p>Copy the <code>headlineContent</code> line. Change it to <code>supportingContent</code>, and show <code>word.meaning</code>.</p></details>
+  <details><summary>Hint for Quest 2</summary><p>Inside the braces, write <code>navController.navigate(WordDetail(word.id))</code>.</p></details>
+  <details><summary>Hint 1 for the boss</summary><p>Start with <code>var known by rememberSaveable(stateSaver = KnownSaver) { mutableStateOf(emptySet&lt;Int&gt;()) }</code>.</p></details>
+  <details><summary>Hint 2 for the boss</summary><p>Replace both <code>emptySet()</code> and <code>false</code> with <code>known</code> and <code>id in known</code>. To update: <code>known = if (nowKnown) known + id else known - id</code>.</p></details>
+  <details><summary>Red error? Read this first</summary><p>Red text under a word usually means a missing import. Click the word and press Alt+Enter (Option+Return on a Mac). Pick the import.</p></details>
+</div>
+
+<h2>For the trainer</h2>
+<ul class="tight">
+  <li>Level: Sec 2 and 3 club members who did the Kotlin tour and the Compose counter. Quest 1 and 2 copy a pattern. The boss quest is the only new idea: hoisting state.</li>
+  <li>Timing: about 40 minutes for the quests. My test run on a club PC took 14 minutes for the open, sync and first run, so the PCs get synced the week before.</li>
+  <li>Check: walk round with the three tests. A pair that passes the boss test can explain why the star survives rotation. Ask them.</li>
+</ul>
+<p class="small">The club, the PCs and my timings are made up for this example, like me. The code is real and builds.</p>
+</main>
+</body>
+</html>

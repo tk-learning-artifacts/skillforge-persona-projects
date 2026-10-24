@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Build the Cool-Down Dock: net, wiring, steps and a test storyboard, by Aisha Rahman</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Aisha Rahman is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<p><a href="index.html">Back to the Cool-Down Dock</a></p>
+<p class="kicker">Instead of photos</p>
+<h1>Build the dock</h1>
+<p class="lede">Everything you need to make version 2 in one lesson. There are the parts, a cutting net, the wiring and the steps. A storyboard shows how my test went.</p>
+<p>Measurements are ours, in millimetres. Lay your own gun on the card first and adjust. Guns come in different sizes.</p>
+
+<h2>Parts for one dock</h2>
+<ul class="parts">
+  <li>1 micro:bit V2 (V2 for the speaker)</li>
+  <li>1 battery pack, 2 × AAA</li>
+  <li>2 crocodile clip leads</li>
+  <li>Corrugated card, about A3</li>
+  <li>1 ceramic tile, about 100 mm square</li>
+  <li>Kitchen foil, 2 pieces 100 × 40</li>
+  <li>Craft foam or sponge, 5 mm thick, 120 × 50</li>
+  <li>Masking tape and a glue stick</li>
+  <li>Steel ruler, cutting mat, craft knife</li>
+  <li>A pencil and the gun you will use</li>
+</ul>
+
+<div class="safety">
+<h3>Safety first</h3>
+<ul class="tight">
+  <li>Build with the glue guns unplugged and cold. Do not hot-glue this dock: tape and glue stick are enough.</li>
+  <li>Craft knife: use a steel ruler and cutting mat, and cut away from your body. Retract the blade when you put it down. I cut the thick end walls myself.</li>
+  <li>The tile is where the nozzle rests. The nozzle never touches card.</li>
+</ul>
+</div>
+
+<h2>1. The cradle net</h2>
+<figure>
+<svg viewBox="0 0 480 360" role="img" aria-labelledby="net-t net-d">
+  <title id="net-t">Cutting net for the cradle</title>
+  <desc id="net-d">A 220 by 80 millimetre base with 40 millimetre walls on all four sides. The left end wall has a U-shaped notch 30 wide for the gun's barrel. Solid lines are cuts, dashed lines are folds.</desc>
+  <rect width="480" height="360" rx="18" fill="#FFFFFF"/>
+  <g font-family="Segoe UI, system-ui, sans-serif" font-size="15" fill="#15211F">
+    <path d="M90 60 H390 V100 H430 V260 H390 V300 H90 V260 H50 V100 H90 Z" fill="#F4E4C8" stroke="#B2471B" stroke-width="3"/>
+    <path d="M50 160 h14 a6 6 0 0 1 6 6 v28 a6 6 0 0 1 -6 6 h-14" fill="#FFFFFF" stroke="#B2471B" stroke-width="3"/>
+    <path d="M90 100 H390 M90 260 H390 M90 100 V260 M390 100 V260" fill="none" stroke="#0B6E69" stroke-width="2.5" stroke-dasharray="9 6"/>
+    <path d="M90 60 V100 M390 60 V100 M90 260 V300 M390 260 V300" stroke="#B2471B" stroke-width="3"/>
+    <text x="240" y="186" text-anchor="middle" font-weight="700">Base 220 × 80</text>
+    <text x="240" y="208" text-anchor="middle" fill="#3C4846">flutes run this way →</text>
+    <text x="240" y="86" text-anchor="middle">Side wall 40</text>
+    <text x="240" y="286" text-anchor="middle">Side wall 40</text>
+    <text x="410" y="185" text-anchor="middle" transform="rotate(90 410 185)">End wall 40</text>
+    <line x1="60" y1="330" x2="120" y2="330" stroke="#B2471B" stroke-width="3"/>
+    <text x="128" y="335">cut</text>
+    <line x1="190" y1="330" x2="250" y2="330" stroke="#0B6E69" stroke-width="2.5" stroke-dasharray="9 6"/>
+    <text x="258" y="335">score and fold</text>
+    <text x="240" y="36" text-anchor="middle" font-weight="700">Left end wall is the nozzle end: notch 30 wide</text>
+  </g>
+</svg>
+<figcaption>Score the fold lines with the back of the knife. Go along the flutes where you can. The corners are cut, then taped.</figcaption>
+</figure>
+
+<h2>2. The switch: two foil pads and a foam spacer</h2>
+<figure>
+<svg viewBox="0 0 480 300" role="img" aria-labelledby="sw-t sw-d">
+  <title id="sw-t">Side view of the foil pad switch</title>
+  <desc id="sw-d">Layers from the bottom: cradle base, foil pad B to GND, foam with a window, foil pad A taped under a loose card floor, then the gun. The gun's weight pushes pad A through the window onto pad B.</desc>
+  <rect width="480" height="300" rx="18" fill="#FFFFFF"/>
+  <g font-family="Segoe UI, system-ui, sans-serif" font-size="15" fill="#15211F">
+    <g transform="translate(-44,0)">
+    <rect x="60" y="230" width="300" height="14" fill="#D8B98C" stroke="#7A5A35"/>
+    <rect x="80" y="222" width="260" height="8" fill="#B9C2C9" stroke="#55625F"/>
+    <path d="M90 200 H170 V222 H90 Z M250 200 H330 V222 H250 Z" fill="#F2A23A" stroke="#7A4A00"/>
+    <rect x="80" y="192" width="260" height="8" fill="#B9C2C9" stroke="#55625F"/>
+    <rect x="70" y="178" width="280" height="14" fill="#E7CFA8" stroke="#7A5A35"/>
+    <path d="M110 140 H310 a12 12 0 0 1 12 12 v8 a12 12 0 0 1 -12 12 H110 Z" fill="#4C6B8A" stroke="#22364A" stroke-width="2"/>
+    <path d="M210 120 v14 M204 128 l6 8 l6 -8" stroke="#A3352A" stroke-width="3" fill="none"/>
+    <text x="210" y="112" text-anchor="middle" fill="#A3352A">weight</text>
+    <text x="210" y="162" text-anchor="middle" fill="#FFFFFF">glue gun</text>
+    </g>
+    <text x="326" y="190">loose card floor</text>
+    <text x="326" y="210">foil pad A → P0</text>
+    <text x="166" y="216" text-anchor="middle" font-size="14">window</text>
+    <text x="326" y="232">foil pad B → GND</text>
+    <text x="326" y="254">cradle base</text>
+    <text x="40" y="40" font-weight="700">Gun in: A touches B through the window.</text>
+    <text x="40" y="62">Pin 0 joins GND, so the micro:bit reads it as pressed.</text>
+    <text x="40" y="84">Gun out: the foam lifts A off B again.</text>
+  </g>
+</svg>
+<figcaption>Leave a tab of foil sticking out of each pad for the crocodile clip. Foam about 5 mm thick worked for our guns. A light gun may need thinner foam.</figcaption>
+</figure>
+
+<h2>3. Wiring</h2>
+<figure>
+<svg viewBox="0 0 480 280" role="img" aria-labelledby="w-t w-d">
+  <title id="w-t">Wiring diagram</title>
+  <desc id="w-d">The micro:bit's pin 0 connects by a crocodile lead to foil pad A. Its GND pin connects to foil pad B. The battery pack plugs into the battery socket on top.</desc>
+  <rect width="480" height="280" rx="18" fill="#FFFFFF"/>
+  <g font-family="Segoe UI, system-ui, sans-serif" font-size="15" fill="#15211F">
+    <rect x="40" y="70" width="170" height="130" rx="12" fill="#1D1D1D"/>
+    <g fill="#5A1A12"><rect x="95" y="84" width="8" height="10"/><rect x="109" y="84" width="8" height="10"/><rect x="123" y="84" width="8" height="10"/><rect x="137" y="84" width="8" height="10"/><rect x="151" y="84" width="8" height="10"/><rect x="95" y="99" width="8" height="10"/><rect x="109" y="99" width="8" height="10"/><rect x="123" y="99" width="8" height="10"/><rect x="137" y="99" width="8" height="10"/><rect x="151" y="99" width="8" height="10"/><rect x="95" y="114" width="8" height="10"/><rect x="109" y="114" width="8" height="10"/><rect x="123" y="114" width="8" height="10"/><rect x="137" y="114" width="8" height="10"/><rect x="151" y="114" width="8" height="10"/><rect x="95" y="129" width="8" height="10"/><rect x="109" y="129" width="8" height="10"/><rect x="123" y="129" width="8" height="10"/><rect x="137" y="129" width="8" height="10"/><rect x="151" y="129" width="8" height="10"/><rect x="95" y="144" width="8" height="10"/><rect x="109" y="144" width="8" height="10"/><rect x="123" y="144" width="8" height="10"/><rect x="137" y="144" width="8" height="10"/><rect x="151" y="144" width="8" height="10"/></g>
+    <rect x="52" y="178" width="22" height="22" fill="#D4A62A"/><text x="63" y="172" text-anchor="middle" fill="#FFFFFF">0</text>
+    <rect x="178" y="178" width="22" height="22" fill="#D4A62A"/><text x="189" y="172" text-anchor="middle" fill="#FFFFFF">GND</text>
+    <rect x="110" y="52" width="30" height="18" fill="#EEEEEE" stroke="#55625F"/>
+    <path d="M125 52 V30 H300" stroke="#15211F" stroke-width="3" fill="none"/>
+    <rect x="300" y="14" width="140" height="34" rx="6" fill="#F4F6F5" stroke="#55625F"/>
+    <text x="370" y="36" text-anchor="middle">2 × AAA pack</text>
+    <path d="M63 200 C63 260 300 250 330 170" stroke="#A3352A" stroke-width="4" fill="none"/>
+    <path d="M189 200 C200 240 330 240 360 210" stroke="#15211F" stroke-width="4" fill="none"/>
+    <rect x="300" y="140" width="130" height="30" fill="#B9C2C9" stroke="#55625F"/>
+    <text x="365" y="160" text-anchor="middle">foil pad A</text>
+    <rect x="330" y="200" width="130" height="30" fill="#B9C2C9" stroke="#55625F"/>
+    <text x="395" y="220" text-anchor="middle">foil pad B</text>
+    <text x="250" y="110">red lead: pin 0 to A</text>
+    <text x="250" y="130">black lead: GND to B</text>
+  </g>
+</svg>
+<figcaption>Use battery power. MakeCode's notes say pin presses work best on batteries rather than USB.</figcaption>
+</figure>
+
+<h2>4. Steps</h2>
+<ol class="tight">
+  <li>Cut the net. Score and fold the walls. Tape the corners on the outside.</li>
+  <li>Cut the U-shaped notch in the nozzle end so the barrel sits low.</li>
+  <li>Glue foil pad B to the base. Lay the foam on it. Cut a window in the foam, about 60 × 30, in the middle.</li>
+  <li>Cut a loose floor, 200 × 70. Glue foil pad A under it. Lay it on the foam, foil down.</li>
+  <li>Clip pin 0 to pad A and GND to pad B. Run the leads out under the end wall.</li>
+  <li>Cut a triangle prop and tape it to the front. The micro:bit leans back on it at about 60°. Tape the micro:bit on, with the display facing out.</li>
+  <li>Set the tile in front of the notch. Flash the version 2 code and plug in the battery pack.</li>
+  <li>Test with your hand first. Press the floor: you hear a short beep. Lift: a cross and two low beeps.</li>
+  <li>Change <code>COOL_MINUTES</code> to the time your technician sets for your guns.</li>
+</ol>
+<p>The full code is on the <a href="index.html#prototype">main page</a>. Paste it into the JavaScript view of <a href="https://makecode.microbit.org/">MakeCode for micro:bit</a>.</p>
+
+<h2>5. Storyboard of a version 2 test</h2>
+<p>This is what I saw when student C tested version 2. Read it like a comic, left to right.</p>
+<ul class="frames">
+  <li>
+    <svg viewBox="0 0 240 150" role="img" aria-label="Frame 1: the dock is empty and shows a small square."><rect width="240" height="150" fill="#FFFFFF"/>
+      <rect x="0" y="122" width="240" height="28" fill="#9A7B56"/><rect x="40" y="96" width="140" height="26" fill="#D8B98C" stroke="#7A5A35" stroke-width="2"/>
+      <rect x="12" y="114" width="34" height="8" fill="#D9DDE0" stroke="#6B737A"/><path d="M180 122 L198 74 L206 76 L190 122 Z" fill="#D8B98C" stroke="#7A5A35" stroke-width="2"/>
+      <rect x="191" y="78" width="12" height="18" transform="rotate(20 197 87)" fill="#1D1D1D"/><rect x="194" y="83" width="6" height="6" transform="rotate(20 197 87)" fill="none" stroke="#FF3B24" stroke-width="2"/>
+      <text x="12" y="24" font-family="Segoe UI, system-ui, sans-serif" font-size="14" fill="#15211F">Empty dock: small square</text></svg>
+    <p>1. The bell goes. C unplugs the gun at the bench.</p>
+  </li>
+  <li>
+    <svg viewBox="0 0 240 150" role="img" aria-label="Frame 2: the gun is in the dock and all 25 lights are on."><rect width="240" height="150" fill="#FFFFFF"/>
+      <rect x="0" y="122" width="240" height="28" fill="#9A7B56"/><rect x="40" y="96" width="140" height="26" fill="#D8B98C" stroke="#7A5A35" stroke-width="2"/>
+      <rect x="12" y="114" width="34" height="8" fill="#D9DDE0" stroke="#6B737A"/><path d="M180 122 L198 74 L206 76 L190 122 Z" fill="#D8B98C" stroke="#7A5A35" stroke-width="2"/>
+      <path d="M60 84 H170 v14 H60 Z M60 86 L30 90 L30 96 L60 98 Z" fill="#4C6B8A" stroke="#22364A" stroke-width="2"/>
+      <rect x="191" y="78" width="12" height="18" transform="rotate(20 197 87)" fill="#FF3B24"/>
+      <text x="12" y="24" font-family="Segoe UI, system-ui, sans-serif" font-size="14" fill="#15211F">Beep. All 25 lights on.</text></svg>
+    <p>2. She lays it in, nozzle on the tile. A short beep.</p>
+  </li>
+  <li>
+    <svg viewBox="0 0 240 150" role="img" aria-label="Frame 3: a 5 by 5 grid with the top two rows out."><rect width="240" height="150" fill="#FFFFFF"/>
+      <rect x="70" y="20" width="100" height="110" rx="10" fill="#1D1D1D"/>
+      <g fill="#5A1A12"><rect x="84" y="32" width="10" height="14"/><rect x="100" y="32" width="10" height="14"/><rect x="116" y="32" width="10" height="14"/><rect x="132" y="32" width="10" height="14"/><rect x="148" y="32" width="10" height="14"/>
+      <rect x="84" y="52" width="10" height="14"/><rect x="100" y="52" width="10" height="14"/><rect x="116" y="52" width="10" height="14"/><rect x="132" y="52" width="10" height="14"/><rect x="148" y="52" width="10" height="14"/></g>
+      <g fill="#FF3B24"><rect x="84" y="72" width="10" height="14"/><rect x="100" y="72" width="10" height="14"/><rect x="116" y="72" width="10" height="14"/><rect x="132" y="72" width="10" height="14"/><rect x="148" y="72" width="10" height="14"/>
+      <rect x="84" y="92" width="10" height="14"/><rect x="100" y="92" width="10" height="14"/><rect x="116" y="92" width="10" height="14"/><rect x="132" y="92" width="10" height="14"/><rect x="148" y="92" width="10" height="14"/>
+      <rect x="84" y="112" width="10" height="10"/><rect x="100" y="112" width="10" height="10"/><rect x="116" y="112" width="10" height="10"/><rect x="132" y="112" width="10" height="10"/><rect x="148" y="112" width="10" height="10"/></g>
+      <text x="8" y="144" font-family="Segoe UI, system-ui, sans-serif" font-size="13" fill="#15211F">4 minutes in: 15 lights left</text></svg>
+    <p>3. She packs her table, then comes back to look. "It's like a loading bar backwards."</p>
+  </li>
+  <li>
+    <svg viewBox="0 0 240 150" role="img" aria-label="Frame 4: a hand reaches for the gun, then stops."><rect width="240" height="150" fill="#FFFFFF"/>
+      <rect x="0" y="122" width="240" height="28" fill="#9A7B56"/><rect x="40" y="96" width="140" height="26" fill="#D8B98C" stroke="#7A5A35" stroke-width="2"/>
+      <path d="M60 84 H170 v14 H60 Z" fill="#4C6B8A" stroke="#22364A" stroke-width="2"/>
+      <path d="M100 30 q30 -12 60 0 l0 26 q-30 10 -60 0 Z" fill="#C58F6A" stroke="#7A5136" stroke-width="2"/>
+      <path d="M130 62 v12" stroke="#A3352A" stroke-width="3"/><text x="140" y="74" font-family="Segoe UI, system-ui, sans-serif" font-size="14" fill="#A3352A">stops</text>
+      <text x="12" y="24" font-family="Segoe UI, system-ui, sans-serif" font-size="14" fill="#15211F">Still 10 lights on</text></svg>
+    <p>4. A friend reaches for it to help. C says, "Not yet, it's still got lights."</p>
+  </li>
+  <li>
+    <svg viewBox="0 0 240 150" role="img" aria-label="Frame 5: a tick on the display."><rect width="240" height="150" fill="#FFFFFF"/>
+      <rect x="70" y="20" width="100" height="110" rx="10" fill="#1D1D1D"/>
+      <g fill="#FF3B24"><rect x="148" y="52" width="10" height="14"/><rect x="132" y="72" width="10" height="14"/><rect x="84" y="92" width="10" height="14"/><rect x="116" y="92" width="10" height="14"/><rect x="100" y="112" width="10" height="10"/></g>
+      <text x="8" y="144" font-family="Segoe UI, system-ui, sans-serif" font-size="13" fill="#15211F">10 minutes: tick and a high beep</text></svg>
+    <p>5. The tick and a high beep. She puts the gun in the tray.</p>
+  </li>
+  <li>
+    <svg viewBox="0 0 240 150" role="img" aria-label="Frame 6: a doorway two metres away, with a question mark."><rect width="240" height="150" fill="#FFFFFF"/>
+      <rect x="160" y="20" width="60" height="110" fill="#F4F6F5" stroke="#55625F" stroke-width="2"/><circle cx="208" cy="78" r="4" fill="#55625F"/>
+      <rect x="20" y="96" width="60" height="16" fill="#D8B98C" stroke="#7A5A35"/><rect x="72" y="84" width="6" height="10" fill="#FF3B24"/>
+      <path d="M90 100 H150" stroke="#55625F" stroke-width="2" stroke-dasharray="5 5"/><text x="110" y="70" font-family="Segoe UI, system-ui, sans-serif" font-size="28" fill="#A3352A">?</text>
+      <text x="12" y="24" font-family="Segoe UI, system-ui, sans-serif" font-size="14" fill="#15211F">From the door: too small</text></svg>
+    <p>6. The technician checks from the door. She can't read it. That's the next loop.</p>
+  </li>
+</ul>
+<p class="small">The test and student C are made up, like me. The storyboard shows what the code does at each moment.</p>
+</main>
+</body>
+</html>
