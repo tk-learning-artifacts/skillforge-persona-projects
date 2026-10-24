@@ -1,0 +1,626 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Checkpoint source code, file by file, by Priya Nair</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Priya Nair is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<p class="crumb"><a href="index.html">Back to Checkpoint</a></p>
+<p class="eyebrow">Deliverable 2</p>
+<h1>The source code</h1>
+<p class="lede">Every file in the Checkpoint project, with what to notice in each. Read App.jsx first. It holds the state and the effect.</p>
+<div class="row">
+  <a class="btn" href="checkpoint-quiz.zip" download>Download the project (.zip)</a>
+  <a class="btn alt" href="https://github.com/tk-learning-artifacts/skillforge-persona-projects/tree/main/react/priya">See the folder on GitHub</a>
+</div>
+<p class="small">To run it: unzip, then <code>npm install</code> and <code>npm run dev</code>, with Node.js 20.19 or newer. Or put the files in a GitHub repository and open it in Codespaces. The built app is in <a href="app/index.html">app/</a>.</p>
+
+<h2 id="map">How the parts fit</h2>
+<p>State lives in App, the closest parent of every part that needs it. Data goes down as props. Clicks come back up through functions like <code>onPick</code>.</p>
+<ul class="tight">
+  <li>App: state for the set, the quiz, an error, retries, the question number and the answers. The fetch effect.
+    <ul>
+      <li>SetPicker: props <code>sets</code>, <code>current</code>, <code>onPick</code>. A list of buttons.</li>
+      <li>Progress: props <code>questions</code>, <code>answers</code>, <code>index</code>. A list of dots.</li>
+      <li>QuestionCard: props <code>question</code>, <code>number</code>, <code>total</code>, <code>outcome</code>, <code>picked</code>, <code>onPick</code>. The focus effect.
+        <ul><li>ChoiceButton: props <code>choice</code>, <code>letter</code>, <code>state</code>, <code>disabled</code>, <code>onPick</code>.</li></ul>
+      </li>
+      <li>Results: props <code>quiz</code>, <code>answers</code>, <code>score</code>, <code>onRestart</code>. A list of outcomes.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="files">The files</h2>
+<ul class="files">
+  <li><a href="#f0"><code>src/App.jsx</code></a></li>
+  <li><a href="#f1"><code>src/components/SetPicker.jsx</code></a></li>
+  <li><a href="#f2"><code>src/components/Progress.jsx</code></a></li>
+  <li><a href="#f3"><code>src/components/QuestionCard.jsx</code></a></li>
+  <li><a href="#f4"><code>src/components/ChoiceButton.jsx</code></a></li>
+  <li><a href="#f5"><code>src/components/Results.jsx</code></a></li>
+  <li><a href="#f6"><code>src/main.jsx</code></a></li>
+  <li><a href="#f7"><code>public/questions/html.json</code></a></li>
+  <li><a href="#f8"><code>vite.config.js</code></a></li>
+  <li><a href="#f9"><code>.devcontainer/devcontainer.json</code></a></li>
+  <li><a href="#f10"><code>.github/workflows/deploy.yml</code></a></li>
+  <li><a href="#f11"><code>index.html</code></a></li>
+  <li><a href="#f12"><code>package.json</code></a></li>
+</ul>
+<section class="file" id="f0">
+<h3><code>src/App.jsx</code> <span class="small">117 lines</span></h3>
+<p>The parent. It holds all the state, runs the effect that loads a set, and picks which screen to show.</p>
+<ul class="tight">
+  <li>Six pieces of state. The score is not one of them: it is worked out from <code>answers</code> on every draw.</li>
+  <li>The effect depends on <code>setId</code> and <code>tries</code>. A new set, or Try again, loads the file again.</li>
+  <li>The <code>ignore</code> flag. Tap HTML then CSS quickly, and the late HTML answer is thrown away.</li>
+  <li><code>response.ok</code> is checked, because a 404 does not make <code>fetch</code> fail by itself.</li>
+  <li>Three conditions decide the screen: error, loading, or a question. Then the results.</li>
+</ul>
+<pre class="code"><code>import { useEffect, useState } from 'react'
+import SetPicker from './components/SetPicker.jsx'
+import Progress from './components/Progress.jsx'
+import QuestionCard from './components/QuestionCard.jsx'
+import Results from './components/Results.jsx'
+import './App.css'
+
+// The three question sets. Each one is a file in public/questions/.
+const SETS = [
+  { id: 'html', name: 'HTML' },
+  { id: 'css', name: 'CSS' },
+  { id: 'js', name: 'JavaScript' },
+]
+
+export default function App() {
+  // State: only what the app must remember between clicks.
+  const [setId, setSetId] = useState('html')
+  const [quiz, setQuiz] = useState(null)
+  const [error, setError] = useState(null)
+  const [tries, setTries] = useState(0)
+  const [index, setIndex] = useState(0)
+  const [answers, setAnswers] = useState([])
+
+  // Effect: load the chosen set. The ignore flag throws away a late answer
+  // if the student picks another set before this one arrives.
+  useEffect(() =&gt; {
+    let ignore = false
+    fetch(`questions/${setId}.json`)
+      .then((response) =&gt; {
+        if (!response.ok) throw new Error(`The file ${setId}.json did not load (status ${response.status}).`)
+        return response.json()
+      })
+      .then((data) =&gt; {
+        if (!ignore) setQuiz(data)
+      })
+      .catch((err) =&gt; {
+        if (!ignore) setError(err.message)
+      })
+    return () =&gt; {
+      ignore = true
+    }
+  }, [setId, tries])
+
+  function startOver() {
+    setIndex(0)
+    setAnswers([])
+  }
+
+  function pickSet(id) {
+    if (id === setId) return
+    setSetId(id)
+    setQuiz(null)
+    setError(null)
+    startOver()
+  }
+
+  function tryAgain() {
+    setError(null)
+    setTries(tries + 1)
+  }
+
+  function pickChoice(choiceId) {
+    const question = quiz.questions[index]
+    setAnswers([...answers, { questionId: question.id, choiceId, correct: choiceId === question.answer }])
+  }
+
+  // Worked out from state on every draw, so it is never stored.
+  const score = answers.filter((a) =&gt; a.correct).length
+  const finished = quiz !== null &amp;&amp; index === quiz.questions.length
+  const question = quiz &amp;&amp; !finished ? quiz.questions[index] : null
+  const picked = question ? answers.find((a) =&gt; a.questionId === question.id) : null
+
+  return (
+    &lt;div className="app"&gt;
+      &lt;header className="top"&gt;
+        &lt;p className="eyebrow"&gt;Checkpoint&lt;/p&gt;
+        &lt;h1&gt;Am I ready for React?&lt;/h1&gt;
+        &lt;p className="lede"&gt;Pick a set. Answer 5 questions. See which outcomes to revisit.&lt;/p&gt;
+        &lt;SetPicker sets={SETS} current={setId} onPick={pickSet} /&gt;
+      &lt;/header&gt;
+
+      &lt;main className="stage"&gt;
+        {error &amp;&amp; (
+          &lt;div className="panel error" role="alert"&gt;
+            &lt;p&gt;{error}&lt;/p&gt;
+            &lt;button type="button" className="btn" onClick={tryAgain}&gt;Try again&lt;/button&gt;
+          &lt;/div&gt;
+        )}
+
+        {!error &amp;&amp; quiz === null &amp;&amp; &lt;p className="panel loading" role="status"&gt;Loading questions...&lt;/p&gt;}
+
+        {question &amp;&amp; (
+          &lt;&gt;
+            &lt;Progress questions={quiz.questions} answers={answers} index={index} /&gt;
+            &lt;QuestionCard
+              key={question.id}
+              question={question}
+              number={index + 1}
+              total={quiz.questions.length}
+              outcome={quiz.outcomes.find((o) =&gt; o.id === question.outcome)}
+              picked={picked ? picked.choiceId : null}
+              onPick={pickChoice}
+            /&gt;
+            {picked &amp;&amp; (
+              &lt;button type="button" className="btn primary next" onClick={() =&gt; setIndex(index + 1)}&gt;
+                {index + 1 === quiz.questions.length ? 'See my results' : 'Next question'}
+              &lt;/button&gt;
+            )}
+            &lt;p className="score" aria-live="polite"&gt;{answers.length &gt; 0 &amp;&amp; `Score so far: ${score} of ${answers.length}`}&lt;/p&gt;
+          &lt;/&gt;
+        )}
+
+        {finished &amp;&amp; &lt;Results quiz={quiz} answers={answers} score={score} onRestart={startOver} /&gt;}
+      &lt;/main&gt;
+    &lt;/div&gt;
+  )
+}</code></pre>
+</section>
+<section class="file" id="f1">
+<h3><code>src/components/SetPicker.jsx</code> <span class="small">18 lines</span></h3>
+<p>The three set buttons. A list drawn with <code>map</code>, each with a key.</p>
+<ul class="tight">
+  <li>It owns no state. It gets the sets, the current one and <code>onPick</code> as props.</li>
+  <li><code>aria-pressed</code> tells a screen reader which set is on.</li>
+</ul>
+<pre class="code"><code>// Props: the list of sets, the one in use, and what to do on a tap.
+export default function SetPicker({ sets, current, onPick }) {
+  return (
+    &lt;div className="picker" role="group" aria-label="Question set"&gt;
+      {sets.map((set) =&gt; (
+        &lt;button
+          key={set.id}
+          type="button"
+          className="chip"
+          aria-pressed={set.id === current}
+          onClick={() =&gt; onPick(set.id)}
+        &gt;
+          {set.name}
+        &lt;/button&gt;
+      ))}
+    &lt;/div&gt;
+  )
+}</code></pre>
+</section>
+<section class="file" id="f2">
+<h3><code>src/components/Progress.jsx</code> <span class="small">18 lines</span></h3>
+<p>One dot per question.</p>
+<ul class="tight">
+  <li>Each dot's colour is worked out from props. The key is the question id, not the index.</li>
+</ul>
+<pre class="code"><code>// One dot per question: done right, done wrong, now, or still to come.
+export default function Progress({ questions, answers, index }) {
+  return (
+    &lt;ol className="progress" aria-label={`Question ${index + 1} of ${questions.length}`}&gt;
+      {questions.map((q, i) =&gt; {
+        const answer = answers.find((a) =&gt; a.questionId === q.id)
+        let state = 'todo'
+        if (answer) state = answer.correct ? 'right' : 'wrong'
+        else if (i === index) state = 'now'
+        return (
+          &lt;li key={q.id} className={`dot ${state}`}&gt;
+            &lt;span className="sr-only"&gt;{`Question ${i + 1}: ${state}`}&lt;/span&gt;
+          &lt;/li&gt;
+        )
+      })}
+    &lt;/ol&gt;
+  )
+}</code></pre>
+</section>
+<section class="file" id="f3">
+<h3><code>src/components/QuestionCard.jsx</code> <span class="small">54 lines</span></h3>
+<p>One question, its choices and the feedback.</p>
+<ul class="tight">
+  <li>App gives it <code>key={question.id}</code>, so each new question starts fresh.</li>
+  <li>A second, small effect moves keyboard focus to the new question. It needs no cleanup.</li>
+  <li>The feedback names the outcome and links to MDN, so students can check the answer themselves.</li>
+</ul>
+<pre class="code"><code>import { useEffect, useRef } from 'react'
+import ChoiceButton from './ChoiceButton.jsx'
+
+export default function QuestionCard({ question, number, total, outcome, picked, onPick }) {
+  const heading = useRef(null)
+
+  // After "Next question", move keyboard focus to the new question.
+  useEffect(() =&gt; {
+    if (number &gt; 1) heading.current.focus()
+  }, [number])
+
+  const answered = picked !== null
+  const right = picked === question.answer
+
+  return (
+    &lt;section className="card" aria-labelledby={`q-${question.id}`}&gt;
+      &lt;p className="meta"&gt;
+        Question {number} of {total} &lt;span className="tag"&gt;{outcome.id}&lt;/span&gt;
+      &lt;/p&gt;
+      &lt;h2 id={`q-${question.id}`} ref={heading} tabIndex={-1}&gt;{question.prompt}&lt;/h2&gt;
+      {question.code &amp;&amp; &lt;pre className="code"&gt;&lt;code&gt;{question.code}&lt;/code&gt;&lt;/pre&gt;}
+
+      &lt;ul className="choices"&gt;
+        {question.choices.map((choice, i) =&gt; {
+          let state = 'open'
+          if (answered &amp;&amp; choice.id === question.answer) state = 'right'
+          else if (answered &amp;&amp; choice.id === picked) state = 'wrong'
+          return (
+            &lt;ChoiceButton
+              key={choice.id}
+              choice={choice}
+              letter={'ABCD'[i]}
+              state={state}
+              disabled={answered}
+              onPick={onPick}
+            /&gt;
+          )
+        })}
+      &lt;/ul&gt;
+
+      &lt;div aria-live="polite"&gt;
+        {answered &amp;&amp; (
+          &lt;div className={`feedback ${right ? 'good' : 'bad'}`}&gt;
+            &lt;p className="verdict"&gt;{right ? 'Right.' : 'Not this time.'}&lt;/p&gt;
+            &lt;p&gt;{question.explain}&lt;/p&gt;
+            &lt;p className="small"&gt;
+              Outcome {outcome.id}: {outcome.text}. &lt;a href={question.source} target="_blank" rel="noreferrer"&gt;Read more on MDN&lt;/a&gt;
+            &lt;/p&gt;
+          &lt;/div&gt;
+        )}
+      &lt;/div&gt;
+    &lt;/section&gt;
+  )
+}</code></pre>
+</section>
+<section class="file" id="f4">
+<h3><code>src/components/ChoiceButton.jsx</code> <span class="small">13 lines</span></h3>
+<p>One answer button.</p>
+<ul class="tight">
+  <li>A tick or cross is added to the colour, so colour is never the only clue.</li>
+</ul>
+<pre class="code"><code>// A single answer. It shows a tick or a cross once the student has picked.
+export default function ChoiceButton({ choice, letter, state, disabled, onPick }) {
+  const mark = { right: ' ✓', wrong: ' ✗' }[state] || ''
+  return (
+    &lt;li&gt;
+      &lt;button type="button" className={`choice ${state}`} disabled={disabled} onClick={() =&gt; onPick(choice.id)}&gt;
+        &lt;span className="letter" aria-hidden="true"&gt;{letter}&lt;/span&gt;
+        &lt;span className="text"&gt;{choice.text}&lt;/span&gt;
+        &lt;span className="mark" aria-hidden="true"&gt;{mark}&lt;/span&gt;
+      &lt;/button&gt;
+    &lt;/li&gt;
+  )
+}</code></pre>
+</section>
+<section class="file" id="f5">
+<h3><code>src/components/Results.jsx</code> <span class="small">30 lines</span></h3>
+<p>The end screen.</p>
+<ul class="tight">
+  <li>An outcome is met when every question on it was right. That uses <code>filter</code> and <code>every</code>.</li>
+  <li>The exit line is the bit I collect. Teachers get the same short line from every student.</li>
+</ul>
+<pre class="code"><code>// The end screen: the score, each outcome met or to revisit, and an exit line.
+export default function Results({ quiz, answers, score, onRestart }) {
+  const total = quiz.questions.length
+
+  const outcomes = quiz.outcomes.map((outcome) =&gt; {
+    const ids = quiz.questions.filter((q) =&gt; q.outcome === outcome.id).map((q) =&gt; q.id)
+    const met = answers.filter((a) =&gt; ids.includes(a.questionId)).every((a) =&gt; a.correct)
+    return { ...outcome, met }
+  })
+  const revisit = outcomes.filter((o) =&gt; !o.met).map((o) =&gt; o.id)
+  const exitLine = `${quiz.title}: ${score}/${total}. Revisit: ${revisit.length ? revisit.join(', ') : 'none'}.`
+
+  return (
+    &lt;section className="card results" aria-labelledby="results-title"&gt;
+      &lt;h2 id="results-title"&gt;You scored {score} of {total}&lt;/h2&gt;
+      &lt;ul className="outcomes"&gt;
+        {outcomes.map((o) =&gt; (
+          &lt;li key={o.id} className={o.met ? 'met' : 'revisit'}&gt;
+            &lt;span className="tag"&gt;{o.id}&lt;/span&gt;
+            &lt;span className="text"&gt;{o.text}&lt;/span&gt;
+            &lt;strong&gt;{o.met ? 'Met' : 'Revisit'}&lt;/strong&gt;
+          &lt;/li&gt;
+        ))}
+      &lt;/ul&gt;
+      &lt;p className="small"&gt;Copy this line into your class exit form:&lt;/p&gt;
+      &lt;p className="exit"&gt;{exitLine}&lt;/p&gt;
+      &lt;button type="button" className="btn primary" onClick={onRestart}&gt;Do this set again&lt;/button&gt;
+    &lt;/section&gt;
+  )
+}</code></pre>
+</section>
+<section class="file" id="f6">
+<h3><code>src/main.jsx</code> <span class="small">9 lines</span></h3>
+<p>Starts React. Strict Mode is on, so in development the effect runs twice on purpose.</p>
+<pre class="code"><code>import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import App from './App.jsx'
+
+createRoot(document.getElementById('root')).render(
+  &lt;StrictMode&gt;
+    &lt;App /&gt;
+  &lt;/StrictMode&gt;,
+)</code></pre>
+</section>
+<section class="file" id="f7">
+<h3><code>public/questions/html.json</code> <span class="small">81 lines</span></h3>
+<p>One of the three sets. Each question names its outcome and its source.</p>
+<ul class="tight">
+  <li>CSS and JavaScript follow the same shape. Add a file and a line in <code>SETS</code> to add a set.</li>
+</ul>
+<pre class="code"><code>{
+  "set": "html",
+  "title": "HTML checkpoint",
+  "outcomes": [
+    { "id": "H1", "text": "Pick the right element for each part of a page" },
+    { "id": "H2", "text": "Write paths and alt text that still work online" },
+    { "id": "H3", "text": "Build forms and buttons everyone can use" }
+  ],
+  "questions": [
+    {
+      "id": "html-1",
+      "outcome": "H1",
+      "prompt": "Which element should hold the main content of a page?",
+      "choices": [
+        { "id": "a", "text": "&lt;div&gt;" },
+        { "id": "b", "text": "&lt;main&gt;" },
+        { "id": "c", "text": "&lt;section&gt;" },
+        { "id": "d", "text": "&lt;body&gt;" }
+      ],
+      "answer": "b",
+      "explain": "&lt;main&gt; holds the main content. A page should have only one &lt;main&gt; that is not hidden.",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/main"
+    },
+    {
+      "id": "html-2",
+      "outcome": "H2",
+      "prompt": "Which attribute gives an image text that a screen reader reads out?",
+      "choices": [
+        { "id": "a", "text": "title" },
+        { "id": "b", "text": "src" },
+        { "id": "c", "text": "alt" },
+        { "id": "d", "text": "name" }
+      ],
+      "answer": "c",
+      "explain": "Screen readers read the alt text. It also shows if the image fails to load.",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/img"
+    },
+    {
+      "id": "html-3",
+      "outcome": "H2",
+      "prompt": "Your site is at you.github.io/quiz/. Which link finds about.html in the same folder?",
+      "choices": [
+        { "id": "a", "text": "href=\"about.html\"" },
+        { "id": "b", "text": "href=\"/about.html\"" },
+        { "id": "c", "text": "href=\"quiz:about.html\"" },
+        { "id": "d", "text": "href=\"C:/quiz/about.html\"" }
+      ],
+      "answer": "a",
+      "explain": "A path with no slash at the start looks next to the page. A slash at the start jumps to the top of you.github.io, where the file isn't.",
+      "source": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Structuring_content/Creating_links"
+    },
+    {
+      "id": "html-4",
+      "outcome": "H3",
+      "prompt": "An input has id=\"name\". Which label is linked to it?",
+      "choices": [
+        { "id": "a", "text": "&lt;label id=\"name\"&gt;" },
+        { "id": "b", "text": "&lt;label name=\"name\"&gt;" },
+        { "id": "c", "text": "&lt;label for=\"name\"&gt;" },
+        { "id": "d", "text": "&lt;label href=\"#name\"&gt;" }
+      ],
+      "answer": "c",
+      "explain": "The for attribute matches the input's id. Now a tap on the label puts the cursor in the input.",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/label"
+    },
+    {
+      "id": "html-5",
+      "outcome": "H3",
+      "prompt": "Why use &lt;button&gt; and not a &lt;div&gt; with a click handler?",
+      "choices": [
+        { "id": "a", "text": "A &lt;button&gt; loads faster" },
+        { "id": "b", "text": "A &lt;button&gt; works with the keyboard already" },
+        { "id": "c", "text": "A &lt;div&gt; can't have a click handler" },
+        { "id": "d", "text": "A &lt;div&gt; can't hold text" }
+      ],
+      "answer": "b",
+      "explain": "You can reach a &lt;button&gt; with Tab and press it with Space or Enter. A &lt;div&gt; needs extra code for that.",
+      "source": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Accessibility/HTML"
+    }
+  ]
+}</code></pre>
+</section>
+<section class="file" id="f8">
+<h3><code>vite.config.js</code> <span class="small">12 lines</span></h3>
+<p>Vite's settings.</p>
+<ul class="tight">
+  <li><code>base: './'</code> keeps every path relative, so the build works under any repository name.</li>
+  <li>The <code>server</code> line lets the Codespaces preview address reach Vite.</li>
+</ul>
+<pre class="code"><code>import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite'
+
+// base './' makes every path relative to the page. The same build then works
+// in any repository name, so 30 students don't need 30 different settings.
+export default defineConfig({
+  base: './',
+  plugins: [react()],
+  // For GitHub Codespaces: listen on every address, and answer the
+  // CODESPACENAME-5173.app.github.dev address that Codespaces gives the preview.
+  server: { host: true, allowedHosts: ['.app.github.dev'] },
+})</code></pre>
+</section>
+<section class="file" id="f9">
+<h3><code>.devcontainer/devcontainer.json</code> <span class="small">14 lines</span></h3>
+<p>The Codespaces set-up.</p>
+<ul class="tight">
+  <li>It picks a Node.js 24 image, runs <code>npm install</code> once, and opens the preview on port 5173.</li>
+</ul>
+<pre class="code"><code>{
+  "name": "Checkpoint quiz",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:24",
+  "postCreateCommand": "npm install",
+  "forwardPorts": [5173],
+  "portsAttributes": {
+    "5173": { "label": "Quiz", "onAutoForward": "openPreview" }
+  },
+  "customizations": {
+    "codespaces": {
+      "openFiles": ["src/App.jsx"]
+    }
+  }
+}</code></pre>
+</section>
+<section class="file" id="f10">
+<h3><code>.github/workflows/deploy.yml</code> <span class="small">52 lines</span></h3>
+<p>The deploy workflow, copied from Vite's guide.</p>
+<ul class="tight">
+  <li>It runs <code>npm ci</code> and <code>npm run build</code>, then publishes <code>dist</code> to GitHub Pages.</li>
+</ul>
+<pre class="code"><code># From Vite's deploy guide: https://vite.dev/guide/static-deploy#github-pages
+# Simple workflow for deploying static content to GitHub Pages
+name: Deploy static content to Pages
+
+on:
+  # Runs on pushes targeting the default branch
+  push:
+    branches: ['main']
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Sets the GITHUB_TOKEN permissions to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deployment
+concurrency:
+  group: 'pages'
+  cancel-in-progress: true
+
+jobs:
+  # Single deploy job since we're just deploying
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - name: Set up Node
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: lts/*
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - name: Build
+        run: npm run build
+      - name: Setup Pages
+        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5
+        with:
+          # Upload dist folder
+          path: './dist'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5</code></pre>
+</section>
+<section class="file" id="f11">
+<h3><code>index.html</code> <span class="small">14 lines</span></h3>
+<p>The page shell. React draws into the div with the id root.</p>
+<pre class="code"><code>&lt;!doctype html&gt;
+&lt;html lang="en"&gt;
+  &lt;head&gt;
+    &lt;meta charset="UTF-8" /&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&gt;
+    &lt;link rel="icon" href="data:," /&gt;
+    &lt;title&gt;Checkpoint: am I ready for React?&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;p class="ai-note" data-ai-note&gt;&lt;strong&gt;Made by an AI persona.&lt;/strong&gt; Priya Nair is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.&lt;/p&gt;
+    &lt;div id="root"&gt;&lt;/div&gt;
+    &lt;script type="module" src="/src/main.jsx"&gt;&lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</section>
+<section class="file" id="f12">
+<h3><code>package.json</code> <span class="small">19 lines</span></h3>
+<p>The packages and the three scripts: dev, build and preview.</p>
+<pre class="code"><code>{
+  "name": "checkpoint-quiz",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^6.1.2",
+    "vite": "^8.3.5"
+  }
+}</code></pre>
+</section>
+
+<h2 id="answers">Where the quiz answers come from</h2>
+<p>I checked each answer against MDN before it went in. Each question links its page.</p>
+<h3>HTML checkpoint</h3>
+<ul class="tight small">
+  <li>html-1: <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/main">MDN, main</a></li>
+  <li>html-2: <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/img">MDN, img</a></li>
+  <li>html-3: <a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Structuring_content/Creating_links">MDN, Creating links</a></li>
+  <li>html-4: <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/label">MDN, label</a></li>
+  <li>html-5: <a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Accessibility/HTML">MDN, HTML: a good basis for accessibility</a></li>
+</ul>
+<h3>CSS checkpoint</h3>
+<ul class="tight small">
+  <li>css-1: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Selectors/Class_selectors">MDN, Class selectors</a></li>
+  <li>css-2: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/box-sizing">MDN, box-sizing</a></li>
+  <li>css-3: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/box-sizing">MDN, box-sizing</a></li>
+  <li>css-4: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/flex-wrap">MDN, flex-wrap</a></li>
+  <li>css-5: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@media/prefers-color-scheme">MDN, prefers-color-scheme</a></li>
+</ul>
+<h3>JavaScript checkpoint</h3>
+<ul class="tight small">
+  <li>js-1: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/const">MDN, const</a></li>
+  <li>js-2: <a href="https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener">MDN, addEventListener</a></li>
+  <li>js-3: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map">MDN, Array map()</a></li>
+  <li>js-4: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse">MDN, JSON.parse()</a></li>
+  <li>js-5: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/fetch">MDN, fetch()</a></li>
+</ul>
+<p class="small">The deploy workflow comes from <a href="https://vite.dev/guide/static-deploy#github-pages">Vite's deploy guide</a>. The Codespaces settings follow the <a href="https://containers.dev/implementors/json_reference/">dev container reference</a> and <a href="https://vite.dev/config/server-options">Vite's server options</a>.</p>
+</main>
+</body>
+</html>

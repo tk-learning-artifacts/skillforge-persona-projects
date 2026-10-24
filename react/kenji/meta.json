@@ -1,0 +1,6 @@
+{
+  "module": "react",
+  "persona": "kenji",
+  "title": "Playtest Night: a React vote board for game day",
+  "summary": "A deployed React vote board where each player spends 3 tokens, its source in a no-account browser editor I built, a starter with a task card, and a 70-minute Sec 2 lesson."
+}

@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Build the vote board: a 70-minute React lesson for Sec 2, by Kenji Watanabe</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Kenji Watanabe is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<p><a href="index.html">Back to Playtest Night</a></p>
+<header class="hero">
+  <p class="kicker">Deliverable 4</p>
+  <h1>Build the vote board</h1>
+  <p class="lede">One double period. Pairs play the vote board, find its parts, then finish it in React Pad with their own games in it.</p>
+</header>
+
+<div class="card">
+<ul class="tight">
+  <li>Class: 32 Sec 2 students, aged 13 to 14, in 16 pairs. They know some JavaScript from earlier lessons: variables, functions, arrays and objects.</li>
+  <li>Time: a 70-minute double period, two periods of 35 minutes.</li>
+  <li>Devices: one school device per pair. iPads with keyboard covers or Chromebooks both work.</li>
+  <li>Editor: <a href="pad.html?p=starter">React Pad</a>, in the browser. No account, no install, nothing sent anywhere.</li>
+  <li>Teacher: a laptop on the projector with the <a href="app/index.html">finished board</a> open.</li>
+  <li>Printed: one <a href="starter.html#card">task card</a> per pair.</li>
+  <li>Before the lesson: each pair writes down one game they made last term, with a one-line pitch.</li>
+</ul>
+</div>
+
+<h2>By the end, students can</h2>
+<ul class="tight">
+  <li>Point to the components on a screen, and say which one holds the state.</li>
+  <li>Fix a missing key warning, and say why React wants keys.</li>
+  <li>Update state from a click by copying and changing a pattern.</li>
+  <li>Change the data in a JSON file and see the app change with it.</li>
+</ul>
+
+<h2>The lesson</h2>
+<ol class="timeline">
+  <li><span class="t">0 to 5</span><div><p>Settle. One device per pair. The React Pad link is on the board as a short link.</p></div></li>
+  <li><span class="t">5 to 15</span><div><p>Play first. Four volunteers vote on the projector board, using last term's games. Reveal. Cheer.</p><p class="small">Ask: what did the board have to remember between players? Collect answers on the whiteboard: tokens, totals, whose turn. That list is the state.</p></div></li>
+  <li><span class="t">15 to 22</span><div><p>Find the parts. Pairs sketch the board on paper and draw a box round each part: the coins, the filter, one game card, the list. Name each box.</p><p class="small">Compare with the tree on the project page. Most pairs miss that every card is the same component.</p></div></li>
+  <li><span class="t">22 to 27</span><div><p>Step 0: predict, then run. Pairs open the starter, read <code>App.jsx</code>, and write two guesses on the card.</p></div></li>
+  <li><span class="t">27 to 37</span><div><p>TODO 1: the key. Read the red console line out loud first. Then fix it.</p><p class="small">Show the leaderboard re-ordering on the projector. Ask: how does React know which row is which game after they swap?</p></div></li>
+  <li><span class="t">35</span><div><p>Bell between periods. Drivers swap. Students stay seated.</p></div></li>
+  <li><span class="t">37 to 52</span><div><p>TODO 2: voting. Read <code>takeBack</code> together, then copy its pattern into <code>vote</code>. Test by spending all 3 tokens.</p><p class="small">Walk the room. A pair with "NaN tokens left" gets hint 2, not the answer.</p></div></li>
+  <li><span class="t">52 to 60</span><div><p>Make it yours. Pairs put their own game into <code>games.json</code>. Vote for it.</p></div></li>
+  <li><span class="t">60 to 66</span><div><p>Swap and play. Pairs swap devices with the next pair and vote on their board. Pairs who finish early try the stretch, sorting the leaderboard.</p></div></li>
+  <li><span class="t">66 to 70</span><div><p>Exit card: "Name one piece of state in your board, and the click that changes it." Download the project if you want a copy. Pack up.</p></div></li>
+</ol>
+<p class="small">Check: 5 + 10 + 7 + 5 + 10 + 15 + 8 + 6 + 4 = 70 minutes. The bell at 35 falls inside TODO 1, which is a short task and easy to pause.</p>
+
+<h2 id="devices">Device check, the week before</h2>
+<ul class="tight">
+  <li>Open the <a href="pad.html?p=starter">starter</a> on one student iPad and one Chromebook, on the student Wi-Fi. The preview should show the games with a red key warning in the console.</li>
+  <li>Type a letter in the editor, then reload the page. Your change should still be there. If it is not, the browser is blocking storage. Students then press Download before they leave.</li>
+  <li>On an iPad, press Download once. The .zip should land in the Files app.</li>
+  <li>React Pad loads once from GitHub Pages, about 0.7 MB. After that, it runs on the device. Check the school filter allows <code>tk-learning-artifacts.github.io</code>.</li>
+</ul>
+
+<h2 id="planb">Plan B</h2>
+<p>If the page won't load, pairs do step 0 and TODO 2 on the printed card and the code printout. They write the new line for <code>vote</code> by hand. I type the best three into React Pad on the projector, and the class votes on which works.</p>
+
+<h2>For different students</h2>
+<ul class="tight">
+  <li>New to JavaScript objects: pair them with a confident partner, and start them on Step 3, editing the JSON. It needs no code, and they see their own game appear.</li>
+  <li>Done early: the stretch. Then a new genre, a fourth token, or a second category such as "Best sound".</li>
+  <li>A student who takes over the keyboard: drivers swap at the bell and at every step. The card says so.</li>
+  <li>A student who needs less on screen at once: React Pad works at phone width, so they can zoom in and see one file at a time.</li>
+</ul>
+
+<h2>How I check it</h2>
+<p>I play each pair's board once during the swap. Three questions: does +1 spend a token, is the key warning gone, and is their game on the list? The exit cards tell me who can link a click to the state it changes. That is the idea the next lesson builds on.</p>
+
+<h2>Sources</h2>
+<ul class="tight small">
+  <li>Keys: <a href="https://react.dev/learn/rendering-lists">React, Rendering Lists</a>.</li>
+  <li>Updating objects in state: <a href="https://react.dev/learn/updating-objects-in-state">React, Updating Objects in State</a>.</li>
+  <li>Sorting a copy: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort">MDN, Array sort()</a>.</li>
+  <li>Devices in Singapore secondary schools: <a href="https://www.peicaisec.moe.edu.sg/sec-one-registration-2026/personal-learning-device-pld/">Peicai Secondary</a> (iPad with a keyboard cover) and <a href="https://admiraltysec.moe.edu.sg/personalised-digital-learning-programme/">Admiralty Secondary</a> (Chromebook).</li>
+</ul>
+</main>
+</body>
+</html>

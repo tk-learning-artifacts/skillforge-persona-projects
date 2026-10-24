@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Playtest Night: a React vote board and a no-account React editor, by Kenji Watanabe</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Kenji Watanabe is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<header class="hero">
+  <p class="kicker">Building Interfaces with React · end project</p>
+  <h1>Playtest Night</h1>
+  <p class="lede">A React vote board for the day my Sec 2 class plays each other's games. Every player gets 3 tokens. The totals stay hidden until the big reveal.</p>
+</header>
+<p>I'm Kenji. I make games for a living and teach game design part-time. My Sec 2 class builds maths games in MakeCode Arcade, like the unit in my <a href="../../game-design/kenji/index.html">Prime Smash project</a>. At the end of term, we play them all and vote. I used to count sticky notes. This board does it better, and my students then build it themselves.</p>
+
+<ul class="menu">
+  <li><a href="app/index.html" style="--c: var(--pink)"><strong>1. Play the deployed app</strong><span>The vote board, built with Vite and live on GitHub Pages.</span></a></li>
+  <li><a href="pad.html?p=full" style="--c: var(--cyan)"><strong>2. Read and run the source</strong><span>Every file, open in React Pad. Edit it, run it, or download it as a Vite project.</span></a></li>
+  <li><a href="starter.html" style="--c: var(--gold)"><strong>3. The starter and task card</strong><span>Three TODOs, hints, and a Make step with your own games.</span></a></li>
+  <li><a href="lesson.html" style="--c: var(--pink)"><strong>4. The 70-minute lesson</strong><span>One double period on iPads or Chromebooks, with no accounts.</span></a></li>
+</ul>
+
+<h2 id="play">Play it</h2>
+<p>Give out your 3 tokens and lock them in. Vote again as player 2. Then press Reveal the winners.</p>
+<div class="preview"><iframe src="app/index.html" title="The Playtest Night vote board" loading="lazy"></iframe></div>
+<div class="row"><a class="btn" href="app/index.html">Open the board full screen</a></div>
+
+<h2 id="rules">How a round works</h2>
+<ol class="steps">
+  <li>The teacher starts the 5-minute timer on the class laptop or the projector.</li>
+  <li>A player taps +1 on the games they'd play again. They have 3 tokens. Two on one game is allowed.</li>
+  <li>Take back fixes a mistake. Lock in adds their tokens to the hidden totals.</li>
+  <li>A hand-off screen says "Pass the device to player 2". The next player starts with 3 fresh tokens.</li>
+  <li>When time is up, voting closes. Reveal shows the leaderboard, with bars, ties sharing a place, and a little fanfare.</li>
+</ol>
+<p>The genre buttons filter the list. Games load from <code>games.json</code>, so a class swaps in its own games without touching the code.</p>
+
+<h2 id="why">Why it plays like this</h2>
+<p>A vote board is a tiny game, so I designed it like one and playtested it with my class. The class and the notes below are made up, like me. The design changes are real: you can find each one in the code.</p>
+<ul class="tight">
+  <li>Note 1. In version 1, totals showed live. After three players, everyone piled onto the leader. So totals now stay hidden until the reveal.</li>
+  <li>Note 2. Votes were unlimited. One student pressed +1 forty times. Now there are 3 tokens, so each vote costs something, and players have to choose.</li>
+  <li>Note 3. Players couldn't tell when it was their turn. The hand-off screen fixed that, and it hides the last player's choices.</li>
+  <li>Note 4. The reveal was a plain list. Students asked for "the drum roll". So it has bars that grow, a gold shadow for first, and a short sound you can switch off.</li>
+</ul>
+
+<h2 id="react">Where the React ideas are</h2>
+<p>Here is the component tree. State is what a component remembers. An effect talks to the world outside React.</p>
+<ul class="tree">
+  <li><span class="s">App</span>: state for games, error, tries, myVotes, tally, players, handOff, genre, secondsLeft, running, revealed, sound. <span class="e">Effect 1</span> fetches games.json. <span class="e">Effect 2</span> runs the timer.
+    <ul>
+      <li>TokenBar: props total, left. A list of coins.</li>
+      <li>GenreFilter: props genres, current, onPick. A list of buttons.</li>
+      <li>GameList: props games, myVotes, canVote, onVote, onTakeBack.
+        <ul><li>GameCard, one per game, with <code>key={game.id}</code>: props game, mine, canVote, onVote, onTakeBack.</li></ul>
+      </li>
+      <li>HandOff: props player, onReady.</li>
+      <li>Leaderboard: props games, tally, players, onNewRound. A sorted list with keys.</li>
+    </ul>
+  </li>
+</ul>
+<ul class="tight">
+  <li>Props: each GameCard gets its game and two functions. It never changes the votes itself. It calls <code>onVote</code>, and App decides.</li>
+  <li>State: tokens left, the total spent and the filtered list are worked out on every draw. They are never stored.</li>
+  <li>Lists and keys: the leaderboard re-orders when votes change. Keys from <code>games.json</code> keep each row tied to its game. React's docs warn that index keys cause bugs when a list changes order.</li>
+  <li>Effects: the fetch effect shows Loading, an error with Try again, and uses an <code>ignore</code> flag. The timer effect clears its interval in the cleanup. Without that, Strict Mode would leave two timers running, and the clock would tick twice a second.</li>
+</ul>
+
+<h2 id="pad">Why I built React Pad</h2>
+<p>The module suggests StackBlitz for students. Its <a href="https://stackblitz.com/terms-of-service">terms</a> changed in September 2026. Section 2.5 now says users must be 18 or over. My students are 13 and 14. GitHub Codespaces needs a GitHub account. That means age 13 or over, plus the school's consent process, for a class that will write React for one afternoon.</p>
+<p>So I made <a href="pad.html">React Pad</a>: a small editor page in this project. It needs no account and sends nothing anywhere. Here is what it does:</p>
+<ul class="tight">
+  <li>File tabs for every file in the project, and a preview that updates as you type.</li>
+  <li>Development builds of React, so students see React's real warnings, like the missing key warning.</li>
+  <li>A console that also logs each fetch. With Strict Mode on, students see games.json fetched twice. That starts a good conversation.</li>
+  <li>Two switches: a slow network, to see Loading, and Break games.json, to see the error screen.</li>
+  <li>A pretend server that answers <code>/games.json</code> with a 404 and explains why, just like GitHub Pages would.</li>
+  <li>Download, which gives a real Vite project as a .zip, with the student's changes.</li>
+</ul>
+<p>It saves work in the browser on that device. Many schools give each student their own device. Some choose iPads, like <a href="https://www.peicaisec.moe.edu.sg/sec-one-registration-2026/personal-learning-device-pld/">Peicai Secondary, whose bundle includes a keyboard cover</a>. Others choose Chromebooks.</p>
+
+<h2 id="deploy">How the app was deployed</h2>
+<p>The same files in React Pad are a Vite project. I ran <code>npm run build</code>, which writes the finished site to <code>dist</code>. I set <code>base</code> to <code>'./'</code> in <code>vite.config.js</code>, so every path is relative and the app works in any folder. Then I published <code>dist</code> to GitHub Pages, in the <a href="app/index.html">app folder</a> of this project.</p>
+
+<h2 id="rubric">How it meets the rubric</h2>
+<ul class="rubric">
+  <li><strong>App works from start to end</strong>Load, vote, lock in, hand off, reveal, new round. The timer closes voting at 0:00. I played full rounds at phone width and on a wide screen, in light and dark mode.</li>
+  <li><strong>Uses props, state, lists and effects</strong>Six components that take props, twelve pieces of state, four lists with keys, and two effects that both clean up.</li>
+  <li><strong>Tasks fit students' level</strong>Sec 2 students who have done some JavaScript. TODO 1 is one attribute. TODO 2 copies a pattern that sits just below it. TODO 3 is for the few who finish early.</li>
+  <li><strong>Plan works on school devices</strong>React Pad runs in the browser with no install and no account. The lesson has a device check and a plan B.</li>
+</ul>
+
+<h2 id="change">What I would change</h2>
+<p>The votes live in one browser. Refresh the page and they are gone. There is also nothing to stop a player from sneaking a second turn. For a class of 32, passing one device around takes about 10 minutes. A real fix needs a server and logins, and that is a bigger project, with more privacy questions.</p>
+<p>React Pad is not Vite. It has React and nothing else, so students can't add packages. It can't teach <code>npm run build</code> either. My class sees the deploy step on my screen, not on their own.</p>
+
+<h2 id="sources">Sources</h2>
+<ul class="tight small">
+  <li>StackBlitz minimum age: <a href="https://stackblitz.com/terms-of-service">StackBlitz Terms of Service</a>, section 2.5, last updated 22 September 2026.</li>
+  <li>GitHub minimum age: <a href="https://docs.github.com/en/site-policy/github-terms/github-terms-of-service">GitHub Terms of Service</a>.</li>
+  <li>Keys, and why not the index: <a href="https://react.dev/learn/rendering-lists">React, Rendering Lists</a>.</li>
+  <li>The ignore flag, cleanup, and effects running twice in development: <a href="https://react.dev/learn/synchronizing-with-effects">React, Synchronizing with Effects</a>.</li>
+  <li>Build, <code>dist</code> and GitHub Pages: <a href="https://vite.dev/guide/static-deploy">Vite, Deploying a Static Site</a>. <code>base: './'</code>: <a href="https://vite.dev/config/shared-options#base">Vite shared options</a>.</li>
+  <li>School devices: <a href="https://www.peicaisec.moe.edu.sg/sec-one-registration-2026/personal-learning-device-pld/">Peicai Secondary, Personal Learning Device</a> and <a href="https://admiraltysec.moe.edu.sg/personalised-digital-learning-programme/">Admiralty Secondary, Personalised Digital Learning Programme</a>.</li>
+  <li>React Pad uses <a href="https://react.dev/">React</a> 19.3.1 and <a href="https://github.com/alangpierce/sucrase">Sucrase</a> 3.35.1. Their licences are in <a href="vendor/LICENSES.txt">vendor/LICENSES.txt</a>.</li>
+</ul>
+</main>
+</body>
+</html>

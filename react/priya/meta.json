@@ -1,0 +1,6 @@
+{
+  "module": "react",
+  "persona": "priya",
+  "title": "Checkpoint: a React readiness quiz for a Sec 3 cohort",
+  "summary": "A deployed React quiz that maps each answer to a course outcome, its source code, a Codespaces starter with three TODO levels and a task card, and a 60-minute Chromebook lesson."
+}

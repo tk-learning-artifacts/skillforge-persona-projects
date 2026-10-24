@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Use it, then build it: a 60-minute React lesson in Codespaces for Sec 3, by Priya Nair</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Priya Nair is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<p class="crumb"><a href="index.html">Back to Checkpoint</a></p>
+<p class="eyebrow">Deliverable 4</p>
+<h1>Use it, then build it</h1>
+<p class="lede">A 60-minute lesson for Week 5 of our Sec 3 web elective. Students take the Checkpoint quiz, then finish its React starter in GitHub Codespaces.</p>
+
+<div class="card">
+<ul class="tight">
+  <li>Class: about 30 Sec 3 students, aged 15. Four trainers teach four classes from this one plan.</li>
+  <li>Time: one 60-minute lesson.</li>
+  <li>Devices: the school's Chromebooks, one per student. Nothing to install.</li>
+  <li>Editor: <a href="https://docs.github.com/en/codespaces/overview">GitHub Codespaces</a> in Chrome, from our template repository.</li>
+  <li>Accounts: every student has a GitHub account, made in Week 1 with the school's consent form. GitHub accounts need users aged 13 or over.</li>
+  <li>Seating: students sit in pairs. Each student types on their own Chromebook, but pairs talk through every prediction.</li>
+  <li>Printed: one <a href="starter.html#card">task card</a> per student, and the hint strips, cut up, in a tray.</li>
+</ul>
+</div>
+
+<h2 id="outcomes">By the end, students can</h2>
+<ul class="tight">
+  <li>Say where state lives in a small React app, and why the score is not stored.</li>
+  <li>Load a JSON file in an effect, using a path with no slash at the start.</li>
+  <li>Update state from a click, and test it with one right and one wrong answer.</li>
+  <li>Save their work with a commit.</li>
+</ul>
+
+<h2 id="plan">The lesson</h2>
+<ol class="plan">
+  <li><span class="t">0 to 5</span><div><p>Settle. Chromebooks open, Chrome only. Post the Checkpoint link and the template link on the class page.</p></div></li>
+  <li><span class="t">5 to 10</span><div><p>Entry check. Students take the <a href="app/index.html">Checkpoint</a> JavaScript set and paste their exit line into the class form.</p><p class="who">Trainer: scan the form. Note who must revisit J2 or J3. Those students get the hint strips first.</p></div></li>
+  <li><span class="t">10 to 15</span><div><p>Make a copy. Use this template, then Create a new repository, then Code, Codespaces, Create codespace on main.</p><p class="who">While it starts, students do step 0 on paper: two predictions about the starter.</p></div></li>
+  <li><span class="t">15 to 20</span><div><p>Run. Type <code>npm run dev</code>. The preview opens beside the code. Check both predictions. Two pairs share theirs.</p></div></li>
+  <li><span class="t">20 to 30</span><div><p>TODO 1, fill the gap. Load the set the student picked.</p><p class="who">At 27 minutes, show the blank page diagram from the module's "Why my deployed site is a blank page" guide. Ask: what would <code>/questions/css.json</code> do on GitHub Pages?</p></div></li>
+  <li><span class="t">30 to 42</span><div><p>TODO 2, finish the idea. Keep score. Test with one right and one wrong answer.</p><p class="who">Trainer: sit with the students who flagged J2 or J3 at the start.</p></div></li>
+  <li><span class="t">42 to 50</span><div><p>Stretch or catch up. Pairs who are done start TODO 3. Others finish TODO 2 with a hint strip.</p></div></li>
+  <li><span class="t">50 to 54</span><div><p>Save. Source Control, a message, Commit, Sync Changes. Pairs check each other's repository shows the commit.</p></div></li>
+  <li><span class="t">54 to 58</span><div><p>Exit question in the class form: "Where does your TODO 1 path go if you add a slash at the start?"</p></div></li>
+  <li><span class="t">58 to 60</span><div><p>Stop the codespace at github.com/codespaces, then pack up.</p></div></li>
+</ol>
+<p class="small">Check: 5 + 5 + 5 + 5 + 10 + 12 + 8 + 4 + 4 + 2 = 60 minutes.</p>
+
+<h2 id="devices">Device check, one week before</h2>
+<p>One trainer runs this on a student Chromebook, on the student Wi-Fi, in the actual lab.</p>
+<ul class="checks">
+  <li>A test student account can open a codespace from the template, and <code>npm run dev</code> opens the preview.</li>
+  <li>The school network lets through the addresses Codespaces needs. GitHub lists them in its <a href="https://api.github.com/meta">meta API</a>, under codespaces: <code>*.github.com</code>, <code>*.api.github.com</code>, <code>*.github.dev</code>, <code>*.visualstudio.com</code>, <code>*.vscode-webview.net</code>, <code>*.windows.net</code>, <code>*.azureedge.net</code>, <code>*.msecnd.net</code> and <code>*.microsoft.com</code>. GitHub's <a href="https://docs.github.com/en/codespaces/troubleshooting/troubleshooting-your-connection-to-github-codespaces">connection guide</a> says to check that list.</li>
+  <li>Every student can sign in to GitHub. Collect the usernames in a class list.</li>
+  <li>Chrome is not blocked from opening the preview tab.</li>
+</ul>
+<p>Codespaces stops after 30 minutes with no activity, by default. A codespace also has a <a href="https://docs.github.com/en/codespaces/setting-your-user-preferences/setting-your-timeout-period-for-github-codespaces">maximum life of 12 hours</a>. Neither matters inside one lesson. The commit at minute 50 keeps the work.</p>
+<p>Each lesson uses about 2 of a student's 120 free core hours a month, on a 2-core machine. A student who forgets to stop the codespace loses at most another half hour of quota.</p>
+
+<h2 id="planb">Plan B, if Codespaces won't load</h2>
+<ul class="tight">
+  <li>Students open the <a href="starter-app/index.html">starter running on its own page</a>, and do step 0 there.</li>
+  <li>They do TODO 1 and 2 on the printed code, in pen. Pairs swap and check with the hint strips.</li>
+  <li>Next lesson starts with 10 minutes in Codespaces to type in what they wrote.</li>
+</ul>
+
+<h2 id="differ">For different students</h2>
+<ul class="tight">
+  <li>Flagged J2 or J3 at the start: hint strips first, and the trainer sits with them during TODO 2.</li>
+  <li>Done early: TODO 3, then add a fourth set of their own, with 5 questions and a source for each.</li>
+  <li>Slow to type: their partner reads the TODO aloud while they type. They swap for TODO 2.</li>
+  <li>Absent in Week 1, so no account yet: they pair with a partner on one Chromebook, and make the account after the lesson.</li>
+</ul>
+
+<h2 id="check">How the team checks it</h2>
+<p>Each trainer opens five repositories at random. TODO 1 and 2 done, with one commit, means the lesson worked. The exit question shows who understood the slash. I collect the four classes' results in one sheet. That tells me whether Week 6 starts with tic-tac-toe or with a fetch recap.</p>
+
+<h2 id="sources">Sources</h2>
+<ul class="tight small">
+  <li>GitHub age limit: <a href="https://docs.github.com/en/site-policy/github-terms/github-terms-of-service">GitHub Terms of Service</a>.</li>
+  <li>Codespaces addresses: <a href="https://docs.github.com/en/codespaces/troubleshooting/troubleshooting-your-connection-to-github-codespaces">Troubleshooting your connection to GitHub Codespaces</a> and the <a href="https://api.github.com/meta">GitHub meta API</a>, checked in October 2026. The list may change.</li>
+  <li>Timeouts: <a href="https://docs.github.com/en/codespaces/setting-your-user-preferences/setting-your-timeout-period-for-github-codespaces">Setting your timeout period</a>. Stopping: <a href="https://docs.github.com/en/codespaces/developing-in-a-codespace/stopping-and-starting-a-codespace">Stopping and starting a codespace</a>.</li>
+  <li>Free quota: <a href="https://docs.github.com/en/billing/concepts/product-billing/github-codespaces">How use of GitHub Codespaces is measured</a>.</li>
+  <li>Chromebooks as school devices: for example, <a href="https://admiraltysec.moe.edu.sg/personalised-digital-learning-programme/">Admiralty Secondary's Personalised Digital Learning Programme</a>.</li>
+</ul>
+</main>
+</body>
+</html>

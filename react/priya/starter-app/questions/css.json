@@ -1,0 +1,83 @@
+{
+  "set": "css",
+  "title": "CSS checkpoint",
+  "outcomes": [
+    { "id": "C1", "text": "Choose elements with selectors" },
+    { "id": "C2", "text": "Work out the size of a box" },
+    { "id": "C3", "text": "Lay out a page for phones and dark mode" }
+  ],
+  "questions": [
+    {
+      "id": "css-1",
+      "outcome": "C1",
+      "prompt": "Which selector picks every element with class=\"card\"?",
+      "choices": [
+        { "id": "a", "text": "#card" },
+        { "id": "b", "text": "card" },
+        { "id": "c", "text": ".card" },
+        { "id": "d", "text": "*card" }
+      ],
+      "answer": "c",
+      "explain": "A dot picks a class. A # picks an id, and a bare word picks a tag such as p.",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Selectors/Class_selectors"
+    },
+    {
+      "id": "css-2",
+      "outcome": "C2",
+      "prompt": "A box has width: 200px, padding: 20px and border: 2px solid. box-sizing is the default. How wide is it on screen?",
+      "code": ".box {\n  width: 200px;\n  padding: 20px;\n  border: 2px solid;\n}",
+      "choices": [
+        { "id": "a", "text": "200px" },
+        { "id": "b", "text": "220px" },
+        { "id": "c", "text": "244px" },
+        { "id": "d", "text": "222px" }
+      ],
+      "answer": "c",
+      "explain": "The default is content-box. Padding and border are added on both sides: 200 + 20 + 20 + 2 + 2 = 244.",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/box-sizing"
+    },
+    {
+      "id": "css-3",
+      "outcome": "C2",
+      "prompt": "Now add box-sizing: border-box to the same box. How wide is it?",
+      "code": ".box {\n  box-sizing: border-box;\n  width: 200px;\n  padding: 20px;\n  border: 2px solid;\n}",
+      "choices": [
+        { "id": "a", "text": "200px" },
+        { "id": "b", "text": "244px" },
+        { "id": "c", "text": "156px" },
+        { "id": "d", "text": "240px" }
+      ],
+      "answer": "a",
+      "explain": "With border-box, the width includes padding and border. The box stays 200px wide.",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/box-sizing"
+    },
+    {
+      "id": "css-4",
+      "outcome": "C3",
+      "prompt": "Cards in a flex row run off a phone screen. Which line lets them move onto a new line?",
+      "choices": [
+        { "id": "a", "text": "flex-wrap: wrap;" },
+        { "id": "b", "text": "display: wrap;" },
+        { "id": "c", "text": "overflow: wrap;" },
+        { "id": "d", "text": "flex-direction: wrap;" }
+      ],
+      "answer": "a",
+      "explain": "flex-wrap decides if flex items stay on one line or wrap onto more lines.",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/flex-wrap"
+    },
+    {
+      "id": "css-5",
+      "outcome": "C3",
+      "prompt": "Which rule applies styles only when the device is set to dark mode?",
+      "choices": [
+        { "id": "a", "text": "@media (dark-mode: on)" },
+        { "id": "b", "text": "@media (prefers-color-scheme: dark)" },
+        { "id": "c", "text": "@media (theme: dark)" },
+        { "id": "d", "text": "@dark { }" }
+      ],
+      "answer": "b",
+      "explain": "prefers-color-scheme reads the light or dark setting of the device or browser.",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@media/prefers-color-scheme"
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>React Pad: edit and run the Playtest Night code, by Kenji Watanabe</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="pad.css">
+<script src="vendor/sucrase.js" defer></script>
+<script src="vendor/react-dev.js" defer></script>
+<script src="projects.js" defer></script>
+<script src="pad.js" defer></script>
+</head>
+<body class="pad-page">
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Kenji Watanabe is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<header class="pad-bar">
+  <a class="pad-back" href="index.html">Back to the project</a>
+  <h1><span class="pad-logo" aria-hidden="true">⚛</span> React Pad <span class="pad-project" id="project-name"></span></h1>
+  <nav class="pad-switch" aria-label="Which code to open">
+    <a href="pad.html?p=starter" id="go-starter">Starter</a>
+    <a href="pad.html?p=full" id="go-full">Finished app</a>
+  </nav>
+</header>
+<p class="pad-saved" id="saved" role="status"></p>
+
+<div class="pad-layout">
+  <section class="pad-code" aria-label="Code">
+    <div class="pad-tabs" id="tabs" role="group" aria-label="Files"></div>
+    <div class="pad-editor">
+      <pre class="pad-gutter" id="gutter" aria-hidden="true"></pre>
+      <textarea id="editor" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" wrap="off" aria-label="Code editor" aria-describedby="editor-help"></textarea>
+    </div>
+    <p class="pad-help" id="editor-help">Tab adds 2 spaces. Press Esc, then Tab, to leave the editor. Ctrl+Enter (or Cmd+Enter) runs the code.</p>
+    <div class="pad-tools">
+      <button type="button" class="pad-run" id="run">Run</button>
+      <label class="pad-check"><input type="checkbox" id="live" checked> Run as I type</label>
+      <button type="button" id="download">Download as a Vite project (.zip)</button>
+      <button type="button" id="reset">Reset all files</button>
+    </div>
+  </section>
+
+  <section class="pad-out" aria-label="Preview and console">
+    <div class="pad-out-head">
+      <h2>Preview</h2>
+      <label class="pad-check"><input type="checkbox" id="slow"> Slow network (2 s)</label>
+      <label class="pad-check"><input type="checkbox" id="broken"> Break games.json</label>
+    </div>
+    <div class="pad-frame" id="frame-box"></div>
+    <div class="pad-out-head">
+      <h2>Console <span class="pad-count" id="count"></span></h2>
+      <button type="button" id="clear">Clear</button>
+    </div>
+    <ol class="pad-console" id="console" aria-live="polite" aria-label="Console messages"></ol>
+  </section>
+</div>
+
+<footer class="pad-foot">
+  <p>React Pad runs your code in this browser. Nothing is sent anywhere. Your changes are saved on this device only. index.html is fixed: it has a div with the id root.</p>
+  <p>It uses development builds of React 19.3.1 and react-dom, so you see React's warnings. <a href="https://github.com/alangpierce/sucrase">Sucrase</a> turns JSX into JavaScript. Licences are in <a href="vendor/LICENSES.txt">vendor/LICENSES.txt</a>.</p>
+</footer>
+</body>
+</html>

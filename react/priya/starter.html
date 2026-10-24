@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Checkpoint starter project and task card, by Priya Nair</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Priya Nair is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<p class="crumb noprint"><a href="index.html">Back to Checkpoint</a></p>
+<div class="noprint">
+<p class="eyebrow">Deliverable 3</p>
+<h1>The starter and task card</h1>
+<p class="lede">The same quiz with two features taken out and one gap left in. It runs on the first try. Students finish it in GitHub Codespaces, in the browser.</p>
+<div class="row">
+  <a class="btn" href="checkpoint-starter.zip" download>Download the starter (.zip)</a>
+  <a class="btn alt" href="starter-app/index.html">See the starter running</a>
+</div>
+
+<h2 id="removed">What I took out</h2>
+<p>I followed the three TODO levels from the module's starter guide. Each TODO is numbered, so a student can say "I'm stuck on 2".</p>
+<ul class="tight">
+  <li><span class="level l1">Fill the gap</span> TODO 1 in <code>src/App.jsx</code>. The effect always loads <code>questions/demo.json</code>. Students build the path from <code>setId</code>.</li>
+  <li><span class="level l2">Finish the idea</span> TODO 2 in <code>src/App.jsx</code>. Scoring is gone: every answer is saved as wrong. Students compare <code>choiceId</code> with <code>question.answer</code>.</li>
+  <li><span class="level l3">Make it new</span> TODO 3 in <code>src/components/Results.jsx</code>. The outcome list is gone. Students rebuild it with <code>map</code>, a key, <code>filter</code> and <code>every</code>.</li>
+</ul>
+<p>Here is TODO 1 as students see it:</p>
+<pre class="code"><code>useEffect(() =&gt; {
+  let ignore = false
+  // TODO 1 (fill the gap): load the set the student picked, not the demo.
+  // Build the path from setId. Don't put a slash at the start.
+  const path = 'questions/demo.json'
+  fetch(path)</code></pre>
+<p>And TODO 2:</p>
+<pre class="code"><code>function pickChoice(choiceId) {
+  const question = quiz.questions[index]
+  // TODO 2 (finish the idea): work out if the pick is right.
+  // Compare choiceId with question.answer, so the score goes up.
+  const correct = false
+  setAnswers([...answers, { questionId: question.id, choiceId, correct }])
+}</code></pre>
+<p>The starter still shows feedback after each answer. Only the score stays at 0. That gap is easy to spot in step 0, and it points straight at TODO 2.</p>
+</div>
+
+<h2 id="card" class="noprint">The task card</h2>
+<p class="small noprint">One page. Print it, or students open <code>TASKS.md</code>, which Codespaces opens for them.</p>
+<article class="taskcard">
+<h2>Finish the Checkpoint quiz</h2>
+<p><strong>Goal:</strong> a quiz that loads the set you pick, keeps score and tells you what to revisit.</p>
+
+<h2>Step 0. Predict, then run</h2>
+<p>Read <code>src/App.jsx</code>. Write down two guesses. What happens when you pick CSS? What score do you get for all right answers? Then type <code>npm run dev</code> in the terminal. Were you right?</p>
+
+<h2>Step 1. <span class="level l1">TODO 1</span> Load the set you picked</h2>
+<p>In <code>src/App.jsx</code>, change <code>path</code> so it uses <code>setId</code>. Test: pick CSS. The first question should ask about a <code>.card</code> selector.</p>
+<details><summary>Hint for step 1</summary><p>Use a template string with backticks: <code>`questions/${setId}.json`</code>. No slash at the start, or it breaks on GitHub Pages.</p></details>
+
+<h2>Step 2. <span class="level l2">TODO 2</span> Keep score</h2>
+<p>In <code>src/App.jsx</code>, work out <code>correct</code> by comparing <code>choiceId</code> with <code>question.answer</code>. Test: one right and one wrong answer. The score should say 1 of 2.</p>
+<details><summary>Hint for step 2</summary><p><code>===</code> gives <code>true</code> or <code>false</code>. That is exactly what <code>correct</code> needs.</p></details>
+
+<h2>Step 3. Save your work</h2>
+<p>Open Source Control on the left. Type a message, such as "Load sets and keep score". Click Commit, then Sync Changes.</p>
+
+<h2>Stretch. <span class="level l3">TODO 3</span> Outcomes to revisit</h2>
+<p>In <code>src/components/Results.jsx</code>, show each outcome as Met or Revisit. Use <code>map</code> with a <code>key</code>. Then add the outcomes to revisit to the exit line.</p>
+<details><summary>Hint for the stretch</summary><p>For each outcome, find its questions with <code>filter</code>. It is met if <code>every</code> answer to them was right.</p></details>
+</article>
+
+<div class="noprint">
+<h2 id="setup">Set-up for the team, once per term</h2>
+<p>One trainer does this with the school's GitHub account. Then every class uses the same link.</p>
+<ol class="steps">
+  <li>On GitHub, make a new repository called <code>checkpoint-starter</code>, with a README.</li>
+  <li>Click Code, then Codespaces, then Create codespace on main.</li>
+  <li>Drag <code>checkpoint-starter.zip</code> into the file list on the left.</li>
+  <li>In the terminal, type <code>unzip checkpoint-starter.zip</code>, then <code>cp -r checkpoint-starter/. .</code>, then <code>rm -r checkpoint-starter checkpoint-starter.zip</code>.</li>
+  <li>Commit and sync. Then stop the codespace at <a href="https://github.com/codespaces">github.com/codespaces</a>: the "..." menu, then Stop codespace.</li>
+  <li>In the repository, open Settings and tick <a href="https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-template-repository">Template repository</a>.</li>
+  <li>Open a fresh codespace from the template once, as a student would. Check that <code>npm run dev</code> opens the preview.</li>
+</ol>
+<p>Students then click Use this template, then Create a new repository. Each copy belongs to the student, so their commits are saved there. GitHub's guide to <a href="https://docs.github.com/en/codespaces/developing-in-a-codespace/creating-a-codespace-from-a-template">starting from a template</a> also offers "Open in a codespace" straight away. I don't use it in class, because that work only lives in the codespace until the student publishes it.</p>
+
+<h2 id="inside">What is in the starter</h2>
+<ul class="tight">
+  <li><code>.devcontainer/devcontainer.json</code> picks a Node.js 24 image, runs <code>npm install</code> once and opens <code>TASKS.md</code> and <code>App.jsx</code>. When Vite starts on port 5173, the preview opens beside the code.</li>
+  <li><code>vite.config.js</code> lets Vite answer the <code>...app.github.dev</code> address that Codespaces gives the preview.</li>
+  <li><code>public/questions/demo.json</code> is a 3-question set, so the starter has something to show before TODO 1.</li>
+  <li><code>TASKS.md</code> is this task card.</li>
+</ul>
+
+<h2 id="tested">Testing it on a colleague</h2>
+<p>The module's guide says to test a starter on a colleague for 10 minutes and say nothing. Ravi, one of my trainers, did it. Like the students in the lesson plan, Ravi is made up for this example.</p>
+<ul class="tight">
+  <li>The starter ran with no edits. Ravi predicted the CSS button would do nothing. It loads the demo set, which surprised him. That is the point of step 0.</li>
+  <li>TODO 1 took him 2 minutes. He first wrote <code>'questions/setId.json'</code>, in plain quotes. I added the backticks to the hint.</li>
+  <li>TODO 2 took 1 minute. He asked where <code>question</code> came from. It is the line just above, so I left the code as it is.</li>
+  <li>The stretch took 9 minutes. That is fine for a stretch. I moved it after the Save step, so nobody skips saving to chase it.</li>
+</ul>
+</div>
+</main>
+</body>
+</html>
