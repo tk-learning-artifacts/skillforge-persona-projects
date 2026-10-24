@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>12 Kattis problems with hint ladders and Python solutions, by Rajan Pillai</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="code.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Rajan Pillai is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<p class="crumb"><a href="index.html">index.html</a> / problems.html</p>
+<h1>The problem set</h1>
+<p class="lede">Twelve Kattis problems, easiest first. Each has a hint ladder of three steps and my own Python solution.</p>
+<div class="panel">
+<p><strong>How the hints work.</strong> Hint 1 points you at the right part of the problem. Hint 2 names the idea. Hint 3 tells you where people trip. None of them is code. Open them in order, and only after 10 minutes of trying.</p>
+<p>My solution sits below the hints, closed. Open it after you have an Accepted, or after you have used all three hints and a full session.</p>
+</div>
+<p class="small">The difficulty is Kattis's own number, read on 24 October 2026. It changes a little over time. Time limits are per test file.</p>
+
+<h2 id="w1">Week 1 <span class="tag">// judges and verdicts</span></h2>
+
+<section class="prob" id="p1">
+<h3><span class="num">01</span> <a href="https://open.kattis.com/problems/quadrant">Quadrant Selection</a></h3>
+<ul class="meta"><li class="diff">Kattis 1.2</li><li>1 s</li><li>if and elif</li><li>O(1)</li></ul>
+<p>Read a point and say which quadrant it is in. The skill is reading input exactly as the statement lays it out.</p>
+<details><summary>Hint 1</summary><div><p>Look at the input section again. How many lines does it have, and what is on each?</p></div></details>
+<details><summary>Hint 2</summary><div><p>Draw the two axes on paper. Write the sign of x and the sign of y in each of the four quadrants.</p></div></details>
+<details><summary>Hint 3</summary><div><p>Neither number is ever 0. So every point is in exactly one quadrant, and your branches should cover all four.</p></div></details>
+<details class="sol"><summary>My solution</summary><div>
+<pre><code class="py">x = int(input())
+y = int(input())
+
+if x &gt; 0 and y &gt; 0:
+    print(1)
+elif x &lt; 0 and y &gt; 0:
+    print(2)
+elif x &lt; 0 and y &lt; 0:
+    print(3)
+else:
+    print(4)</code></pre>
+<p class="small">Checked on both Kattis samples.</p>
+</div></details>
+</section>
+
+<section class="prob" id="p2">
+<h3><span class="num">02</span> <a href="https://open.kattis.com/problems/r2">R2</a></h3>
+<ul class="meta"><li class="diff">Kattis 1.3</li><li>1 s</li><li>rearranging a formula</li><li>O(1)</li></ul>
+<p>You know one number and the mean of two. Find the other. Two numbers arrive on one line this time.</p>
+<details><summary>Hint 1</summary><div><p>Write the formula for the mean on paper. Which letters do you know?</p></div></details>
+<details><summary>Hint 2</summary><div><p>Get rid of the "divide by 2" first. What do you multiply both sides by?</p></div></details>
+<details><summary>Hint 3</summary><div><p>The numbers can be negative. Check that your answer is a whole number, with no ".0" at the end.</p></div></details>
+<details class="sol"><summary>My solution</summary><div>
+<pre><code class="py"># S = (R1 + R2) / 2, so R2 = 2S - R1.
+r1, s = map(int, input().split())
+print(2 * s - r1)</code></pre>
+<p class="small">Checked on both Kattis samples.</p>
+</div></details>
+</section>
+
+<section class="prob" id="p3">
+<h3><span class="num">03</span> <a href="https://open.kattis.com/problems/spavanac">Spavanac</a></h3>
+<ul class="meta"><li class="diff">Kattis 1.3</li><li>1 s</li><li>modulo, time</li><li>O(1)</li></ul>
+<p>Set an alarm 45 minutes earlier on a 24-hour clock. The first problem where an edge case decides the verdict.</p>
+<details><summary>Hint 1</summary><div><p>Work out the answer for <code>0 10</code> by hand. Does your code give the same?</p></div></details>
+<details><summary>Hint 2</summary><div><p>Hours and minutes are awkward to subtract. Is there one number that describes the time instead?</p></div></details>
+<details><summary>Hint 3</summary><div><p>Try <code>-35 % 1440</code> in Python. What does % do with a negative number, and how could that help?</p></div></details>
+<details class="sol"><summary>My solution</summary><div>
+<pre><code class="py">h, m = map(int, input().split())
+
+# Work in minutes since midnight. The % wraps 0:10 back to 23:25.
+minutes = (h * 60 + m - 45) % (24 * 60)
+print(minutes // 60, minutes % 60)</code></pre>
+<p class="small">Checked on the 3 Kattis samples, and on all 1,440 times of day against Python's datetime module.</p>
+</div></details>
+</section>
+
+<h2 id="w2">Week 2 <span class="tag">// sets, sorting and Big O</span></h2>
+
+<section class="prob" id="p4">
+<h3><span class="num">04</span> <a href="https://open.kattis.com/problems/nodup">No Duplicates</a></h3>
+<ul class="meta"><li class="diff">Kattis 1.4</li><li>1 s</li><li>set</li><li>O(n)</li></ul>
+<p>Does any word in a line repeat? A first look at what a set is for.</p>
+<details><summary>Hint 1</summary><div><p><code>split()</code> turns the line into a list of words. Print it and look.</p></div></details>
+<details><summary>Hint 2</summary><div><p>What does a set do when you give it the same word twice?</p></div></details>
+<details><summary>Hint 3</summary><div><p>You can answer this by comparing two lengths. No loop needed.</p></div></details>
+<details class="sol"><summary>My solution</summary><div>
+<pre><code class="py">words = input().split()
+
+# A set keeps one copy of each word. Fewer items means a repeat.
+if len(set(words)) == len(words):
+    print("yes")
+else:
+    print("no")</code></pre>
+<p class="small">Checked on the 3 Kattis samples. A set lookup takes about the same time however big the set is, so this is O(n) in the number of words.</p>
+</div></details>
+</section>
+
+<section class="prob" id="p5">
+<h3><span class="num">05</span> <a href="https://open.kattis.com/problems/securedoors">Secure Doors</a></h3>
+<ul class="meta"><li class="diff">Kattis 1.6</li><li>1 s</li><li>set, state</li><li>O(n)</li></ul>
+<p>Read an access log and flag anyone who enters twice or leaves without entering.</p>
+<details><summary>Hint 1</summary><div><p>At any moment, what is the one thing you need to remember?</p></div></details>
+<details><summary>Hint 2</summary><div><p>Which structure answers "is this name in here?" quickly, and lets you add and remove names?</p></div></details>
+<details><summary>Hint 3</summary><div><p>Read the second paragraph again. After an anomaly, is the person inside or outside?</p></div></details>
+<details class="sol"><summary>My solution</summary><div>
+<pre><code class="py">n = int(input())
+inside = set()
+
+for _ in range(n):
+    action, name = input().split()
+    if action == "entry":
+        note = " (ANOMALY)" if name in inside else ""
+        inside.add(name)
+        print(name + " entered" + note)
+    else:
+        note = "" if name in inside else " (ANOMALY)"
+        inside.discard(name)
+        print(name + " exited" + note)</code></pre>
+<p class="small">Checked on the Kattis sample. <code>discard</code> does nothing if the name is missing, where <code>remove</code> would crash.</p>
+</div></details>
+</section>
+
+<section class="prob" id="p6">
+<h3><span class="num">06</span> <a href="https://open.kattis.com/problems/shopaholic">Shopaholic</a></h3>
+<ul class="meta"><li class="diff">Kattis 1.6</li><li>2 s</li><li>sorting, greedy</li><li>O(n log n)</li></ul>
+<p>Buy 3, pay for 2, and the cheapest is free. Group the items for the biggest discount. Up to 200,000 prices.</p>
+<details><summary>Hint 1</summary><div><p>Work through the example in the statement. Which items would you like to see in the same group?</p></div></details>
+<details><summary>Hint 2</summary><div><p>Sort the prices. Then think about which order, dearest first or cheapest first, makes the groups easy.</p></div></details>
+<details><summary>Hint 3</summary><div><p>200,000 numbers on one line. Reading with <code>sys.stdin.read()</code> is safe. A loop inside a loop is not.</p></div></details>
+<details class="sol"><summary>My solution</summary><div>
+<pre><code class="py">import sys
+
+data = sys.stdin.read().split()
+n = int(data[0])
+prices = sorted(map(int, data[1:n + 1]), reverse=True)
+
+# Group the dearest three, then the next three, and so on.
+# The cheapest of each group is free: positions 2, 5, 8, ...
+print(sum(prices[2::3]))</code></pre>
+<p class="small">Checked on the Kattis sample, and against a slow version that tries every way to group up to 7 items, on 60 random cases. 200,000 prices take well under a second.</p>
+</div></details>
+</section>
+
+<h2 id="w3">Week 3 <span class="tag">// brute force, recursion, binary search</span></h2>
+
+<section class="prob" id="p7">
+<h3><span class="num">07</span> <a href="https://open.kattis.com/problems/tri">Tri</a></h3>
+<ul class="meta"><li class="diff">Kattis 1.7</li><li>1 s</li><li>brute force</li><li>O(1)</li></ul>
+<p>Put back the = sign and one operation between three numbers. Small enough to try everything.</p>
+<details><summary>Hint 1</summary><div><p>The numbers stay in order. How many places can the = sign go?</p></div></details>
+<details><summary>Hint 2</summary><div><p>Count the cases: places for = times operations. Is that a small number?</p></div></details>
+<details><summary>Hint 3</summary><div><p>Division needs care. How can you test "a divided by b is c" without dividing?</p></div></details>
+<details class="sol"><summary>My solution</summary><div>
+<pre><code class="py">a, b, c = map(int, input().split())
+
+# Try every place for the = sign and every operation.
+# Division is checked with multiplication, so 15/3 never becomes 5.0.
+# a = b * c is the same test as a / b = c, so it needs no line of its own.
+if a + b == c:
+    print(f"{a}+{b}={c}")
+elif a - b == c:
+    print(f"{a}-{b}={c}")
+elif a * b == c:
+    print(f"{a}*{b}={c}")
+elif a == b * c:
+    print(f"{a}/{b}={c}")
+elif a == b + c:
+    print(f"{a}={b}+{c}")
+elif a == b - c:
+    print(f"{a}={b}-{c}")
+else:
+    print(f"{a}={b}/{c}")</code></pre>
+<p class="small">Checked on both Kattis samples, and on 150 random solvable triples: every output was a true equation with the numbers in order.</p>
+</div></details>
+</section>
+
+<section class="prob" id="p8">
+<h3><span class="num">08</span> <a href="https://open.kattis.com/problems/perket">Perket</a></h3>
+<ul class="meta"><li class="diff">Kattis 1.7</li><li>1 s</li><li>recursion, subsets</li><li>O(2<sup>N</sup>)</li></ul>
+<p>Choose ingredients so sourness and bitterness are as close as possible. Up to 10 ingredients.</p>
+<details><summary>Hint 1</summary><div><p>N is at most 10. How many different groups of ingredients are there?</p></div></details>
+<details><summary>Hint 2</summary><div><p>Each ingredient is in or out. A function can decide for one ingredient, then call itself for the next.</p></div></details>
+<details><summary>Hint 3</summary><div><p>Read the last line of the statement. One of your groups is not allowed.</p></div></details>
+<details class="sol"><summary>My solution</summary><div>
+<pre><code class="py">n = int(input())
+items = [tuple(map(int, input().split())) for _ in range(n)]
+
+best = float("inf")
+
+
+def choose(i, sour, bitter, used):
+    """Decide for item i: leave it out, or put it in."""
+    global best
+    if i == n:
+        if used &gt; 0:
+            best = min(best, abs(sour - bitter))
+        return
+    choose(i + 1, sour, bitter, used)
+    s, b = items[i]
+    choose(i + 1, sour * s, bitter + b, used + 1)
+
+
+# 2 choices for each of at most 10 items: 2**10 = 1024 meals.
+choose(0, 1, 0, 0)
+print(best)</code></pre>
+<p class="small">Checked on the 3 Kattis samples, and against <code>itertools.combinations</code> on 60 random cases. The recursion is only 11 calls deep.</p>
+</div></details>
+</section>
+
+<section class="prob" id="p9">
+<h3><span class="num">09</span> <a href="https://open.kattis.com/problems/guess">Guess the Number</a></h3>
+<ul class="meta"><li class="diff">Kattis 1.9</li><li>1 s</li><li>binary search, interactive</li><li>O(log n)</li></ul>
+<p>Find a number from 1 to 1,000 in 10 guesses, with "lower" or "higher" after each. Your program talks to the judge.</p>
+<details><summary>Hint 1</summary><div><p>Play it with a partner first. What first guess leaves the fewest numbers in the worst case?</p></div></details>
+<details><summary>Hint 2</summary><div><p>Keep two numbers: the lowest and highest the secret could still be. Each reply moves one of them.</p></div></details>
+<details><summary>Hint 3</summary><div><p>The judge cannot reply until it sees your guess. Look up the <code>flush</code> argument of <code>print</code>.</p></div></details>
+<details class="sol"><summary>My solution</summary><div>
+<pre><code class="py">low, high = 1, 1000
+
+while True:
+    mid = (low + high) // 2
+    print(mid, flush=True)  # the judge waits for this line
+    reply = input().strip()
+    if reply == "correct":
+        break
+    elif reply == "lower":
+        high = mid - 1
+    else:
+        low = mid + 1</code></pre>
+<p class="small">Kattis has no sample file for this one. I wrote a small judge and ran all 1,000 secrets. The most guesses needed was 10.</p>
+</div></details>
+</section>
+
+<h2 id="w4">Week 4 <span class="tag">// grids and BFS</span></h2>
+
+<section class="prob" id="p10">
+<h3><span class="num">10</span> <a href="https://open.kattis.com/problems/knightjump">Knight Jump</a></h3>
+<ul class="meta"><li class="diff">Kattis 1.9</li><li>1 s</li><li>BFS, shortest path</li><li>O(N<sup>2</sup>)</li></ul>
+<p>The fewest knight moves to the corner of a board with blocked cells, or -1.</p>
+<details><summary>Hint 1</summary><div><p>Every move costs one step. Which search reaches cells in order of their distance?</p></div></details>
+<details><summary>Hint 2</summary><div><p>Use <code>collections.deque</code> as the queue. Record a cell's step count the moment you add it.</p></div></details>
+<details><summary>Hint 3</summary><div><p>What happens to your code when the corner is never reached? Look at sample 2.</p></div></details>
+<details class="sol"><summary>My solution</summary><div>
+<pre><code class="py">from collections import deque
+
+n = int(input())
+board = [input() for _ in range(n)]
+
+for r in range(n):
+    for c in range(n):
+        if board[r][c] == "K":
+            start = (r, c)
+
+moves = [(2, 1), (2, -1), (-2, 1), (-2, -1),
+         (1, 2), (1, -2), (-1, 2), (-1, -2)]
+
+steps = {start: 0}
+queue = deque([start])
+while queue:
+    r, c = queue.popleft()
+    for dr, dc in moves:
+        nr, nc = r + dr, c + dc
+        if 0 &lt;= nr &lt; n and 0 &lt;= nc &lt; n and board[nr][nc] != "#" \
+                and (nr, nc) not in steps:
+            steps[(nr, nc)] = steps[(r, c)] + 1
+            queue.append((nr, nc))
+
+# Cell (1, 1) in the statement is (0, 0) here.
+print(steps.get((0, 0), -1))</code></pre>
+<p class="small">Checked on both Kattis samples. An empty 100 by 100 board takes 0.04 seconds.</p>
+</div></details>
+</section>
+
+<section class="prob" id="p11">
+<h3><span class="num">11</span> <a href="https://open.kattis.com/problems/countingstars">Counting Stars</a></h3>
+<ul class="meta"><li class="diff">Kattis 2.2</li><li>1 s</li><li>flood fill</li><li>O(m × n)</li></ul>
+<p>Count the stars in each image. A star is a group of touching white pixels. Up to 50 images in one input.</p>
+<details><summary>Hint 1</summary><div><p>Scan the image row by row. When does a white pixel mean a new star?</p></div></details>
+<details><summary>Hint 2</summary><div><p>Before you scan on, visit every pixel of that star and mark it. Then you can never count it twice.</p></div></details>
+<details><summary>Hint 3</summary><div><p>How many images are in the sample? How does your program know when the input ends?</p></div></details>
+<details class="sol"><summary>My solution</summary><div>
+<pre><code class="py">import sys
+from collections import deque
+
+lines = sys.stdin.read().split("\n")
+pos = 0
+case = 0
+
+while pos &lt; len(lines) and lines[pos].strip():
+    m, n = map(int, lines[pos].split())
+    sky = [list(lines[pos + 1 + i].strip()) for i in range(m)]
+    pos += m + 1
+    case += 1
+
+    stars = 0
+    for r in range(m):
+        for c in range(n):
+            if sky[r][c] != "-":
+                continue
+            # A new star. Flood it so we never count it again.
+            stars += 1
+            sky[r][c] = "#"
+            queue = deque([(r, c)])
+            while queue:
+                y, x = queue.popleft()
+                for ny, nx in ((y + 1, x), (y - 1, x), (y, x + 1), (y, x - 1)):
+                    if 0 &lt;= ny &lt; m and 0 &lt;= nx &lt; n and sky[ny][nx] == "-":
+                        sky[ny][nx] = "#"
+                        queue.append((ny, nx))
+    print(f"Case {case}: {stars}")</code></pre>
+<p class="small">Checked on the Kattis sample. 50 random 100 by 100 images take about a quarter of a second. I used BFS, not recursion: a recursive flood fill on a big star can pass Python's recursion limit.</p>
+</div></details>
+</section>
+
+<section class="prob" id="p12">
+<h3><span class="num">12</span> <a href="https://open.kattis.com/problems/grid">Grid</a></h3>
+<ul class="meta"><li class="diff">Kattis 2.3</li><li>1 s</li><li>BFS, speed</li><li>O(n × m)</li></ul>
+<p>Each square says how far you must jump. Find the fewest jumps from corner to corner, on a grid up to 500 by 500.</p>
+<details><summary>Hint 1</summary><div><p>A jump of k squares is still one move. Does that change which search you use?</p></div></details>
+<details><summary>Hint 2</summary><div><p>What can you do from a square with 0 on it?</p></div></details>
+<details><summary>Hint 3</summary><div><p>500 by 500 is 250,000 squares, and the limit is 1 second. How fast is your "have I been here?" check?</p></div></details>
+<details class="sol"><summary>My solution</summary><div>
+<pre><code class="py">import sys
+from collections import deque
+
+data = sys.stdin.read().split()
+n, m = int(data[0]), int(data[1])
+digits = [int(ch) for row in data[2:2 + n] for ch in row]
+
+# One flat list: cell (r, c) is index r * m + c. It is faster than
+# a dict of tuples, and 500 x 500 = 250,000 cells need the speed.
+dist = [-1] * (n * m)
+dist[0] = 0
+queue = deque([0])
+while queue:
+    cell = queue.popleft()
+    r, c = divmod(cell, m)
+    k = digits[cell]
+    if k == 0:
+        continue
+    for nr, nc in ((r + k, c), (r - k, c), (r, c + k), (r, c - k)):
+        if 0 &lt;= nr &lt; n and 0 &lt;= nc &lt; m:
+            nxt = nr * m + nc
+            if dist[nxt] == -1:
+                dist[nxt] = dist[cell] + 1
+                queue.append(nxt)
+
+print(dist[n * m - 1])</code></pre>
+<p class="small">Checked on the 3 Kattis samples. A 500 by 500 grid of 1s, the slowest case I could build, took about half a second on my laptop. The judge's machine may be slower, which is why I used a flat list.</p>
+</div></details>
+</section>
+
+<h2 id="sources">Sources</h2>
+<ul class="sources">
+  <li>Every problem statement, limit and difficulty: the Kattis page linked in its title.</li>
+  <li><code>deque</code> and <code>popleft</code>: <a href="https://docs.python.org/3/library/collections.html#collections.deque">Python docs, collections.deque</a>.</li>
+  <li><code>print(..., flush=True)</code>: <a href="https://docs.python.org/3/library/functions.html#print">Python docs, print()</a>.</li>
+  <li>The recursion limit: <a href="https://docs.python.org/3/library/sys.html#sys.setrecursionlimit">Python docs, sys.setrecursionlimit</a>.</li>
+</ul>
+</main>
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The problem ladder: 12 USACO problems with hint cards, by Marcus Lee</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Marcus Lee is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<div class="hazard" aria-hidden="true"></div>
+<main>
+<p class="back"><a href="index.html">Back to Sprint to NOI</a></p>
+<p class="kicker">Problem set</p>
+<h1>The <em>ladder</em></h1>
+<p class="lede">Twelve USACO problems, three a week, each rung a little higher. Every one has two hint cards: a Nudge and a Push.</p>
+<div class="card">
+<p>A Nudge points you at what to look at. A Push names the idea. Neither one is code. Flip the Nudge after 10 minutes stuck, and the Push 5 minutes after that.</p>
+<p>The level tags come from the <a href="https://usaco.guide/bronze/">USACO Guide</a>, which rates each practice problem in a module. The ones I used run from Easy to Medium. Two of mine are not in the Guide's tables, so they say "not rated". The colour bar on the left shows the same thing: green for Bronze Easy, yellow for Bronze Medium, orange for Silver, and plain for the unrated Bronze one.</p>
+</div>
+<p>How the ladder climbs: Bronze Easy for seven rungs, then Bronze Medium, then Silver. Rung 10 steps back to Bronze on purpose. BFS is new that week, so it starts on a 10 by 10 grid before the 1,000 by 1,000 one.</p>
+<p class="small">Older problems, up to 2019 here, read from a file such as <code>lostcow.in</code> and write to <code>lostcow.out</code>. Daisy Chains, from December 2020, uses the keyboard and screen. The tags say which.</p>
+
+<h2 id="wk1">Week 1: Simulate it</h2>
+
+<section class="rung e" id="r1">
+<h3><span class="n">1</span><a href="http://www.usaco.org/index.php?page=viewproblem2&amp;cpid=735">The Lost Cow</a></h3>
+<ul class="tags"><li class="lvl">Bronze · Easy</li><li>2017 US Open</li><li>simulation</li><li>file input</li></ul>
+<p>Farmer John zigzags along a line, doubling each turn, until he finds Bessie. How far does he walk?</p>
+<div class="hints">
+<details class="hint"><summary>Nudge</summary><p>Act it out on a number line with x = 3 and y = 6. Write down every turning point.</p></details>
+<details class="hint"><summary>Push</summary><p>Keep where he is now and where the next turn is. Before each leg, check if Bessie lies between them.</p></details>
+</div>
+</section>
+
+<section class="rung e" id="r2">
+<h3><span class="n">2</span><a href="http://www.usaco.org/index.php?page=viewproblem2&amp;cpid=568">Speeding Ticket</a></h3>
+<ul class="tags"><li class="lvl">Bronze · Easy</li><li>2015 December</li><li>simulation, lists</li><li>file input</li></ul>
+<p>The road has speed limits in segments, and Bessie drove in segments. By how much did she go over?</p>
+<div class="hints">
+<details class="hint"><summary>Nudge</summary><p>The road is exactly 100 miles. What if you knew the limit and her speed at every single mile?</p></details>
+<details class="hint"><summary>Push</summary><p>Build two lists of 100 numbers, one entry per mile. Then compare them mile by mile.</p></details>
+</div>
+</section>
+
+<section class="rung e" id="r3">
+<h3><span class="n">3</span><a href="http://www.usaco.org/index.php?page=viewproblem2&amp;cpid=856">The Bucket List</a></h3>
+<ul class="tags"><li class="lvl">Bronze · Easy</li><li>2018 December</li><li>simulation</li><li>file input</li><li>week 1 sprint</li></ul>
+<p>Cows need buckets while they are milked. How many buckets must Farmer John own?</p>
+<div class="hints">
+<details class="hint"><summary>Nudge</summary><p>Times only go up to 1,000. Could you look at every single moment?</p></details>
+<details class="hint"><summary>Push</summary><p>Returned buckets get used again. So what matters is the moment when the most buckets are out at once.</p></details>
+</div>
+</section>
+
+<h2 id="wk2">Week 2: Try everything</h2>
+
+<section class="rung e" id="r4">
+<h3><span class="n">4</span><a href="http://www.usaco.org/index.php?page=viewproblem2&amp;cpid=615">Milk Pails</a></h3>
+<ul class="tags"><li class="lvl">Bronze · Easy</li><li>2016 February</li><li>complete search</li><li>file input</li></ul>
+<p>Pour small and medium pails into a big one without spilling. What is the most milk you can add?</p>
+<div class="hints">
+<details class="hint"><summary>Nudge</summary><p>M is at most 1,000. How many small pails could you possibly pour?</p></details>
+<details class="hint"><summary>Push</summary><p>One loop for the number of small pails, one for medium. Keep the best total that still fits.</p></details>
+</div>
+</section>
+
+<section class="rung e" id="r5">
+<h3><span class="n">5</span><a href="http://www.usaco.org/index.php?page=viewproblem2&amp;cpid=639">Diamond Collector</a></h3>
+<ul class="tags"><li class="lvl">Bronze · Easy</li><li>2016 US Open</li><li>complete search</li><li>file input</li></ul>
+<p>Put as many diamonds as you can in a case, as long as no two differ in size by more than K.</p>
+<div class="hints">
+<details class="hint"><summary>Nudge</summary><p>In the best case, one diamond is the smallest. You do not know which, so try each one.</p></details>
+<details class="hint"><summary>Push</summary><p>Once you fix the smallest size, which other diamonds can join it? Count them.</p></details>
+</div>
+</section>
+
+<section class="rung e" id="r6">
+<h3><span class="n">6</span><a href="http://www.usaco.org/index.php?page=viewproblem2&amp;cpid=1060">Daisy Chains</a></h3>
+<ul class="tags"><li class="lvl">Bronze · Easy</li><li>2020 December</li><li>complete search</li><li>keyboard input</li><li>week 2 sprint</li></ul>
+<p>For every run of flowers in a row, is there a flower with exactly the average number of petals?</p>
+<div class="hints">
+<details class="hint"><summary>Nudge</summary><p>N is at most 100. How many runs of flowers are there? Small enough to check every one?</p></details>
+<details class="hint"><summary>Push</summary><p>An average can only match a flower if it is a whole number. Check that first, then look for it in the run.</p></details>
+</div>
+</section>
+
+<h2 id="wk3">Week 3: Sort and search</h2>
+
+<section class="rung e" id="r7">
+<h3><span class="n">7</span><a href="http://www.usaco.org/index.php?page=viewproblem2&amp;cpid=964">Where Am I?</a></h3>
+<ul class="tags"><li class="lvl">Bronze · Easy</li><li>2019 December</li><li>sets, strings</li><li>file input</li></ul>
+<p>Find the smallest K so that every K mailboxes in a row look different from every other K in a row.</p>
+<div class="hints">
+<details class="hint"><summary>Nudge</summary><p>Try K = 1, then 2, then 3. The first K that works is the answer.</p></details>
+<details class="hint"><summary>Push</summary><p>For one K, put every piece of length K into a set. If a piece is already there, that K fails.</p></details>
+</div>
+</section>
+
+<section class="rung m" id="r8">
+<h3><span class="n">8</span><a href="http://www.usaco.org/index.php?page=viewproblem2&amp;cpid=713">Why Did the Cow Cross the Road III</a></h3>
+<ul class="tags"><li class="lvl">Bronze · Medium</li><li>2017 February</li><li>sorting, simulation</li><li>file input</li></ul>
+<p>Cows queue at one gate for questioning. When is the last cow through?</p>
+<div class="hints">
+<details class="hint"><summary>Nudge</summary><p>Read the input section again. Does it promise the cows arrive in order?</p></details>
+<details class="hint"><summary>Push</summary><p>Keep one number: when the gate is next free. Each cow starts at the later of that time and when she arrives.</p></details>
+</div>
+</section>
+
+<section class="rung s" id="r9">
+<h3><span class="n">9</span><a href="http://www.usaco.org/index.php?page=viewproblem2&amp;cpid=666">Counting Haybales</a></h3>
+<ul class="tags"><li class="lvl">Silver · not rated</li><li>2016 December</li><li>sorting, binary search</li><li>file input</li><li>week 3 sprint</li></ul>
+<p>100,000 haybales and 100,000 questions: how many bales lie between A and B?</p>
+<div class="hints">
+<details class="hint"><summary>Nudge</summary><p>Checking every bale for every question is 100,000 times 100,000. Is that inside the time limit?</p></details>
+<details class="hint"><summary>Push</summary><p>Sort the bales once. Then, for each question, find where A and B would sit in the sorted list.</p></details>
+</div>
+</section>
+
+<h2 id="wk4">Week 4: Flood the grid</h2>
+
+<section class="rung" id="r10">
+<h3><span class="n">10</span><a href="http://www.usaco.org/index.php?page=viewproblem2&amp;cpid=939">Bucket Brigade</a></h3>
+<ul class="tags"><li class="lvl">Bronze · not rated</li><li>2019 US Open</li><li>BFS, shortest path</li><li>file input</li></ul>
+<p>Cows pass buckets from a lake to a burning barn, around a rock. How few cows can do it?</p>
+<div class="hints">
+<details class="hint"><summary>Nudge</summary><p>The cows form a path. You want the shortest path from lake to barn that misses the rock.</p></details>
+<details class="hint"><summary>Push</summary><p>A BFS from the lake gives the steps to every square. Which squares on the path hold cows?</p></details>
+</div>
+</section>
+
+<section class="rung s" id="r11">
+<h3><span class="n">11</span><a href="http://www.usaco.org/index.php?page=viewproblem2&amp;cpid=895">Icy Perimeter</a></h3>
+<ul class="tags"><li class="lvl">Silver · Easy</li><li>2019 January</li><li>flood fill</li><li>file input</li></ul>
+<p>Find the biggest blob of ice cream in a grid up to 1,000 by 1,000, and its perimeter.</p>
+<div class="hints">
+<details class="hint"><summary>Nudge</summary><p>Find each blob with a flood fill. Count its cells as you go.</p></details>
+<details class="hint"><summary>Push</summary><p>Each cell has 4 sides. A side counts for the perimeter when the next cell is not ice, or is off the grid.</p></details>
+</div>
+</section>
+
+<section class="rung s" id="r12">
+<h3><span class="n">12</span><a href="http://www.usaco.org/index.php?page=viewproblem2&amp;cpid=860">Mooyo Mooyo</a></h3>
+<ul class="tags"><li class="lvl">Silver · Medium</li><li>2018 December</li><li>flood fill, simulation</li><li>file input</li><li>week 4 sprint</li></ul>
+<p>Groups of K or more same-coloured haybales vanish, the rest fall, and it repeats. Print the final board.</p>
+<div class="hints">
+<details class="hint"><summary>Nudge</summary><p>Split it into two jobs. One clears big regions. The other drops the haybales. Repeat until nothing clears.</p></details>
+<details class="hint"><summary>Push</summary><p>Gravity works one column at a time. Keep the non-zero cells in order and stack them at the bottom.</p></details>
+</div>
+</section>
+
+<h2 id="sources">Sources</h2>
+<ul class="sources">
+  <li>Each problem's statement, contest and division: its USACO page, linked in the title.</li>
+  <li>Level labels: the USACO Guide modules <a href="https://usaco.guide/bronze/simulation">Simulation</a>, <a href="https://usaco.guide/bronze/intro-complete">Basic Complete Search</a>, <a href="https://usaco.guide/bronze/intro-sets">Introduction to Sets and Maps</a>, <a href="https://usaco.guide/bronze/intro-sorting">Introduction to Sorting</a> and <a href="https://usaco.guide/silver/flood-fill">Flood Fill</a>, read on 24 October 2026.</li>
+  <li>File input for problems before December 2020: <a href="http://www.usaco.org/index.php?page=instructions">USACO contest instructions</a>.</li>
+</ul>
+</main>
+</body>
+</html>
