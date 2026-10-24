@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Session 2: Make it a Scratch game. A 90-minute Scratch lesson for P4, by Mei Ling Tan</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="program.js" defer></script>
+<script src="scratchlite.js" defer></script>
+<script src="render.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Mei Ling Tan is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<a class="back" href="index.html">Back to Flip to 31</a>
+<h1>Session 2: Make it a Scratch game</h1>
+<p class="lede">Pairs turn last week's dot cards into a Scratch game. Bit the robot asks for a number, and you flip cards to make it.</p>
+
+<ul class="facts">
+  <li><b>Who</b>The same 24 P4 pupils, in 12 pairs.</li>
+  <li><b>Time</b>90 minutes, with a 5-minute break.</li>
+  <li><b>Devices</b>12 school laptops, one per pair.</li>
+  <li><b>Scratch</b>scratch.mit.edu with no log-in. Pupils save to the laptop.</li>
+</ul>
+
+<h2>Learning goal</h2>
+<p>Pupils build a game with a loop, an if and an input. They use it to practise binary from 0 to 31.</p>
+<h3>Success criteria, in pupil words</h3>
+<ol class="tight">
+  <li>All 5 of our cards flip and change the total by the right number.</li>
+  <li>Bit asks for 5 numbers, using a repeat loop.</li>
+  <li>Bit waits until our total matches, then says so.</li>
+  <li>I can explain what the if-else block on a card does.</li>
+</ol>
+
+<h2>Materials</h2>
+<ul class="tight">
+  <li>12 laptops. I copy <a href="dot-cards-starter.sb3" download>dot-cards-starter.sb3</a> onto each one the day before.</li>
+  <li>The finished game, <a href="dot-cards.sb3" download>dot-cards.sb3</a>, on my laptop and the projector.</li>
+  <li>12 step cards with Bit's script in colour. It is shown below.</li>
+  <li>Backup: 6 envelopes of paper Scratch blocks, for laptops that won't log in.</li>
+  <li>Last week's dot cards, one set per pair.</li>
+</ul>
+
+<h2>The starter file</h2>
+<p>Everything is drawn already. Only Card 16 has scripts. Pupils read them first, then copy them to the other cards.</p>
+<div class="blocks" data-sprite="Card 16"></div>
+<p>Copying a script: drag it onto another sprite's thumbnail in the sprite list. Then change 16 to that card's number, in both places.</p>
+
+<h2>The plan, minute by minute</h2>
+<ol class="timeline">
+  <li><span class="t">0 to 10 min</span>Arrive and log in to the laptops. Log-ins are slow, so pairs warm up with dot cards while they wait. One calls a number, the other shows it.</li>
+  <li><span class="t">10 to 20 min</span>I play the finished game on the projector. We break it into parts on the board. Cards flip, the total changes, Bit asks, Bit checks. Those are our jobs for today.</li>
+  <li><span class="t">20 to 35 min</span>Open Scratch. File, then "Load from your computer", then the starter. Read Card 16's script together. "What happens if I click it twice?" Pairs copy the scripts to Cards 8, 4, 2 and 1. They change the numbers.</li>
+  <li><span class="t">35 to 40 min</span>Test. Click 8 and 2: does the total say 10? A wrong total means a number was not changed. Pairs fix their own.</li>
+  <li class="brk"><span class="t">40 to 45 min</span>Break, away from the screens.</li>
+  <li><span class="t">45 to 70 min</span>Build Bit's game from the step card. Drivers swap every 10 minutes when I ring the bell. I walk round with three questions: "Where is your loop? Where is your if? Where does the player give an input?"</li>
+  <li><span class="t">70 to 80 min</span>Swap seats with the next pair and play their game. Done early? Add Bit's last question with "ask and wait".</li>
+  <li><span class="t">80 to 87 min</span>Two pairs show their game. Everyone answers the 2 check questions with a thumbs up or down. Then they explain to a partner.</li>
+  <li><span class="t">87 to 90 min</span>File, then "Save to your computer". Shut down.</li>
+</ol>
+<p class="sum">Check: 10 + 10 + 15 + 5 + 5 + 25 + 10 + 7 + 3 = 90 minutes.</p>
+
+<h2>Bit's step card</h2>
+<p>This is the whole script. On the printed card, the blocks for steps 1 to 4 are numbered. The last question is the extension.</p>
+<div class="blocks" data-sprite="Bit"></div>
+<ol class="tight">
+  <li>Set score and total to 0, and broadcast reset so all cards turn face down.</li>
+  <li>Repeat 5: pick a random number from 1 to 31 and say it.</li>
+  <li>Wait until total = target. That is the check.</li>
+  <li>Add 1 to the score, say "Yes!", then reset the cards.</li>
+  <li>Extension: ask a question, then use if-else on the answer.</li>
+</ol>
+
+<h2>Check questions</h2>
+<ol class="tight">
+  <li>Card 16 has dots up, and you click it. Which part of the if-else runs? (The top part. It turns face down and takes 16 off the total.)</li>
+  <li>What would change if the repeat said 10 instead of 5? (Bit would ask for 10 numbers.)</li>
+</ol>
+
+<h2>For every pupil</h2>
+<ul class="tight">
+  <li>Pairs who struggle: skip building Bit. Open the finished game and change the numbers instead. Make Bit ask from 1 to 15, and play with 4 cards.</li>
+  <li>Pairs who race ahead: add a Card 32. Change pick random to 1 to 63. Then count the flips and make Bit say how many you used.</li>
+  <li>Few devices: pairs share, and the driver swaps every 10 minutes.</li>
+  <li>Laptops that won't log in: the pair builds Bit's script with paper blocks. They join a laptop pair for testing after the break.</li>
+  <li>Pupils who read slowly: the step card uses block colours. They match colour first, then words.</li>
+</ul>
+
+<h2>Source</h2>
+<ul class="tight small">
+  <li>Making projects without an account, and needing one to save online: <a href="https://scratch.mit.edu/faq">Scratch FAQ</a>.</li>
+  <li>Copying a script by dragging it onto another sprite's thumbnail: <a href="https://scratch.mit.edu/help/studio/tips/howto/hide10">Scratch help, Add to Your Game</a>.</li>
+  <li>The menu items in the Scratch editor source: <a href="https://github.com/scratchfoundation/scratch-editor/blob/develop/packages/scratch-gui/src/lib/shared-messages.ts">"Load from your computer"</a> and <a href="https://github.com/scratchfoundation/scratch-editor/blob/develop/packages/scratch-gui/src/components/menu-bar/file-menu.jsx">"Save to your computer"</a>.</li>
+</ul>
+</main>
+</body>
+</html>

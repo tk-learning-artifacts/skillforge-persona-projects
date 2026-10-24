@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Student work samples and marking for Sort it like a computer, by Priya Nair</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="program.js" defer></script>
+<script src="samples.js" defer></script>
+<script src="scratchlite.js" defer></script>
+<script src="render.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Priya Nair is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<a class="back" href="index.html">Back to the unit</a>
+<header class="masthead">
+  <p class="code">Student work · Marked and moderated</p>
+  <h1>Student work samples</h1>
+  <p class="lede">Three group keys, one pair's Scratch bug and fix, and two exit tickets. Each has the level we agreed as a team.</p>
+</header>
+<p class="callout">The students, groups and their work are made up, like me. We collect keys and .sb3 files, not photos, so the work is typed out here. The mistakes are the ones trainers told me they see most.</p>
+
+<h2 id="guide">The marking guide</h2>
+<p>All three trainers use this guide in all six classes. Each criterion gets one level.</p>
+<div class="tablewrap"><table>
+  <tr><th>Criterion</th><th>Beginning</th><th>Developing</th><th>Secure</th></tr>
+  <tr><td><span class="tag sci">Science</span> Questions test physical properties</td><td>Questions are about size, weight or looks, with no test.</td><td>Most questions name a property. One names a material or a guess.</td><td>Every question tests a property you can check, like floating or conducting.</td></tr>
+  <tr><td><span class="tag cs">CS</span> The key works as an algorithm</td><td>Two people give different answers. Objects end together.</td><td>Works for the group, but fails the swap test once.</td><td>Every object ends alone. Another group follows it with no help.</td></tr>
+  <tr><td><span class="tag sci">Science</span> Justifies the choices</td><td>No reason given.</td><td>A reason for one question.</td><td>Says why each question splits the objects.</td></tr>
+</table></div>
+
+<h2 id="keys">Lesson 1: three group keys</h2>
+
+<div class="sample">
+  <h3>Group A <span class="level secure">Secure</span></h3>
+  <ul class="tree">
+    <li><span class="q">1. Does it stretch and spring back?</span>
+      <ul>
+        <li><span class="yes">Yes</span><span class="end">rubber band</span></li>
+        <li><span class="no">No</span><span class="q">2. Does it conduct electricity?</span>
+          <ul>
+            <li><span class="yes">Yes</span><span class="q">3. Can you bend it with your fingers?</span>
+              <ul>
+                <li><span class="yes">Yes</span><span class="end">copper wire</span></li>
+                <li><span class="no">No</span><span class="end">steel spoon</span></li>
+              </ul>
+            </li>
+            <li><span class="no">No</span><span class="q">4. Does it float in water?</span>
+              <ul>
+                <li><span class="yes">Yes</span><span class="end">ice-cream stick</span></li>
+                <li><span class="no">No</span><span class="end">glass marble</span></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+  <p class="label">Their reason</p>
+  <p><span class="student">We asked stretch first because only the rubber band does it, so it is fast to take out.</span></p>
+  <p class="label">Swap-test notes from Group B</p>
+  <p><span class="student">All 5 right. No problems.</span></p>
+  <div class="moderation">
+    <p>Different from the model key, and it works. We used it in class to show "many ways of classifying". The trainer asked: "Does your first question split the objects well?" It only removes one object. Starting with conductivity splits them 2 and 3. Their reason is still a real reason, so justification stays secure.</p>
+  </div>
+</div>
+
+<div class="sample">
+  <h3>Group B <span class="level developing">Developing</span></h3>
+  <ul class="tree">
+    <li><span class="q">1. Is it made of metal?</span>
+      <ul>
+        <li><span class="yes">Yes</span><span class="q">2. Is it shiny?</span>
+          <ul>
+            <li><span class="yes">Yes</span><span class="end bad">steel spoon or copper wire</span></li>
+            <li><span class="no">No</span><span class="end bad">(nothing)</span></li>
+          </ul>
+        </li>
+        <li><span class="no">No</span><span class="q">3. Is it see-through?</span>
+          <ul>
+            <li><span class="yes">Yes</span><span class="end">glass marble</span></li>
+            <li><span class="no">No</span><span class="q">4. Does it stretch?</span>
+              <ul>
+                <li><span class="yes">Yes</span><span class="end">rubber band</span></li>
+                <li><span class="no">No</span><span class="end">ice-cream stick</span></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+  <p class="label">Swap-test notes from Group C</p>
+  <p><span class="student">Our marble is blue inside, it is not see-through. So we got ice-cream stick. Also spoon and wire both shiny, we couldn't finish.</span></p>
+  <div class="moderation">
+    <p>Two bugs, both found by the swap test, which is the point. "Shiny" ends with two objects. "See-through" depends on which marble you got. "Made of metal" names a material, not a property you test. The group changed question 1 to "Does it conduct electricity?" in the debug time.</p>
+    <p>Moderation: Trainer 2 first marked this secure. The key worked on the group's own tray. We agreed on developing, because it failed the swap test. The guide says "another group follows it".</p>
+  </div>
+</div>
+
+<div class="sample">
+  <h3>Group C <span class="level beginning">Beginning</span></h3>
+  <ul class="tree">
+    <li><span class="q">1. Is it heavy?</span>
+      <ul>
+        <li><span class="yes">Yes</span><span class="end bad">glass marble, steel spoon</span></li>
+        <li><span class="no">No</span><span class="q">2. Is it long?</span>
+          <ul>
+            <li><span class="yes">Yes</span><span class="end bad">ice-cream stick, copper wire</span></li>
+            <li><span class="no">No</span><span class="end">rubber band</span></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+  <p class="label">Swap-test notes from Group D</p>
+  <p><span class="student">We think the spoon is light. They think it is heavy. We argued.</span></p>
+  <p class="label">After debugging</p>
+  <p><span class="student">Q1 is now "does it conduct electricity". We didn't finish the rest.</span></p>
+  <div class="moderation">
+    <p>The argument in the notes is the best evidence on this page. It is exactly why a key needs testable questions. The group saw it and fixed question 1. The trainer gave them the question bank for lesson 2, and their Scratch bot worked.</p>
+  </div>
+</div>
+
+<h2 id="scratch">Lesson 2: one pair's Scratch bug</h2>
+<div class="sample">
+  <h3>Pair 7, coding Group A's key</h3>
+  <p>Their first version. Each question says (y/n), but each check looks for "yes".</p>
+  <div class="blocks" data-sprite="pair7-bug"></div>
+  <p><strong>Their test log:</strong></p>
+  <div class="tablewrap"><table>
+    <tr><th>Object</th><th>Bot said</th><th>Right?</th></tr>
+    <tr><td>rubber band</td><td>glass marble</td><td>No</td></tr>
+    <tr><td>copper wire</td><td>glass marble</td><td>No</td></tr>
+    <tr><td>steel spoon</td><td>glass marble</td><td>No</td></tr>
+    <tr><td>ice-cream stick</td><td>glass marble</td><td>No</td></tr>
+    <tr><td>glass marble</td><td>glass marble</td><td>Yes</td></tr>
+  </table></div>
+  <p class="label">Their explanation</p>
+  <p><span class="student">The tester typed y. Our code checks for yes. y is not yes so it always goes to the no side, and the last no is glass marble.</span></p>
+  <p>Their fix: they changed "yes" to "y" in all four checks.</p>
+  <div class="blocks" data-sprite="pair7-fixed"></div>
+  <div class="moderation">
+    <p>This is the bug in the trainer briefing, found on their own. The explanation traces the path all the way to the marble. That is a secure answer. They used "say for 2 seconds" instead of a guess variable. That works fine, and it was their choice.</p>
+  </div>
+</div>
+
+<h2 id="tickets">Two exit tickets</h2>
+<div class="sample">
+  <h3>Student X, lesson 1</h3>
+  <p>1. Why is "Is it heavy?" a weak question for a key?</p>
+  <p class="student">Because heavy is different for different people. A key has to work the same for everyone.</p>
+  <p>2. Put a cork through your key. Where does it end up? What question would you add?</p>
+  <p class="student">It goes to ice-cream stick. Add: is it squishy?</p>
+  <div class="moderation">
+    <p>Question 1 is secure. Question 2 finds the right place, then makes the same mistake as "heavy". The trainer wrote: "How would two people test squishy the same way?"</p>
+  </div>
+</div>
+<div class="sample">
+  <h3>Student Y, lesson 2</h3>
+  <p>1. Which block is the input, and which block makes the decision?</p>
+  <p class="student">Ask and wait is the input. If else decides.</p>
+  <p>2. A tester typed "yes", and the bot went down the "no" path. Why?</p>
+  <p class="student">The computer doesn't know yes means y.</p>
+  <div class="moderation">
+    <p>Question 1 is secure. Question 2 is developing. It is true, but it doesn't say how the bot decides. It compares two pieces of text, and they must match.</p>
+  </div>
+</div>
+</main>
+</body>
+</html>

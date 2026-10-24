@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flip to 31: binary dot cards and Scratch for P4 place value, by Mei Ling Tan</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="program.js" defer></script>
+<script src="scratchlite.js" defer></script>
+<script src="player.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Mei Ling Tan is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<h1>Flip to 31 <span class="dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span></h1>
+<p class="lede">A 2-session computer science mini-unit for my P4 coding club. Pupils learn binary with dot cards, then build a dot-card game in Scratch. It links to P4 maths: place value and number patterns.</p>
+<p>I'm Mei Ling. I run an after-school coding club for upper primary pupils. My club has no subject of its own, so I borrowed one. Our P4s learn place value in maths this year. Binary is place value too, with a 2 where they expect a 10.</p>
+
+<ul class="facts">
+  <li><b>Who</b>24 P4 pupils, aged 10. Groups of 4.</li>
+  <li><b>When</b>2 club sessions of 90 minutes, a week apart.</li>
+  <li><b>Devices</b>None in session 1. 12 laptops for 24 in session 2.</li>
+  <li><b>Subject link</b>P4 maths: place value, and patterns in number sequences.</li>
+</ul>
+
+<ul class="chips">
+  <li><a href="lesson1.html">Session 1 plan: dot cards</a></li>
+  <li><a href="lesson2.html">Session 2 plan: Scratch</a></li>
+  <li><a href="#play">Play the Scratch project</a></li>
+  <li><a href="work.html">Pupil work samples</a></li>
+  <li><a href="#reflection">My reflection</a></li>
+</ul>
+
+<h2 id="idea">The CS idea, and the maths link</h2>
+<p>A bit is one thing with two states. Here it is a card, with its dots up or down. Five cards are five bits. They make 32 patterns, so you can show every number from 0 to 31.</p>
+<p>Inside a computer there are no tiny 1s and 0s. A bit is a voltage that is high or low. We write 1 and 0 because it is quick. I say this out loud in session 1. I have said the wrong version before.</p>
+<div class="pv">
+  <div class="card">
+    <p class="cap">Our numbers: 13</p>
+    <div class="tablewrap"><table>
+      <tr><th>Thousands</th><th>Hundreds</th><th>Tens</th><th>Ones</th></tr>
+      <tr><td>0</td><td>0</td><td>1</td><td>3</td></tr>
+    </table></div>
+    <p class="small">Each place is worth 10 times the place on its right. Each place holds a digit from 0 to 9.</p>
+  </div>
+  <div class="card">
+    <p class="cap">Dot cards: 13</p>
+    <div class="tablewrap"><table>
+      <tr><th>16</th><th>8</th><th>4</th><th>2</th><th>1</th></tr>
+      <tr><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td></tr>
+    </table></div>
+    <p class="small">Each place is worth 2 times the place on its right. Each place holds 0 or 1. 8 + 4 + 1 = 13.</p>
+  </div>
+</div>
+<p>Two more links come up on their own. Every odd number has the 1 card up, which pupils met in P2. Counting from 0 to 31 makes a pattern too. The 1 card flips every time. The 2 card flips every second time, and the 4 card every fourth time.</p>
+
+<h2 id="plans">The two lesson plans</h2>
+<div class="card">
+<h3><a href="lesson1.html">Session 1: Dot cards, no laptops</a></h3>
+<p>Pupils find the card pattern and turn numbers into binary with an algorithm. Then they count to 31 and link it to place value. Printable cards and a record sheet are on the page.</p>
+<h3><a href="lesson2.html">Session 2: Make it a Scratch game</a></h3>
+<p>Pairs load a starter file and copy one card's script to the other four cards. Then they build Bit's game with a loop, an if and an input. There is a paper plan for when the laptops won't log in.</p>
+</div>
+
+<h2 id="play">Play the Scratch project</h2>
+<p>Click the green flag. Bit asks for 5 numbers. Click cards to flip them until the total matches. Then Bit asks one last question: type your answer and press the tick.</p>
+<p>The blocks are the real scripts. The block that each script is on lights up yellow as it runs. Watch the "wait until" block glow while Bit waits for you.</p>
+<div class="player">
+  <div>
+    <div class="controls">
+      <button type="button" class="flagbtn" id="flag" aria-label="Green flag: start"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 1v14" stroke="#2b6a1f" stroke-width="2"/><path d="M4 2c3-1.6 5 1.6 9 0v7c-4 1.6-6-1.6-9 0z" fill="#4cbf56" stroke="#2b6a1f"/></svg> Start</button>
+      <button type="button" class="stopbtn" id="stop" aria-label="Stop"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 1h6l4 4v6l-4 4H5l-4-4V5z" fill="#e8554e" stroke="#9c2b25"/></svg> Stop</button>
+    </div>
+    <div class="sl-stage" id="stage" role="group" aria-label="Scratch stage. Bit the robot and 5 dot cards: 16, 8, 4, 2 and 1."></div>
+    <form class="ask" id="ask" hidden>
+      <label class="small" for="answer">Your answer</label>
+      <input id="answer" autocomplete="off">
+      <button type="submit" class="primary" aria-label="Send answer">&#10003;</button>
+    </form>
+    <p class="live" id="live" aria-live="polite"></p>
+  </div>
+  <div class="blocks" id="blocks"></div>
+</div>
+<p class="small">On a keyboard, press Tab to reach a card and Enter to flip it. This player runs on this page. It copies how Scratch runs blocks. It may differ from Scratch in small ways, like timing.</p>
+
+<h3 id="sb3">Open it in Scratch</h3>
+<div class="row">
+  <a class="button primary" href="dot-cards.sb3" download>Download the finished project (.sb3)</a>
+  <a class="button" href="dot-cards-starter.sb3" download>Download the session 2 starter (.sb3)</a>
+</div>
+<ol class="tight">
+  <li>Go to <a href="https://scratch.mit.edu/">scratch.mit.edu</a> and click Create. You can make projects without an account.</li>
+  <li>Open the File menu. Choose "Load from your computer" and pick the .sb3 file.</li>
+  <li>Click the green flag.</li>
+</ol>
+<p>About the "Scratch project link" in the brief: I can't give you a scratch.mit.edu link. Saving and sharing on the site needs an account, and I am an AI persona. The .sb3 file is the whole project. To make a link, load it in your own account and click Share. The Scratch app also opens it with no internet.</p>
+<p class="small">My Bit robot is drawn for this project. I did not use the Scratch Cat, because it is a Scratch trademark.</p>
+
+<h2 id="work">Samples of pupil work</h2>
+<p>No photos here. I wrote out the work instead, so you can read it on a phone. The pupils and their answers are made up, like me. The mistakes are ones I have seen pupils make.</p>
+<div class="card">
+<ul class="tight">
+  <li>A count-to-31 record sheet, with what one pupil noticed.</li>
+  <li>Three exit tickets. One is right. One mixes up place value. One uses a card that does not exist.</li>
+  <li>Two pairs' Scratch scripts. In one, Card 2 still added 16. The other added a sixth card.</li>
+</ul>
+<p><a class="button" href="work.html">See the samples and my feedback</a></p>
+</div>
+
+<h2 id="reflection">My reflection</h2>
+<h3>Clear link to my subject</h3>
+<p>The link to place value did more than I planned. Pupil C wrote "821" for cards 8, 2 and 1. She was using tens and ones. That mistake opened the best 5 minutes of session 1. We put her answer next to the right one. Then we talked about what each place is worth.</p>
+<h3>CS idea explained correctly</h3>
+<p>I simplify, and I know it. In my starter last year, I said "computers only understand 1 and 0". A pupil asked if there are tiny zeros inside. Now the plan says it plainly. A bit is anything with two states. In a chip, it is a voltage.</p>
+<h3>Works for all students</h3>
+<p>Session 1 needs no devices, so it always runs. The 4-card set helps pupils who struggle, and the sixth card keeps fast pupils busy. In session 2, pairs share the 12 laptops. The paper blocks kept one pair going when their laptop would not log in.</p>
+<h3>What I would change</h3>
+<p>Session 2 is too full. Only half the pairs reached the last question before pack-up. Next time I would give Bit's script as printed blocks to put in order first. Also, the game only checks the total. A pupil can click at random until it matches. I would count the flips and have Bit say how few it could take.</p>
+
+<h2 id="sources">Sources</h2>
+<ul class="tight small">
+  <li>P4 place values up to ten thousands, and patterns in number sequences; P2 odd and even numbers: <a href="https://www.moe.gov.sg/media/files/primary/92bff26d-b2b4-4535-b868-b8415c744b91.pdf">MOE Mathematics Syllabus, Primary One to Six</a> (2021 cohort, updated October 2025), from <a href="https://www.moe.gov.sg/primary/curriculum/syllabus">MOE's primary syllabus page</a>.</li>
+  <li>The dot cards, the big-to-small algorithm, and bits as two states such as voltage ranges: <a href="https://www.csunplugged.org/en/topics/binary-numbers/how-binary-digits-work/">CS Unplugged, How binary digits work</a> (ages 8 to 10).</li>
+  <li>Making projects without an account, needing one to save and share, the Scratch app, ages 8 to 16, and the Scratch Cat as a trademark: <a href="https://scratch.mit.edu/faq">Scratch FAQ</a>.</li>
+  <li>The "Load from your computer" menu item: <a href="https://github.com/scratchfoundation/scratch-editor/blob/develop/packages/scratch-gui/src/lib/shared-messages.ts">Scratch editor source</a>.</li>
+</ul>
+</main>
+</body>
+</html>
