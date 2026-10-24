@@ -1,0 +1,577 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hitbox: every file in the project, by Kenji Watanabe</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Kenji Watanabe is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<p><a href="index.html">Back to the project</a></p>
+<h1>Hitbox: every file in the project</h1>
+<p>This is the whole Android Studio project, file by file. The Gradle wrapper scripts and jar are in the folder too, but not shown. Get the folder from <a href="https://github.com/tk-learning-artifacts/skillforge-persona-projects/tree/main/android-kotlin/kenji">GitHub</a>.</p>
+<p><a href="#starter">Jump to the starter</a></p>
+<h2 id="app">The finished app: hitbox-app</h2>
+<section class="file"><h3>app/src/main/java/com/example/hitbox/MainActivity.kt</h3><pre><code>package com.example.hitbox
+
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.Saver
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
+import kotlinx.serialization.Serializable
+
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContent {
+            HitboxTheme {
+                HitboxApp()
+            }
+        }
+    }
+}
+
+// The two screens. Navigation Compose uses these as routes.
+@Serializable
+object WordList
+
+@Serializable
+data class WordDetail(val id: Int)
+
+// A Set can't go in a Bundle, so save the ids as an IntArray.
+private val KnownSaver = Saver&lt;Set&lt;Int&gt;, IntArray&gt;(
+    save = { it.toIntArray() },
+    restore = { it.toSet() }
+)
+
+@Composable
+fun HitboxApp() {
+    val navController = rememberNavController()
+
+    // The words you know. It lives here, above both screens, so both can see it.
+    // rememberSaveable keeps it when you rotate the phone.
+    var known by rememberSaveable(stateSaver = KnownSaver) { mutableStateOf(emptySet&lt;Int&gt;()) }
+
+    NavHost(navController = navController, startDestination = WordList) {
+        composable&lt;WordList&gt; {
+            WordListScreen(
+                words = gameWords,
+                known = known,
+                onWordClick = { word -&gt; navController.navigate(WordDetail(word.id)) }
+            )
+        }
+        composable&lt;WordDetail&gt; { entry -&gt;
+            val id = entry.toRoute&lt;WordDetail&gt;().id
+            val word = gameWords.first { it.id == id }
+            WordDetailScreen(
+                word = word,
+                isKnown = id in known,
+                onKnownChange = { nowKnown -&gt; known = if (nowKnown) known + id else known - id },
+                onBack = { navController.popBackStack() }
+            )
+        }
+    }
+}</code></pre></section>
+<section class="file"><h3>app/src/main/java/com/example/hitbox/Theme.kt</h3><pre><code>package com.example.hitbox
+
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
+
+private val Light = lightColorScheme(
+    primary = Color(0xFF5B3CC4),
+    secondary = Color(0xFFB0006D),
+    background = Color(0xFFFBF8FF),
+    surface = Color(0xFFFBF8FF)
+)
+
+private val Dark = darkColorScheme(
+    primary = Color(0xFFC9B8FF),
+    secondary = Color(0xFFFFAFD3),
+    background = Color(0xFF15121F),
+    surface = Color(0xFF15121F)
+)
+
+@Composable
+fun HitboxTheme(content: @Composable () -&gt; Unit) {
+    MaterialTheme(
+        colorScheme = if (isSystemInDarkTheme()) Dark else Light,
+        content = content
+    )
+}</code></pre></section>
+<section class="file"><h3>app/src/main/java/com/example/hitbox/WordDetailScreen.kt</h3><pre><code>package com.example.hitbox
+
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TopAppBar
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun WordDetailScreen(
+    word: Word,
+    isKnown: Boolean,
+    onKnownChange: (Boolean) -&gt; Unit,
+    onBack: () -&gt; Unit
+) {
+    // Only this screen needs to know if the meaning is showing,
+    // so this state stays here and is not hoisted.
+    var revealed by rememberSaveable { mutableStateOf(false) }
+
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("Level ${word.level}") },
+                navigationIcon = { TextButton(onClick = onBack) { Text("&lt; Back") } }
+            )
+        }
+    ) { inner -&gt;
+        Column(
+            modifier = Modifier
+                .padding(inner)
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            Text(word.term, style = MaterialTheme.typography.displaySmall)
+
+            if (revealed) {
+                Card(Modifier.fillMaxWidth()) {
+                    Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                        Text(word.meaning, style = MaterialTheme.typography.titleLarge)
+                        Text("In a game: ${word.example}")
+                    }
+                }
+                Text("Did you know it?")
+                Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                    Button(onClick = { onKnownChange(true); onBack() }) { Text("I knew it") }
+                    OutlinedButton(onClick = { onKnownChange(false); onBack() }) { Text("Not yet") }
+                }
+            } else {
+                Text("Say the meaning out loud first. Then check.")
+                Button(onClick = { revealed = true }) { Text("Show meaning") }
+            }
+
+            if (isKnown) {
+                Text("★ You marked this one as known.", color = MaterialTheme.colorScheme.primary)
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun WordDetailPreview() {
+    HitboxTheme {
+        WordDetailScreen(word = gameWords[3], isKnown = false, onKnownChange = {}, onBack = {})
+    }
+}</code></pre></section>
+<section class="file"><h3>app/src/main/java/com/example/hitbox/WordListScreen.kt</h3><pre><code>package com.example.hitbox
+
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.ListItem
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.ui.unit.dp
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun WordListScreen(
+    words: List&lt;Word&gt;,
+    known: Set&lt;Int&gt;,
+    onWordClick: (Word) -&gt; Unit
+) {
+    Scaffold(
+        topBar = {
+            TopAppBar(title = { Text("Hitbox: game words") })
+        }
+    ) { inner -&gt;
+        Column(Modifier.padding(inner)) {
+            // State goes down: the list only reads known. It never changes it.
+            Text(
+                text = "Known ${known.size} of ${words.size}",
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+            )
+            LinearProgressIndicator(
+                progress = { known.size / words.size.toFloat() },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp)
+            )
+            // LazyColumn only builds the rows on screen.
+            LazyColumn {
+                items(words, key = { it.id }) { word -&gt;
+                    ListItem(
+                        headlineContent = { Text(word.term, fontWeight = FontWeight.Bold) },
+                        supportingContent = { Text(word.meaning) },
+                        overlineContent = { Text("Level ${word.level}") },
+                        trailingContent = { Text(if (word.id in known) "★" else "☆") },
+                        // Events go up: tell the parent which word was tapped.
+                        modifier = Modifier.clickable { onWordClick(word) }
+                    )
+                    HorizontalDivider()
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun WordListPreview() {
+    HitboxTheme {
+        WordListScreen(words = gameWords, known = setOf(1, 3), onWordClick = {})
+    }
+}</code></pre></section>
+<section class="file"><h3>app/src/main/java/com/example/hitbox/Words.kt</h3><pre><code>package com.example.hitbox
+
+// One game-design word. level is how hard the word is: 1, 2 or 3.
+data class Word(
+    val id: Int,
+    val term: String,
+    val level: Int,
+    val meaning: String,
+    val example: String
+)
+
+val gameWords = listOf(
+    Word(1, "Goal", 1,
+        "What the player is trying to do.",
+        "In Super Mario Bros., you run right to reach the flagpole at the end of each level."),
+    Word(2, "Rule", 1,
+        "What the player can and can't do.",
+        "In my game Prime Smash, a wrong prime costs a heart."),
+    Word(3, "Feedback", 1,
+        "How the game tells you what just happened.",
+        "In Pac-Man, the ghosts turn blue after you eat a power pellet. You see the rules change."),
+    Word(4, "Core loop", 2,
+        "The thing the player does again and again.",
+        "Look at the number, pick a prime, see it shrink, pick again."),
+    Word(5, "Spawn point", 1,
+        "Where a player appears at the start, or after they lose.",
+        "In Minecraft, sleeping in a bed sets your spawn point to that bed."),
+    Word(6, "Power-up", 1,
+        "An item that gives the player a new ability for a while.",
+        "In Super Mario Bros., a Super Mushroom makes Mario bigger. It protects him from one hit."),
+    Word(7, "Sprite", 2,
+        "A 2D picture that moves around the game screen.",
+        "In MakeCode Arcade, your player, the enemies and the coins are all sprites."),
+    Word(8, "Hitbox", 2,
+        "The invisible shape the game checks to see if two things touch.",
+        "A hitbox smaller than the sprite makes near misses feel fair."),
+    Word(9, "HUD", 2,
+        "Heads-up display: the score, lives and timer drawn over the game.",
+        "Prime Smash shows score, level and hearts in a bar above the screen."),
+    Word(10, "Playtest", 2,
+        "Watching someone new play your game, without helping them.",
+        "Stay silent. Write down where they get stuck."),
+    Word(11, "Difficulty curve", 3,
+        "How fast the game gets harder as you play.",
+        "Too steep and players give up. Too flat and they get bored."),
+    Word(12, "Cooldown", 3,
+        "A wait before you can use the same move again.",
+        "A cooldown stops players from pressing one strong button over and over.")
+)</code></pre></section>
+<section class="file"><h3>app/src/main/AndroidManifest.xml</h3><pre><code>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;manifest xmlns:android="http://schemas.android.com/apk/res/android"&gt;
+    &lt;application
+        android:label="@string/app_name"
+        android:theme="@android:style/Theme.Material.Light.NoActionBar"&gt;
+        &lt;activity
+            android:name=".MainActivity"
+            android:exported="true"&gt;
+            &lt;intent-filter&gt;
+                &lt;action android:name="android.intent.action.MAIN" /&gt;
+                &lt;category android:name="android.intent.category.LAUNCHER" /&gt;
+            &lt;/intent-filter&gt;
+        &lt;/activity&gt;
+    &lt;/application&gt;
+&lt;/manifest&gt;</code></pre></section>
+<section class="file"><h3>app/src/main/res/values/strings.xml</h3><pre><code>&lt;resources&gt;
+    &lt;string name="app_name"&gt;Hitbox&lt;/string&gt;
+&lt;/resources&gt;</code></pre></section>
+<section class="file"><h3>app/build.gradle.kts</h3><pre><code>plugins {
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlin.serialization)
+}
+
+android {
+    namespace = "com.example.hitbox"
+    compileSdk = 37
+
+    defaultConfig {
+        applicationId = "com.example.hitbox"
+        minSdk = 24
+        targetSdk = 37
+        versionCode = 1
+        versionName = "1.0"
+    }
+
+    buildFeatures {
+        compose = true
+    }
+}
+
+dependencies {
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.ui.tooling.preview)
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.kotlinx.serialization.core)
+    debugImplementation(libs.androidx.compose.ui.tooling)
+}</code></pre></section>
+<section class="file"><h3>build.gradle.kts</h3><pre><code>plugins {
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.kotlin.compose) apply false
+    alias(libs.plugins.kotlin.serialization) apply false
+}</code></pre></section>
+<section class="file"><h3>gradle/libs.versions.toml</h3><pre><code>[versions]
+agp = "9.4.1"
+kotlin = "2.4.21"
+composeBom = "2026.09.00"
+activityCompose = "1.13.0"
+navigationCompose = "2.10.2"
+serialization = "1.12.0"
+
+[libraries]
+androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
+androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
+kotlinx-serialization-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-core", version.ref = "serialization" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }</code></pre></section>
+<section class="file"><h3>gradle/wrapper/gradle-wrapper.properties</h3><pre><code>distributionBase=GRADLE_USER_HOME
+distributionPath=wrapper/dists
+distributionUrl=https\://services.gradle.org/distributions/gradle-9.8.2-bin.zip
+networkTimeout=10000
+retries=0
+retryBackOffMs=500
+validateDistributionUrl=true
+zipStoreBase=GRADLE_USER_HOME
+zipStorePath=wrapper/dists</code></pre></section>
+<section class="file"><h3>settings.gradle.kts</h3><pre><code>pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+rootProject.name = "Hitbox"
+include(":app")</code></pre></section>
+<h2 id="starter">The starter: hitbox-starter</h2>
+<p>The starter is a copy of the app with 3 parts taken out. Only the files that differ are shown. The TODO lines are marked. I used comments, not Kotlin's <code>TODO()</code> function, because <code>TODO()</code> crashes the app when it runs. The starter builds and runs as it is.</p>
+<section class="file"><h3>app/src/main/java/com/example/hitbox/MainActivity.kt</h3><pre><code>package com.example.hitbox
+
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.Saver
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
+import kotlinx.serialization.Serializable
+
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContent {
+            HitboxTheme {
+                HitboxApp()
+            }
+        }
+    }
+}
+
+// The two screens. Navigation Compose uses these as routes.
+@Serializable
+object WordList
+
+@Serializable
+data class WordDetail(val id: Int)
+
+// A Set can't go in a Bundle, so save the ids as an IntArray.
+private val KnownSaver = Saver&lt;Set&lt;Int&gt;, IntArray&gt;(
+    save = { it.toIntArray() },
+    restore = { it.toSet() }
+)
+
+@Composable
+fun HitboxApp() {
+    val navController = rememberNavController()
+
+<mark>    // TODO 3 (boss quest): make a var called known that holds a Set&lt;Int&gt;.</mark>
+    // Use rememberSaveable with KnownSaver, so it survives a rotation.
+    // Then pass it to both screens instead of emptySet().
+
+    NavHost(navController = navController, startDestination = WordList) {
+        composable&lt;WordList&gt; {
+            WordListScreen(
+                words = gameWords,
+                known = emptySet(),
+                onWordClick = { word -&gt;
+<mark>                    // TODO 2 (quest 2): go to the WordDetail screen for this word.</mark>
+                }
+            )
+        }
+        composable&lt;WordDetail&gt; { entry -&gt;
+            val id = entry.toRoute&lt;WordDetail&gt;().id
+            val word = gameWords.first { it.id == id }
+            WordDetailScreen(
+                word = word,
+                isKnown = false,
+                onKnownChange = { nowKnown -&gt;
+<mark>                    // TODO 3 (boss quest): add id to known, or take it away.</mark>
+                },
+                onBack = { navController.popBackStack() }
+            )
+        }
+    }
+}</code></pre></section>
+<section class="file"><h3>app/src/main/java/com/example/hitbox/WordListScreen.kt</h3><pre><code>package com.example.hitbox
+
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.ListItem
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.ui.unit.dp
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun WordListScreen(
+    words: List&lt;Word&gt;,
+    known: Set&lt;Int&gt;,
+    onWordClick: (Word) -&gt; Unit
+) {
+    Scaffold(
+        topBar = {
+            TopAppBar(title = { Text("Hitbox: game words") })
+        }
+    ) { inner -&gt;
+        Column(Modifier.padding(inner)) {
+            // State goes down: the list only reads known. It never changes it.
+            Text(
+                text = "Known ${known.size} of ${words.size}",
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+            )
+            LinearProgressIndicator(
+                progress = { known.size / words.size.toFloat() },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp)
+            )
+            // LazyColumn only builds the rows on screen.
+            LazyColumn {
+                items(words, key = { it.id }) { word -&gt;
+                    ListItem(
+                        headlineContent = { Text(word.term, fontWeight = FontWeight.Bold) },
+<mark>                        // TODO 1 (quest 1): show the word's meaning under the term.</mark>
+                        // Look at how headlineContent shows word.term.
+                        overlineContent = { Text("Level ${word.level}") },
+                        trailingContent = { Text(if (word.id in known) "★" else "☆") },
+                        // Events go up: tell the parent which word was tapped.
+                        modifier = Modifier.clickable { onWordClick(word) }
+                    )
+                    HorizontalDivider()
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun WordListPreview() {
+    HitboxTheme {
+        WordListScreen(words = gameWords, known = setOf(1, 3), onWordClick = {})
+    }
+}</code></pre></section>
+</main>
+</body>
+</html>

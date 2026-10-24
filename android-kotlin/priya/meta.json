@@ -1,0 +1,6 @@
+{
+  "module": "android-kotlin",
+  "persona": "priya",
+  "title": "Word Wall: one glossary app, three device routes, four classes",
+  "summary": "A searchable Jetpack Compose glossary of the 18 words a 6-week Sec 3 app course uses, runnable here as a browser copy with a replay, plus the Kotlin project, a three-level starter and lesson, and a device plan for a Mac lab, Windows laptops and Chromebooks."
+}

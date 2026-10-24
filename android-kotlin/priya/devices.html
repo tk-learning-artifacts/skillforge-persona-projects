@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Word Wall device plan for three schools, by Priya Nair</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Priya Nair is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<div class="page">
+<nav class="rail" aria-label="Contents">
+  <p>On this page</p>
+  <ol>
+    <li><a href="index.html">Back to Word Wall</a></li>
+    <li><a href="#check">Device checks</a></li>
+    <li><a href="#a">School A</a></li>
+    <li><a href="#b">School B</a></li>
+    <li><a href="#c">School C</a></li>
+    <li><a href="#handin">Hand-in</a></li>
+    <li><a href="#it">IT checklist</a></li>
+    <li><a href="#play">Google Play</a></li>
+  </ol>
+</nav>
+<main>
+<p class="kicker">Device plan</p>
+<h1>One app, three routes</h1>
+<p class="lede">Four Sec 3 classes in three schools. Each school's devices decide its route. The learning goals and the task card stay the same.</p>
+<p class="note">The schools and their devices are made up for this example. The requirements are Google's, checked in October 2026. Replace my three columns with one device from each of your schools.</p>
+
+<h2 id="check">Step 1: one device from each school, against the requirements</h2>
+<div class="scroll">
+<table>
+  <tr><th>Check</th><th>School A: Mac lab</th><th>School B: Windows laptops</th><th>School C: Chromebooks</th></tr>
+  <tr><td>Device</td><td>Mac mini, Apple M1, macOS 15</td><td>Student laptop, Windows 11, Core i5-1135G7</td><td>Student Chromebook, Intel Celeron N4500</td></tr>
+  <tr><td>RAM</td><td>16 GB: <span class="yes">Studio and emulator</span></td><td>8 GB: <span class="yes">Studio only</span>. The emulator needs 16 GB.</td><td>4 GB: <span class="no">below</span> the 8 GB Studio needs on Windows, Mac and Linux</td></tr>
+  <tr><td>Processor</td><td>M1 is the Mac minimum: <span class="yes">yes</span></td><td>11th gen Core i5, newer than the 8th gen minimum: <span class="yes">yes</span>. Google does not recommend U-series chips for heavier work.</td><td><span class="no">Low-power chip</span></td></tr>
+  <tr><td>Graphics</td><td>Built in, fine on a Mac: <span class="yes">yes</span></td><td>Built in. The Windows emulator wants a GPU with 4 GB of video memory: <span class="no">no</span></td><td>Not checked</td></tr>
+  <tr><td>Free disk</td><td>100 GB: <span class="yes">yes</span> (16 GB needed with the emulator)</td><td>40 GB: <span class="yes">yes</span> (8 GB needed)</td><td>20 GB</td></tr>
+  <tr><td>Other limits</td><td>Lab is shared. Booked for all 6 weeks.</td><td>A personal learning device with a Device Management Application. IT must allow Studio.</td><td>Studio on ChromeOS needs Linux turned on, and runs apps only on a connected phone.</td></tr>
+  <tr><td><strong>Route</strong></td><td><strong>Studio with the emulator</strong></td><td><strong>Studio with a loan phone</strong></td><td><strong>Half Studio on a laptop trolley, half App Inventor</strong></td></tr>
+</table>
+</div>
+
+<h2 id="a">School A: Class 3A, Studio with the emulator</h2>
+<div class="card school">
+  <ul class="tight">
+    <li>36 students, one Mac each, 40 Macs in the lab. Pairs still share for the TODOs. Pairing makes them talk about the code.</li>
+    <li>IT creates one emulator, a Pixel phone image, on every Mac before week 3. The first boot is slow, so they start it once.</li>
+    <li>Risk: 36 emulators start at once and the lab network is busy with downloads. That is why IT does the first sync, not the class.</li>
+  </ul>
+</div>
+
+<h2 id="b">School B: Classes 3B and 3C, Studio with a loan phone</h2>
+<div class="card school b">
+  <ul class="tight">
+    <li>Students use their own learning devices: Windows laptops with 8 GB. Studio runs, the emulator would not.</li>
+    <li>MOE set out for every secondary student to own a personal learning device by the end of 2021, with a Device Management Application installed. So installing Studio is a request to the school's IT team, weeks ahead. Ask early.</li>
+    <li>The school lends 12 Android phones, all Android 13. Developer options and USB debugging are turned on before week 3. Pairs plug in for each run, so 18 pairs share 12 phones.</li>
+    <li>Students do not use their own phones. USB debugging lets a laptop install apps and read logs on the phone. That is not something to switch on for a personal phone in class.</li>
+    <li>While waiting for a phone, pairs use the Preview pane. It shows a composable without running the app.</li>
+  </ul>
+</div>
+
+<h2 id="c">School C: Class 3D, half the class can't run Studio</h2>
+<div class="card school c">
+  <p>The class has Chromebooks with 4 GB. The school has a trolley of 10 Windows laptops with 8 GB. So the class splits.</p>
+  <div class="cols">
+    <div>
+      <h3>Studio group: 18 students</h3>
+      <ul class="tight">
+        <li>9 pairs on 9 trolley laptops. One spare.</li>
+        <li>5 loan phones from School B, shared.</li>
+        <li>Same task card as Schools A and B.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Blocks group: 18 students</h3>
+      <ul class="tight">
+        <li>9 pairs on Chromebooks with MIT App Inventor in the browser.</li>
+        <li>They build the <a href="starter.html#blocks">blocks version</a>: a filtered list, a second screen, a start value.</li>
+        <li>They test on the Chromebook itself, or with the Companion app on a phone or tablet.</li>
+      </ul>
+    </div>
+  </div>
+  <h3>How the lesson runs with two groups</h3>
+  <ol class="tight">
+    <li>The whole class watches the same opening: the replay, and "where does search live?".</li>
+    <li>Pairs are mixed by confidence, not by who sits together. A keen Chromebook pair can ask for the trolley next week.</li>
+    <li>The last 6 minutes: each Studio pair shows a Blocks pair their app, and the other way round. Both answer: "where is the list, and how does the second screen know which word?"</li>
+    <li>Week 6 swaps the groups if the trolley is free. If not, the Blocks group reads and annotates the Kotlin of Word Wall on paper.</li>
+  </ol>
+  <p class="small">If the App Inventor site is blocked, or the Companion can't connect on school Wi-Fi, ask IT. App Inventor warns that some school firewalls block the Wi-Fi link. Its USB option works only with Android devices.</p>
+</div>
+
+<h2 id="handin">What each group hands in, in week 6</h2>
+<div class="scroll">
+<table>
+  <tr><th>Route</th><th>Hand in</th><th>How</th></tr>
+  <tr><td>Studio with the emulator</td><td>The project folder as a zip, and a 30-second screen video</td><td>Record with <code>adb shell screenrecord</code>, which saves an MP4, or the screen recorder on the Mac. Upload both to the class's usual hand-in place.</td></tr>
+  <tr><td>Studio with a phone</td><td>The project folder as a zip, and a 30-second screen video</td><td>Record on the loan phone with <code>adb shell screenrecord</code>. Delete the video from the phone after.</td></tr>
+  <tr><td>App Inventor</td><td>The .aia file, and 2 screenshots: the list and the second screen</td><td>In App Inventor, export the project as an .aia file. Screenshots come from the Chromebook or Companion.</td></tr>
+</table>
+</div>
+<p>Every group answers the same exit ticket. So the team can compare learning across the three routes.</p>
+
+<h2 id="it">IT checklist, two weeks before week 3</h2>
+<ul class="tight">
+  <li>All schools: allow kotlinlang.org and appinventor.mit.edu. Weeks 1 and 2 run in the browser.</li>
+  <li>Schools A and B, and the School C trolley: install Android Studio and the SDK. Open the starter once on each device so Gradle downloads the libraries.</li>
+  <li>School A: make one emulator on each Mac, and boot it once.</li>
+  <li>School B: approve Studio on the learning devices. On Windows, some phones need their maker's USB driver.</li>
+  <li>Loan phones: turn on Developer options by tapping Build number seven times. Turn on USB debugging. No personal accounts on them.</li>
+  <li>After week 6: turn USB debugging off on every loan phone.</li>
+</ul>
+
+<h2 id="play">Why no student app goes on Google Play</h2>
+<p>Students ask this in week 6, every time. Here is the short answer.</p>
+<ul class="tight">
+  <li>A Play Console account costs US$25, once.</li>
+  <li>You must be 18 or older to sign up. Our Sec 3 students are about 15.</li>
+  <li>A new personal account must first run a closed test with at least 12 testers, opted in for 14 days in a row.</li>
+</ul>
+<p>So in this course, apps stay on school phones and emulators. If a school wants to publish a student app one day, a staff member owns the account, and the school agrees on it first.</p>
+
+<h2>Sources</h2>
+<ul class="tight small">
+  <li>System requirements for Windows, Mac and Linux, and the ChromeOS notes: <a href="https://developer.android.com/studio/install">Install Android Studio</a>.</li>
+  <li>USB and Wi-Fi debugging, Windows USB drivers: <a href="https://developer.android.com/studio/run/device">Run apps on a hardware device</a>.</li>
+  <li>Build number seven times: <a href="https://developer.android.com/studio/debug/dev-options">Configure on-device developer options</a>.</li>
+  <li>Previews instead of the emulator: <a href="https://developer.android.com/develop/ui/compose/tooling/previews">Preview your UI</a>.</li>
+  <li>Screen recording: <a href="https://developer.android.com/tools/adb">Android Debug Bridge (adb)</a>.</li>
+  <li>App Inventor on Chromebooks, Companion, USB for Android only, school firewalls: <a href="https://appinventor.mit.edu/explore/ai2/setup">App Inventor setup</a>.</li>
+  <li>Exporting an .aia file: <a href="https://appinventor.mit.edu/explore/ai2/share">App Inventor, Sharing and Remixing Apps</a>.</li>
+  <li>Personal learning devices and Device Management Applications: <a href="https://www.moe.gov.sg/news/press-releases/20201229-blended-learning-to-enhance-schooling-experience-and-further-develop-students-into-self-directed-learners">MOE press release, 29 December 2020</a>.</li>
+  <li>Fee and age: <a href="https://support.google.com/googleplay/android-developer/answer/6112435">Get started with Play Console</a>. Testing rules: <a href="https://support.google.com/googleplay/android-developer/answer/14151465">App testing requirements for new personal developer accounts</a>.</li>
+</ul>
+</main>
+</div>
+</body>
+</html>

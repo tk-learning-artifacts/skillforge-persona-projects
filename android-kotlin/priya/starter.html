@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Word Wall starter: task card and week 5 lesson, by Priya Nair</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Priya Nair is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<div class="page">
+<nav class="rail noprint" aria-label="Contents">
+  <p>On this page</p>
+  <ol>
+    <li><a href="index.html">Back to Word Wall</a></li>
+    <li><a href="#card">Task card</a></li>
+    <li><a href="#blocks">Blocks version</a></li>
+    <li><a href="#lesson">Week 5 lesson</a></li>
+    <li><a href="#check">Checking learning</a></li>
+    <li><a href="#team">Team notes</a></li>
+  </ol>
+</nav>
+<main>
+<p class="kicker">Week 5 · Lists and screens</p>
+<h1>Starter project and task card</h1>
+<p class="lede">Sec 3 pairs finish Word Wall from a starter that already runs. One task card, three levels, the same for all four classes.</p>
+
+<h2 id="card">Task card</h2>
+<div class="taskcard">
+  <p><strong>Goal.</strong> Finish Word Wall: a list of course words you can search, open and save.</p>
+  <p><strong>Open:</strong> the <code>wordwall-starter</code> project in Android Studio. Look for the 3 <code>// TODO</code> comments. View, Tool Windows, TODO lists them.</p>
+
+  <h3>Step 0: Predict, then run (5 min)</h3>
+  <p>Read <code>WordListScreen.kt</code>. Write 2 things the app will do, and 1 thing that won't work yet. Then press Run. Check your guess.</p>
+
+  <h3><span class="level lv1">Everyone</span>TODO 1: two more words (8 min)</h3>
+  <p>In <code>AppWords.kt</code>, add 2 words from week 6. Copy the AppWord above. Use ids 17 and 18.</p>
+  <p class="small">Test: the list has a Week 6 header with 3 words under it.</p>
+
+  <h3><span class="level lv2">Most pairs</span>TODO 2: make search work (10 min)</h3>
+  <p>In <code>WordListScreen.kt</code>, the search box changes nothing. Keep only the words that contain the search text.</p>
+  <p class="small">Test: type "st". You see List and State, plus any new word with "st" in it. Rotate: "st" is still there.</p>
+
+  <h3><span class="level lv3">Stretch</span>TODO 3: save for revision (15 min)</h3>
+  <p>The switch does nothing. In <code>MainActivity.kt</code>, add a <code>saved</code> state next to <code>search</code>. Pass it to both screens. Update it when the switch changes.</p>
+  <p class="small">Test: save 2 words. The list says "2 saved for revision" and those rows say Saved.</p>
+
+  <h3>Hints, one at a time</h3>
+  <details><summary>Hint for TODO 1</summary><p>Each word ends with a closing bracket and a comma: <code>),</code>. The last word in a list needs no comma.</p></details>
+  <details><summary>Hint for TODO 2</summary><p><code>val shown = words.filter { it.word.contains(search.trim(), ignoreCase = true) }</code></p></details>
+  <details><summary>Hint 1 for TODO 3</summary><p>Copy how <code>search</code> is made. Use <code>rememberSaveable(stateSaver = IdSetSaver) { mutableStateOf(emptySet&lt;Int&gt;()) }</code>.</p></details>
+  <details><summary>Hint 2 for TODO 3</summary><p>Swap <code>emptySet()</code> for <code>saved</code>, and <code>false</code> for <code>word.id in saved</code>. Update with <code>saved = if (on) saved + word.id else saved - word.id</code>.</p></details>
+  <details><summary>Red underline?</summary><p>Click the red word and press Alt+Enter, or Option+Return on a Mac. Choose the import.</p></details>
+</div>
+<p class="small">I wrote the TODOs as comments, not with Kotlin's <code>TODO()</code> function. <code>TODO()</code> throws an error when it runs, so the app would crash.</p>
+
+<h2 id="blocks">The same task in App Inventor</h2>
+<p>School C students without a laptop build Word Wall in blocks. The learning is the same: a list, a second screen, and data passed between them.</p>
+<ol class="tight">
+  <li>Screen1: a ListView. Set ElementsFromString to the 18 words. Set ShowFilterBar to true. That is the search box.</li>
+  <li>Screen2: two Labels, for the word and its meaning.</li>
+  <li>In Screen1, use <code>when ListView1.AfterPicking</code>. Inside it, <code>open another screen with start value</code>, giving it ListView1.Selection.</li>
+  <li>In Screen2, show <code>get start value</code> in the first Label.</li>
+  <li>Stretch: store meanings in a second list, and look one up with <code>index in list</code>.</li>
+</ol>
+<p>The Companion app shows it live on a phone or tablet. Many Chromebooks can also run the app on the same device.</p>
+
+<h2 id="lesson">Week 5 lesson: 60 minutes, pairs</h2>
+<div class="scroll">
+<table>
+  <tr><th>Minutes</th><th>What happens</th><th>What the trainer does</th></tr>
+  <tr><td>0 to 5</td><td>Pairs sit at one device. Open the starter. Studio was synced the day before.</td><td>Takes the register. Checks every screen shows the project.</td></tr>
+  <tr><td>5 to 12</td><td>Show the finished app on the projector. Play the replay.</td><td>Asks: where does <code>search</code> live? Why there?</td></tr>
+  <tr><td>12 to 17</td><td>Step 0: predict, then run.</td><td>Two pairs share their guess.</td></tr>
+  <tr><td>17 to 25</td><td>TODO 1. Driver types, navigator reads the card.</td><td>Checks the Week 6 header on each screen.</td></tr>
+  <tr><td>25 to 35</td><td>TODO 2. Swap driver.</td><td>At minute 30, shows the state-down, events-up picture on the board.</td></tr>
+  <tr><td>35 to 50</td><td>TODO 3 for pairs who are ready. Others test search and add a third word.</td><td>Sits with pairs still on TODO 1.</td></tr>
+  <tr><td>50 to 56</td><td>Exit ticket, on paper or SLS.</td><td>Collects them.</td></tr>
+  <tr><td>56 to 60</td><td>Save, close Studio, log off.</td><td>Notes which hints were opened most.</td></tr>
+</table>
+</div>
+<p class="small">Check: 5 + 7 + 5 + 8 + 10 + 15 + 6 + 4 = 60 minutes.</p>
+
+<h2 id="check">How we check learning</h2>
+<ul class="tight">
+  <li>During: the test line under each TODO. A trainer ticks it on a class list.</li>
+  <li>Exit ticket, three questions:
+    <ol>
+      <li>Where does <code>search</code> live, and why not in the list screen?</li>
+      <li>What would go wrong if it used <code>remember</code> instead of <code>rememberSaveable</code>?</li>
+      <li>Which TODO was hardest? What helped?</li>
+    </ol>
+  </li>
+  <li>Week 6 hand-in: see the <a href="devices.html#handin">device plan</a>. It differs by route.</li>
+</ul>
+
+<h2 id="team">Notes for the four trainers</h2>
+<ul class="tight">
+  <li>Use the same card in every class. If you change it, change it for the team.</li>
+  <li>Sync the starter on every device the day before. The first Gradle sync downloads the libraries.</li>
+  <li>Say "state goes down, events go up" in the same words. Students move between our classes for CCA and talk.</li>
+  <li>After your class, add one line to the team sheet: how long minutes 0 to 5 really took.</li>
+</ul>
+
+<h2>Sources</h2>
+<ul class="tight small">
+  <li>Three TODO levels, PRIMM and the task card shape: the SkillForge guide "Turn your build into a student starter", in this module, and <a href="https://static.raspberrypi.org/files/curriculum/quickreads/11-Pedagogy_Summary_PRIMM_V4_2023.pdf">Raspberry Pi Foundation PRIMM quick read</a>.</li>
+  <li>ListView, ShowFilterBar, AfterPicking and Selection: <a href="https://ai2.appinventor.mit.edu/reference/components/userinterface.html">App Inventor User Interface components</a>.</li>
+  <li>Start values between screens: <a href="https://ai2.appinventor.mit.edu/reference/blocks/control.html">App Inventor Control blocks</a>.</li>
+  <li>Companion on iPhone, iPad and Android: <a href="https://appinventor.mit.edu/explore/ai2/setup">App Inventor setup</a>.</li>
+  <li>State hoisting: <a href="https://developer.android.com/develop/ui/compose/state">State and Jetpack Compose</a>.</li>
+</ul>
+</main>
+</div>
+</body>
+</html>
