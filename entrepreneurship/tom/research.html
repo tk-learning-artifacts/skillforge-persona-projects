@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Second Round, part 1: market research report, by Tom Brennan</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="chart.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Tom Brennan is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<p class="crumb"><a href="index.html">Second Round</a> · Part 1 of 3 · <a href="pilot.html">Part 2</a> · <a href="plan.html">Part 3</a></p>
+<p class="kicker">Part 1</p>
+<h1>Market research report</h1>
+<p class="lede">Is there a real problem, who has it, and will they act? Twelve interviews, one national dataset and a demand test.</p>
+<p class="made-up">The students, parents, staff and their words are made up, like me. So are the counts from our demand test. The NEA waste figures are real.</p>
+
+<h2><span class="num">01</span>Where the idea came from</h2>
+<p>In week 1, the class listed 10 problems they meet at school. Then they voted.</p>
+<ol class="tight">
+  <li>Canteen queues at first recess.</li>
+  <li>Uniforms that stop fitting mid-year. <strong>(won the vote)</strong></li>
+  <li>Water bottles left in the hall.</li>
+  <li>No shade at the bus stop outside school.</li>
+  <li>Old textbooks thrown away each December.</li>
+  <li>Wet umbrellas making the stairs slippery.</li>
+  <li>Lockers that jam.</li>
+  <li>Lost PE kit after CCA.</li>
+  <li>Plastic cups at the drinks stall.</li>
+  <li>Group work with nowhere quiet to meet.</li>
+</ol>
+<p>Problems 2 and 8 merged. Our How Might We question:</p>
+<p class="box"><strong>How might we get outgrown uniforms to students who need the next size, without anyone feeling singled out?</strong></p>
+<p>The last part came from a student, Farhan. He said, "If it's only for poor kids, no one will go." That one line shaped everything after.</p>
+
+<h2><span class="num">02</span>The bigger picture: real data</h2>
+<p>Before the interviews, I showed the class NEA's waste figures. I wanted them to see the system around a small project.</p>
+<div class="chart-wrap" id="chart-wrap">
+  <h3>Singapore's textile and leather waste, 2015 to 2025</h3>
+  <p class="sub">Thousand tonnes a year. Each bar is the total thrown out. The orange base is the part recycled.</p>
+  <ul class="legend">
+    <li><i style="background:var(--s-recycled)"></i>Recycled</li>
+    <li><i style="background:var(--s-disposed)"></i>Disposed of</li>
+  </ul>
+  <div id="chart" role="img" aria-label="Stacked bar chart. Textile and leather waste rose from 155 thousand tonnes in 2015 to 231 thousand tonnes in 2025. The recycled part stayed between 5 and 14 thousand tonnes, 2 to 8 percent."></div>
+  <div class="tip" id="tip" hidden></div>
+</div>
+<details>
+  <summary>Show the numbers as a table</summary>
+  <div class="scroll">
+  <table id="data-table">
+    <thead><tr><th>Year</th><th class="n">Generated</th><th class="n">Recycled</th><th class="n">Disposed of</th><th class="n">Recycling rate</th></tr></thead>
+    <tbody></tbody>
+  </table>
+  </div>
+  <p class="small">Thousand tonnes. In 2019 NEA's recycled and disposed figures add to 167, not 168, because of rounding.</p>
+</details>
+<p>What the class noticed:</p>
+<ul class="tight">
+  <li>In 2025, 231,000 tonnes of textile and leather waste were thrown out. Only 6,000 tonnes were recycled. That is 3%.</li>
+  <li>The rate has stayed at 4% or below since 2019. In 2015 it was 8%.</li>
+  <li>Food waste, by comparison, was recycled at 18% in 2025. Plastics were at 4%.</li>
+  <li>Semakau Landfill will run out of space by around 2035, at current rates (<a href="https://www.mse.gov.sg/policies/waste-management/">MSE</a>).</li>
+</ul>
+<p>"Textile and leather" covers far more than uniforms: clothes, shoes, bags, curtains. Our swap is tiny next to these numbers. I said that out loud. A student asked, "Then why bother?" We spent 20 minutes on that question. It was the best lesson of the term.</p>
+
+<h2 id="method"><span class="num">03</span>How we interviewed</h2>
+<ul class="tight">
+  <li>Weeks 1 and 2. Twelve interviews in total.</li>
+  <li>Students interviewed 6 schoolmates at recess, in pairs. One asked, one wrote. First names only.</li>
+  <li>I interviewed 4 parents at a Parent Support Group meeting, with the school's agreement.</li>
+  <li>I also talked to the uniform shop owner and a general office staff member.</li>
+  <li>Nobody pitched the idea until the last question. We asked about the last time, not the future.</li>
+</ul>
+<div class="box">
+<p><strong>Our question bank</strong></p>
+<ol class="tight">
+  <li>When did you last need a uniform item? What was it?</li>
+  <li>What did you do? Where did you get it, and how long did it take?</li>
+  <li>What happened to the last item you outgrew?</li>
+  <li>What was the hardest part?</li>
+  <li>Students only, asked last: would you pick one up at a table during recess?</li>
+</ol>
+</div>
+<p>Question 5 is about the future, so it is weak. We kept it, asked it last, and treated the answers as a hint only.</p>
+
+<h2 id="interviews"><span class="num">04</span>Interview notes</h2>
+<div class="notes">
+  <article class="note"><h4>1. Aisyah</h4><p class="who">Sec 1 student</p>
+    <blockquote>"My PE shorts fit in January. By June they were too short."</blockquote>
+    <p>Her mum bought new ones at the shop in Term 2. Recess table? "Maybe, if no one's there."</p>
+    <p class="learn">PE kit is outgrown first.</p></article>
+  <article class="note"><h4>2. Ravi</h4><p class="who">Sec 2 student</p>
+    <blockquote>"I wore tight pants for a whole term."</blockquote>
+    <p>He did not want to ask his parents to pay again. Recess table? "No. People would know."</p>
+    <p class="learn">Some students hide the problem to save their family money.</p></article>
+  <article class="note"><h4>3. Mei</h4><p class="who">Sec 4 student</p>
+    <blockquote>"My mum keeps three old skirts for no one."</blockquote>
+    <p>She would give them away today. Recess table? "Yes, why not."</p>
+    <p class="learn">Supply is sitting in cupboards at home.</p></article>
+  <article class="note"><h4>4. Jun Hao</h4><p class="who">Sec 1 student</p>
+    <blockquote>"I'd never take one at recess. My friends would see."</blockquote>
+    <p>He wears his cousin's old shirts. Nobody at school knows.</p>
+    <p class="learn">Being seen is the barrier, not second-hand itself.</p></article>
+  <article class="note"><h4>5. Nisha</h4><p class="who">Sec 3 student</p>
+    <blockquote>"I lost my PE shirt at CCA and needed one by Thursday."</blockquote>
+    <p>She bought a new one at full price that week. Recess table? "Not with my CCA friends around."</p>
+    <p class="learn">Lost kit needs a fast answer, too.</p></article>
+  <article class="note"><h4>6. Daniel</h4><p class="who">Sec 2 student</p>
+    <blockquote>"I don't care if it's used. I care if it's fast."</blockquote>
+    <p>His pants tore before a uniform check. Recess table? "Sure."</p>
+    <p class="learn">Speed matters more than newness for some.</p></article>
+  <article class="note"><h4>7. Mrs Tan</h4><p class="who">Parent of a Sec 1 boy</p>
+    <blockquote>"I bought three sets in December. By May one shirt was tight."</blockquote>
+    <p>She went to the uniform shop on a Saturday. It was closed.</p>
+    <p class="learn">The shop's hours do not fit every parent.</p></article>
+  <article class="note"><h4>8. Mr Lim</h4><p class="who">Parent of three</p>
+    <blockquote>"We don't qualify for school help. Three of everything, every year."</blockquote>
+    <p>His youngest gets hand-me-downs. The eldest always needs new.</p>
+    <p class="learn">Cost bites hardest just above the help line.</p></article>
+  <article class="note"><h4>9. Mdm Siti</h4><p class="who">Parent of a Sec 3 girl</p>
+    <blockquote>"I'd give, not buy. Buying used feels like taking from someone poorer."</blockquote>
+    <p>She donated two bags of clothes last year, to a charity drive.</p>
+    <p class="learn">Our sign must say the swap is for everyone.</p></article>
+  <article class="note"><h4>10. Mrs Kaur</h4><p class="who">Parent of a Sec 2 girl</p>
+    <blockquote>"The school gave us uniforms in January. By July her shoes were done."</blockquote>
+    <p>Her family is on MOE FAS. New shoes cost her more than anything else that term.</p>
+    <p class="learn">FAS covers the start of the year. Shoes are a need we won't meet, for hygiene.</p></article>
+  <article class="note"><h4>11. Mr Koh</h4><p class="who">Uniform shop owner</p>
+    <blockquote>"Used is fine. Just don't sell near-new ones outside my door in December."</blockquote>
+    <p>December and January are his busiest months. Mid-year he keeps few large sizes. He offered to tell parents about the swap when a size runs out.</p>
+    <p class="learn">He can be a partner, not a rival.</p></article>
+  <article class="note"><h4>12. Ms Ong</h4><p class="who">General office</p>
+    <blockquote>"Every year end we have a box of PE shirts nobody claims."</blockquote>
+    <p>About 40 a year. Last year's 22 were still in the store room.</p>
+    <p class="learn">Free stock, if the school agrees.</p></article>
+</div>
+
+<h2 id="findings"><span class="num">05</span>What we found</h2>
+<ul class="tight">
+  <li>Timing beats price. 8 of 12 talked about a size or timing problem. Only 3 raised cost on their own: Ravi, Mr Lim and Mrs Kaur.</li>
+  <li>PE kit goes first. It is outgrown, worn out and lost more than anything else.</li>
+  <li>Being seen matters. 4 of 6 students would not pick up at a recess table.</li>
+  <li>The stock exists. It sits in cupboards at home and in the lost-and-found box.</li>
+  <li>The gap is mid-year. Families on MOE FAS can get free attire on a need basis. Families just above the line, and anyone who grows in June, have no help.</li>
+</ul>
+
+<h3>Assumptions we got wrong</h3>
+<div class="vs">
+  <div class="head">We thought</div><div class="head">We found</div>
+  <div>Price is the main problem.</div><div>Sizes and timing come first. Price comes third.</div>
+  <div>Students will happily shop at a recess table.</div><div>Most want privacy. A table in public scares off the very students we want.</div>
+  <div>Most stock will come from Sec 4s leaving.</div><div>Parents' cupboards and the lost-and-found box hold more.</div>
+  <div>It is mainly for families with less money.</div><div>It is for anyone who grows. Saying so out loud helps the families with less money too.</div>
+  <div>The uniform shop will object.</div><div>The owner wants to send us the sizes he can't stock.</div>
+</div>
+
+<h2 id="demand"><span class="num">06</span>Demand test: request slips</h2>
+<p>Interviews show a problem. They do not show that people will act. So in weeks 4 and 5 we ran a request slip.</p>
+<ul class="tight">
+  <li>Every form class got slips. A student wrote first name, class, item and size.</li>
+  <li>Form teachers sent the slips to us in a sealed envelope. Only the team leader and I saw names.</li>
+  <li>A donation box stood at the general office. Families dropped off washed items.</li>
+  <li>We set our targets in week 3, before any slip went out. Writing the number first stops you from moving the goalposts.</li>
+</ul>
+<div class="scroll">
+<table>
+  <thead><tr><th>Measure</th><th class="n">Target</th><th class="n">Result</th><th></th></tr></thead>
+  <tbody>
+    <tr><td>Size requests in 2 weeks (school of about 1,200)</td><td class="n">30</td><td class="n">41</td><td class="good">Met</td></tr>
+    <tr><td>Items handed in</td><td class="n">60</td><td class="n">88</td><td class="good">Met</td></tr>
+    <tr><td>Usable items after our check</td><td class="n">50</td><td class="n">71</td><td class="good">Met</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>Requests and stock, side by side</h3>
+<div class="scroll">
+<table>
+  <thead><tr><th>Item</th><th class="n">Requested</th><th class="n">Usable stock</th></tr></thead>
+  <tbody>
+    <tr><td>PE shorts</td><td class="n">15</td><td class="n">14</td></tr>
+    <tr><td>PE shirt</td><td class="n">11</td><td class="n">22</td></tr>
+    <tr><td>School shirt</td><td class="n">9</td><td class="n">21</td></tr>
+    <tr><td>Pants or skirt</td><td class="n">6</td><td class="n">14</td></tr>
+    <tr class="total"><td>Total</td><td class="n">41</td><td class="n">71</td></tr>
+  </tbody>
+</table>
+</div>
+<div class="scroll">
+<table>
+  <thead><tr><th>Size</th><th class="n">Requested</th><th class="n">Usable stock</th></tr></thead>
+  <tbody>
+    <tr><td>S</td><td class="n">6</td><td class="n">24</td></tr>
+    <tr><td>M</td><td class="n">14</td><td class="n">25</td></tr>
+    <tr><td>L</td><td class="n">13</td><td class="n">16</td></tr>
+    <tr><td>XL</td><td class="n">8</td><td class="n">6</td></tr>
+    <tr class="total"><td>Total</td><td class="n">41</td><td class="n">71</td></tr>
+  </tbody>
+</table>
+</div>
+<p>Of the 88 items, 17 failed our check. 9 were stained, 5 torn and 3 from another school. Ms Ong's 22 lost-and-found PE shirts all passed after a wash.</p>
+<p>Look at the size table. Requests lean large, and stock leans small. Students who grow need the next size up. Students who give have outgrown the smaller one. I missed this until swap week. It was there in week 5.</p>
+<p class="box"><strong>Is this proof of demand?</strong> It is proof that people want free items in the right size. A slip costs nothing to fill in. Swap week, in <a href="pilot.html">part 2</a>, is stronger proof: people came and took items home. Neither proves people will pay. The plan deals with that.</p>
+
+<footer class="sources">
+<h2><span class="num">07</span>Sources</h2>
+<ul>
+  <li>Textile and leather, food and plastics waste, 2015 to 2025: <a href="https://www.nea.gov.sg/docs/default-source/default-document-library/waste-and-recycling-statistics-2015-to-2025.pdf">NEA, Waste and recycling statistics 2015 to 2025 (PDF)</a>. Linked from <a href="https://www.nea.gov.sg/our-services/waste-management/waste-statistics-and-overall-recycling">NEA's waste statistics page</a>.</li>
+  <li>Semakau Landfill running out of space by around 2035: <a href="https://www.mse.gov.sg/policies/waste-management/">Ministry of Sustainability and the Environment, Waste management</a>.</li>
+  <li>Free school attire under MOE FAS, on a need basis: <a href="https://yuanchingsec.moe.edu.sg/others/financial-assistance-scheme-fas/">MOE FAS 2026, as listed by Yuan Ching Secondary School</a>.</li>
+  <li>How Might We questions: <a href="https://dschool.stanford.edu/tools/how-might-we-questions">Stanford d.school</a>.</li>
+</ul>
+</footer>
+</main>
+</body>
+</html>
