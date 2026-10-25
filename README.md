@@ -26,6 +26,7 @@ These apply to every `.html` file, not only `index.html`.
 ```
 
   Task pages, two folders deeper, use `../../../../kit/note.css`, and end the note with "AI wrote this page as an example for teachers."
+- The note always shows: no style hides it, including print styles, so a printed worksheet carries it too.
 - It is self-contained: no scripts, styles, fonts or images loaded from other sites. Links to other sites are fine.
 - It works on a phone (about 360 px wide) and in light and dark mode.
 - It has its own look, suited to the persona and the project. `kit/base.css` is a fallback, not a house style; projects should not all look the same.

@@ -84,7 +84,7 @@ canvas#screen { display: block; width: 100%; aspect-ratio: 4 / 3; image-renderin
 .tick li::before { content: "\2610  "; }
 .times td:first-child { white-space: nowrap; font-weight: 700; }
 @media print {
-  .ai-note, .noprint { display: none !important; }
+  .noprint { display: none !important; }
   :root { --bg: #fff; --card: #fff; --ink: #000; --ink-2: #000; --muted: #333; --line: #888; --leaf-soft: #fff; }
   body { font-size: 9.4pt; line-height: 1.28; background: #fff; color: #000; }
   main { max-width: none; padding: 0; }

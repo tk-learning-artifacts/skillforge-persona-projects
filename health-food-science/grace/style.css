@@ -91,7 +91,7 @@ button.primary { background: var(--mint); border-color: var(--mint); color: var(
 .jobcard h3 { margin: 0 0 4px; color: var(--mint); }
 .tickbox { display: inline-block; width: 18px; height: 18px; border: 2px solid var(--ink-2); border-radius: 4px; vertical-align: -3px; margin-right: 8px; }
 @media print {
-  .ai-note, .noprint, .band { display: none; }
+  .noprint, .band { display: none; }
   body { background: #fff; color: #000; font-size: 12pt; }
   h2 { margin-top: 16px; }
 }

@@ -77,7 +77,7 @@ th, td { border-bottom: 1px solid var(--line); padding: 8px 6px; text-align: lef
 .talk-card span { display: block; font-size: 0.9rem; color: var(--ink-2); font-weight: 400; margin-top: 4px; }
 .print-btn { min-height: 48px; padding: 0 18px; border-radius: 12px; border: 2px solid var(--accent); background: var(--ground); color: var(--accent); font-weight: 700; cursor: pointer; }
 @media print {
-  .ai-note, .no-print { display: none; }
+  .no-print { display: none; }
   body { background: #fff; color: #000; }
   .talk-card { break-inside: avoid; }
 }

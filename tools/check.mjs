@@ -3,6 +3,7 @@
 // Every .html page under <module>/<persona>/ and tasks/<module>/<task>/<persona>/ must:
 // - start its body with the AI note naming one of the personas,
 // - load nothing from other sites (scripts, styles, images, fonts, frames),
+// - never hide the note with a style, on screen or in print,
 // - stay under 2 MB with its folder's assets,
 // - load in headless Chrome with no JavaScript errors.
 // With --skillforge, every project and task link_path in SkillForge's
@@ -76,6 +77,8 @@ if (fs.existsSync(TASKS)) {
   }
 }
 
+// A rule whose selector names .ai-note and whose body hides it.
+const HIDES_NOTE = /[^{}]*\.ai-note\b[^{}]*\{[^{}]*(display\s*:\s*none|visibility\s*:\s*hidden)/i;
 const OUTSIDE = [
   /<script[^>]+src\s*=\s*["']?(https?:)?\/\//i,
   /<link[^>]+href\s*=\s*["']?(https?:)?\/\/[^>]*>/i,
@@ -92,10 +95,12 @@ for (const page of pages) {
   if (!/kit\/note\.css/.test(html)) fail(page, 'does not link kit/note.css');
   if (!/<meta[^>]+name=["']viewport/i.test(html)) fail(page, 'no viewport meta tag');
   for (const re of OUTSIDE) if (re.test(html)) fail(page, `loads something from another site (${re.source.slice(0, 30)}...)`);
+  if (HIDES_NOTE.test(html)) fail(page, 'a style hides the AI note; it must show on screen and in print');
 }
 for (const css of pages.flatMap((p) => walk(path.dirname(p)).filter((f) => f.endsWith('.css')))) {
   const text = fs.readFileSync(css, 'utf8');
   if (/@import\s+(url\()?["']?(https?:)?\/\/|url\(\s*["']?(https?:)?\/\//i.test(text)) fail(css, 'loads something from another site');
+  if (HIDES_NOTE.test(text)) fail(css, 'hides the AI note; it must show on screen and in print');
 }
 
 if (skillforge) {

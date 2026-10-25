@@ -79,7 +79,7 @@ button { font: inherit; }
 a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visible, [tabindex]:focus-visible { outline: 3px solid var(--marker); outline-offset: 3px; }
 .print-btn { min-height: 48px; padding: 0 18px; border: 3px solid var(--ink); border-radius: 6px; background: var(--card); color: var(--ink); font-weight: 800; cursor: pointer; }
 @media print {
-  .ai-note, .no-print { display: none; }
+  .no-print { display: none; }
   body { background: #fff; color: #000; }
   .print-page { break-before: page; }
 }
