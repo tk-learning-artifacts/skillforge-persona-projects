@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson 2: Teach the key to Scratch. A 60-minute Scratch lesson for Sec 1 Science, by Priya Nair</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="program.js" defer></script>
+<script src="scratchlite.js" defer></script>
+<script src="render.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Priya Nair is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<a class="back" href="index.html">Back to the unit</a>
+<header class="masthead">
+  <p class="code">Lesson 2 of 2 · Scratch</p>
+  <h1>Teach the key to Scratch</h1>
+  <p class="lede">Pairs turn their group's key from lesson 1 into a Scratch bot. It asks the questions and names the object.</p>
+  <ul class="meta">
+    <li>Sec 1 G2 or G3 Science</li>
+    <li>60 minutes</li>
+    <li>About 36 students, 18 pairs</li>
+    <li>Computer lab, one computer per pair</li>
+  </ul>
+</header>
+
+<h2>Learning goals</h2>
+<ul class="tight">
+  <li><span class="tag cs">CS</span> Code a key with input ("ask and wait"), selection (if-else) and a loop ("forever").</li>
+  <li><span class="tag sci">Science</span> Justify each question: which property it tests, and why it splits the objects.</li>
+</ul>
+<h3>Success criteria</h3>
+<ol class="tight">
+  <li>Our bot asks our group's questions in the right order.</li>
+  <li>It names all 5 objects correctly when another pair tests it.</li>
+  <li>We can point to the input, the decision and the loop in our script.</li>
+  <li>We can explain one bug we found and how we fixed it.</li>
+</ol>
+
+<h2>Materials</h2>
+<ul class="tight">
+  <li>The lab, with scratch.mit.edu checked the day before on a student log-in.</li>
+  <li><a href="key-bot-starter.sb3" download>key-bot-starter.sb3</a> in the class folder. The trainer loads it on every computer during the break before.</li>
+  <li>Each group's key from lesson 1, returned with the swap-test notes.</li>
+  <li>A test log sheet per pair: object, bot's guess, right or wrong.</li>
+  <li>Backup: printed block strips for each pair, in case the lab is down.</li>
+</ul>
+
+<h2>The starter file</h2>
+<p>The first question is done. Pairs replace the two "say" blocks with the rest of their own key.</p>
+<div class="blocks" data-sprite="Key Bot" data-program="STARTER"></div>
+<p>The finished model, for trainers, is <a href="index.html#play">Key Bot on the unit page</a>. Do not show it before 40 minutes. Students' keys should look like their own, not like ours.</p>
+
+<h2>Trainer briefing</h2>
+<ul class="tight">
+  <li>The common bug: a tester types "yes", but the script checks for "y". The bot then goes down the "no" path. Let pairs find it in testing, then show the fix below.</li>
+  <li>The second bug: an if-else nested in the wrong branch. Ask: "Read your key's step 1. Where does 'no' go? Where does your script send it?"</li>
+  <li>Drivers and navigators swap at the 25-minute checkpoint.</li>
+</ul>
+
+<h2>The lesson, minute by minute</h2>
+<div class="tablewrap"><table class="timing">
+  <tr><th>Time</th><th>What happens</th><th>Trainer says or does</th></tr>
+  <tr><td>0 to 8</td><td>Settle in pairs. Scratch is open with the starter loaded. Pairs read their key from lesson 1 and its swap-test notes.</td><td>"Fix any question the other group got stuck on before you code it."</td></tr>
+  <tr><td>8 to 15</td><td>Demo. The trainer runs the starter, then adds question 2 live. One "ask and wait", one if-else inside the first one.</td><td>"Each step of your key is one ask and one if-else. The answer decides the branch."</td></tr>
+  <tr><td>15 to 40</td><td>Build. Pairs code their own key. At 25 minutes, checkpoint: the first two questions work. Drivers swap.</td><td>Circulate. Ask each pair to point to the input, the decision and the loop.</td></tr>
+  <tr><td>40 to 50</td><td>Test. Pairs swap seats. The tester thinks of an object and answers the bot. Five games, one per object, logged on the sheet. Then back to fix.</td><td>Show the "y or yes" fix to anyone who found the bug.</td></tr>
+  <tr><td>50 to 57</td><td>Exit ticket on paper: the 2 check questions. File, then "Save to your computer", into the class folder.</td><td>Check one file opens before students leave.</td></tr>
+  <tr><td>57 to 60</td><td>Log off, chairs in.</td><td></td></tr>
+</table></div>
+<p class="sum">Check: 8 + 7 + 25 + 10 + 7 + 3 = 60 minutes.</p>
+
+<h2>The "y or yes" fix</h2>
+<p>Scratch's "=" ignores capital letters, so "Y" equals "y". But "yes" is a different word. An "or" block accepts both.</p>
+<div class="blocks" data-sprite="fix"></div>
+
+<h2>Check questions</h2>
+<ol class="tight">
+  <li>In your script, which block is the input, and which block makes the decision? ("ask and wait" is the input. The if-else decides.)</li>
+  <li>A tester typed "yes", and the bot went down the "no" path. Why? (The script compares the answer with "y". "yes" is not equal to "y", so the else branch runs.)</li>
+</ol>
+
+<h2>For every student</h2>
+<ul class="tight">
+  <li>Pairs who struggle: code the model key from the unit page instead of their own. The blocks are printed for them in order.</li>
+  <li>Pairs who race ahead: add the cork. Add the "or" fix to every question. Then make the bot count how often it is right.</li>
+  <li>Few computers: three students per computer. The third is the tester, who keeps the log.</li>
+  <li>Lab down or Scratch blocked: pairs build the script with printed block strips. Another pair "runs" it by reading the blocks aloud. Save the strips in an envelope and code them next lesson.</li>
+  <li>Students do not need Scratch accounts. Nobody signs up in this unit.</li>
+</ul>
+
+<h2>Sources</h2>
+<ul class="tight small">
+  <li>The <a href="https://scratch.mit.edu/projects/editor/">Scratch editor</a> opens with no sign-in.</li>
+  <li>Text comparison that ignores capitals: <a href="https://github.com/scratchfoundation/scratch-vm/blob/develop/src/util/cast.js">Scratch VM source, cast.js</a>.</li>
+  <li>Menu items in the Scratch editor source: <a href="https://github.com/scratchfoundation/scratch-editor/blob/develop/packages/scratch-gui/src/lib/shared-messages.ts">"Load from your computer"</a> and <a href="https://github.com/scratchfoundation/scratch-editor/blob/develop/packages/scratch-gui/src/components/menu-bar/file-menu.jsx">"Save to your computer"</a>.</li>
+</ul>
+</main>
+</body>
+</html>

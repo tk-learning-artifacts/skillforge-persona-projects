@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The spreadsheet: formulas, checks and a practice tab, by Nadia Hussain</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Nadia Hussain is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<p><a href="index.html">Back to the project</a></p>
+<div class="tools" role="group" aria-label="Reading tools">
+  <span class="group">Text size
+    <button type="button" data-size="0" aria-pressed="true" aria-label="Normal text">A</button>
+    <button type="button" data-size="1" aria-pressed="false" aria-label="Bigger text">A+</button>
+    <button type="button" data-size="2" aria-pressed="false" aria-label="Biggest text">A++</button>
+  </span>
+  <button type="button" id="short-toggle" aria-pressed="false">Short version</button>
+</div>
+<h1>The spreadsheet</h1>
+<div class="short"><p>I did all the work in one spreadsheet. Every number comes from a formula. You can trace each one back to the raw census file.</p></div>
+<div class="card">
+  <p><strong><a href="getting-to-school.xlsx" download>Download getting-to-school.xlsx</a></strong></p>
+  <p class="long">To open it in Google Sheets: in Google Drive, choose New, then File upload. Then open the file with Google Sheets. It also opens in Excel.</p>
+</div>
+<p class="long">It has seven tabs. Each one does one job, from left to right:</p>
+<ol class="tight long">
+  <li>Read me: the question, the source and the licence.</li>
+  <li>Raw: the census file exactly as downloaded. Nobody edits this tab.</li>
+  <li>Groups: the 11 census ways of travel, and the group for each.</li>
+  <li>Clean: the tidy table, 12 rows.</li>
+  <li>Summary: my checks.</li>
+  <li>Change log: the 8 notes from the <a href="data.html">data page</a>.</li>
+  <li>Class practice (made up): a fake class survey for practising cleaning and averages.</li>
+</ol>
+
+<h2>The formulas that do the work</h2>
+<div class="short"><p>Three formulas: one looks up, one adds up a group, one makes a percent.</p></div>
+<h3>Groups tab: look up each number</h3>
+<p><code>=INDEX(Raw!$H$1:$H$13,MATCH($A2,Raw!$A$1:$A$13,0))</code></p>
+<p class="long">MATCH finds the row with this census label. INDEX takes the number from the Primary column, column H. If the census ever changes the row order, this still finds the right row.</p>
+<h3>Clean tab: add up each group</h3>
+<p><code>=SUMIF(Groups!$B$2:$B$12,$B2,Groups!C$2:C$12)</code></p>
+<p class="long">SUMIF adds the numbers for every census row in this group. For "MRT, LRT or mixed trips", that is three rows.</p>
+<h3>Clean tab: percent of the level</h3>
+<p><code>=C2/SUMIF($A$2:$A$13,$A2,$C$2:$C$13)</code></p>
+<p class="long">This divides by the total for that level. So primary and secondary each add up to 100%. The cell is formatted as a percent with 1 decimal place.</p>
+
+<h2>The Summary tab: my checks</h2>
+<div class="card"><p><strong>Primary groups add up</strong></p><p><code>=SUMIF(Clean!$A$2:$A$13,&quot;Primary&quot;,Clean!$C$2:$C$13)</code></p><p>Mine: 245,456. Census: 245,456. Same? TRUE</p></div>
+<div class="card"><p><strong>Secondary groups add up</strong></p><p><code>=SUMIF(Clean!$A$2:$A$13,&quot;Secondary&quot;,Clean!$C$2:$C$13)</code></p><p>Mine: 173,710. Census: 173,710. Same? TRUE</p></div>
+<div class="card"><p><strong>Pre-primary and primary, no transport (%)</strong></p><p><code>=ROUND((Raw!E13+Raw!H13)/(Raw!E2+Raw!H2)*100,1)</code></p><p>Mine: 43.0. Census: 43.0. Same? TRUE</p></div>
+<div class="card"><p><strong>Pre-primary and primary, car or taxi (%)</strong></p><p><code>=ROUND((Raw!E8+Raw!E7+Raw!H8+Raw!H7)/(Raw!E2+Raw!H2)*100,1)</code></p><p>Mine: 22.1. Census: 22.0. Same? FALSE</p></div>
+<div class="card"><p><strong>Secondary, public bus only (%)</strong></p><p><code>=ROUND(Raw!K3/Raw!K2*100,1)</code></p><p>Mine: 36.9. Census: 36.9. Same? TRUE</p></div>
+<p>The FALSE is real. I left it in. A check that always says TRUE teaches nothing.</p>
+
+<h2 id="practice">Practice tab: a made-up class survey</h2>
+<div class="card made-up">
+  <p><strong>This data is made up.</strong> These are not real pupils. I wrote it so my class can practise cleaning before they see their own slips.</p>
+  <p><a href="data/made-up-class-survey-messy.csv" download>Download the messy made-up survey as a CSV file</a></p>
+</div>
+<p class="long">It has the mess real slips have. There are words in a number box, a range and blanks. One number can't be right, and one slip is typed twice. The "minutes_clean" column is my fix. The last column says what I did.</p>
+<p class="long">Slip 19 says 200 minutes. That is over 3 hours, so it is almost certainly a slip of the pen. But the slips have no names, so I can't ask. I leave it blank. That is the price of keeping it anonymous, and I think it is worth it.</p>
+<details>
+<summary>Show all 31 rows</summary>
+<div class="scroll"><table>
+  <thead><tr><th class="num">slip</th><th>how_i_travel</th><th>minutes_as_written</th><th class="num">minutes_clean</th><th>what_i_did</th></tr></thead>
+  <tbody>
+<tr><td class="num">1</td><td>Walk</td><td>10</td><td class="num">10</td><td></td></tr>
+<tr class="fixed"><td class="num">2</td><td>School bus</td><td>35 min</td><td class="num">35</td><td>Took out the word</td></tr>
+<tr><td class="num">3</td><td>Car</td><td>15</td><td class="num">15</td><td></td></tr>
+<tr><td class="num">4</td><td>Walk</td><td>5</td><td class="num">5</td><td></td></tr>
+<tr><td class="num">5</td><td>Public bus</td><td>20</td><td class="num">20</td><td></td></tr>
+<tr><td class="num">6</td><td>Walk</td><td>8</td><td class="num">8</td><td></td></tr>
+<tr class="fixed"><td class="num">7</td><td>School bus</td><td>abt 30</td><td class="num">30</td><td>Took out the word</td></tr>
+<tr><td class="num">8</td><td>Car</td><td>10</td><td class="num">10</td><td></td></tr>
+<tr class="fixed"><td class="num">9</td><td>Walk</td><td>5 to 10</td><td class="num">7.5</td><td>A range: used the middle</td></tr>
+<tr><td class="num">10</td><td>Public bus</td><td>25</td><td class="num">25</td><td></td></tr>
+<tr><td class="num">11</td><td>MRT and bus</td><td>45</td><td class="num">45</td><td></td></tr>
+<tr><td class="num">12</td><td>Walk</td><td>12</td><td class="num">12</td><td></td></tr>
+<tr class="fixed"><td class="num">12</td><td>Walk</td><td>12</td><td class="num"></td><td>Slip 12 typed twice: not counted</td></tr>
+<tr><td class="num">13</td><td>School bus</td><td>40</td><td class="num">40</td><td></td></tr>
+<tr class="fixed"><td class="num">14</td><td>Car</td><td>(blank)</td><td class="num"></td><td>Blank: left blank</td></tr>
+<tr><td class="num">15</td><td>Walk</td><td>7</td><td class="num">7</td><td></td></tr>
+<tr class="fixed"><td class="num">16</td><td>Public bus</td><td>15 mins</td><td class="num">15</td><td>Took out the word</td></tr>
+<tr><td class="num">17</td><td>Prefer not to say</td><td>20</td><td class="num">20</td><td></td></tr>
+<tr><td class="num">18</td><td>Walk</td><td>10</td><td class="num">10</td><td></td></tr>
+<tr class="fixed"><td class="num">19</td><td>School bus</td><td>200</td><td class="num"></td><td>Can't be right, can't ask: left blank</td></tr>
+<tr><td class="num">20</td><td>Car</td><td>20</td><td class="num">20</td><td></td></tr>
+<tr class="fixed"><td class="num">21</td><td>Walk</td><td>half hour</td><td class="num">30</td><td>Words to a number</td></tr>
+<tr><td class="num">22</td><td>Public bus</td><td>30</td><td class="num">30</td><td></td></tr>
+<tr><td class="num">23</td><td>Walk</td><td>6</td><td class="num">6</td><td></td></tr>
+<tr><td class="num">24</td><td>Car</td><td>12</td><td class="num">12</td><td></td></tr>
+<tr><td class="num">25</td><td>School bus</td><td>25</td><td class="num">25</td><td></td></tr>
+<tr class="fixed"><td class="num">26</td><td>Walk</td><td>not sure</td><td class="num"></td><td>Not a number: left blank</td></tr>
+<tr><td class="num">27</td><td>Public bus</td><td>18</td><td class="num">18</td><td></td></tr>
+<tr><td class="num">28</td><td>Walk</td><td>10</td><td class="num">10</td><td></td></tr>
+<tr><td class="num">29</td><td>Car</td><td>15</td><td class="num">15</td><td></td></tr>
+<tr><td class="num">30</td><td>Walk</td><td>5</td><td class="num">5</td><td></td></tr>
+  </tbody>
+</table></div>
+</details>
+
+<h3>The summary formulas</h3>
+<div class="scroll"><table>
+  <thead><tr><th>What</th><th>Formula</th><th class="num">Result</th></tr></thead>
+  <tbody>
+    <tr><td>How many numbers</td><td><code>=COUNT(D3:D33)</code></td><td class="num">27</td></tr>
+    <tr><td>Average (mean)</td><td><code>=ROUND(AVERAGE(D3:D33),1)</code></td><td class="num">18.0 min</td></tr>
+    <tr><td>Middle value (median)</td><td><code>=MEDIAN(D3:D33)</code></td><td class="num">15 min</td></tr>
+    <tr><td>Shortest</td><td><code>=MIN(D3:D33)</code></td><td class="num">5 min</td></tr>
+    <tr><td>Longest</td><td><code>=MAX(D3:D33)</code></td><td class="num">45 min</td></tr>
+    <tr><td>Range</td><td><code>=MAX(D3:D33)-MIN(D3:D33)</code></td><td class="num">40 min</td></tr>
+  </tbody>
+</table></div>
+<div class="short"><p>The average is 18 minutes but the middle value is 15. A few long trips pull the average up. The middle value stays put.</p></div>
+<p class="long">P6 pupils learn the average as the total divided by how many. The median is not in the primary syllabus, so I call it the middle value. Pupils find it by lining up number cards from shortest to longest. Then I ask: which number tells a new pupil what to expect?</p>
+<p class="long">Then the count by way of travel: Walk 12, Car 6, School bus 5, Public bus 5, MRT and bus 1, Prefer not to say 1. The last two are under 5. So they become "Other or not said: 2" before the class sees the chart.</p>
+
+<h2>Sources</h2>
+<ul class="tight small">
+  <li>Census data and licence: see the <a href="data.html">data page</a>.</li>
+  <li>Average in P6: <a href="https://www.moe.gov.sg/primary/curriculum/syllabus">MOE 2021 Mathematics Syllabus, Primary 1 to 6</a>.</li>
+  <li>Google Sheets functions: <a href="https://support.google.com/docs/answer/3098242">INDEX</a>, <a href="https://support.google.com/docs/answer/3093378">MATCH</a>, <a href="https://support.google.com/docs/answer/3093583">SUMIF</a>, <a href="https://support.google.com/docs/answer/3093615">AVERAGE</a>, <a href="https://support.google.com/docs/answer/3094025">MEDIAN</a>.</li>
+</ul>
+</main>
+</body>
+</html>

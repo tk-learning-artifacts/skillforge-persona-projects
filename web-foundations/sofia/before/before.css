@@ -1,0 +1,24 @@
+/* My first draft's styles, kept as they were. The pale colours are the contrast errors. */
+:root { --paper: #fffdf6; --ink: #222; --pale: #f2c94c; --soft: #b8b0a0; --card: #fff; color-scheme: light dark; }
+@media (prefers-color-scheme: dark) { :root { --paper: #15171c; --ink: #eee; --pale: #6b5a1e; --soft: #4d4a45; --card: #1f2229; } }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 17px/1.5 system-ui, sans-serif; }
+.draft { margin: 0; padding: 10px 16px; background: #fde9a8; color: #3b2f00; font-weight: 600; }
+.draft a { color: #1f4e8c; }
+.top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px; padding: 10px 16px; border-bottom: 2px solid var(--ink); }
+.top img { width: 44px; height: 44px; display: block; }
+.top nav a { margin-right: 12px; color: inherit; }
+.wrap { max-width: 900px; margin: 0 auto; padding: 16px; }
+.big { font: 700 2rem/1.2 ui-monospace, Menlo, monospace; margin: 8px 0; }
+.cards { display: flex; flex-wrap: wrap; gap: 14px; }
+.card { flex: 1 1 240px; background: var(--card); border: 2px solid var(--ink); border-radius: 12px; padding: 14px; position: relative; }
+.card img { width: 56px; height: 56px; }
+.stamp { color: var(--pale); font: 700 0.8rem ui-monospace, Menlo, monospace; text-transform: uppercase; }
+.arrow { position: absolute; right: 12px; bottom: 10px; width: 32px; height: 32px; color: var(--ink); }
+.foot { color: var(--soft); text-align: center; padding: 16px; font-size: 0.85rem; }
+textarea { width: 100%; min-height: 80px; font: 1rem ui-monospace, Menlo, monospace; background: var(--card); color: var(--ink); }
+.step button { width: 44px; height: 44px; background: var(--card); border: 2px solid var(--ink); border-radius: 8px; color: var(--ink); }
+.step button svg { width: 20px; height: 20px; }
+.step span { font: 700 1.5rem ui-monospace, Menlo, monospace; margin: 0 10px; }
+.out { color: var(--soft); font: 700 1.2rem ui-monospace, Menlo, monospace; }
+.hint { color: var(--soft); font-size: 0.85rem; }

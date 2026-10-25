@@ -1,0 +1,12 @@
+{
+  "event": "Playtest Night",
+  "note": "Made-up games for this example. Swap in your own class's games.",
+  "games": [
+    { "id": "lava-lift", "title": "Lava Lift", "team": "Team Kaya", "genre": "Platformer", "colour": "#e8590c", "pitch": "Jump only on numbers that divide by 3. Lava rises every 10 seconds." },
+    { "id": "prime-diner", "title": "Prime Time Diner", "team": "Team Teh Peng", "genre": "Arcade", "colour": "#2b8a3e", "pitch": "Serve the orders with prime numbers. Wrong plates cost a star." },
+    { "id": "ratio-racer", "title": "Ratio Racer", "team": "Team Kopi O", "genre": "Racing", "colour": "#1971c2", "pitch": "Steer into the lane that shows the same ratio as your car." },
+    { "id": "fraction-stack", "title": "Fraction Stack", "team": "Team Milo Dino", "genre": "Puzzle", "colour": "#9c36b5", "pitch": "Stack fraction blocks until the tower is exactly 1 whole." },
+    { "id": "angle-archer", "title": "Angle Archer", "team": "Team Chendol", "genre": "Arcade", "colour": "#c2255c", "pitch": "Set your bow to the angle the target needs, then fire." },
+    { "id": "below-zero", "title": "Below Zero", "team": "Team Ice Kacang", "genre": "Platformer", "colour": "#0c8599", "pitch": "Dive under the sea line. Each level is a negative number deeper." }
+  ]
+}

@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Teacher note: Sun, Fish or House?, by Mei Ling Tan</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Mei Ling Tan is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<p class="back noprint"><a href="index.html">Back to Sun, Fish or House?</a> · This note prints on one A4 page. <button type="button" id="print">Print</button></p>
+<div class="sheet">
+<h1>Teacher note: Sun, Fish or House?</h1>
+<p>A doodle classifier for a 90-minute club with Primary 5 and 6 pupils. By Mei Ling Tan.</p>
+<div class="two">
+<div>
+<h2>What it is</h2>
+<p>A web page with a small model that sorts drawings into sun, fish or house. Pupils teach it with their own drawings. They test it on new ones and see how sure it is.</p>
+<h2>Scope: what it is for</h2>
+<ul>
+  <li>Showing that a model learns only from its training data.</li>
+  <li>The words training data, label, feature and overfitting.</li>
+  <li>Testing on new data, and fixing data when it fails.</li>
+  <li>A backup when webcams or log-ins fail. It needs no camera and no account.</li>
+</ul>
+<p>It is not a drawing judge. Never use it to mark pupils' work.</p>
+<h2>How it works</h2>
+<p>Each drawing is cut out, shrunk and turned into 20 × 20 squares. To guess, it finds the 5 taught drawings with the most similar squares. They vote. 4 votes of 5 shows as 80%.</p>
+</div>
+<div>
+<h2>What it gets wrong</h2>
+<ul>
+  <li>Version 1 scored 13 of 15 on new drawings. It called a sun with no rays a fish, at 100%. It called a tall house a sun, also at 100%.</li>
+  <li>Version 2 adds 6 drawings and scores 15 of 15. It is only 60% sure on those two.</li>
+  <li>It knows 3 things only. A cat will still be called sun, fish or house.</li>
+  <li>It sees dark squares, not colour or meaning.</li>
+  <li>My drawings come from one hand. Pupils' styles will fool it more.</li>
+</ul>
+<h2>Safety and privacy</h2>
+<ul>
+  <li>No pupil accounts, no names, no faces. Drawings stay in the browser tab.</li>
+  <li>"Download this model" saves numbers, not pictures. Pupils keep it on the school laptop only.</li>
+  <li>For Teachable Machine, I use my own laptop. Only objects go on camera. I close the tab without saving to Drive.</li>
+  <li>Teachable Machine's FAQ says it needs no account and trains in the browser tab. Samples go to no server unless you save to Drive.</li>
+  <li>Pupils draw things, not classmates.</li>
+</ul>
+<h2>If it goes wrong</h2>
+<p>"It's broken!" usually means it was taught too few or too similar drawings. Ask: what did you teach it? What does it see?</p>
+</div>
+</div>
+<p class="small">Source: Teachable Machine FAQ, teachablemachine.withgoogle.com/faq, checked 24 October 2026.</p>
+</div>
+<script src="print.js" defer></script>
+</main>
+</body>
+</html>

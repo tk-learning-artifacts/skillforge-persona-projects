@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scam or not? A 6-message quiz | Scam or Not?</title>
+<link rel="stylesheet" href="../../../kit/note.css">
+<link rel="stylesheet" href="site.css">
+<script src="quiz.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Daniel Ong is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<a class="skip" href="#main">Skip to the quiz</a>
+<header class="bar">
+  <div class="bar-in">
+    <a class="logo" href="index.html">
+      <svg viewBox="0 0 40 40" aria-hidden="true" focusable="false"><path d="M20 3l14 5v10c0 9-6 16-14 19C12 34 6 27 6 18V8z" fill="currentColor"/><path d="M14 20l4 4 8-9" fill="none" stroke="var(--brand)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Scam or Not?
+    </a>
+    <nav aria-label="Main">
+    <ul>
+      <li><a href="index.html">Spot the signs</a></li>
+      <li><a href="quiz.html" aria-current="page">Scam or not?</a></li>
+      <li><a href="help.html">Get help</a></li>
+    </ul>
+    </nav>
+  </div>
+</header>
+<main id="main">
+  <h1>Scam or not?</h1>
+  <p class="lede">Read each message. Is it a scam, or does it look safe? Choose one. You get a clue after each answer.</p>
+  <p class="made-up">Every message, name and link here is made up. Links end in .example, a name kept for examples, so they go nowhere.</p>
+  <div class="score">
+    <p id="score" aria-live="polite">Score: 0 of 6</p>
+    <button type="button" id="restart">Start again</button>
+  </div>
+  <ol class="chat" id="chat">
+    <li class="msg" data-answer="scam" data-clue="Hurry, a strange link and a small payment. Three signs in one message. Waiting for a parcel? Check in the shop's own app.">
+      <p class="from">SG-Parcel <span>· SMS</span></p>
+      <p class="bubble">Your parcel is held at our depot. Pay $1.50 within 2 hours or it goes back: parcel-sg-help.example/pay</p>
+    </li>
+    <li class="msg" data-answer="safe" data-clue="No money, no secrets, no hurry. You can also check with Jun Hao in person tomorrow.">
+      <p class="from">Jun Hao (classmate) <span>· chat</span></p>
+      <p class="bubble">The CCA slides are in the same class folder as last week. See you at training!</p>
+    </li>
+    <li class="msg" data-answer="scam" data-clue="Too good to be true, and you must pay to start. Job scams were among Singapore's top five scam types in 2023.">
+      <p class="from">Easy Job Hiring <span>· social media</span></p>
+      <p class="bubble">Earn $300 a day just liking videos! Students welcome. Pay a $50 joining fee to start today.</p>
+    </li>
+    <li class="msg" data-answer="scam" data-clue="Government officials will never ask you to transfer money over a phone call. Hang up and tell a parent.">
+      <p class="from">Unknown number <span>· phone call</span></p>
+      <p class="bubble call">"This is the police. Your bank account is linked to a crime. Move your money to a safe account now. Don't tell your parents."</p>
+    </li>
+    <li class="msg" data-answer="safe" data-clue="You asked for this code a moment ago, and the message tells you not to share it. Type it into the app yourself.">
+      <p class="from">GameHub <span>· SMS, just after you tapped Log in</span></p>
+      <p class="bubble">Your GameHub login code is 482913. Do not share this code with anyone.</p>
+    </li>
+    <li class="msg" data-answer="scam" data-clue="Asks for a secret. A login code lets someone into your account. Nobody needs yours, even a friend.">
+      <p class="from">Mei (new number) <span>· chat</span></p>
+      <p class="bubble">Hi, I sent my login code to your number by mistake. Can you send it to me? Quick, it runs out soon.</p>
+    </li>
+  </ol>
+  <p id="done" aria-live="polite"></p>
+  <p><a href="help.html">What to do if you are not sure</a></p>
+</main>
+<footer>
+  <p>A Sec 2 cyber wellness site by Daniel Ong. Every message on this site is made up. <a href="../index.html">How I made this site</a></p>
+</footer>
+</body>
+</html>

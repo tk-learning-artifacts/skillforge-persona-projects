@@ -1,0 +1,87 @@
+/* Daniel's project pages: a new trainer's learning log. Lined paper, mint margins, sticky notes for mistakes. */
+:root {
+  --bg: #fdfdfb; --panel: #ffffff; --ink: #1a2321; --ink-2: #44514e; --muted: #56625f; --line: #dfe6e4; --rule: #e8eef7;
+  --mint: #075548; --mint-soft: #ddf1eb; --sticky: #fff4c2; --sticky-ink: #3b3000; --red: #9f2d20; --red-soft: #fbe5e1;
+  --green: #166534; --green-soft: #dcf2e3; --code: #f1f4f3;
+  color-scheme: light dark;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #111615; --panel: #182120; --ink: #e8efed; --ink-2: #bfcbc8; --muted: #a2b0ad; --line: #2b3836; --rule: #1b2423;
+    --mint: #6fd6c0; --mint-soft: #16332d; --sticky: #3a3415; --sticky-ink: #f5e9b0; --red: #ffab9e; --red-soft: #3a1f1b;
+    --green: #8fdcaa; --green-soft: #15301f; --code: #0d1211;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; color: var(--ink); font: 17px/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg) linear-gradient(var(--rule) 1px, transparent 1px) 0 0 / 100% 28px; }
+main { max-width: 820px; margin: 0 auto; padding: 22px 18px 64px; background: var(--bg); border-left: 3px solid var(--mint-soft); border-right: 3px solid var(--mint-soft); min-height: 100vh; }
+h1 { font-size: 2.05rem; line-height: 1.15; margin: 10px 0 8px; }
+h2 { font-size: 1.4rem; line-height: 1.25; margin: 44px 0 10px; color: var(--mint); }
+h3 { font-size: 1.1rem; margin: 22px 0 6px; }
+a { color: var(--mint); }
+a:focus-visible, button:focus-visible, summary:focus-visible, pre:focus-visible { outline: 3px solid var(--red); outline-offset: 2px; }
+.kicker { font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.82rem; margin: 0; }
+.lede { font-size: 1.12rem; color: var(--ink-2); }
+.small { font-size: 0.92rem; color: var(--muted); }
+.toc { list-style: none; padding: 0; margin: 16px 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.toc a { display: block; min-height: 44px; padding: 10px 14px; border-radius: 999px; background: var(--mint-soft); color: var(--ink);
+  text-decoration: none; font-weight: 600; font-size: 0.95rem; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; margin: 14px 0; }
+.sticky { background: var(--sticky); color: var(--sticky-ink); border-radius: 4px 4px 18px 4px; padding: 12px 16px; margin: 16px 0;
+  box-shadow: 0 2px 0 rgba(0,0,0,0.08); }
+.sticky h3 { margin-top: 0; }
+.sticky a { color: inherit; }
+ul.tight li, ol.steps li { margin-bottom: 6px; }
+.live { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; background: var(--panel); border: 2px solid var(--mint);
+  border-radius: 14px; padding: 14px 16px; margin: 12px 0; }
+.live strong { color: var(--mint); }
+.live a { font-weight: 700; word-break: break-all; }
+.pages { display: flex; flex-wrap: wrap; gap: 12px; list-style: none; padding: 0; }
+.pages li { flex: 1 1 220px; background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; }
+.pages a { font-weight: 700; }
+code, pre { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; }
+code { background: var(--code); padding: 1px 5px; border-radius: 4px; font-size: 0.9em; }
+
+/* Redrawn WAVE summaries */
+.wave { display: flex; flex-wrap: wrap; gap: 12px; }
+.wave figure { flex: 1 1 240px; margin: 0; background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; }
+.wave figcaption { font-weight: 700; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 0.92rem; }
+.nums { display: flex; gap: 10px; margin: 10px 0; }
+.nums div { flex: 1; border-radius: 10px; padding: 6px 8px; text-align: center; font-size: 0.9rem; }
+.nums b { display: block; font-size: 1.9rem; line-height: 1.1; }
+.nums .bad { background: var(--red-soft); color: var(--ink); }
+.nums .bad b { color: var(--red); }
+.nums .ok { background: var(--green-soft); color: var(--ink); }
+.nums .ok b { color: var(--green); }
+.wave ul { margin: 0; padding-left: 20px; font-size: 0.92rem; }
+.fixes li { margin-bottom: 10px; }
+.fixes .who { display: block; color: var(--muted); font-size: 0.93rem; }
+
+/* Code listings */
+.file { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; margin: 14px 0; overflow: hidden; }
+.file-top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px; padding: 8px 12px; background: var(--code); border-bottom: 1px solid var(--line); }
+.file-top h3 { margin: 0; font-size: 1rem; font-family: ui-monospace, Menlo, Consolas, monospace; }
+pre { margin: 0; padding: 12px; overflow-x: auto; font-size: 0.85rem; line-height: 1.5; }
+pre mark { background: var(--sticky); color: var(--sticky-ink); }
+button { font: inherit; font-weight: 700; min-height: 44px; min-width: 44px; padding: 0 16px; border-radius: 999px; border: 2px solid var(--mint);
+  background: var(--panel); color: var(--ink); cursor: pointer; }
+details { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 4px 14px; margin: 12px 0; }
+summary { cursor: pointer; font-weight: 700; min-height: 44px; display: flex; align-items: center; }
+
+/* Task card */
+.taskcard { background: var(--panel); border: 2px solid var(--ink); border-radius: 14px; padding: 16px; }
+.taskcard h1 { margin-top: 0; font-size: 1.55rem; }
+.taskcard h2 { color: var(--ink); font-size: 1.08rem; margin: 14px 0 4px; }
+.task { border-left: 5px solid var(--mint); background: var(--mint-soft); border-radius: 0 10px 10px 0; padding: 8px 12px; margin: 8px 0; }
+.task p { margin: 4px 0; }
+.boxes { list-style: none; padding: 0; margin: 4px 0; }
+.boxes li::before { content: "☐ "; }
+@media print {
+  .noprint { display: none; }
+  body { background: #fff; color: #000; font-size: 11pt; line-height: 1.38; }
+  main { border: 0; padding: 0; max-width: none; min-height: 0; }
+  .taskcard { padding: 10px 12px; border-width: 1.5px; }
+  .task { background: none; padding: 4px 10px; margin: 5px 0; }
+  .taskcard h1 { font-size: 1.3rem; }
+}

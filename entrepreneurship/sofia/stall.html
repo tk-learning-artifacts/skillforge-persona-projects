@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Queue Quest, part 3: the Stall Day game, by Sofia Reyes</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="stall.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Sofia Reyes is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<p class="crumb"><a href="index.html">Queue Quest</a> · <a href="research.html">1</a> · <a href="deck.html">2</a> · Part 3 · <a href="plan.html">4</a></p>
+<h1>Stall Day</h1>
+<p class="lede">Run our showcase sale yourself. Pick a price. Decide whether to ask first. Print some decks. Then open the stall and see who comes.</p>
+<p>My Shop team played this on Thursday, before I printed anything. It turned the money plan into a game. They argued about it for half an hour. That is what I wanted.</p>
+<p class="made-up">The families here are pretend. How they choose comes from a made-up model, set to land near our camp's numbers. It is a game for thinking, not a forecast.</p>
+
+<div class="stall" id="stall">
+  <fieldset>
+    <legend>1. Pick a price for one deck</legend>
+    <div class="choice" id="prices" role="group" aria-label="Price">
+      <button type="button" data-price="2" aria-pressed="false">$2</button>
+      <button type="button" data-price="3" aria-pressed="false">$3</button>
+      <button type="button" data-price="4" aria-pressed="true">$4</button>
+      <button type="button" data-price="5" aria-pressed="false">$5</button>
+      <button type="button" data-price="6" aria-pressed="false">$6</button>
+    </div>
+    <p class="hint">Each deck costs $1.10 to print and pack. Set-up costs $14, whatever you sell.</p>
+  </fieldset>
+
+  <fieldset>
+    <legend>2. Ask first?</legend>
+    <div class="choice" role="group" aria-label="Pre-order sheet">
+      <button type="button" data-sheet="yes" aria-pressed="true">Yes, put up a pre-order sheet</button>
+      <button type="button" data-sheet="no" aria-pressed="false">No, just make them</button>
+    </div>
+    <div id="sheet-box">
+      <p class="hint">The sheet goes up at pick-up for a day. Nobody pays yet.</p>
+      <button type="button" id="sheet-run">Put the sheet up</button>
+      <p class="preorder-result" id="sheet-result" aria-live="polite"></p>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend id="print-legend">3. Spare decks on top of the pre-orders</legend>
+    <div class="stepper">
+      <button type="button" id="minus" aria-label="One fewer">−</button>
+      <output id="print-out" for="print-in">6</output>
+      <button type="button" id="plus" aria-label="One more">+</button>
+      <input type="range" id="print-in" min="0" max="20" value="6" aria-labelledby="print-legend">
+    </div>
+    <p class="hint" id="print-hint"></p>
+  </fieldset>
+
+  <div class="buttons">
+    <button type="button" class="go" id="run">Open the stall</button>
+    <button type="button" id="run20">Run 20 showcase days</button>
+  </div>
+
+  <div id="day" hidden>
+    <h3>Showcase day</h3>
+    <ul class="legend-k">
+      <li><span class="fam yes pre">✓</span>pre-ordered and paid</li>
+      <li><span class="fam yes">✓</span>bought on the day</li>
+      <li><span class="fam miss">!</span>wanted one, sold out</li>
+      <li><span class="fam no">-</span>no thanks, or didn't come</li>
+      <li><span class="fam walk">&nbsp;</span>square: a visitor walking past</li>
+    </ul>
+    <div class="crowd" id="crowd" role="img" aria-label=""></div>
+    <div class="score" id="score"></div>
+    <p class="coach" id="coach" aria-live="polite"></p>
+  </div>
+
+  <div id="many" hidden>
+    <h3>20 showcase days, same choices</h3>
+    <div class="scroll"><table id="many-table"><tbody></tbody></table></div>
+    <p class="coach" id="many-coach"></p>
+  </div>
+</div>
+
+<h2>Challenges</h2>
+<ul class="badges" id="badges">
+  <li data-badge="beat">Beat our team's $74.80</li>
+  <li data-badge="tidy">No decks left and nobody turned away</li>
+  <li data-badge="brave">Make a profit without a pre-order sheet</li>
+  <li data-badge="best">Find the price with the best 20-day average</li>
+</ul>
+<p class="small">For the one who finishes early: which price is best over 20 days? Is it the same price that wins a single day?</p>
+
+<h2>How the pretend families choose</h2>
+<ul class="tight">
+  <li>There are 38 families, as at our camp. 4 to 10 visitors from the centre walk past too.</li>
+  <li>The chance a family wants a deck drops as the price goes up. It is about 9 in 10 at $2, 6 in 10 at $4 and 3 in 10 at $6.</li>
+  <li>About 1 in 4 buying families wants 2 decks, one for each child.</li>
+  <li>With a sheet, 9 in 10 families who want one sign it. Some forget and turn up on the day.</li>
+  <li>Pre-orders are always kept. A family who misses Friday collects later.</li>
+  <li>Walk-past visitors are half as keen as camp families.</li>
+</ul>
+<p>Our real Friday: $4, a sheet, 26 pre-orders and 6 spares. We sold 31 and kept 1 as a sample. The model is not our camp. It is close enough to argue with.</p>
+
+<h2>What my Shop team took from it</h2>
+<ul class="tight">
+  <li>Without a sheet, they either ran out or had a pile left. The sticker pack pile, again.</li>
+  <li>$6 felt rich, but fewer families bought. The best days were at $4 or $5.</li>
+  <li>One great day proves nothing. Twenty days show you the risk.</li>
+</ul>
+<p>Wen asked the best question: "Why do we pay for the spare decks if nobody buys them?" That is the whole lesson about stock.</p>
+</main>
+</body>
+</html>

@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agent page starter project for campers aged 8 to 12, by Sofia Reyes</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="copy.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Sofia Reyes is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<p><a href="index.html">Back to Code Breakers HQ</a></p>
+<h1>Starter: build your agent page</h1>
+<p class="lede">A half-made web page for campers aged 8 to 12. It has 3 TODOs: one in HTML, one in CSS and one in JavaScript. When all 3 are done, a button cracks a secret message.</p>
+
+<ul class="toc">
+  <li><a href="starter/index.html">Run the starter as it is</a></li>
+  <li><a href="card.html">Print the task card</a></li>
+  <li><a href="#files">Copy the 3 files</a></li>
+  <li><a href="#session">How I run the session</a></li>
+  <li><a href="#answers">Answer key</a></li>
+</ul>
+
+<h2 id="setup">How campers get it</h2>
+<ol class="steps">
+  <li>Open the <a href="https://editor.raspberrypi.org/">Raspberry Pi Code Editor</a> and choose "Start coding HTML/CSS". No account is needed.</li>
+  <li>Replace the code in <code>index.html</code> and <code>styles.css</code> with the files below.</li>
+  <li>Use the Add file button to make <code>script.js</code>, then paste the third file.</li>
+  <li>Press Run. The page shows, but the badges are in a column and the message stays secret.</li>
+</ol>
+<p>Campers do not log in. Under 13s need a parent's permission for a Raspberry Pi Foundation account. A 3-day camp is too short to collect forms. So at the end, each pair uses the editor's download button. I keep the files for our showcase.</p>
+<p class="note">Copying 3 files is fiddly for an 8-year-old. I pair each younger camper with an older one. The older one is the navigator and reads the steps. The younger one types.</p>
+
+<h2 id="files">The 3 files</h2>
+<p>The yellow lines are the TODOs. The copies here leave out the AI note, so campers paste only their own page.</p>
+<p class="small" id="copied" aria-live="polite"></p>
+<div class="file">
+<div class="file-top"><h3>index.html</h3><button type="button" data-copy="sindex" data-name="index.html">Copy index.html</button></div>
+<pre id="sindex" tabindex="0" aria-label="index.html code">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+  &lt;title&gt;Agent page&lt;/title&gt;
+  &lt;link rel="stylesheet" href="styles.css"&gt;
+  &lt;script src="script.js" defer&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;header&gt;
+    &lt;h1&gt;Agent ???&lt;/h1&gt;
+    &lt;p&gt;Top secret. Code breakers only.&lt;/p&gt;
+  &lt;/header&gt;
+  &lt;main&gt;
+    &lt;section&gt;
+      &lt;h2&gt;My gadgets&lt;/h2&gt;
+<mark>      &lt;!-- TODO 1 (HTML): Change ??? in the h1 to your agent name.</mark>
+           Then add a list of 3 gadgets here, with ul and li tags. --&gt;
+    &lt;/section&gt;
+    &lt;section&gt;
+      &lt;h2&gt;My badges&lt;/h2&gt;
+      &lt;div class="badges"&gt;
+        &lt;p class="badge"&gt;Caesar wheel&lt;/p&gt;
+        &lt;p class="badge"&gt;Morse lab&lt;/p&gt;
+        &lt;p class="badge"&gt;Table tap&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/section&gt;
+    &lt;section&gt;
+      &lt;h2&gt;Secret message&lt;/h2&gt;
+      &lt;p id="secret"&gt;PHHW PH DW WKH VOLGH&lt;/p&gt;
+      &lt;button id="decode"&gt;Decode it&lt;/button&gt;
+    &lt;/section&gt;
+  &lt;/main&gt;
+  &lt;footer&gt;
+    &lt;p&gt;Made at Code Breakers Camp&lt;/p&gt;
+  &lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+</div>
+<div class="file">
+<div class="file-top"><h3>styles.css</h3><button type="button" data-copy="scss" data-name="styles.css">Copy styles.css</button></div>
+<pre id="scss" tabindex="0" aria-label="styles.css code">body {
+  font-family: sans-serif;
+  margin: 0;
+  background: #fbf6e9;
+  color: #1d1b16;
+}
+
+header, main, footer {
+  padding: 16px;
+}
+
+header {
+  background: #1d1b16;
+  color: #fbf6e9;
+}
+
+.badge {
+  background: white;
+  border: 3px solid #1d1b16;
+  border-radius: 12px;
+  padding: 12px;
+  text-align: center;
+}
+
+<mark>/* TODO 2 (CSS): Make the badges sit side by side.</mark>
+   Inside .badges below, add these 3 lines:
+   display: flex;
+   gap: 12px;
+   flex-wrap: wrap;     (so they wrap on a phone) */
+.badges {
+
+}
+
+#secret {
+  font-family: monospace;
+  font-size: 1.4rem;
+}
+
+button {
+  font-size: 1.1rem;
+  padding: 10px 16px;
+}</pre>
+</div>
+<div class="file">
+<div class="file-top"><h3>script.js</h3><button type="button" data-copy="sjs" data-name="script.js">Copy script.js</button></div>
+<pre id="sjs" tabindex="0" aria-label="script.js code">// Find the secret message and the button on the page.
+const secret = document.querySelector('#secret');
+const button = document.querySelector('#decode');
+const hidden = secret.textContent;
+
+<mark>// TODO 3 (JavaScript): The message was hidden with a Caesar shift.</mark>
+// Change the 0 to the right shift. Caesar's own shift is a good guess.
+const shift = 0;
+
+// Moves every letter back along the alphabet by the shift.
+function decode(text) {
+  const abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  let answer = '';
+  for (const letter of text) {
+    const place = abc.indexOf(letter);
+    if (place === -1) {
+      answer = answer + letter;
+    } else {
+      answer = answer + abc[(place - shift + 26) % 26];
+    }
+  }
+  return answer;
+}
+
+button.addEventListener('click', function () {
+  secret.textContent = decode(hidden);
+});</pre>
+</div>
+
+<h2 id="session">How I run it: one 90-minute camp block</h2>
+<p>20 campers, aged 8 to 12, in 10 mixed-age pairs. One laptop per pair.</p>
+<ol class="steps timeline">
+  <li>0 to 10 min. Warm up with the table tap game from the Morse lab.</li>
+  <li>10 to 20 min. I show the finished agent page on the big screen. I click Decode it. Then I show the starter, with nothing working.</li>
+  <li>20 to 30 min. Pairs open the editor and paste the 3 files. Older campers navigate.</li>
+  <li>30 to 65 min. TODOs 1, 2 and 3. I walk round with the "check these first" list from the task card.</li>
+  <li>65 to 80 min. Mastermind challenges for pairs who finish. Pairs still working get my help.</li>
+  <li>80 to 90 min. Gallery walk. Half the pairs leave their pages open, and the rest go round cracking messages. Then swap.</li>
+</ol>
+<p class="small">Check: 10 + 10 + 10 + 35 + 15 + 10 = 90 minutes.</p>
+
+<h2 id="levels">Why 3 levels on one card</h2>
+<ul class="tiers">
+  <li><span class="stamp">Rookie</span><h3>About ages 8 and 9</h3><p>The hint gives the exact code to type and where. Success is a page that works.</p></li>
+  <li><span class="stamp">Agent</span><h3>About ages 10 to 12</h3><p>The hint names the idea, such as "flexbox", and lets them find the line.</p></li>
+  <li><span class="stamp">Mastermind</span><h3>Anyone who finishes</h3><p>New features with no step-by-step help. This keeps early finishers busy and away from other pairs' keyboards.</p></li>
+</ul>
+<p>Every camper does the same 3 TODOs. Only the hints change. So the gallery walk still works. Every page has a list, a row of badges and a decoder.</p>
+
+<h2 id="test">Test run with a colleague</h2>
+<p class="small">My colleague and campers are made up, like me.</p>
+<ul class="tight">
+  <li>My colleague did all 3 TODOs in 14 minutes. Campers will take 2 to 3 times longer, so 35 minutes fits.</li>
+  <li>She typed <code>display flex;</code> without the colon. Nothing happened, and there was no error. I added "check the colon" to the task card.</li>
+  <li>She asked what "shift" meant. Rookies won't know either. The Rookie hint now says "try 3, like Caesar".</li>
+</ul>
+
+<h2 id="answers">Answer key</h2>
+<details>
+<summary>Show the finished TODOs</summary>
+<p>TODO 1, in <code>index.html</code>:</p>
+<pre>&lt;h1&gt;Agent Night Owl&lt;/h1&gt;
+...
+&lt;ul&gt;
+  &lt;li&gt;Invisible ink pen&lt;/li&gt;
+  &lt;li&gt;Pocket torch&lt;/li&gt;
+  &lt;li&gt;Caesar wheel&lt;/li&gt;
+&lt;/ul&gt;</pre>
+<p>TODO 2, in <code>styles.css</code>:</p>
+<pre>.badges {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}</pre>
+<p>TODO 3, in <code>script.js</code>: <code>const shift = 3;</code> The message reads MEET ME AT THE SLIDE.</p>
+</details>
+</main>
+</body>
+</html>

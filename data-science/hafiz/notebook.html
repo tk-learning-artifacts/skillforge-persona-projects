@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Colab notebook: Changi's wettest day in pandas, by Hafiz Ismail</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Hafiz Ismail is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<p><a href="index.html">Back to the project</a></p>
+<span class="tag">Deliverable · short Colab notebook</span>
+<h1>The notebook</h1>
+<p class="lede">Eleven code cells in Python with pandas. Every output below is real: I ran the notebook top to bottom before putting it here.</p>
+<div class="card">
+  <p><strong>Run it yourself in Google Colab</strong></p>
+  <ol class="tight">
+    <li><a href="changi-wettest-day.ipynb" download>Download changi-wettest-day.ipynb</a>.</li>
+    <li>Open <a href="https://colab.research.google.com/">Colab</a>. Choose File, then Upload notebook, and pick the file.</li>
+    <li>Choose Runtime, then Run all. The first cell reads the four CSV files from this site.</li>
+    <li>No internet in the lab? Upload the four <a href="data.html">raw CSV files</a> to Colab's Files panel. Then change the first cell to <code>BASE = ""</code>.</li>
+  </ol>
+  <p class="small">You need a Google account to use Colab. On a school account, your school's admin can turn Colab on or off. Check before the lesson.</p>
+</div>
+<p>The question: <strong>has the wettest day of each year at Changi Climate Station got wetter from 1984 to 2025?</strong> Source and licence notes are in the notebook's first cell.</p>
+<div class="cell">
+<div class="in"><div class="prompt">In [1]:</div><pre><code># 1. Load the three NEA files and look at the first rows
+import os
+import pandas as pd
+import numpy as np
+
+BASE = &quot;data/raw/&quot; if os.path.exists(&quot;data/raw/&quot;) else \
+    &quot;https://tk-learning-artifacts.github.io/skillforge-persona-projects/data-science/hafiz/data/raw/&quot;
+
+total = pd.read_csv(BASE + &quot;RainfallMonthlyTotal.csv&quot;, na_values=&quot;na&quot;)
+wettest = pd.read_csv(BASE + &quot;RainfallMonthlyHighestDailyTotal.csv&quot;, na_values=&quot;na&quot;)
+days = pd.read_csv(BASE + &quot;RainfallMonthlyNumberofRainDays.csv&quot;, na_values=&quot;na&quot;)
+
+for name, df in [(&quot;total&quot;, total), (&quot;wettest&quot;, wettest), (&quot;days&quot;, days)]:
+    print(name, df.shape, list(df.columns))
+total.head()</code></pre></div>
+<div class="out"><div class="prompt">Out[1]:</div><pre>total (537, 2) [&#x27;month&#x27;, &#x27;total_rainfall&#x27;]
+wettest (537, 2) [&#x27;month&#x27;, &#x27;maximum_rainfall_in_a_day&#x27;]
+days (537, 2) [&#x27;month&#x27;, &#x27;no_of_rainy_days&#x27;]</pre></div>
+<div class="out"><div class="prompt">Out[1]:</div><pre>     month  total_rainfall
+0  1982-01           107.1
+1  1982-02            27.8
+2  1982-03           160.8
+3  1982-04           157.0
+4  1982-05           102.2</pre></div>
+<p class="why">read_csv loads each file into a DataFrame. I print the shape first: 537 rows each, so the files line up.</p>
+</div>
+<div class="cell">
+<div class="in"><div class="prompt">In [2]:</div><pre><code># 2. Join them on month, then check for gaps and repeats
+rain = total.merge(wettest, on=&quot;month&quot;).merge(days, on=&quot;month&quot;)
+rain.columns = [&quot;month&quot;, &quot;total_mm&quot;, &quot;wettest_day_mm&quot;, &quot;rain_days&quot;]
+rain[&quot;month&quot;] = pd.to_datetime(rain[&quot;month&quot;], format=&quot;%Y-%m&quot;)
+rain[&quot;year&quot;] = rain[&quot;month&quot;].dt.year
+
+print(&quot;rows:&quot;, len(rain))
+print(&quot;missing values:&quot;, rain.isna().sum().sum())
+print(&quot;repeated months:&quot;, rain[&quot;month&quot;].duplicated().sum())
+print(&quot;wettest day bigger than the month&#x27;s total:&quot;, (rain[&quot;wettest_day_mm&quot;] &gt; rain[&quot;total_mm&quot;]).sum())
+print(&quot;rain days over 31:&quot;, (rain[&quot;rain_days&quot;] &gt; 31).sum())
+rain.dtypes</code></pre></div>
+<div class="out"><div class="prompt">Out[2]:</div><pre>rows: 537
+missing values: 0
+repeated months: 0
+wettest day bigger than the month&#x27;s total: 0
+rain days over 31: 0</pre></div>
+<div class="out"><div class="prompt">Out[2]:</div><pre>month             datetime64[us]
+total_mm                 float64
+wettest_day_mm           float64
+rain_days                  int64
+year                       int32
+dtype: object</pre></div>
+<p class="why">merge joins on month. Then four quick checks. A zero is a result too: it tells me what I don&#x27;t need to fix.</p>
+</div>
+<div class="cell">
+<div class="in"><div class="prompt">In [3]:</div><pre><code># 3. Does every year have 12 months?
+months_per_year = rain.groupby(&quot;year&quot;)[&quot;month&quot;].count()
+months_per_year[months_per_year != 12]</code></pre></div>
+<div class="out"><div class="prompt">Out[3]:</div><pre>year
+2026    9
+Name: month, dtype: int64</pre></div>
+<p class="why">Counting rows per year finds part years fast. Only 2026 is short.</p>
+</div>
+<div class="cell">
+<div class="in"><div class="prompt">In [4]:</div><pre><code># 4. Check my yearly sums against SingStat&#x27;s annual table
+ss = pd.read_csv(BASE + &quot;AirTemperatureAndSunshineRelativeHumidityAndRainfallAnnual.csv&quot;, na_values=&quot;na&quot;)
+ss = ss.set_index(&quot;DataSeries&quot;).T
+ss.index = ss.index.astype(int)
+
+mine = rain[rain[&quot;year&quot;] &lt;= 2025].groupby(&quot;year&quot;).agg(
+    total_mm=(&quot;total_mm&quot;, &quot;sum&quot;), wettest_day_mm=(&quot;wettest_day_mm&quot;, &quot;max&quot;))
+check = pd.DataFrame({
+    &quot;my_total&quot;: mine[&quot;total_mm&quot;].round(1),
+    &quot;singstat_total&quot;: ss[&quot;Total Rainfall&quot;],
+    &quot;my_wettest&quot;: mine[&quot;wettest_day_mm&quot;],
+    &quot;singstat_wettest&quot;: ss[&quot;Highest Daily Rainfall Total&quot;],
+}).dropna()
+check[&quot;total_gap&quot;] = (check[&quot;my_total&quot;] - check[&quot;singstat_total&quot;]).round(1)
+check[&quot;wettest_gap&quot;] = (check[&quot;my_wettest&quot;] - check[&quot;singstat_wettest&quot;]).round(1)
+check[(check[&quot;total_gap&quot;] != 0) | (check[&quot;wettest_gap&quot;] != 0)]</code></pre></div>
+<div class="out"><div class="prompt">Out[4]:</div><pre>      my_total  singstat_total  my_wettest  singstat_wettest  total_gap  \
+1982    1581.7          1749.6       109.0             121.5     -167.9   
+1983    1993.7          2080.8       181.8             112.9      -87.1   
+2015    1267.1          1266.8        63.2              63.2        0.3   
+
+      wettest_gap  
+1982        -12.5  
+1983         68.9  
+2015          0.0</pre></div>
+<p class="why">A second source is the best check I know. SingStat&#x27;s table is wide, one column per year, so I flip it with .T.</p>
+</div>
+<div class="cell">
+<div class="in"><div class="prompt">In [5]:</div><pre><code># 5. Clean: keep whole years from 1984, when both sources agree on the station
+clean = rain[(rain[&quot;year&quot;] &gt;= 1984) &amp; (rain[&quot;year&quot;] &lt;= 2025)].copy()
+clean[&quot;month_num&quot;] = clean[&quot;month&quot;].dt.month
+clean[&quot;month&quot;] = clean[&quot;month&quot;].dt.strftime(&quot;%Y-%m&quot;)
+clean = clean[[&quot;month&quot;, &quot;year&quot;, &quot;month_num&quot;, &quot;total_mm&quot;, &quot;wettest_day_mm&quot;, &quot;rain_days&quot;]]
+clean.to_csv(&quot;changi-monthly-clean.csv&quot;, index=False)
+print(len(clean), &quot;months,&quot;, clean[&quot;year&quot;].min(), &quot;to&quot;, clean[&quot;year&quot;].max())
+
+# One more check: MSS publishes a 1991 to 2020 average of 2113.3 mm a year at Changi
+yearly_total = clean.groupby(&quot;year&quot;)[&quot;total_mm&quot;].sum()
+print(&quot;my 1991-2020 average:&quot;, round(yearly_total.loc[1991:2020].mean(), 1), &quot;mm&quot;)</code></pre></div>
+<div class="out"><div class="prompt">Out[5]:</div><pre>504 months, 1984 to 2025
+my 1991-2020 average: 2113.3 mm</pre></div>
+<p class="why">I filter to whole years from 1984. The MSS average is a free check that my sums are right.</p>
+</div>
+<div class="cell">
+<div class="in"><div class="prompt">In [6]:</div><pre><code># 6. One row per year
+yearly = clean.groupby(&quot;year&quot;).agg(
+    total_mm=(&quot;total_mm&quot;, &quot;sum&quot;),
+    wettest_day_mm=(&quot;wettest_day_mm&quot;, &quot;max&quot;),
+    rain_days=(&quot;rain_days&quot;, &quot;sum&quot;),
+)
+yearly[&quot;mm_per_rain_day&quot;] = (yearly[&quot;total_mm&quot;] / yearly[&quot;rain_days&quot;]).round(1)
+yearly[&quot;total_mm&quot;] = yearly[&quot;total_mm&quot;].round(1)
+yearly.to_csv(&quot;changi-yearly-clean.csv&quot;)
+yearly[&quot;wettest_day_mm&quot;].describe().round(1)</code></pre></div>
+<div class="out"><div class="prompt">Out[6]:</div><pre>count     42.0
+mean     126.0
+std       50.7
+min       59.4
+25%       84.1
+50%      127.5
+75%      158.0
+max      216.2
+Name: wettest_day_mm, dtype: float64</pre></div>
+<p class="why">groupby year with agg makes a pivot table in one line. describe gives the five-number summary.</p>
+</div>
+<div class="cell">
+<div class="in"><div class="prompt">In [7]:</div><pre><code># 7. Compare the first 21 years with the last 21 years
+yearly[&quot;half&quot;] = np.where(yearly.index &lt;= 2004, &quot;1984-2004&quot;, &quot;2005-2025&quot;)
+summary = yearly.groupby(&quot;half&quot;)[&quot;wettest_day_mm&quot;].agg(
+    mean=&quot;mean&quot;, median=&quot;median&quot;,
+    q1=lambda s: s.quantile(0.25), q3=lambda s: s.quantile(0.75),
+    lowest=&quot;min&quot;, highest=&quot;max&quot;)
+summary[&quot;iqr&quot;] = summary[&quot;q3&quot;] - summary[&quot;q1&quot;]
+summary.round(1)</code></pre></div>
+<div class="out"><div class="prompt">Out[7]:</div><pre>            mean  median    q1     q3  lowest  highest   iqr
+half                                                        
+1984-2004  133.4   129.9  86.8  177.8    65.8    211.1  91.0
+2005-2025  118.6    92.3  69.8  154.8    59.4    216.2  85.0</pre></div>
+<p class="why">Medians and quartiles for each half. These are the numbers behind the box plot.</p>
+</div>
+<div class="cell">
+<div class="in"><div class="prompt">In [8]:</div><pre><code># 8. Trend line, and a shuffle test: could a trend this size come from luck?
+years = yearly.index.to_numpy()
+wet = yearly[&quot;wettest_day_mm&quot;].to_numpy()
+slope = np.polyfit(years, wet, 1)[0]
+print(&quot;trend:&quot;, round(slope * 10, 1), &quot;mm per decade&quot;)
+
+rng = np.random.default_rng(42)
+shuffled = [np.polyfit(years, rng.permutation(wet), 1)[0] for _ in range(10000)]
+share = np.mean(np.abs(shuffled) &gt;= abs(slope))
+print(&quot;shuffled years with a trend at least this steep:&quot;, round(share * 100), &quot;%&quot;)
+
+for col in [&quot;total_mm&quot;, &quot;rain_days&quot;, &quot;mm_per_rain_day&quot;]:
+    s = np.polyfit(years, yearly[col].to_numpy(), 1)[0]
+    print(col, &quot;trend:&quot;, round(s * 10, 1), &quot;per decade&quot;)</code></pre></div>
+<div class="out"><div class="prompt">Out[8]:</div><pre>trend: -6.5 mm per decade</pre></div>
+<div class="out"><div class="prompt">Out[8]:</div><pre>shuffled years with a trend at least this steep: 31 %
+total_mm trend: 0.9 per decade
+rain_days trend: 4.4 per decade
+mm_per_rain_day trend: -0.3 per decade</pre></div>
+<p class="why">polyfit gives the slope of the trend line. The shuffle test asks a question. If years came in random order, how often is a slope this steep?</p>
+</div>
+<div class="cell">
+<div class="in"><div class="prompt">In [9]:</div><pre><code># 9. Chart 1: the wettest day of each year
+import matplotlib.pyplot as plt
+
+fig, ax = plt.subplots(figsize=(9, 4))
+ax.bar(yearly.index, yearly[&quot;wettest_day_mm&quot;], color=&quot;#2f6f9f&quot;)
+ax.plot(years, np.polyval(np.polyfit(years, wet, 1), years), color=&quot;#b8541a&quot;, linewidth=2, label=&quot;trend line&quot;)
+ax.set_ylim(0, 250)
+ax.set_title(&quot;Wettest day of each year at Changi Climate Station, 1984 to 2025&quot;)
+ax.set_xlabel(&quot;Year&quot;)
+ax.set_ylabel(&quot;Rain on the wettest day (mm)&quot;)
+ax.legend(frameon=False)
+fig.text(0.01, 0.01, &quot;Source: NEA via data.gov.sg&quot;, fontsize=8)
+plt.tight_layout()
+plt.show()</code></pre></div>
+<div class="out"><div class="prompt">Out[9]:</div><div class="paper"><img src="nb-chart-1.png" alt="Matplotlib bar chart of the wettest day of each year at Changi, 1984 to 2025, with a gently falling trend line." width="896" height="403" loading="lazy"></div></div>
+<p class="why">Chart 1. The y-axis starts at zero, with a title, axis labels and a source line.</p>
+</div>
+<div class="cell">
+<div class="in"><div class="prompt">In [10]:</div><pre><code># 10. Chart 2: the spread in each half
+fig, ax = plt.subplots(figsize=(6, 4))
+groups = [yearly.loc[yearly[&quot;half&quot;] == h, &quot;wettest_day_mm&quot;] for h in [&quot;1984-2004&quot;, &quot;2005-2025&quot;]]
+ax.boxplot(groups, whis=(0, 100))
+ax.set_xticks([1, 2], [&quot;1984 to 2004&quot;, &quot;2005 to 2025&quot;])
+ax.set_ylim(0, 250)
+ax.set_title(&quot;Wettest day of the year: two halves compared&quot;)
+ax.set_ylabel(&quot;Rain on the wettest day (mm)&quot;)
+ax.text(0.5, 8, &quot;Whiskers show the lowest and highest year. 21 years in each box.&quot;, fontsize=8)
+plt.tight_layout()
+plt.show()</code></pre></div>
+<div class="out"><div class="prompt">Out[10]:</div><div class="paper"><img src="nb-chart-2.png" alt="Matplotlib box plots of the wettest day of the year for 1984 to 2004 and 2005 to 2025. The boxes overlap." width="590" height="390" loading="lazy"></div></div>
+<p class="why">Chart 2. whis=(0, 100) makes the whiskers reach the lowest and highest year. That is easier to explain to Sec 3.</p>
+</div>
+<div class="cell">
+<div class="in"><div class="prompt">In [11]:</div><pre><code># 11. How to fool people: start the trend in 2018
+recent = yearly.loc[2018:]
+fake = np.polyfit(recent.index, recent[&quot;wettest_day_mm&quot;], 1)[0]
+print(&quot;trend from 2018 only:&quot;, round(fake * 10, 1), &quot;mm per decade&quot;)
+print(&quot;trend from 1984:&quot;, round(slope * 10, 1), &quot;mm per decade&quot;)</code></pre></div>
+<div class="out"><div class="prompt">Out[11]:</div><pre>trend from 2018 only: 135.2 mm per decade
+trend from 1984: -6.5 mm per decade</pre></div>
+<p class="why">The same data, framed to mislead. I keep this cell so students can see the trick in code.</p>
+</div>
+<div class="card"><h3>What I can claim</h3>
+<ul class="tight">
+<li>The wettest day of the year at Changi did <strong>not</strong> get steadily wetter from 1984 to 2025. The trend is slightly down, and shuffled years often give a trend as steep.</li>
+<li>The spread is huge. One year's wettest day was about 59 mm and another's was over 210 mm. Both halves have years at both ends.</li>
+<li>Starting the trend in 2018 makes it look like a fast rise. That is a cherry-picked window.</li>
+</ul>
+<h3>What I cannot claim</h3>
+<ul class="tight">
+<li>That MSS is wrong. MSS averages 32 stations across the island and uses a different wet-day rule. One station is noisy.</li>
+<li>Anything about short, intense storms. These files only give whole days.</li>
+<li>Anything about the future.</li>
+</ul></div>
+<h2><span class="tag">Sources</span>Sources</h2>
+<ul class="tight small">
+  <li>Data: NEA and SingStat via data.gov.sg. Full list and licence on the <a href="data.html">data page</a>.</li>
+  <li>pandas: <a href="https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html">read_csv</a>, <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.merge.html">merge</a>, <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.describe.html">describe</a>. NumPy: <a href="https://numpy.org/doc/stable/reference/generated/numpy.polyfit.html">polyfit</a>.</li>
+  <li>Colab admin setting: <a href="https://knowledge.workspace.google.com/admin/users/access/turn-google-colab-on-or-off-for-users">Turn Google Colab on or off for users</a>.</li>
+</ul>
+</main>
+</body>
+</html>

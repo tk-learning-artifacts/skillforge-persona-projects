@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Playtest Night starter and task card, by Kenji Watanabe</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Kenji Watanabe is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<p class="noprint"><a href="index.html">Back to Playtest Night</a></p>
+<div class="noprint">
+<header class="hero">
+  <p class="kicker">Deliverable 3</p>
+  <h1>The starter</h1>
+  <p class="lede">The vote board with two features taken out. It loads, shows the games and runs on the first try. Pairs finish it in React Pad, in the browser, with no account.</p>
+</header>
+<div class="row">
+  <a class="btn" href="pad.html?p=starter">Open the starter in React Pad</a>
+  <a class="btn alt" href="#card">Jump to the task card</a>
+</div>
+
+<h2 id="removed">What I took out</h2>
+<ul class="tight">
+  <li>Voting. The +1 button beeps but nothing happens. The <code>vote</code> function has a TODO where the state update was.</li>
+  <li>Sorting the leaderboard. The reveal shows games in file order.</li>
+  <li>One small gap: the <code>key</code> on each GameCard. React warns about it in the console the moment the starter runs.</li>
+</ul>
+<p>I kept <code>takeBack</code> whole. It sits right under <code>vote</code> and does the opposite. That is the pattern students need. So TODO 2 is read, copy and change, not a blank line. It also follows the Predict, Run, Investigate, Modify, Make steps that the module's starter guide uses.</p>
+<pre><code>function vote(id) {
+  if (tokensLeft === 0 || !canVote) return
+  // TODO 2 (finish the idea): add 1 to this game's votes in myVotes.
+  // takeBack, just below, takes 1 away. Copy its pattern.
+  beep('vote', sound)
+}
+
+function takeBack(id) {
+  if (!myVotes[id]) return
+  setMyVotes({ ...myVotes, [id]: myVotes[id] - 1 })
+  beep('back', sound)
+}</code></pre>
+<p>The beep stays in on purpose. A button that beeps but changes nothing tells a player something. It says "your click arrived, the game ignored it". Students hear the bug before they read the code.</p>
+</div>
+
+<h2 id="card">Task card: finish the vote board</h2>
+<article class="taskcard">
+<p><strong>Goal:</strong> a vote board where each player spends 3 tokens. The reveal puts the winner on top.</p>
+<p><strong>Work in pairs.</strong> One drives, one navigates. Swap at every step.</p>
+
+<h2>Step 0. Predict, then run</h2>
+<p>Open the starter in React Pad. Before you touch anything, read <code>App.jsx</code> and write down two guesses. What happens when you press +1? What does the console say? Now look. Were you right?</p>
+
+<h2>Step 1. <span class="todo">TODO 1</span> Fill the gap</h2>
+<p>Open <code>GameList.jsx</code>. Give each <code>GameCard</code> a key. Test: press Clear on the console, then Run. The red warning should be gone.</p>
+<details><summary>Hint 1</summary><p>Each game in <code>games.json</code> has an <code>id</code> that never changes. Write <code>key={game.id}</code> on the GameCard.</p></details>
+
+<h2>Step 2. <span class="todo">TODO 2</span> Finish the idea</h2>
+<p>Open <code>App.jsx</code> and find <code>vote</code>. Make it add 1 to this game's votes. Test: spend all 3 tokens. The coins should go dim and +1 should stop working.</p>
+<details><summary>Hint 2</summary><p>Copy the <code>setMyVotes</code> line from <code>takeBack</code>. Change the minus to a plus. If the game has no votes yet, <code>myVotes[id]</code> is undefined, so use <code>(myVotes[id] || 0) + 1</code>.</p></details>
+
+<h2>Step 3. Make it yours</h2>
+<p>Open <code>games.json</code>. Change two games to games from your class. Give each a title, team, genre, colour and one-line pitch. Keep each <code>id</code> different. Test: vote for your game.</p>
+<details><summary>Hint 3</summary><p>Copy a whole game, from <code>{</code> to <code>}</code>, with the comma after it. If the board shows an error about JSON, look for a missing comma or quote.</p></details>
+
+<h2>Stretch. <span class="todo">TODO 3</span> Make it new</h2>
+<p>Open <code>Leaderboard.jsx</code>. Sort the games so the most votes come first. Test: vote as 2 players, then reveal.</p>
+<details><summary>Hint for the stretch</summary><p><code>[...games]</code> makes a copy. <code>sort((a, b) =&gt; ...)</code> puts b first when your function returns a number above 0. Votes are in <code>tally[game.id]</code>.</p></details>
+
+<p><strong>Done?</strong> Press Download to keep a copy. Then swap devices with another pair and vote on their board.</p>
+</article>
+
+<div class="noprint">
+<h2 id="tested">Tested on a colleague</h2>
+<p>I gave the starter and card to a colleague for 10 minutes and said nothing. The module's starter guide suggests that. Like the class on the main page, this colleague is made up.</p>
+<ul class="tight">
+  <li>Step 0: she guessed +1 would add a star. It beeped and did nothing, and she laughed. Good.</li>
+  <li>TODO 1 took 1 minute. The warning names GameList, so she went straight there.</li>
+  <li>TODO 2 took 4 minutes. Her first try was <code>myVotes[id] + 1</code>. The board said "NaN of 3 tokens left", because undefined + 1 is NaN. I added the <code>|| 0</code> part to hint 2.</li>
+  <li>Step 3 took 3 minutes. She broke the JSON once and the error screen caught it. That is the effect's error handling doing its job.</li>
+  <li>She didn't reach the stretch. That's right for a stretch.</li>
+</ul>
+</div>
+</main>
+<script>
+// Print the hints too: open every hint before printing.
+addEventListener('beforeprint', function () {
+  document.querySelectorAll('details').forEach(function (d) { d.open = true; });
+});
+</script>
+</body>
+</html>

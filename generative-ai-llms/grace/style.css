@@ -1,0 +1,95 @@
+/* Grace's guide: a mentor's notebook. Warm paper, serif headings, a green
+   accent for what she keeps and a red pen for what she changes. */
+:root {
+  --ink: #2a2420; --ink-2: #4a423b; --muted: #6b6158; --line: #e4dccf;
+  --paper: #fbf8f2; --card: #ffffff; --soft: #f3eee4;
+  --green: #2f6b4f; --green-soft: #e4f1e9; --red: #b3261e; --red-soft: #fbe9e7;
+  --gold: #7a5300; --gold-soft: #f8eed8;
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --hand: "Bradley Hand", "Segoe Print", "Comic Sans MS", cursive;
+  color-scheme: light dark;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ink: #efe9df; --ink-2: #d6cdc0; --muted: #a99e90; --line: #3a342d;
+    --paper: #1c1a17; --card: #25221e; --soft: #2c2823;
+    --green: #8fd1ad; --green-soft: #1d3328; --red: #ff9b8f; --red-soft: #3d1f1b;
+    --gold: #f0c674; --gold-soft: #3a2f17;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink);
+  font: 17.5px/1.65 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width: 780px; margin: 0 auto; padding: 22px 18px 72px; }
+a { color: var(--green); }
+a:focus-visible, button:focus-visible, summary:focus-visible { outline: 3px solid var(--green); outline-offset: 2px; }
+h1, h2, h3 { font-family: var(--serif); line-height: 1.25; }
+h1 { font-size: 2.1rem; margin: 10px 0 6px; }
+h2 { font-size: 1.5rem; margin: 46px 0 10px; padding-bottom: 6px; border-bottom: 2px solid var(--line); }
+h3 { font-size: 1.15rem; margin: 22px 0 6px; }
+.eyebrow { font: italic 1rem/1.4 var(--serif); color: var(--muted); margin: 0; }
+.lede { font: 1.18rem/1.55 var(--serif); color: var(--ink-2); }
+.small { font-size: 0.92rem; color: var(--muted); }
+ul.tight li, ol.tight li { margin-bottom: 6px; }
+code { font: 0.9em ui-monospace, Menlo, Consolas, monospace; }
+.back { font-size: 0.95rem; }
+
+.rule { background: var(--card); border: 2px solid var(--green); border-radius: 14px; padding: 16px 18px; margin: 18px 0; }
+.rule p { margin: 0; font: 1.15rem/1.5 var(--serif); }
+.rule p + p { margin-top: 8px; font: 0.95rem/1.5 system-ui, sans-serif; color: var(--ink-2); }
+.made-up { background: var(--gold-soft); border-left: 4px solid var(--gold); border-radius: 8px; padding: 10px 14px; }
+
+.contents { list-style: none; padding: 0; margin: 16px 0; display: grid; gap: 8px; }
+.contents a { display: flex; flex-wrap: wrap; gap: 2px 12px; align-items: baseline; padding: 12px 14px; min-height: 44px; background: var(--card);
+  border: 1px solid var(--line); border-radius: 10px; text-decoration: none; color: var(--ink); }
+.contents b { font-family: var(--serif); color: var(--green); min-width: 1.4em; }
+.contents span { flex-basis: 100%; padding-left: calc(1.4em + 12px); color: var(--muted); font-size: 0.93rem; }
+
+.routine { counter-reset: r; list-style: none; padding: 0; display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
+.routine li { counter-increment: r; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; }
+.routine li::before { content: counter(r); display: inline-flex; width: 28px; height: 28px; border-radius: 50%; align-items: center;
+  justify-content: center; background: var(--green); color: var(--paper); font-weight: 700; margin-right: 8px; }
+.routine b { font-family: var(--serif); font-size: 1.1rem; }
+.routine p { margin: 6px 0 0; font-size: 0.95rem; color: var(--ink-2); }
+
+.tally { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 14px 0; }
+.tally div { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px; text-align: center; }
+.tally b { display: block; font: 700 2rem/1.1 var(--serif); }
+.tally .k b { color: var(--green); }
+.tally .c b { color: var(--gold); }
+.tally .x b { color: var(--red); }
+.tally span { font-size: 0.88rem; color: var(--muted); }
+
+/* Prompt pages */
+.pcard { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; margin: 26px 0; }
+.pcard h2 { border: 0; margin: 0 0 4px; padding: 0; font-size: 1.3rem; }
+.why { margin: 0 0 10px; color: var(--ink-2); }
+.ptext { background: var(--soft); border-radius: 10px; padding: 12px 14px; margin: 8px 0; white-space: pre-wrap; overflow-wrap: anywhere;
+  font: 0.95rem/1.55 ui-monospace, Menlo, Consolas, monospace; }
+.copy { min-height: 44px; padding: 0 16px; border-radius: 22px; border: 1.5px solid var(--green); background: transparent;
+  color: var(--green); font: 600 0.95rem/1 system-ui, sans-serif; cursor: pointer; }
+.copy:hover { background: var(--green-soft); }
+.runs { display: grid; gap: 10px; margin-top: 12px; }
+@media (min-width: 680px) { .runs { grid-template-columns: 1fr 1fr; } }
+.run { border-radius: 10px; padding: 10px 12px; border: 1px solid var(--line); }
+.run h3 { margin: 0 0 4px; font-size: 1rem; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.run p { margin: 6px 0; font-size: 0.95rem; }
+.badge { font: 700 0.75rem/1.2 system-ui, sans-serif; padding: 4px 8px; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.03em; }
+.badge.k { background: var(--green-soft); color: var(--green); }
+.badge.c { background: var(--gold-soft); color: var(--gold); }
+.badge.x { background: var(--red-soft); color: var(--red); }
+.claude { font: 0.93rem/1.5 var(--serif); font-style: italic; color: var(--ink-2); border-left: 3px solid var(--line); padding-left: 10px; margin: 6px 0; }
+.redpen { color: var(--red); font-family: var(--hand); font-size: 1.02rem; line-height: 1.45; }
+del { text-decoration-color: var(--red); text-decoration-thickness: 2px; }
+
+/* Lesson plan */
+.plan { list-style: none; padding: 0; margin: 10px 0; border-left: 3px solid var(--line); }
+.plan li { position: relative; padding: 4px 0 12px 18px; }
+.plan li::before { content: ""; position: absolute; left: -8px; top: 12px; width: 13px; height: 13px; border-radius: 50%;
+  background: var(--paper); border: 3px solid var(--green); }
+.plan li.ai::before { background: var(--green); }
+.plan b { font-family: var(--serif); }
+.video { display: block; width: 100%; max-width: 540px; margin: 14px auto; border-radius: 14px; aspect-ratio: 1 / 1; background: #2a2420; }
+footer.src { margin-top: 44px; }
+footer.src li { margin-bottom: 6px; overflow-wrap: anywhere; }
+.sr-status { min-height: 1.4em; }

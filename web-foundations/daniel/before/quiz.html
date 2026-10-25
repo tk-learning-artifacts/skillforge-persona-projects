@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scam or Not? Quiz, first draft</title>
+<link rel="stylesheet" href="../../../kit/note.css">
+<link rel="stylesheet" href="before.css">
+<script src="quiz-v1.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Daniel Ong is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<p class="draft">My first draft, kept with its WAVE errors on purpose. Run WAVE on it. <a href="../site/quiz.html">See the fixed page</a>.</p>
+<a class="skip" href="#content">Skip to content</a>
+<div class="bar">
+  <a href="index.html"><img src="../site/logo.svg"></a>
+  <a href="index.html">Signs</a> <a href="quiz.html">Quiz</a>
+</div>
+<main class="page" id="main">
+  <h1>Scam or not?</h1>
+  <div class="msg" data-answer="scam"><p class="time">SMS · 10:42</p><p>Your parcel is held at our depot. Pay $1.50 within 2 hours: parcel-sg-help.example/pay</p>
+    <input type="radio" name="q1" value="scam"> Scam <input type="radio" name="q1" value="safe"> Safe</div>
+  <div class="msg" data-answer="safe"><p class="time">Chat · 18:05</p><p>The CCA slides are in the same class folder as last week.</p>
+    <input type="radio" name="q2" value="scam"> Scam <input type="radio" name="q2" value="safe"> Safe</div>
+  <div class="msg" data-answer="scam"><p class="time">Social media · 21:17</p><p>Earn $300 a day just liking videos! Pay a $50 joining fee.</p>
+    <input type="radio" name="q3" value="scam"> Scam <input type="radio" name="q3" value="safe"> Safe</div>
+  <p><button class="btn" id="check">Check answers</button> <button class="icon" id="again"><svg viewBox="0 0 20 20" width="20" height="20"><path d="M15 6a6 6 0 1 0 1 6" fill="none" stroke="currentColor" stroke-width="2"/><path d="M15 2v4h-4" fill="none" stroke="currentColor" stroke-width="2"/></svg></button></p>
+  <p id="result"></p>
+</main>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Task card: build your agent page, by Sofia Reyes</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="print.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Sofia Reyes is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<p class="noprint"><a href="starter.html">Back to the starter</a>. This card prints on one A4 page. <button type="button" id="print">Print</button></p>
+<article class="taskcard">
+<h1>Mission 3: build your agent page</h1>
+<p>Your page is half made. Do the 3 TODOs to finish it. Then crack the secret message with your own button.</p>
+<p>You need the starter in the Raspberry Pi Code Editor and a partner. It takes about 35 minutes.<br>
+<strong>Swap jobs</strong> after each TODO. One types. One reads the card.</p>
+
+<section class="todo">
+<h2>TODO 1 · HTML · in index.html</h2>
+<p>Put your agent name in the big heading. Add a list of 3 gadgets.</p>
+<p class="hint-r">Change <code>???</code> to your agent name. Under the TODO, type <code>&lt;ul&gt;</code>, then 3 lines like <code>&lt;li&gt;Pocket torch&lt;/li&gt;</code>, then <code>&lt;/ul&gt;</code>.</p>
+<p class="hint-a">A list needs a ul tag around li tags. Every tag you open, you close.</p>
+</section>
+
+<section class="todo">
+<h2>TODO 2 · CSS · in styles.css</h2>
+<p>Make your 3 badges sit side by side, and wrap on a small screen.</p>
+<p class="hint-r">Inside <code>.badges { }</code>, type <code>display: flex;</code> then <code>gap: 12px;</code> then <code>flex-wrap: wrap;</code></p>
+<p class="hint-a">Use flexbox on the box that holds the badges. Make the window narrow to test the wrap.</p>
+</section>
+
+<section class="todo">
+<h2>TODO 3 · JavaScript · in script.js</h2>
+<p>The button can't crack the message, because the shift is 0. Find the right shift.</p>
+<p class="hint-r">Try 3, like Caesar. Change <code>const shift = 0;</code> and press Run.</p>
+<p class="hint-a">Paste the message into the Caesar wheel on Code Breakers HQ to find the shift.</p>
+</section>
+
+<h2 class="todo-h">Nothing changed? Check these first</h2>
+<ul class="boxes">
+  <li>Did you press Run after your change?</li>
+  <li>CSS: is there a colon after the word, and a semicolon at the end? <code>display: flex;</code></li>
+  <li>HTML: does every <code>&lt;li&gt;</code> have its <code>&lt;/li&gt;</code>?</li>
+</ul>
+
+<h2 class="todo-h">Mastermind challenges (done early?)</h2>
+<ul class="boxes">
+  <li>Add a 4th badge. Does the row still wrap well?</li>
+  <li>Change the secret message to one of your own, hidden with the Caesar wheel. Make your partner crack it.</li>
+  <li>Make the button say "Cracked!" after you click it. Hint: <code>button.textContent</code>.</li>
+</ul>
+<p><strong>Use your agent name only.</strong> No real names, schools or photos on your page.</p>
+</article>
+</main>
+</body>
+</html>

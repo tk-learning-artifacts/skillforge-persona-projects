@@ -1,0 +1,42 @@
+body {
+  font-family: sans-serif;
+  margin: 0;
+  background: #fbf6e9;
+  color: #1d1b16;
+}
+
+header, main, footer {
+  padding: 16px;
+}
+
+header {
+  background: #1d1b16;
+  color: #fbf6e9;
+}
+
+.badge {
+  background: white;
+  border: 3px solid #1d1b16;
+  border-radius: 12px;
+  padding: 12px;
+  text-align: center;
+}
+
+/* TODO 2 (CSS): Make the badges sit side by side.
+   Inside .badges below, add these 3 lines:
+   display: flex;
+   gap: 12px;
+   flex-wrap: wrap;     (so they wrap on a phone) */
+.badges {
+
+}
+
+#secret {
+  font-family: monospace;
+  font-size: 1.4rem;
+}
+
+button {
+  font-size: 1.1rem;
+  padding: 10px 16px;
+}

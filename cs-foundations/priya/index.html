@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sort it like a computer: a 2-lesson CS unit for Sec 1 Science, by Priya Nair</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="program.js" defer></script>
+<script src="scratchlite.js" defer></script>
+<script src="player.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Priya Nair is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<header class="masthead">
+  <p class="code">Unit plan · Sec 1 Science with computer science</p>
+  <h1>Sort it like a computer</h1>
+  <p class="lede">Students write a yes/no key to sort everyday objects by their properties. Then they teach the key to a Scratch bot. A key is an algorithm, and this unit makes that visible.</p>
+  <ul class="meta">
+    <li>Sec 1 G2 and G3 Science</li>
+    <li>6 classes of about 36</li>
+    <li>2 lessons of 60 minutes</li>
+    <li>3 trainers, with each class's science teacher</li>
+  </ul>
+</header>
+
+<p>I'm Priya. I plan courses for a team of trainers. A school asked us for one computer science unit inside a subject. It was for every Sec 1 class. I wrote it once so that three trainers could teach it the same way. This page has the plan, the Scratch project, student work and what I learnt.</p>
+
+<ul class="toc">
+  <li><a href="lesson1.html">Lesson 1 plan<span>Build a key, then break it. No devices.</span></a></li>
+  <li><a href="lesson2.html">Lesson 2 plan<span>Teach the key to Scratch. One computer per pair.</span></a></li>
+  <li><a href="#play">Try Key Bot<span>The Scratch project, running here.</span></a></li>
+  <li><a href="work.html">Student work<span>Three keys and a Scratch bug, with marking.</span></a></li>
+  <li><a href="#reflection">Reflection<span>Rubric line by line.</span></a></li>
+</ul>
+
+<h2>Why Science, and why a key</h2>
+<p>Look at the Sec 1 G2 and G3 Science syllabus. One section is "Exploring Diversity of Matter by its Physical Properties". Two of its outcomes are why I chose it:</p>
+<ul class="tight">
+  <li>"classify a number of common everyday objects and recognise that there are many ways of classifying the same group of objects"</li>
+  <li>"communicate findings on classification and justify reasons"</li>
+</ul>
+<p>Science teachers already use keys for this. We did not add a topic. We added a way of looking at a key.</p>
+
+<h2>The CS idea</h2>
+<p>An algorithm is a list of steps. Anyone who follows it exactly gets the same result. A yes/no key is one.</p>
+<ul class="tight">
+  <li><span class="tag cs">Selection</span> Each step asks one yes/no question. The answer decides which step comes next. In Scratch, that is an if-else block.</li>
+  <li><span class="tag cs">Precision</span> "Is it heavy?" fails, because two people can answer it differently. "Does it float in water?" works, because you can test it.</li>
+  <li><span class="tag cs">Abstraction</span> Each question uses one property and ignores the rest, like colour or size.</li>
+  <li><span class="tag cs">Decomposition</span> "Which object is this?" is hard. Four small questions are easy.</li>
+  <li><span class="tag cs">Testing</span> Groups swap keys. If a stranger can't follow yours, it is a bug, not their mistake.</li>
+</ul>
+<p>One link to binary is worth a minute with fast groups. Each yes/no question is one bit of choice. So 3 questions can split at most 2 × 2 × 2 = 8 objects.</p>
+
+<h2>Unit map</h2>
+<div class="tablewrap"><table>
+  <tr><th></th><th>Lesson 1: Build a key, then break it</th><th>Lesson 2: Teach the key to Scratch</th></tr>
+  <tr><th>Science</th><td>Classify 5 everyday objects by properties. See that groups' keys differ and still work.</td><td>Justify each question: which property, and why it splits the group.</td></tr>
+  <tr><th>CS</th><td>An algorithm must be precise. Test it on someone else.</td><td>Input with "ask and wait", selection with if-else, a loop with "forever".</td></tr>
+  <tr><th>Devices</th><td>None. A tray of objects and a tub of water per group.</td><td>One computer per pair. Scratch with no log-in.</td></tr>
+  <tr><th>Evidence</th><td>The group's key, the swap-test notes and an exit ticket.</td><td>The pair's .sb3 file, a test log and an exit ticket.</td></tr>
+</table></div>
+<p class="small">It sits after the practical where classes test which materials conduct electricity. Students use those results in lesson 1. Density is in the same syllabus section. The float question is a hook for it.</p>
+
+<h2 id="play">Try Key Bot</h2>
+<p>Pick one of the 5 objects on the bench. Press Start. Answer each question with y or n, then press the tick. The model key lights up to show where you are. Then play again and type "yes" instead of "y". See what happens.</p>
+<div class="player">
+  <div>
+    <div class="controls">
+      <button type="button" id="flag" aria-label="Green flag: start"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 1v14" stroke="#2b6a1f" stroke-width="2"/><path d="M4 2c3-1.6 5 1.6 9 0v7c-4 1.6-6-1.6-9 0z" fill="#4cbf56" stroke="#2b6a1f"/></svg> Start</button>
+      <button type="button" id="stop" aria-label="Stop"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 1h6l4 4v6l-4 4H5l-4-4V5z" fill="#e8554e" stroke="#9c2b25"/></svg> Stop</button>
+    </div>
+    <div class="sl-stage" id="stage" role="group" aria-label="Scratch stage. Key Bot and 5 objects on a bench: steel spoon, copper wire, rubber band, glass marble and ice-cream stick."></div>
+    <form class="ask" id="ask" hidden>
+      <p class="sl-q" id="askq"></p>
+      <label class="small" for="answer">Answer</label>
+      <input id="answer" autocomplete="off">
+      <button type="submit" class="primary" aria-label="Send answer">&#10003;</button>
+    </form>
+    <p class="live" id="live" aria-live="polite"></p>
+  </div>
+  <div class="side">
+    <h3>The model key</h3>
+    <ol class="key" id="key">
+      <li data-q="Does it conduct electricity?"><b>1</b><span class="q">Does it conduct electricity?</span><span class="ans"><span>Yes: go to 2</span><span>No: go to 3</span></span></li>
+      <li data-q="Can you wrap it round a pencil?"><b>2</b><span class="q">Can you wrap it round a pencil?</span><span class="ans"><span>Yes: <span class="leaf" data-leaf="copper wire">copper wire</span></span><span>No: <span class="leaf" data-leaf="steel spoon">steel spoon</span></span></span></li>
+      <li data-q="Does it stretch and spring back?"><b>3</b><span class="q">Does it stretch and spring back?</span><span class="ans"><span>Yes: <span class="leaf" data-leaf="rubber band">rubber band</span></span><span>No: go to 4</span></span></li>
+      <li data-q="Does it float in water?"><b>4</b><span class="q">Does it float in water?</span><span class="ans"><span>Yes: <span class="leaf" data-leaf="ice-cream stick">ice-cream stick</span></span><span>No: <span class="leaf" data-leaf="glass marble">glass marble</span></span></span></li>
+    </ol>
+  </div>
+</div>
+<h3>The blocks</h3>
+<p>This is Key Bot's only script. The block it is on lights up as it runs. Each question in the key is one "ask and wait" and one if-else.</p>
+<div class="blocks" id="blocks"></div>
+<p class="small">This player runs on this page and copies how Scratch runs blocks. Like Scratch, it ignores capital letters, so "Y" works. It may differ from Scratch in small ways, like timing.</p>
+
+<h3 id="sb3">Open it in Scratch</h3>
+<div class="row">
+  <a class="button primary" href="key-bot.sb3" download>Download Key Bot (.sb3)</a>
+  <a class="button" href="key-bot-starter.sb3" download>Download the lesson 2 starter (.sb3)</a>
+</div>
+<ol class="tight">
+  <li>Go to <a href="https://scratch.mit.edu/">scratch.mit.edu</a> and click Create. No account is needed to make a project.</li>
+  <li>File, then "Load from your computer". Pick the .sb3 file.</li>
+  <li>Click the green flag.</li>
+</ol>
+<p>The brief asks for a Scratch project link. I can't make one. Saving and sharing on scratch.mit.edu needs an account, and I am an AI persona. The .sb3 file holds the whole project. A trainer can load it into their own account and click Share. Students in this unit make no accounts. They save .sb3 files to the class folder instead.</p>
+
+<h2>For the team</h2>
+<p>Six classes and three trainers can mean six versions of one lesson. So we plan for it.</p>
+<ul class="tight">
+  <li>One briefing of 30 minutes the week before. Each trainer runs the swap test on the others.</li>
+  <li>The same trays, starter file and slides in every room.</li>
+  <li>One marking guide with three levels. It is in <a href="work.html#guide">the student work page</a>.</li>
+  <li>After the first two classes, we meet for 20 minutes. Each trainer brings three keys, and we agree their levels.</li>
+  <li>Science teachers keep the keys for their density lessons.</li>
+</ul>
+<p>Next steps across SkillForge: "Coding with Scratch" goes deeper into Scratch. "Machine Learning and AI Basics" is a good contrast. Here, people write the rules of the sort. In machine learning, the computer finds rules from examples.</p>
+
+<h2 id="work">Student work</h2>
+<p>We collect keys and Scratch files, not photos. The <a href="work.html">student work page</a> has three group keys at three levels. It also has a Scratch bug and fix, two exit tickets and our moderation notes. The students are made up, like me.</p>
+
+<h2 id="reflection">Reflection</h2>
+<h3>Clear link to the subject</h3>
+<p>Strong. Every question in a key tests a physical property. The syllabus asks for exactly this sort. The best moment came from the science side. Two groups had different keys that both worked. That is the "many ways of classifying" outcome, shown on the board.</p>
+<h3>CS idea explained correctly</h3>
+<p>Mostly. "A key is an algorithm" landed well. "Selection" needed the Scratch lesson before it made sense. One limitation sits in the model key itself. "Can you wrap it round a pencil?" is about shape, not material. A student said a steel paper clip would wrap too. She was right. Our key sorts these 5 objects, not metals in general.</p>
+<h3>Works for all students</h3>
+<p>Partly. Lesson 1 worked in every class. Groups chose their own questions, and the question bank helped weaker readers. Lesson 2 was harder for G2 classes. Pairs who typed fast finished. Others coded two questions before the bell.</p>
+<h3>What I would change</h3>
+<p>I planned lesson 2 as if the lab would be ready at minute 0. It was not. In the first class, logging in and loading took 12 minutes. I had planned 8. Next time trainers pre-load the starter during the break before. I would also put the "or" block for "y or yes" into the starter. In that class, 7 of 18 pairs lost testing time to the "yes" bug. That is a fine lesson once, but not seven times.</p>
+
+<h2>Sources</h2>
+<ul class="tight small">
+  <li>Syllabus wording and section name: <a href="https://www.moe.gov.sg/media/files/secondary/syllabuses/science/b6d63789-2ad0-4630-b847-42fd380ec404.pdf">MOE Science Syllabus, Lower Secondary G2 and G3</a>.</li>
+  <li>Density is in the same section. The syllabus is on <a href="https://www.moe.gov.sg/secondary/schools-offering-full-sbb/syllabus">MOE's Full SBB syllabus page</a>.</li>
+  <li>Metals conduct, while plastic, wood and rubber do not: <a href="https://www.scientificamerican.com/article/which-materials-conduct-electricity/">Science Buddies in Scientific American</a>.</li>
+  <li>Glass does not let charge move through it: <a href="https://openstax.org/books/college-physics-2e/pages/18-2-conductors-and-insulators">OpenStax College Physics 2e</a>.</li>
+  <li>Glass 2.4 to 2.8 g/cm³, cork 0.20 to 0.25 g/cm³: <a href="https://www.engineeringtoolbox.com/density-solids-d_1265.html">Engineering ToolBox, Densities of solids</a>.</li>
+  <li>Birch 0.51 to 0.77 g/cm³: <a href="https://www.engineeringtoolbox.com/wood-density-d_40.html">Engineering ToolBox, Wood densities</a>.</li>
+  <li>Water about 1 g/cm³: <a href="https://www.usgs.gov/special-topics/water-science-school/science/water-density">USGS, Water density</a>.</li>
+  <li>The <a href="https://scratch.mit.edu/projects/editor/">Scratch editor</a> opens with no sign-in.</li>
+  <li>Saving online needs you signed in: <a href="https://mitscratch.freshdesk.com/en/support/solutions/articles/4000156807-common-reasons-you-can-t-save-a-project">Scratch Help Center, saving</a>.</li>
+  <li>Sharing needs an account: <a href="https://mitscratch.freshdesk.com/en/support/solutions/articles/4000156800-why-can-t-i-share-projects-on-scratch-">Scratch Help Center, sharing</a>.</li>
+  <li>Scratch ignores capital letters when it compares text: <a href="https://github.com/scratchfoundation/scratch-vm/blob/develop/src/util/cast.js">Scratch VM source, cast.js</a>.</li>
+  <li>The "Load from your computer" menu item: <a href="https://github.com/scratchfoundation/scratch-editor/blob/develop/packages/scratch-gui/src/lib/shared-messages.ts">Scratch editor source</a>.</li>
+</ul>
+</main>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Caesar wheel: hide and crack shift codes | Code Breakers HQ</title>
+<link rel="stylesheet" href="../../../kit/note.css">
+<link rel="stylesheet" href="site.css">
+<script src="caesar.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Sofia Reyes is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<a class="skip" href="#main">Skip to the wheel</a>
+<header class="top">
+  <a class="brand" href="index.html">
+    <svg viewBox="0 0 40 40" aria-hidden="true" focusable="false"><circle cx="16" cy="16" r="11" fill="none" stroke="currentColor" stroke-width="4"/><path d="M24 24l11 11" stroke="currentColor" stroke-width="5" stroke-linecap="round"/><path d="M11 16h10M18 16v4" stroke="#a8231b" stroke-width="3" stroke-linecap="round"/></svg>
+    Code Breakers HQ
+  </a>
+  <nav aria-label="Main">
+    <ul>
+      <li><a href="index.html">HQ</a></li>
+      <li><a href="caesar.html" aria-current="page">Caesar wheel</a></li>
+      <li><a href="morse.html">Morse lab</a></li>
+    </ul>
+  </nav>
+</header>
+<main id="main">
+  <h1>The Caesar wheel</h1>
+  <p class="lede">Every letter moves along the alphabet by the same number. That number is the shift. Caesar used a shift of 3.</p>
+
+  <section class="tool" aria-labelledby="wheel-title">
+    <h2 id="wheel-title">Turn the wheel</h2>
+    <div class="tool-row">
+      <div>
+        <svg class="wheel" id="wheel" viewBox="0 0 300 300" role="img" aria-labelledby="wheel-desc">
+          <title id="wheel-desc">A Caesar wheel. The outer ring is the normal alphabet. The inner red ring shows the secret letters.</title>
+        </svg>
+        <p class="label" id="shift-label">Shift</p>
+        <div class="stepper" role="group" aria-labelledby="shift-label">
+          <button type="button" id="down" aria-label="Shift down by one">−</button>
+          <output id="shift" aria-live="polite">3</output>
+          <button type="button" id="up" aria-label="Shift up by one">+</button>
+        </div>
+      </div>
+      <div>
+        <label for="message">Your message</label>
+        <textarea id="message" maxlength="200" spellcheck="false">MEET ME AT THE SLIDE</textarea>
+        <fieldset class="modes">
+          <legend>I want to</legend>
+          <label><input type="radio" name="mode" value="hide" checked> Hide it</label>
+          <label><input type="radio" name="mode" value="reveal"> Reveal it</label>
+        </fieldset>
+        <p class="label" id="result-label">Result</p>
+        <p class="result" id="result" aria-live="polite"></p>
+        <div class="btns">
+          <button type="button" class="go" id="copy">Copy result</button>
+          <button type="button" id="swap">Put result in the message box</button>
+        </div>
+      </div>
+    </div>
+    <p class="label">Each letter and its secret letter</p>
+    <ul class="strip" id="strip" aria-label="Each letter of the alphabet with its secret letter under it"></ul>
+  </section>
+
+  <section id="crack" aria-labelledby="crack-title">
+    <h2 id="crack-title">Crack the notes</h2>
+    <p>Our trainers left three notes. Paste each one into the box and choose Reveal. Turn the wheel until it makes sense.</p>
+    <ul class="secrets">
+      <li><span class="stamp">Rookie</span> Shift 3, like Caesar.<br><code>PHHW DW WKH VQDFN WDEOH</code>
+        <details><summary>Show the answer</summary><p>MEET AT THE SNACK TABLE</p></details></li>
+      <li><span class="stamp">Agent</span> A tiny shift.<br><code>MPPL VOEFS UIF SFE DIBJS</code>
+        <details><summary>Show the answer</summary><p>LOOK UNDER THE RED CHAIR. The shift is 1.</p></details></li>
+      <li><span class="stamp">Mastermind</span> No clue at all.<br><code>LBH NER N GEHR PBQR OERNXRE</code>
+        <details><summary>Show the answer</summary><p>YOU ARE A TRUE CODE BREAKER. The shift is 13. Hide it with 13 again and you get the note back. Why?</p></details></li>
+    </ul>
+  </section>
+
+  <section aria-labelledby="think-title">
+    <h2 id="think-title">Think like a code breaker</h2>
+    <ul>
+      <li>There are only 25 shifts to try. How long would it take you to try them all?</li>
+      <li>E is the most common letter in English. Find the most common letter in a note. It might be E in disguise.</li>
+      <li>Which shift turns a message back into itself?</li>
+    </ul>
+  </section>
+</main>
+<footer>
+  <p>Made for a holiday camp by Sofia Reyes. <a href="../index.html">How I made this site</a></p>
+</footer>
+</body>
+</html>

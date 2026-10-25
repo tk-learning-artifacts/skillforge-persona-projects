@@ -1,0 +1,21 @@
+/* My first draft's styles, unchanged. The pale greys and the mint button are the contrast errors. */
+:root { --bg: #f4f7f6; --panel: #fff; --ink: #1b2422; --pale: #a3adab; --mint: #7fd8c6; --brand: #0a6b5c; color-scheme: light dark; }
+@media (prefers-color-scheme: dark) { :root { --bg: #101716; --panel: #19221f; --ink: #e6eeec; --pale: #4c5856; --mint: #2f8c7b; --brand: #0a6b5c; } }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.5 system-ui, sans-serif; }
+.draft { margin: 0; padding: 10px 16px; background: #fde9a8; color: #3b2f00; font-weight: 600; }
+.draft a { color: #1f4e8c; }
+.skip { position: absolute; left: -999px; }
+.skip:focus { left: 8px; top: 8px; background: #fff; color: #000; padding: 8px; }
+.bar { background: var(--brand); padding: 8px 16px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.bar img { width: 40px; height: 40px; display: block; }
+.bar a { color: #fff; }
+.page { max-width: 960px; margin: 0 auto; padding: 16px; }
+.cards { display: flex; flex-wrap: wrap; gap: 12px; }
+.card { flex: 1 1 180px; background: var(--panel); border-radius: 14px; padding: 12px; }
+.card img { width: 44px; height: 44px; }
+.card .cap { color: var(--pale); font-size: 0.9rem; }
+.btn { display: inline-block; background: var(--mint); color: #fff; padding: 10px 18px; border-radius: 999px; text-decoration: none; font-weight: 700; border: 0; font: inherit; }
+.msg { background: var(--panel); border-radius: 14px; padding: 12px; margin: 12px 0; }
+.time { color: var(--pale); font-size: 0.8rem; }
+.icon { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--ink); background: var(--panel); color: var(--ink); }

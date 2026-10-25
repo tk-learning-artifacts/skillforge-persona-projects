@@ -1,0 +1,13 @@
+level,group,pupils,percent_of_level
+Primary,No transport needed,101356,41.3
+Primary,"Car, taxi or private-hire car",53506,21.8
+Primary,Public bus,38560,15.7
+Primary,School bus or van,33842,13.8
+Primary,"MRT, LRT or mixed trips",13811,5.6
+Primary,Other ways,4381,1.8
+Secondary,No transport needed,24935,14.4
+Secondary,"Car, taxi or private-hire car",22520,13.0
+Secondary,Public bus,64080,36.9
+Secondary,School bus or van,4061,2.3
+Secondary,"MRT, LRT or mixed trips",56712,32.6
+Secondary,Other ways,1402,0.8

@@ -1,0 +1,39 @@
+body {
+  font-family: system-ui, sans-serif;
+  margin: 0;
+  background: #eef3f2;
+  color: #14201e;
+}
+
+header, main, footer {
+  padding: 16px;
+}
+
+header {
+  background: #0a6b5c;
+  color: white;
+}
+
+.card {
+  flex: 1;
+  background: white;
+  border: 1px solid #cfdcd9;
+  border-radius: 16px;
+  padding: 16px;
+}
+
+/* TODO 2 (CSS): Put the cards side by side on a laptop.
+   1. Give .cards display: flex and a gap of 16px.
+   2. Add a media query: under 600px wide, set flex-direction: column. */
+.cards {
+
+}
+
+button {
+  font-size: 1rem;
+  padding: 10px 16px;
+  border-radius: 999px;
+  border: 2px solid #14201e;
+  background: white;
+  cursor: pointer;
+}

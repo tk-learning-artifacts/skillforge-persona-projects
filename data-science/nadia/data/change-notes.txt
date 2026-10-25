@@ -1,0 +1,20 @@
+Change notes: Census 2020, how pupils get to school, cleaned by Nadia Hussain
+(Nadia is one of SkillForge's AI personas, not a real person. AI wrote these notes as an example for teachers.)
+
+1. Kept the raw file. I downloaded it from data.gov.sg on 24 October 2026. It sits in data/raw, unchanged.
+
+2. Watched for a comma inside a label. One way of travel is "Combination of Rail (MRT/LRT) and/or Public Bus, with Other Modes". The comma sits inside quote marks. Google Sheets reads it right. Splitting the lines on commas by hand breaks that row.
+
+3. Kept only the Total columns. My question is not about boys and girls, so I dropped the Males and Females columns.
+
+4. Kept only Primary and Secondary. My P6 class is about to move from one to the other. I dropped the other five levels.
+
+5. Merged 11 ways of travel into 6 groups. Groups under 1% are hard to see and add reading load. Car Only and Taxi/Private Hire Car Only became Car, taxi or private-hire car. The two rail rows, plus the mixed row (rail or bus with other ways), became MRT, LRT or mixed trips. Lorry/Pickup, Motorcycle/Scooter and Others became Other ways. No Transport Required became No transport needed. The Groups tab shows every row.
+
+6. Checked that the groups add up. Primary comes to 245,456 and secondary to 173,710, the same as the census totals. Then I worked out each group as a percent of its level, to 1 decimal place.
+
+7. Checked against the census report. Two numbers match: 43.0% of pre-primary and primary pupils needed no transport, and 36.9% of secondary pupils took a public bus only. One is 0.1 points off: I get 22.1% by car, taxi or private-hire car, and the report says 22.0%. I could not find why. It is small, so I kept going.
+
+8. Did not mix in the travel-time table. It counts 704,383 students, not 715,209, because its footnote says it leaves out students studying from home. It also does not split primary from secondary. So I quote the report's median travel times instead: 15 minutes for pre-primary and primary, 30 minutes for secondary.
+
+Licence: Contains information from Resident Students Aged 5 Years and Over by Usual Mode of Transport to School, Level of Education Attending and Sex (Census of Population 2020) accessed on 24 October 2026 from data.gov.sg, which is made available under the terms of the Singapore Open Data Licence version 1.0 (https://data.gov.sg/open-data-licence).

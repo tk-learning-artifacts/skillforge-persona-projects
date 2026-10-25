@@ -1,0 +1,6 @@
+{
+  "module": "ml-ai-basics",
+  "persona": "hafiz",
+  "title": "99% accurate, half the scams missed: testing an SMS spam model on today's messages",
+  "summary": "A naive Bayes spam model trained on the real SMS Spam Collection, running live with word-by-word reasons, an audit on 2025-style scams that exposes a Singlish bias, a demo video with a 60-minute Sec 3 lesson and a one-page teacher note."
+}

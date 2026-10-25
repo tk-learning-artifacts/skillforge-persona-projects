@@ -1,0 +1,85 @@
+{
+  "set": "js",
+  "title": "JavaScript checkpoint",
+  "outcomes": [
+    { "id": "J1", "text": "Store values in variables" },
+    { "id": "J2", "text": "Make functions run at the right time" },
+    { "id": "J3", "text": "Work with arrays and data from a file" }
+  ],
+  "questions": [
+    {
+      "id": "js-1",
+      "outcome": "J1",
+      "prompt": "What happens when this code runs?",
+      "code": "const score = 0;\nscore = 1;",
+      "choices": [
+        { "id": "a", "text": "score becomes 1" },
+        { "id": "b", "text": "score stays 0 with no message" },
+        { "id": "c", "text": "A TypeError: you can't reassign a const" },
+        { "id": "d", "text": "score becomes \"01\"" }
+      ],
+      "answer": "c",
+      "explain": "A const can't be given a new value with =. Use let for a value that changes.",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/const"
+    },
+    {
+      "id": "js-2",
+      "outcome": "J2",
+      "prompt": "What is wrong with this line?",
+      "code": "button.addEventListener('click', check());",
+      "choices": [
+        { "id": "a", "text": "Nothing. It runs check on each click" },
+        { "id": "b", "text": "It runs check once, straight away, not on a click" },
+        { "id": "c", "text": "'click' must be in capitals" },
+        { "id": "d", "text": "addEventListener only works on links" }
+      ],
+      "answer": "b",
+      "explain": "check() calls the function now. Pass the function itself: addEventListener('click', check). React's onClick works the same way.",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener"
+    },
+    {
+      "id": "js-3",
+      "outcome": "J3",
+      "prompt": "What does this give you?",
+      "code": "[1, 2, 3].map((n) => n * 2)",
+      "choices": [
+        { "id": "a", "text": "[2, 4, 6]" },
+        { "id": "b", "text": "12" },
+        { "id": "c", "text": "[1, 2, 3, 2]" },
+        { "id": "d", "text": "6" }
+      ],
+      "answer": "a",
+      "explain": "map makes a new array from what the function returns for each item. React uses it to draw lists.",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map"
+    },
+    {
+      "id": "js-4",
+      "outcome": "J3",
+      "prompt": "What is the value of result?",
+      "code": "const result = JSON.parse('{\"score\": 5}').score;",
+      "choices": [
+        { "id": "a", "text": "\"score\"" },
+        { "id": "b", "text": "5" },
+        { "id": "c", "text": "{\"score\": 5}" },
+        { "id": "d", "text": "undefined" }
+      ],
+      "answer": "b",
+      "explain": "JSON.parse turns the text into an object. Its score property is the number 5.",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse"
+    },
+    {
+      "id": "js-5",
+      "outcome": "J3",
+      "prompt": "fetch('questions.json') gets a 404 because the file is missing. What does fetch do?",
+      "choices": [
+        { "id": "a", "text": "It throws an error straight away" },
+        { "id": "b", "text": "It returns an empty array" },
+        { "id": "c", "text": "It still resolves. You must check response.ok yourself" },
+        { "id": "d", "text": "It tries again until the file appears" }
+      ],
+      "answer": "c",
+      "explain": "fetch only rejects when the request fails, such as a network error. A 404 still resolves, so check response.ok.",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/API/Window/fetch"
+    }
+  ]
+}

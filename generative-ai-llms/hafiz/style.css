@@ -1,0 +1,97 @@
+/* Hafiz's guide: a lab-notebook look. Cool slate and indigo, monospace labels,
+   results shown as pass marks. Light and dark follow the system setting. */
+:root {
+  --ink: #141a2a; --ink-2: #3a4256; --muted: #5a6275; --line: #d9dde8;
+  --ground: #f7f8fb; --surface: #ffffff; --tint: #eef0fb;
+  --accent: #3644b8; --accent-ink: #ffffff;
+  --pass: #1d6b3a; --pass-soft: #e3f3e8; --warn: #865000; --warn-soft: #fbf0dc;
+  --fail: #a3352a; --fail-soft: #f8e6e3;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  color-scheme: light dark;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ink: #e8ebf5; --ink-2: #c3c8d8; --muted: #9aa1b5; --line: #2e3446;
+    --ground: #0f1320; --surface: #171c2c; --tint: #1d2340;
+    --accent: #9aa6ff; --accent-ink: #0f1320;
+    --pass: #7fd69c; --pass-soft: #15301f; --warn: #f2c27a; --warn-soft: #33270f;
+    --fail: #f0a59b; --fail-soft: #3a1d19;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--ground); color: var(--ink);
+  font: 17px/1.6 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width: 860px; margin: 0 auto; padding: 20px 16px 72px; }
+a { color: var(--accent); }
+h1 { font-size: 1.95rem; line-height: 1.2; margin: 14px 0 6px; letter-spacing: -0.01em; }
+h2 { font-size: 1.35rem; line-height: 1.3; margin: 44px 0 10px; }
+h2::before { content: attr(data-n); display: block; font: 600 0.78rem/1.4 var(--mono);
+  color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; }
+h3 { font-size: 1.08rem; line-height: 1.35; margin: 22px 0 6px; }
+.kicker { font: 600 0.8rem/1.4 var(--mono); color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; margin: 0; }
+.lede { font-size: 1.1rem; color: var(--ink-2); }
+.small { font-size: 0.92rem; color: var(--muted); }
+ul.tight li, ol.tight li { margin-bottom: 6px; }
+code, .mono { font-family: var(--mono); font-size: 0.9em; }
+
+.parts { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px; padding: 0; margin: 18px 0; list-style: none; }
+.parts a { display: block; height: 100%; padding: 14px; border: 1px solid var(--line); border-radius: 10px;
+  background: var(--surface); text-decoration: none; color: var(--ink); }
+.parts a:hover, .parts a:focus-visible { border-color: var(--accent); }
+.parts b { display: block; color: var(--accent); }
+.parts span { font-size: 0.92rem; color: var(--muted); }
+
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 14px 0; }
+.panel > :first-child { margin-top: 0; }
+.panel > :last-child { margin-bottom: 0; }
+.note { background: var(--warn-soft); border-left: 4px solid var(--warn); border-radius: 8px; padding: 10px 14px; }
+.tint { background: var(--tint); border-radius: 10px; padding: 12px 16px; }
+
+/* Results */
+.results { width: 100%; border-collapse: collapse; font-size: 0.95rem; background: var(--surface); }
+.results th, .results td { border-bottom: 1px solid var(--line); padding: 8px 8px; text-align: left; vertical-align: top; }
+.results th { font: 600 0.78rem/1.3 var(--mono); text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); }
+.scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; }
+.marks { white-space: nowrap; font-family: var(--mono); }
+.mark { display: inline-block; width: 1.5em; height: 1.5em; line-height: 1.5em; text-align: center; border-radius: 4px;
+  margin-right: 2px; font-weight: 700; font-size: 0.85rem; }
+.mark.p { background: var(--pass-soft); color: var(--pass); }
+.mark.w { background: var(--warn-soft); color: var(--warn); }
+.mark.f { background: var(--fail-soft); color: var(--fail); }
+.tag { display: inline-block; font: 700 0.74rem/1.2 var(--mono); padding: 4px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.04em; }
+.tag.p { background: var(--pass-soft); color: var(--pass); }
+.tag.w { background: var(--warn-soft); color: var(--warn); }
+.tag.f { background: var(--fail-soft); color: var(--fail); }
+
+/* Prompt cards */
+.prompt { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px; margin: 22px 0; }
+.prompt h3 { margin-top: 0; }
+.prompt .meta { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 4px 0 10px; }
+.ptext { position: relative; background: var(--tint); border-radius: 8px; padding: 12px 14px; margin: 8px 0;
+  font: 0.93rem/1.55 var(--mono); white-space: pre-wrap; overflow-wrap: anywhere; }
+.copy { font: 600 0.9rem/1 system-ui, sans-serif; min-height: 44px; padding: 0 14px; border-radius: 8px; cursor: pointer;
+  border: 1px solid var(--accent); background: var(--accent); color: var(--accent-ink); }
+.copy:focus-visible, a:focus-visible, summary:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+blockquote.out { margin: 8px 0; padding: 10px 14px; border-left: 3px solid var(--muted); background: var(--ground);
+  border-radius: 0 8px 8px 0; font-size: 0.95rem; color: var(--ink-2); }
+blockquote.out p { margin: 0 0 6px; }
+blockquote.out p:last-child { margin: 0; }
+details { margin: 8px 0; }
+summary { cursor: pointer; font-weight: 600; min-height: 44px; display: flex; align-items: center; }
+dl.check { margin: 8px 0; }
+dl.check dt { font: 600 0.8rem/1.3 var(--mono); text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin-top: 10px; }
+dl.check dd { margin: 2px 0 0; }
+
+/* Chart */
+.chart { width: 100%; height: auto; display: block; }
+.chart text { fill: var(--ink); font: 13px system-ui, sans-serif; }
+.chart .lbl { fill: var(--muted); font: 600 11px var(--mono); }
+
+/* Video */
+.video { width: 100%; max-width: 560px; display: block; margin: 12px auto; border-radius: 12px; background: #0f1320; aspect-ratio: 1 / 1; }
+.timeline li { margin-bottom: 8px; }
+.timeline b { font-family: var(--mono); font-weight: 600; color: var(--accent); }
+
+footer.src { margin-top: 48px; border-top: 1px solid var(--line); padding-top: 12px; }
+footer.src li { margin-bottom: 6px; overflow-wrap: anywhere; }
+.back { font-size: 0.95rem; }

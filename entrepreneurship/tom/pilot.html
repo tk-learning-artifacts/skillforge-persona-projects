@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Second Round, part 2: the service and its test results, by Tom Brennan</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Tom Brennan is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<p class="crumb"><a href="index.html">Second Round</a> · <a href="research.html">Part 1</a> · Part 2 of 3 · <a href="plan.html">Part 3</a></p>
+<p class="kicker">Part 2</p>
+<h1>The service and its test</h1>
+<p class="lede">Our MVP was a service, not a product: one week, one table, one cupboard. We changed it halfway through the week.</p>
+<p class="made-up">The people, counts and quotes on this page are made up, like me.</p>
+
+<h2><span class="num">01</span>What we tested</h2>
+<p>Swap week ran from Monday 17 to Friday 21 August, week 8 of Term 3. My principal agreed to it in week 3.</p>
+<ul class="tight">
+  <li>No money changed hands. Every item was free during the test. The module's rule is clear: take no money while you test.</li>
+  <li>We only gave out items that passed our check.</li>
+  <li>Students handled the items. I kept the request slips and the key to the cupboard.</li>
+</ul>
+<p>So this test answers one question: will people come and take the right size? It cannot answer whether they will pay. That question waits for <a href="plan.html#growth">the first sale in 2027</a>.</p>
+
+<h2 id="needs"><span class="num">02</span>Needs and features</h2>
+<p>Each feature comes from a line in the <a href="research.html#interviews">interview notes</a>.</p>
+<div class="scroll">
+<table>
+  <thead><tr><th>Need we heard</th><th>Feature</th><th>Did it work?</th></tr></thead>
+  <tbody>
+    <tr><td>"I'd never take one at recess." (Jun Hao)</td><td>Plain, numbered bags, collected from the general office</td><td class="good">Yes, from version 2</td></tr>
+    <tr><td>"I care if it's fast." (Daniel)</td><td>Request slip any time. Bag ready within 2 school days.</td><td class="good">Yes</td></tr>
+    <tr><td>PE shorts outgrown by June (Aisyah)</td><td>PE kit first in the cupboard, sorted by size</td><td class="miss">Partly. Large shorts ran out.</td></tr>
+    <tr><td>"Feels like taking from someone poorer." (Mdm Siti)</td><td>A sign that says it is for anyone who grew</td><td class="good">Yes. Teachers took items for their own children too.</td></tr>
+    <tr><td>Shop closed on Saturday (Mrs Tan)</td><td>Collect during office hours, any weekday</td><td class="good">Yes</td></tr>
+    <tr><td>Will it fit? (asked by 6 students at the table)</td><td>A tape measure, a mirror and a size chart in centimetres</td><td class="good">Yes, after school only</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2 id="how"><span class="num">03</span>How the service works</h2>
+<svg class="diagram flow" viewBox="0 0 340 470" role="img" aria-labelledby="bp-t bp-d">
+  <title id="bp-t">Service map for Second Round</title>
+  <desc id="bp-d">Donate at the general office box. Check each item. Failed items go to the art room rag bag or back to the family. Passed items are tagged and sorted. Then items go two ways. Requests go in numbered bags for pick-up at the office. Other items wait at the after-school swap table. Both end with a feedback card.</desc>
+  <defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="d-head" d="M0,0L10,5L0,10z"/></marker></defs>
+  <rect class="d-box" x="70" y="6" width="200" height="56" rx="8"/><text class="d-t" x="84" y="30">1. Donate</text><text class="d-s" x="84" y="50">Washed items in the box</text>
+  <rect class="d-box" x="10" y="100" width="180" height="56" rx="8"/><text class="d-t" x="24" y="124">2. Check</text><text class="d-s" x="24" y="144">Five-point check card</text>
+  <rect class="d-box warn" x="214" y="100" width="116" height="56" rx="8"/><text class="d-t" x="226" y="124">Failed</text><text class="d-s" x="226" y="144">Rag bag, or home</text>
+  <rect class="d-box" x="10" y="194" width="180" height="56" rx="8"/><text class="d-t" x="24" y="218">3. Tag and sort</text><text class="d-s" x="24" y="238">Size label, item, shelf</text>
+  <rect class="d-box alt" x="10" y="292" width="152" height="70" rx="8"/><text class="d-t" x="22" y="316">4a. Request bag</text><text class="d-s" x="22" y="336">Numbered, collect</text><text class="d-s" x="22" y="352">at the office</text>
+  <rect class="d-box alt" x="178" y="292" width="152" height="70" rx="8"/><text class="d-t" x="190" y="316">4b. Swap table</text><text class="d-s" x="190" y="336">After school,</text><text class="d-s" x="190" y="352">try it on</text>
+  <rect class="d-box" x="60" y="404" width="220" height="56" rx="8"/><text class="d-t" x="74" y="428">5. Feedback card</text><text class="d-s" x="74" y="448">Fit, condition, how you heard</text>
+  <path class="d-line" d="M120,62V96" marker-end="url(#arr)"/>
+  <path class="d-line" d="M190,128H210" marker-end="url(#arr)"/>
+  <path class="d-line" d="M100,156V190" marker-end="url(#arr)"/>
+  <path class="d-line" d="M86,250V288" marker-end="url(#arr)"/>
+  <path class="d-line" d="M150,250L240,288" marker-end="url(#arr)"/>
+  <path class="d-line" d="M86,362L140,400" marker-end="url(#arr)"/>
+  <path class="d-line" d="M254,362L200,400" marker-end="url(#arr)"/>
+</svg>
+<div class="box">
+<p><strong>The five-point check card</strong></p>
+<ol class="tight">
+  <li>Washed, with no smell.</li>
+  <li>No stain you can see at arm's length.</li>
+  <li>No tears. Hems and seams hold.</li>
+  <li>Zips and buttons work.</li>
+  <li>Our school's crest and current design.</li>
+</ol>
+<p>Two students check each item. If they disagree, it fails. Stained and torn items go to the art room's rag bag. Items from other schools go back to the family.</p>
+</div>
+
+<h2 id="versions"><span class="num">04</span>Two versions in one week</h2>
+<h3>Version 1: a recess table (Monday and Tuesday)</h3>
+<p>A table at the canteen, both recesses. Requests were collected at the table too. Students watched and counted.</p>
+<ul class="tight">
+  <li>9 items taken in two days. 5 of them were requests.</li>
+  <li>The counting team saw 14 students stop, look around, and walk away.</li>
+  <li>A group of Sec 1 boys joked about "used pants" near the table. Two girls left mid-choice.</li>
+  <li>Two students asked if they could come after school instead.</li>
+</ul>
+<p>This was finding 3 from the interviews, happening in front of us. Jun Hao had told us in week 2.</p>
+<h3>Version 2: bags and an after-school room (Wednesday to Friday)</h3>
+<ul class="tight">
+  <li>Requests were packed in plain paper bags with a number, not a name.</li>
+  <li>Form teachers passed each student a slip with their number. They collected the bag at the general office, during office hours.</li>
+  <li>The table moved to a classroom near the office, from 2.30 to 3.30 pm. It had a mirror, a tape measure and a size chart.</li>
+  <li>We dropped the recess table.</li>
+</ul>
+<div class="sign" aria-label="The sign we used in version 2">
+  <h4>Second Round</h4>
+  <p>Uniforms and PE kit for anyone who grew, lost one or just needs a spare.</p>
+  <p class="big">Free this week</p>
+  <p>This is a test week. Take what fits, up to 3 items.</p>
+  <p class="small">Requested an item? Show your number slip at the general office.</p>
+</div>
+
+<h2 id="results"><span class="num">05</span>Results against the targets</h2>
+<p>We set every target in week 3, before the test. Here they are, unchanged.</p>
+<div class="scroll">
+<table class="results">
+  <thead><tr><th>Measure</th><th class="n">Target</th><th class="n">Version 1</th><th class="n">Version 2</th><th class="n">Week</th><th></th></tr></thead>
+  <tbody>
+    <tr><td data-label="Measure">Items taken home</td><td data-label="Target" class="n">40</td><td data-label="Version 1" class="n">9</td><td data-label="Version 2" class="n">43</td><td data-label="Week" class="n">52</td><td data-label="Result" class="good">Met</td></tr>
+    <tr><td data-label="Measure">Requests filled</td><td data-label="Target" class="n">75%</td><td data-label="Version 1" class="n">5</td><td data-label="Version 2" class="n">28</td><td data-label="Week" class="n">33 of 41 (80%)</td><td data-label="Result" class="good">Met</td></tr>
+    <tr><td data-label="Measure">Fit "good" on feedback cards</td><td data-label="Target" class="n">80%</td><td data-label="Version 1" class="n">n/a</td><td data-label="Version 2" class="n">n/a</td><td data-label="Week" class="n">33 of 38 (87%)</td><td data-label="Result" class="good">Met</td></tr>
+    <tr><td data-label="Measure">Complaints about condition</td><td data-label="Target" class="n">3 or fewer</td><td data-label="Version 1" class="n">0</td><td data-label="Version 2" class="n">2</td><td data-label="Week" class="n">2</td><td data-label="Result" class="good">Met</td></tr>
+    <tr><td data-label="Measure">Large-size requests filled</td><td data-label="Target" class="n">75%</td><td data-label="Version 1" class="n">n/a</td><td data-label="Version 2" class="n">n/a</td><td data-label="Week" class="n">13 of 21 (62%)</td><td data-label="Result" class="miss">Missed</td></tr>
+  </tbody>
+</table>
+</div>
+<p class="small">Feedback cards were collected for the whole week, so they are not split by version. "Large" means L and XL. All 8 unfilled requests were L or XL: 4 pants and 4 PE shorts.</p>
+<ul class="tight">
+  <li>Every packed bag was collected by Friday. Two needed a reminder slip through form teachers.</li>
+  <li>Seven people came back to the after-school room a second time.</li>
+  <li>19 items were left, 13 of them small school shirts. They are in the cupboard for the next window.</li>
+  <li>We weighed 20 items: 4.1 kg in all. So the 52 items came to about 11 kg.</li>
+</ul>
+<p>Eleven kilograms, next to the 231,000 tonnes in NEA's 2025 figures, is nothing. My students worked that out themselves. We agreed the point is habits and access, not tonnes. A project should say what it cannot do.</p>
+
+<h3>From the feedback cards</h3>
+<ul class="tight">
+  <li>"I didn't have to stand in the canteen. Good." (Sec 2)</li>
+  <li>"The pants were long but my mum hemmed them." (Sec 1)</li>
+  <li>"Do you have XL PE shorts? I'll come back." (Sec 3)</li>
+  <li>"My son would not come. So I came." (parent, at the office)</li>
+</ul>
+<p>How people heard: form teachers 21, posters 9, a friend 8.</p>
+
+<h2><span class="num">06</span>What the test changed in the plan</h2>
+<ul class="tight">
+  <li>Bags by number become the main channel. The table is only for trying on.</li>
+  <li>An XL drive comes before every window. We ask Sec 4 leavers first.</li>
+  <li>The request slip stays open all term, not only before a window.</li>
+  <li>The cap of 3 items stays, so one family cannot clear a size.</li>
+  <li>We still don't know if people will pay. See <a href="plan.html#growth">the price test</a>.</li>
+</ul>
+
+<h3>Who it still leaves out</h3>
+<p>The parent who came because her son would not. Bags helped, but some students still won't use it. And anyone outside a size we stock. I don't have a fix for the first group yet. Maybe the best fix is time: when enough students use it, it stops being strange.</p>
+
+<footer class="sources">
+<h2><span class="num">07</span>Sources</h2>
+<ul>
+  <li>The 2025 textile and leather figure: <a href="https://www.nea.gov.sg/docs/default-source/default-document-library/waste-and-recycling-statistics-2015-to-2025.pdf">NEA, Waste and recycling statistics 2015 to 2025 (PDF)</a>.</li>
+  <li>Term 3 dates: <a href="https://www.moe.gov.sg/news/press-releases/20250730-school-terms-and-holidays-for-2026">MOE, School terms and holidays for 2026</a>.</li>
+  <li>Taking no money while testing an MVP: the SkillForge module task "Create a minimum viable product".</li>
+</ul>
+</footer>
+</main>
+</body>
+</html>

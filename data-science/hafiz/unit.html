@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Test a climate claim: a 4-lesson data unit for Sec 3, by Hafiz Ismail</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Hafiz Ismail is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<p><a href="index.html">Back to the project</a></p>
+<span class="tag">Deliverable · 4-lesson plan with privacy check</span>
+<h1>Test a climate claim with open data</h1>
+<p class="lede">A 4-lesson unit for Sec 3. Pairs take a claim from the news and turn it into a question. They answer it with NEA's Changi rainfall files in Colab.</p>
+
+<div class="card">
+<ul class="tight">
+  <li>Class: 36 Sec 3 students, working in 18 pairs.</li>
+  <li>Time: 4 lessons of 60 minutes, one a week.</li>
+  <li>Devices: one laptop per pair, signed in to a school Google account.</li>
+  <li>Tools: <a href="https://colab.research.google.com/">Google Colab</a> with pandas, and a Google Form for one anonymous poll.</li>
+  <li>Starter data: three NEA monthly rainfall files for Changi, and my <a href="changi-wettest-day.ipynb" download>starter notebook</a>.</li>
+  <li>Maths link: mean, median, quartiles, interquartile range and box-and-whisker plots. Quartiles and box plots are in MOE's G3 Maths syllabus for Sec 3/4.</li>
+</ul>
+</div>
+
+<h2><span class="tag">Goals</span>By the end, students can</h2>
+<ul class="tight">
+  <li>Turn a claim from the news into a question one dataset can answer.</li>
+  <li>Load, check and clean a CSV file in pandas, and write change notes.</li>
+  <li>Make a fair chart, spot a misleading one, and say what the trick is.</li>
+  <li>Write a claim that matches the evidence, with one limit.</li>
+</ul>
+
+<h2><span class="tag">Before lesson 1</span>Teacher checklist</h2>
+<ul class="check">
+  <li>Ask the school's ICT team if Colab is on for student accounts. An admin can turn it on or off for a group.</li>
+  <li>Run the starter notebook on a student account. Time the first run.</li>
+  <li>Build the prediction poll and run the privacy check below.</li>
+  <li>Print 18 question cards and 18 claim cards, one each per pair.</li>
+</ul>
+
+<h2 class="lesson"><span class="tag">Lesson 1 · 60 min</span>From a claim to a question</h2>
+<ol class="steps">
+  <li><span class="t">0 to 5</span><span>Settle. Students open the prediction poll on the board's QR code. Two questions, no names.</span></li>
+  <li><span class="t">5 to 15</span><span>Show NEA's 2025 headline: rainfall up 92.5 mm per decade, more rain on wet days. Ask: what exactly is claimed? Where was it measured? Over which years?</span></li>
+  <li><span class="t">15 to 25</span><span>Mini lesson. A question data can answer names one place, one measure and fixed years. Show my question about Changi's wettest day.</span></li>
+  <li><span class="t">25 to 45</span><span>Pairs preview the three NEA files on data.gov.sg. Each pair writes its own question on a question card. Examples: are rain days going up? Is December always the wettest month?</span></li>
+  <li><span class="t">45 to 55</span><span>Swap cards with the next pair. Check the question against the three-part test. Rewrite if needed.</span></li>
+  <li><span class="t">55 to 60</span><span>Show the poll as totals only. Collect question cards. Pack up.</span></li>
+</ol>
+<p class="small">Check: 5 + 10 + 10 + 20 + 10 + 5 = 60 minutes.</p>
+
+<h2 class="lesson"><span class="tag">Lesson 2 · 60 min</span>Load, check and clean in Colab</h2>
+<ol class="steps">
+  <li><span class="t">0 to 5</span><span>Settle. Sign in. Open the starter notebook from the class page and save a copy.</span></li>
+  <li><span class="t">5 to 15</span><span>Live demo of cells 1 to 3: read_csv, merge, and the four checks. Students type along.</span></li>
+  <li><span class="t">15 to 40</span><span>Pairs run the checks. They must find the part year and the SingStat mismatch. They write each change in a text cell called Change notes.</span></li>
+  <li><span class="t">40 to 50</span><span>Error clinic. Pairs read their error from the bottom line up. Most common: a misspelt file name or column name.</span></li>
+  <li><span class="t">50 to 57</span><span>Name the notebook with the pair code only, like 3E-P07. Share it with the teacher only.</span></li>
+  <li><span class="t">57 to 60</span><span>Exit ticket: one change you made, and why.</span></li>
+</ol>
+<p class="small">Check: 5 + 10 + 25 + 10 + 7 + 3 = 60 minutes.</p>
+
+<h2 class="lesson"><span class="tag">Lesson 3 · 60 min</span>Summarise and chart</h2>
+<ol class="steps">
+  <li><span class="t">0 to 5</span><span>Settle. Reopen notebooks.</span></li>
+  <li><span class="t">5 to 15</span><span>Mini lesson: groupby and agg, then describe. Read one box plot together: median, quartiles, whiskers.</span></li>
+  <li><span class="t">15 to 35</span><span>Pairs summarise the data for their question and make one fair chart. They tick the chart checklist below.</span></li>
+  <li><span class="t">35 to 45</span><span>Make a misleading copy on purpose: a cherry-picked start year or a cut axis. Write a one-line trick caption.</span></li>
+  <li><span class="t">45 to 55</span><span>Swap laptops with another pair. Spot the trick in theirs. Check their fair chart against the checklist.</span></li>
+  <li><span class="t">55 to 60</span><span>Fix one thing the other pair found. Save.</span></li>
+</ol>
+<p class="small">Check: 5 + 10 + 20 + 10 + 10 + 5 = 60 minutes.</p>
+
+<h2 class="lesson"><span class="tag">Lesson 4 · 60 min</span>Claim, evidence, limit</h2>
+<ol class="steps">
+  <li><span class="t">0 to 5</span><span>Settle. Hand out claim cards.</span></li>
+  <li><span class="t">5 to 12</span><span>Model my claim card: claim, two numbers, chart, limit, and what I cannot claim.</span></li>
+  <li><span class="t">12 to 32</span><span>Pairs fill their claim card. If their question is about a trend, they run the shuffle test.</span></li>
+  <li><span class="t">32 to 50</span><span>Gallery walk. Nine pairs stay with their laptops and present. Nine pairs visit and score with the rubric. Swap at minute 41.</span></li>
+  <li><span class="t">50 to 56</span><span>Show the lesson 1 poll again. Did the evidence change anyone's mind? Why or why not?</span></li>
+  <li><span class="t">56 to 60</span><span>Delete the poll responses together, on the board. Pack up.</span></li>
+</ol>
+<p class="small">Check: 5 + 7 + 20 + 18 + 6 + 4 = 60 minutes.</p>
+
+<h2 id="privacy"><span class="tag">Privacy check</span>Students' data in this unit</h2>
+<p>The rainfall data is about weather, not people. The only data about students is the poll and their notebooks. I check both before lesson 1.</p>
+<div class="scroll"><table>
+  <thead><tr><th>Question</th><th>My answer for this unit</th></tr></thead>
+  <tbody>
+    <tr><td>What do we collect?</td><td>Two poll answers: "Has Singapore's rain got heavier since the 1980s?" (yes, no, not sure) and "How sure are you?" (1 to 5). Nothing else.</td></tr>
+    <tr><td>Can anyone be identified?</td><td>No name, class, index number or email question. In the form's Settings, under Responses, "Collect email addresses" is not set to Verified or Responder input. "Limit to 1 response" stays off, because it makes people sign in.</td></tr>
+    <tr><td>Who sees what?</td><td>Only I see the raw responses. The class sees totals on the board.</td></tr>
+    <tr><td>Where do notebooks live?</td><td>In each student's school Drive. Named by pair code. Shared with me only, never "anyone with the link".</td></tr>
+    <tr><td>Who could be harmed?</td><td>Low risk. A student could feel silly about a wrong guess, so we never show who said what.</td></tr>
+    <tr><td>When is it deleted?</td><td>Poll responses at the end of lesson 4, on the board. Notebooks stay with students. I delete my copies at the end of term.</td></tr>
+    <tr><td>Accounts and age</td><td>School-managed Google accounts only. No personal accounts, no sign-ups to other sites.</td></tr>
+    <tr><td>School rules</td><td>I check the school's own data rules and follow those where they differ from mine.</td></tr>
+  </tbody>
+</table></div>
+<p class="small">Want to run your own survey? Pass this same check with me first.</p>
+
+<h2 id="checklist"><span class="tag">Chart checklist</span>Before a chart leaves your notebook</h2>
+<ul class="check">
+  <li>The title says what, where and when.</li>
+  <li>Both axes have labels, and the y-axis has a unit, like mm.</li>
+  <li>A bar chart's y-axis starts at zero.</li>
+  <li>The years shown are all the years, or you say why not.</li>
+  <li>A source line names who collected the data.</li>
+  <li>One y-axis only. No 3D.</li>
+  <li>Colour is not the only clue. Labels say what each mark is.</li>
+  <li>A one-sentence caption says what the reader should notice.</li>
+</ul>
+
+<h2 id="rubric"><span class="tag">Rubric</span>4-point rubric</h2>
+<div class="scroll"><table class="rubric">
+  <thead><tr><th>Criterion</th><th>1 Beginning</th><th>2 Developing</th><th>3 Secure</th><th>4 Strong</th></tr></thead>
+  <tbody>
+    <tr><th>Question is clear and answerable</th><td data-label="1 Beginning">A topic, not a question.</td><td data-label="2 Developing">A question, but no place, measure or years.</td><td data-label="3 Secure">Names place, measure and years.</td><td data-label="4 Strong">As 3, and says why this data can answer it.</td></tr>
+    <tr><th>Charts are fair and labelled</th><td data-label="1 Beginning">Missing labels or units.</td><td data-label="2 Developing">Labelled, but one checklist item missed.</td><td data-label="3 Secure">Passes the checklist.</td><td data-label="4 Strong">As 3, and the trick copy has a clear trick caption.</td></tr>
+    <tr><th>Claims match the evidence</th><td data-label="1 Beginning">Claim goes beyond the data.</td><td data-label="2 Developing">Claim fits, with no numbers.</td><td data-label="3 Secure">Claim with two numbers and a chart.</td><td data-label="4 Strong">As 3, with a limit and what you cannot claim.</td></tr>
+    <tr><th>Data is handled with care</th><td data-label="1 Beginning">No change notes.</td><td data-label="2 Developing">Some changes noted.</td><td data-label="3 Secure">Every change noted, file named by pair code.</td><td data-label="4 Strong">As 3, and checked against a second source.</td></tr>
+  </tbody>
+</table></div>
+
+<h2><span class="tag">Support</span>For different students</h2>
+<ul class="tight">
+  <li>Stuck on code: a copy of the notebook with blanks to fill, not empty cells.</li>
+  <li>Finished early: add NEA's daily Admiralty file for 2009 to 2017. Does it agree with Changi?</li>
+  <li>Code is a wall: do the same summary in Google Sheets with a pivot table. The thinking is the same.</li>
+  <li>Adult learners: I run the same unit in two 3-hour evening sessions. They argue more about the MSS claim, which is good.</li>
+</ul>
+
+<h2><span class="tag">Sources</span>Sources</h2>
+<ul class="tight small">
+  <li>Box plots and quartiles: <a href="https://www.moe.gov.sg/media/files/secondary/fsbb/syllabus/d415c25d-cf29-4b05-83da-9713f38edd14.pdf">MOE 2020 G2 and G3 Mathematics Syllabuses</a>, Secondary Three/Four content.</li>
+  <li>Colab admin setting: <a href="https://knowledge.workspace.google.com/admin/users/access/turn-google-colab-on-or-off-for-users">Turn Google Colab on or off for users</a>.</li>
+  <li>Forms email setting: <a href="https://support.google.com/docs/answer/139706">View and manage form responses</a>. Sign-in for one response: <a href="https://support.google.com/docs/answer/2839588">Publish and share your form</a>.</li>
+  <li>The claim: <a href="https://www.nea.gov.sg/media/news/news/index/spore-records-wettest-ever-march-and-hottest-ever-june-and-november-in-2025">NEA 2025 Annual Climate Assessment release</a>.</li>
+  <li>Data: NEA rainfall files via data.gov.sg, listed on the <a href="data.html">data page</a>. Admiralty daily records: <a href="https://data.gov.sg/datasets/d_03bb2eb67ad645d0188342fa74ad7066/view">Historical Daily Weather Records</a>.</li>
+</ul>
+</main>
+</body>
+</html>
