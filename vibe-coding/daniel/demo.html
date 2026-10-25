@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fair Picker: the 90-second demo, by Daniel Ong</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="app.css">
+<link rel="stylesheet" href="style.css">
+<script src="app.js" defer></script>
+<script src="demo.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Daniel Ong is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<ul class="tabs-nav">
+  <li><a href="index.html">Project</a></li>
+  <li><a href="demo.html" aria-current="page">90-second demo</a></li>
+  <li><a href="prompts.html">Prompt log</a></li>
+  <li><a href="code.html">Who wrote the code</a></li>
+</ul>
+<h1>The 90-second demo</h1>
+<p class="lede">This demo drives the real app. A cursor clicks each button, and my voice-over runs as captions.</p>
+
+<div class="player">
+  <div class="screen" id="screen">
+    <div class="stage" id="stage">
+      <svg class="cursor" id="cursor" viewBox="0 0 26 26" aria-hidden="true"><path d="M3 2 L3 21 L8 16 L12 24 L15.5 22.5 L11.5 14.5 L18 14.5 Z" fill="#ffffff" stroke="#10142a" stroke-width="2" stroke-linejoin="round"/></svg>
+    </div>
+    <div class="titlecard" id="titlecard"><strong>Fair Picker</strong><span>A name picker with no repeats. Made with ChatGPT and me.</span></div>
+  </div>
+  <p class="caption" id="caption" aria-live="polite"></p>
+  <input class="progress" id="progress" type="range" min="0" max="90" step="0.1" value="0" aria-label="Demo position, in seconds">
+  <div class="controls">
+    <button type="button" id="play">Play</button>
+    <button type="button" id="restart">Start again</button>
+    <span class="time" id="clock">0:00 / 1:30</span>
+  </div>
+</div>
+<ul class="chapters" id="chapters" aria-label="Jump to a part"></ul>
+
+<h2>Why it's a demo you can pause</h2>
+<p>A video file of a screen goes out of date the day you fix a bug. This one runs the code you can use on the project page, so it always matches. It also has captions, and you can jump to any part.</p>
+<p>For my class, I would record the same 90 seconds with the Chromebook's built-in Screen capture tool. Press Shift, Ctrl and the Show windows key, then pick Screen record. The video goes to the Downloads folder.</p>
+<p class="small">The names in the demo are made up. They stay inside this page and are never saved.</p>
+
+<h2>The script</h2>
+<p>I wrote the voice-over first, then timed the clicks to it. Each line is one caption.</p>
+<ol class="script" id="script"></ol>
+
+<h2>How I planned 90 seconds</h2>
+<ul class="tight">
+  <li>One job per chapter: class list, pick, absent, groups, safety.</li>
+  <li>Show the fixes I made by hand. The groups and the safety test are both my changes.</li>
+  <li>Nothing a viewer has to read fast. Each caption stays up for at least 3 seconds.</li>
+  <li>End on where to go next: the prompt log and the code.</li>
+</ul>
+
+<h2>Sources</h2>
+<ul class="tight small">
+  <li>Chromebook screen recording: <a href="https://support.google.com/chromebook/answer/10474268">Google Chromebook Help, Take a screenshot or record your screen</a>.</li>
+  <li>The safety test string: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/innerHTML">MDN, Element: innerHTML property, Security considerations</a>.</li>
+</ul>
+</main>
+</body>
+</html>

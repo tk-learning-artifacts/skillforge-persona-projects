@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fair Picker: who wrote the code, by Daniel Ong</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="app.js" defer></script>
+<script src="source.js" defer></script>
+<script src="code.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Daniel Ong is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<ul class="tabs-nav">
+  <li><a href="index.html">Project</a></li>
+  <li><a href="demo.html">90-second demo</a></li>
+  <li><a href="prompts.html">Prompt log</a></li>
+  <li><a href="code.html" aria-current="page">Who wrote the code</a></li>
+</ul>
+<h1>Who wrote the code</h1>
+<p class="lede">Every block of Fair Picker starts with a tag saying who wrote it. This page reads the tags and counts the lines.</p>
+<p>I started tagging after prompt 4. By then I'd lost track of which lines were mine. The tags follow the AI-use declaration idea from the module: say what the AI did, and what you changed yourself.</p>
+
+<div class="legend">
+  <span class="tag ai">AI</span><span class="tag mix">AI, then me</span><span class="tag me">Me</span>
+</div>
+<div class="share" aria-hidden="true"><span class="ai" id="bar-ai"></span><span class="mix" id="bar-mix"></span><span class="me" id="bar-me"></span></div>
+<ul class="tight">
+  <li>ChatGPT wrote it and I kept it: <b id="n-ai"></b>.</li>
+  <li>ChatGPT wrote it and I changed it: <b id="n-mix"></b>.</li>
+  <li>I wrote it: <b id="n-me"></b>.</li>
+</ul>
+<p>That is <span id="n-total"></span> lines, not counting blank lines, tags and the note at the top. ChatGPT wrote the first version of <b id="n-first"></b> of them.</p>
+<p class="small">A line count flatters the AI. The "AI, then me" blocks are often 20 lines where I changed one. That one line took me the longest.</p>
+
+<h2 id="shuffle">The shuffle test</h2>
+<p>ChatGPT's first shuffle was <code>list.sort(() =&gt; Math.random() - 0.5)</code>. It looks random. This test shuffles a class of 28 students 20,000 times. It counts how often each student lands first in the list. In a fair shuffle, everyone lands first about 1 time in 28, or 3.6%.</p>
+<p><button type="button" class="btn primary" id="run">Run 20,000 shuffles again</button></p>
+<p id="result" aria-live="polite"></p>
+<div class="chart biased" id="chart-sort" data-label="Bar chart: with the sort shuffle, how often each of 28 students lands first.">
+  <h3>ChatGPT's sort shuffle</h3>
+  <p class="small">How often each student lands first, out of 20,000 shuffles.</p>
+</div>
+<div class="chart" id="chart-fair" data-label="Bar chart: with Fisher-Yates, how often each of 28 students lands first.">
+  <h3>Fisher-Yates, the one in the app now</h3>
+  <p class="small">The same test, using the app's own shuffle function.</p>
+</div>
+<details>
+  <summary>Show the numbers as a table</summary>
+  <div class="scroll"><table>
+    <thead><tr><th>Student</th><th>Sort shuffle</th><th>Fisher-Yates</th></tr></thead>
+    <tbody id="table-body"></tbody>
+  </table></div>
+</details>
+<p>The sort shuffle gives No. 1 far more first places. That's the first student on my register, every single lesson. The numbers change a little each run, because they are random. The pattern doesn't.</p>
+<p class="small">These results come from your browser's own sort. javascript.info says the pattern depends on each browser's sort. Another browser may show a different shape.</p>
+
+<h2>Things I checked in the code</h2>
+<ul class="tight">
+  <li>No typed text ever goes through <code>innerHTML</code>. The helper <code>el()</code> only sets text.</li>
+  <li>No global names leak out, except <code>window.FairPicker</code>, which the demo and this page use.</li>
+  <li>Storage errors can't crash the app. Loading and saving sit inside <code>try</code> and <code>catch</code>.</li>
+  <li>Each pure function, like <code>shuffle</code> and <code>makeGroups</code>, takes its random function as an input. That's how the demo picks the same students every time.</li>
+  <li>Still to do: <code>mount()</code> is about 185 lines. I'd split the three tabs into their own functions.</li>
+</ul>
+
+<h2>The whole of app.js</h2>
+<p class="small">The coloured edge shows who wrote each line. Plain blue edges are ChatGPT's lines that I kept.</p>
+<div class="source" id="source"></div>
+
+<h2>Sources</h2>
+<ul class="tight small">
+  <li><a href="https://javascript.info/task/shuffle">javascript.info, Shuffle an array</a>.</li>
+  <li><a href="https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle">Wikipedia, Fisher-Yates shuffle</a>.</li>
+  <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/innerHTML">MDN, Element: innerHTML property</a>.</li>
+</ul>
+</main>
+</body>
+</html>

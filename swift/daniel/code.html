@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Team Points: the Swift code, by Daniel Ong</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Daniel Ong is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<ul class="tabs">
+  <li><a href="index.html">Project</a></li>
+  <li><a href="readme.html">README</a></li>
+  <li><a href="code.html" aria-current="page">The code</a></li>
+</ul>
+<h1>The code</h1>
+<p class="lede">Every Swift file in <a href="TeamPoints.swiftpm.zip" download>TeamPoints.swiftpm.zip</a>, with a note on what to look at.</p>
+<div class="card">
+<p><strong>Where the state lives</strong></p>
+<p>There is one list of teams. It lives in <code>TeamsView</code>, marked <code>@State</code>. <code>TeamView</code> never owns a score. It gets a <code>@Binding</code> to one team. So when it changes the score, the list's copy changes. That is why the score is still there when you tap Back.</p>
+<p>Read the files in this order: <a href="#Team-swift">Team.swift</a>, <a href="#TeamsView-swift">TeamsView.swift</a>, <a href="#TeamView-swift">TeamView.swift</a>.</p>
+</div>
+<p class="small">Every file was checked with the Swift 6.3 compiler on a Mac. The inline title line only works on iPad and iPhone, so the check skipped it. <code>Package.swift</code> is left out here. Swift Playgrounds writes it for you.</p>
+<h2 id="TeamPointsApp-swift">TeamPointsApp.swift</h2>
+<p>Where the app starts. It opens on the list of teams.</p>
+<p class="small">11 lines.</p>
+<pre><code>import SwiftUI
+
+// Where the app starts. It shows the list of teams first.
+@main
+struct TeamPointsApp: App {
+    var body: some Scene {
+        WindowGroup {
+            TeamsView()
+        }
+    }
+}</code></pre>
+
+<h2 id="Team-swift">Team.swift</h2>
+<p>One team is a <code>struct</code>. It has a name, a shape, a colour and points. Look at <code>starters</code>: each team gets a shape as well as a colour.</p>
+<p class="small">26 lines.</p>
+<pre><code>import SwiftUI
+
+// One team in my class quiz.
+// Each team has a colour AND a shape, so colour is never the only clue.
+struct Team: Identifiable {
+    let id = UUID()
+    var name: String
+    var symbol: String   // an SF Symbol name, like &quot;star.fill&quot;
+    var color: Color
+    var points = 0
+}
+
+extension Team {
+    // The four teams I start every lesson with.
+    // The colours are dark enough for white text on top.
+    static let starters: [Team] = [
+        Team(name: &quot;Kopi&quot;, symbol: &quot;circle.fill&quot;,
+             color: Color(red: 0.43, green: 0.27, blue: 0.16)),
+        Team(name: &quot;Teh&quot;, symbol: &quot;triangle.fill&quot;,
+             color: Color(red: 0.69, green: 0.29, blue: 0.0)),
+        Team(name: &quot;Milo&quot;, symbol: &quot;square.fill&quot;,
+             color: Color(red: 0.11, green: 0.42, blue: 0.20)),
+        Team(name: &quot;Bandung&quot;, symbol: &quot;star.fill&quot;,
+             color: Color(red: 0.69, green: 0.15, blue: 0.40))
+    ]
+}</code></pre>
+
+<h2 id="TeamsView-swift">TeamsView.swift</h2>
+<p>Screen 1. Look for <code>ForEach($teams) { $team in</code>. The dollar signs hand screen 2 a binding, not a copy. This is the line from <a href="index.html#wrong">mistake 2</a>.</p>
+<p class="small">86 lines.</p>
+<pre><code>import SwiftUI
+
+// Screen 1: every team and its score.
+// The scores live HERE, in one @State array.
+// Screen 2 gets a @Binding to one team, so its changes come back here.
+struct TeamsView: View {
+    @State private var teams = Team.starters
+    @State private var askingToReset = false
+
+    var body: some View {
+        NavigationStack {
+            List {
+                Section {
+                    // $teams gives me a binding to each team.
+                    ForEach($teams) { $team in
+                        NavigationLink {
+                            TeamView(team: $team)
+                        } label: {
+                            TeamRow(team: team, isLeading: isLeading(team))
+                        }
+                    }
+                } footer: {
+                    Text(&quot;Tap a team to give points.&quot;)
+                }
+            }
+            .navigationTitle(&quot;Team Points&quot;)
+            .toolbar {
+                Button(&quot;Reset&quot;) {
+                    askingToReset = true
+                }
+                .disabled(teams.allSatisfy { $0.points == 0 })
+            }
+            .confirmationDialog(&quot;Set every score back to 0?&quot;,
+                                isPresented: $askingToReset,
+                                titleVisibility: .visible) {
+                Button(&quot;Reset all scores&quot;, role: .destructive) {
+                    for index in teams.indices {
+                        teams[index].points = 0
+                    }
+                }
+            }
+        }
+        // Toolbar text and the back button: black in light mode, white in dark mode.
+        // Orange was hard to read on white.
+        .tint(.primary)
+    }
+
+    // A team leads if it has the top score and that score is above 0.
+    func isLeading(_ team: Team) -&gt; Bool {
+        let top = teams.map(\.points).max() ?? 0
+        return top &gt; 0 &amp;&amp; team.points == top
+    }
+}
+
+// One row in the list: shape, name, a crown for the leader, and the score.
+struct TeamRow: View {
+    let team: Team
+    let isLeading: Bool
+
+    var body: some View {
+        HStack(spacing: 12) {
+            Image(systemName: team.symbol)
+                .font(.title2)
+                .foregroundStyle(team.color)
+                .frame(width: 32)
+            Text(team.name)
+                .font(.title3.weight(.semibold))
+            if isLeading {
+                Image(systemName: &quot;crown.fill&quot;)
+                    .foregroundStyle(.orange)
+            }
+            Spacer()
+            Text(&quot;\(team.points)&quot;)
+                .font(.system(.title, design: .rounded, weight: .bold))
+                .monospacedDigit()
+        }
+        .padding(.vertical, 6)
+        // VoiceOver reads the whole row as one sentence.
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(&quot;\(team.name), \(team.points) points\(isLeading ? &quot;, in the lead&quot; : &quot;&quot;)&quot;)
+    }
+}
+
+#Preview {
+    TeamsView()
+}</code></pre>
+
+<h2 id="TeamView-swift">TeamView.swift</h2>
+<p>Screen 2. Look at <code>@Binding var team</code>, and at <code>change(by:)</code>. It checks Reduce Motion before it animates.</p>
+<p class="small">89 lines.</p>
+<pre><code>import SwiftUI
+
+// Screen 2: one team&#x27;s score, with buttons to change it.
+// @Binding means this screen changes the team that lives in TeamsView.
+struct TeamView: View {
+    @Binding var team: Team
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @State private var bump = false
+
+    var body: some View {
+        VStack(spacing: 28) {
+            Image(systemName: team.symbol)
+                .font(.system(size: 56))
+                .foregroundStyle(team.color)
+                .accessibilityHidden(true)
+
+            // The big score. It rolls to the new number and pops a little.
+            Text(&quot;\(team.points)&quot;)
+                .font(.system(size: 120, weight: .heavy, design: .rounded))
+                .monospacedDigit()
+                .contentTransition(.numericText(value: Double(team.points)))
+                .scaleEffect(bump ? 1.15 : 1)
+                .accessibilityLabel(&quot;\(team.points) points&quot;)
+
+            HStack(spacing: 16) {
+                PointButton(label: &quot;−1&quot;, color: .gray) { change(by: -1) }
+                    .accessibilityLabel(&quot;Take away 1 point&quot;)
+                    .disabled(team.points == 0)
+                PointButton(label: &quot;+1&quot;, color: team.color) { change(by: 1) }
+                    .accessibilityLabel(&quot;Add 1 point&quot;)
+                PointButton(label: &quot;+3&quot;, color: team.color) { change(by: 3) }
+                    .accessibilityLabel(&quot;Add 3 points&quot;)
+            }
+
+            // Renaming here renames the team on screen 1 too, because of @Binding.
+            TextField(&quot;Team name&quot;, text: $team.name)
+                .textFieldStyle(.roundedBorder)
+                .font(.title3)
+                .multilineTextAlignment(.center)
+                .frame(maxWidth: 280)
+                .accessibilityLabel(&quot;Team name&quot;)
+
+            Spacer()
+        }
+        .padding(.top, 32)
+        .padding(.horizontal)
+        .navigationTitle(team.name)
+        .navigationBarTitleDisplayMode(.inline)
+    }
+
+    func change(by amount: Int) {
+        let newPoints = max(0, team.points + amount)
+        if reduceMotion {
+            // No rolling numbers or popping for people who turned on Reduce Motion.
+            team.points = newPoints
+            return
+        }
+        withAnimation(.spring(duration: 0.3)) {
+            team.points = newPoints
+            bump = true
+        }
+        withAnimation(.spring(duration: 0.3).delay(0.15)) {
+            bump = false
+        }
+    }
+}
+
+// A big round-cornered button. 80 by 64 points, well over Apple&#x27;s 44 by 44.
+struct PointButton: View {
+    let label: String
+    let color: Color
+    let action: () -&gt; Void
+
+    var body: some View {
+        Button(action: action) {
+            Text(label)
+                .font(.system(.title, design: .rounded, weight: .bold))
+                .frame(width: 80, height: 64)
+                .foregroundStyle(.white)
+                .background(color, in: RoundedRectangle(cornerRadius: 16))
+        }
+    }
+}
+
+#Preview {
+    NavigationStack {
+        TeamView(team: .constant(Team.starters[0]))
+    }
+}</code></pre>
+
+</main>
+</body>
+</html>

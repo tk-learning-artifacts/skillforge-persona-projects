@@ -1,0 +1,6 @@
+{
+  "module": "vibe-coding",
+  "persona": "daniel",
+  "title": "Fair Picker: a no-repeats name picker I built with ChatGPT",
+  "summary": "A class name picker with no repeats, and a group maker, for a Sec 2 class. It has a self-playing 90-second demo and all 9 prompts. Every line is tagged AI or me, and a test shows why ChatGPT's shuffle was unfair."
+}

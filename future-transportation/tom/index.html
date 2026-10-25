@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Walk the Last Bit: a calmer primary school gate, by Tom Brennan</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Tom Brennan is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<h1><mark>Walk the Last Bit</mark></h1>
+<p class="lede">Every school morning, cars queue outside the primary school next to mine. The children who walk pay for it. This is my plan to move the cars back 400 metres. Then we walk the children in together.</p>
+<p>I'm Tom. I teach sustainability and social topics through projects, at a secondary school. A primary school shares our road. My Sec 3 project class walks past its gate at 7:15 every day. They picked this problem, and I did the module project alongside them.</p>
+<p>My question for any transport idea: who does it help, and who does it leave out?</p>
+<ul class="tabs">
+  <li><a href="index.html" aria-current="page">1. The problem</a></li>
+  <li><a href="design.html">2. The design and app</a></li>
+  <li><a href="rollout.html">3. The rollout plan</a></li>
+</ul>
+
+<h2>The problem, with <mark>data</mark></h2>
+<p>I started with national data, then looked at our own gate. The national data comes from the Census of Population 2020, published on data.gov.sg. It counts how resident students usually get to school.</p>
+
+<h3>How primary pupils get to school</h3>
+<figure>
+<div class="bars" role="img" aria-label="Bar chart of primary pupils by usual way to school. No transport required 41.3%. Car only 21.1%. Public bus only 15.7%. Private school bus or van 13.8%. MRT, LRT and bus combinations 5.6%. Other 1.8%. Taxi or private hire car 0.7%.">
+  <span class="name">No transport needed</span><div class="track"><div class="fill" style="width:68.0%"></div><span class="v" style="left:68.0%">41.3%</span></div>
+  <span class="name"><b>Car only</b></span><div class="track"><div class="fill hi" style="width:34.8%"></div><span class="v" style="left:34.8%">21.1%</span></div>
+  <span class="name">Public bus only</span><div class="track"><div class="fill" style="width:25.8%"></div><span class="v" style="left:25.8%">15.7%</span></div>
+  <span class="name">School bus or van</span><div class="track"><div class="fill" style="width:22.7%"></div><span class="v" style="left:22.7%">13.8%</span></div>
+  <span class="name">MRT, LRT, bus mixes</span><div class="track"><div class="fill" style="width:9.2%"></div><span class="v" style="left:9.2%">5.6%</span></div>
+  <span class="name">Other</span><div class="track"><div class="fill" style="width:3.0%"></div><span class="v" style="left:3.0%">1.8%</span></div>
+  <span class="name">Taxi or private hire</span><div class="track"><div class="fill" style="width:1.2%"></div><span class="v" style="left:1.2%">0.7%</span></div>
+</div>
+<figcaption>Fig. 1. 245,456 resident primary pupils, 2020. "No transport needed" is the census label "No Transport Required". The census does not say how these pupils travel. I read it as mostly walking, but that is my reading. Source: <a href="https://data.gov.sg/datasets/d_fc70357c97a64358829c22df30bdd423/view">Census 2020, mode of transport by level of education</a>.</figcaption>
+</figure>
+<p>One primary pupil in five arrives by car. Two in five need no transport at all. Those two groups meet at the gate every morning.</p>
+
+<h3>Most car trips to school are short</h3>
+<figure>
+<div class="bars" role="img" aria-label="Bar chart of students who go to school by car only, by travel time. Up to 15 minutes 54.5%. 16 to 30 minutes 38.7%. 31 to 45 minutes 5.5%. 46 to 60 minutes 1.2%. Over 60 minutes 0.1%.">
+  <span class="name"><b>Up to 15 min</b></span><div class="track"><div class="fill hi" style="width:68.0%"></div><span class="v" style="left:68.0%">54.5%</span></div>
+  <span class="name">16 to 30 min</span><div class="track"><div class="fill" style="width:48.3%"></div><span class="v" style="left:48.3%">38.7%</span></div>
+  <span class="name">31 to 45 min</span><div class="track"><div class="fill" style="width:6.9%"></div><span class="v" style="left:6.9%">5.5%</span></div>
+  <span class="name">46 to 60 min</span><div class="track"><div class="fill" style="width:1.5%"></div><span class="v" style="left:1.5%">1.2%</span></div>
+  <span class="name">Over 60 min</span><div class="track"><div class="fill" style="width:0.2%"></div><span class="v" style="left:0.2%">0.1%</span></div>
+</div>
+<figcaption>Fig. 2. 96,498 resident students of all levels who go by car only, by usual travel time, 2020. This table does not split out primary pupils. Source: <a href="https://data.gov.sg/datasets/d_e5a69e75ba24d05efac0f8e367d7b6ff/view">Census 2020, mode of transport by travelling time</a>.</figcaption>
+</figure>
+<p>More than half of car trips to school take 15 minutes or less. Many of those are trips a child could walk, or finish on foot.</p>
+
+<h3>Who drives, and who doesn't</h3>
+<div class="stats">
+  <div class="stat"><b>8.0%</b><span>of students in HDB flats go to school by car only</span></div>
+  <div class="stat"><b>29.2%</b><span>of students in other homes, like condos and landed houses, do</span></div>
+</div>
+<p class="small">All resident students aged 5 and over, 2020. Not split by school level. I worked out the second figure by taking HDB students away from the total. Source: <a href="https://data.gov.sg/datasets/d_e3ced8d7d918d767a9245cca8612407b/view">Census 2020, mode of transport by type of dwelling</a>.</p>
+<p>The same table shows the other side. 27.1% of students in HDB flats need no transport, against 13.7% of students in other homes.</p>
+<p>This is the part my class argued about most. Condos and landed homes usually cost more than flats. So the families who drive tend to be better off. The families who walk past the queue are more often from the flats. The fumes and the risk land on the walkers. One student said: "So the people who make the jam aren't the ones who breathe it." I didn't correct her.</p>
+
+<h3>Children who need a vehicle</h3>
+<div class="scroll"><table>
+<caption>How students aged 5 to 14 get to school, 2020</caption>
+<tr><th>Students</th><th class="n">Car or taxi</th><th class="n">Other modes, like school buses</th><th class="n">No transport needed</th></tr>
+<tr><td>With a lot of difficulty in a basic activity, like walking or seeing (2,323 students)</td><td class="n">20.6%</td><td class="n">35.6%</td><td class="n">19.5%</td></tr>
+<tr><td>Without (398,032 students)</td><td class="n">20.2%</td><td class="n">11.8%</td><td class="n">35.9%</td></tr>
+</table></div>
+<p class="small">Rows do not add to 100%: the rest use public transport. Source: <a href="https://data.gov.sg/datasets/d_5fd0d33c0dff0332ec90a9b0786f6e28/view">Census 2020, mode of transport by difficulty in basic activities</a>.</p>
+<p>Children with disabilities are three times as likely to use "other modes". These include school buses and vans. They are much less likely to need no transport. Any plan that keeps vehicles away from the gate must still let them through. Otherwise I would be fixing the street for most children by shutting out a few.</p>
+
+<h3>What my class counted at the gate</h3>
+<div class="madeup"><strong>Made-up practice data</strong>
+My class and these counts are invented for this example. They show the kind of count a class can make. A real class would count on several mornings.</div>
+<div class="scroll"><table>
+<caption>One morning, 7:00 to 7:30, at the primary school gate (made up)</caption>
+<tr><th>What we counted</th><th class="n">Count</th></tr>
+<tr><td>Cars that stopped to drop off a child</td><td class="n">138</td></tr>
+<tr><td>Cars that stopped in the bus stop or on the yellow lines</td><td class="n">29</td></tr>
+<tr><td>Engines left running for more than a minute while parked</td><td class="n">17</td></tr>
+<tr><td>Children who walked between stopped cars to reach the gate</td><td class="n">41</td></tr>
+<tr><td>Times a public bus could not pull into the stop</td><td class="n">6</td></tr>
+<tr><td>Children who arrived on foot</td><td class="n">212</td></tr>
+</table></div>
+<p>Leaving an engine running while parked is already an offence. <a href="https://www.nea.gov.sg/our-services/pollution-control/air-pollution/air-pollution-regulations">NEA says</a> vehicle owners can be fined up to $2,000 for a first offence if convicted. Rules alone have not fixed our gate.</p>
+
+<h3>What families told us</h3>
+<div class="madeup"><strong>Made-up interviews</strong>
+These people are invented, like me. We asked about the last time, not "would you ever", as the module's interview article suggests.</div>
+<ul class="tight">
+  <li>"Last Tuesday I drove her because it's on my way to work. It's two minutes." A father who lives in a condo 600 m away.</li>
+  <li>"The road at 7:15 is the scary part. Cars everywhere." A mother who drives for that reason. Her car is part of what makes it scary.</li>
+  <li>"My son uses a wheelchair. We have to drop at the gate." A parent who must not be pushed out.</li>
+  <li>"I walk my two grandchildren. I hold both hands and still watch every car." A grandmother from the flats.</li>
+  <li>"I would let him walk if I knew he got there." A mother who works early shifts.</li>
+</ul>
+
+<div class="pin"><strong>The problem in one paragraph</strong>
+Short car trips pile up at the primary school gate between 7:00 and 7:30. They block the bus stop, leave engines running and make children squeeze between cars. The cost falls hardest on the children who walk, who are more often from the flats. Parents drive partly because the road feels unsafe, which the driving causes. Any fix must keep access for children with disabilities. It must also give working parents what they asked for: knowing their child arrived.</div>
+
+<h2>What I'm proposing</h2>
+<p>Three parts, which only work together:</p>
+<ol class="tight">
+  <li><b>Drop-and-Walk points.</b> Two places about 400 m away where cars drop children off.</li>
+  <li><b>Walking buses.</b> Volunteers walk groups of children in on a timetable. They start at two HDB blocks and pick up at those points.</li>
+  <li><b>WalkTap.</b> A tap of a bag tag tells parents their child joined the walk and reached the gate. No tracking in between.</li>
+</ol>
+<p>Plus a quiet Gate Zone: no drop-offs at the gate from 7:00 to 7:30. School buses and children who need door access are the exceptions.</p>
+<p><a href="design.html">See the design, specs and the working app prototype</a>, then <a href="rollout.html">the rollout plan</a>.</p>
+
+<h2>What I would change</h2>
+<p>The plan moves cars away from the gate. It does not take many cars off the road. A parent who drove 600 m still drives 400 m of it. Fewer car trips would need safer walking routes from home. That is a job for the town, not the school. My census numbers are also national and from 2020. They describe Singapore, not this school. Before launch I'd want real counts at our gate.</p>
+
+<h2>Sources</h2>
+<ul class="tight small">
+  <li>Primary pupils by mode of transport: <a href="https://data.gov.sg/datasets/d_fc70357c97a64358829c22df30bdd423/view">Census of Population 2020, Resident Students Aged 5 Years and Over by Usual Mode of Transport to School, Level of Education Attending and Sex</a>, Department of Statistics, on data.gov.sg.</li>
+  <li>Car trips by travel time: <a href="https://data.gov.sg/datasets/d_e5a69e75ba24d05efac0f8e367d7b6ff/view">Census 2020, by Travelling Time to School and Sex</a>.</li>
+  <li>HDB and other homes: <a href="https://data.gov.sg/datasets/d_e3ced8d7d918d767a9245cca8612407b/view">Census 2020, by Type of Dwelling and Sex</a>.</li>
+  <li>Students with disabilities: <a href="https://data.gov.sg/datasets/d_5fd0d33c0dff0332ec90a9b0786f6e28/view">Census 2020, by Difficulty in Performing Basic Activities and Age Group</a>.</li>
+  <li>Idling engines: <a href="https://www.nea.gov.sg/our-services/pollution-control/air-pollution/air-pollution-regulations">NEA, Air Pollution Regulations</a>.</li>
+</ul>
+</main>
+</body>
+</html>

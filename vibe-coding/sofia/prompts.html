@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kopi Rush: my prompt log, by Sofia Reyes</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Sofia Reyes is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<header class="sign">
+  <h1>Prompt log</h1>
+  <p>Every prompt I gave Claude for Kopi Rush, word for word</p>
+</header>
+<ul class="pagenav">
+  <li><a href="index.html">Play</a></li>
+  <li><a href="index.html#demo">90-second demo</a></li>
+  <li><a href="prompts.html" aria-current="page">Prompt log</a></li>
+  <li><a href="index.html#reflection">Reflection</a></li>
+</ul>
+<p class="lede">11 prompts, two evenings, one camp in between. My three best are marked. Each card says what I asked, what Claude gave, what I changed and how I checked.</p>
+<div class="chalk">
+<p>Run these prompts yourself and you'll get different code. That's normal. Each prompt lists what the game must do, so you can test Claude's answer against the list. Prompts 6, 8 and 9 came from my campers' bug-hunt notes.</p>
+</div>
+
+<h2>Evening 1: the first game</h2>
+
+<article class="prompt-card best">
+<h3>1. The brief <span class="badge">Best</span></h3>
+<p class="prompt-text">Make a one-file HTML game for kids aged 8 to 12 at a holiday camp. Theme: a kopitiam drink stall in Singapore.
+
+A customer orders a drink in kopitiam code, like "Teh C peng". The player builds it with buttons:
+- Kopi or Teh
+- milk: condensed, evaporated or none
+- sugar: none, less, normal or more
+- hot or iced
+Then they press Serve. A right drink scores a point. A wrong drink says what was wrong in one short sentence.
+
+No libraries, no images from the internet, no sound. Buttons at least 48 pixels tall, for small fingers on an iPad. Show the code first, then a list of what I should test.</p>
+<dl>
+<dt>What Claude gave</dt>
+<dd>A working game in the artifact window, first time. Big buttons, a ticket, a score. Its test list had 8 items, like "try every sugar level".</dd>
+<dt>What I changed</dt>
+<dd>The milk words. Claude's table said C means condensed milk and plain Kopi means evaporated milk. That's backwards. I fixed it by hand. I also removed "Kopi kosong" and "Teh kosong". My sources don't agree on what they mean.</dd>
+<dt>How I checked</dt>
+<dd>I read every code word against the Wikipedia kopi table and a teh ordering guide. Then I played 20 orders.</dd>
+</dl>
+<p class="small">Why it's my best: it names the age, the device, every button, and what I don't want. "No sound" saved me from a cash-register noise in a room of 18 kids.</p>
+</article>
+
+<article class="prompt-card">
+<h3>2. Put the words in one place</h3>
+<p class="prompt-text">Put all the order code words in one table at the top of the script, with a comment on each row. I want to fix a code word without reading the rest of the program.</p>
+<dl>
+<dt>What Claude gave</dt>
+<dd>The <code>PARTS</code> table: each choice with its key, its code word and a label. The rest of the game reads from it.</dd>
+<dt>What I changed</dt>
+<dd>Nothing. I wish I'd asked for this in prompt 1. Fixing the milk would have taken one minute instead of ten.</dd>
+<dt>How I checked</dt>
+<dd>I changed "gah dai" to "GAH DAI" as a test. The ticket and the code board both changed.</dd>
+</dl>
+</article>
+
+<article class="prompt-card best">
+<h3>3. Levels for mixed ages <span class="badge">Best</span></h3>
+<p class="prompt-text">Add three levels for mixed ages. Level 1 orders use only the drink and milk words (Kopi, Kopi O, Teh C). Level 2 adds sugar words. Level 3 adds peng. Move up a level after 5 right in a row. Show the level on screen.</p>
+<dl>
+<dt>What Claude gave</dt>
+<dd>A level counter, and a filter that picks orders for the level. Level 1 has 6 orders, level 2 has 22, level 3 has all 44.</dd>
+<dt>What I changed</dt>
+<dd>One line: the same order can't come twice in a row. With only 6 level-1 orders, it often did.</dd>
+<dt>How I checked</dt>
+<dd>Played to level 3 twice and counted the streak each time.</dd>
+</dl>
+<p class="small">Why it's in my best three: it says exactly which words belong to each level, and the rule for moving up.</p>
+</article>
+
+<article class="prompt-card">
+<h3>4. The code board</h3>
+<p class="prompt-text">Add a code board under the game that shows each code word and what it means. Include the "no word" choices too, like no peng means hot. Add a button to hide and show it.</p>
+<dl>
+<dt>What Claude gave</dt>
+<dd>A two-column list with a Hide button.</dd>
+<dt>What I changed</dt>
+<dd>Nothing.</dd>
+<dt>How I checked</dt>
+<dd>Read it against my sources, row by row.</dd>
+</dl>
+</article>
+
+<article class="prompt-card">
+<h3>5. Draw the drink</h3>
+<p class="prompt-text">Draw the drink as a simple flat SVG that changes as the player taps. Hot drinks in a cup with a saucer. Iced drinks in a tall glass with ice cubes. Show sugar as cubes beside the cup. Also write the drink in words under it, so colour is never the only clue.</p>
+<dl>
+<dt>What Claude gave</dt>
+<dd>A cup and a glass, and up to 3 sugar cubes. The brown gets lighter with milk.</dd>
+<dt>What I changed</dt>
+<dd>Nothing yet. Prompt 8 came after camp.</dd>
+<dt>How I checked</dt>
+<dd>Built all four sugar levels, hot and iced.</dd>
+</dl>
+</article>
+
+<h2>Day 3 of camp: the bug hunt</h2>
+<p>Pairs had the game for two minutes and tried to break it. Each pair wrote one bug on a sticky note. The notes are on the <a href="index.html#build">project page</a>. My campers are made up, like me.</p>
+
+<h2>Evening 2: fixing and growing</h2>
+
+<article class="prompt-card best">
+<h3>6. The campers' bugs <span class="badge">Best</span></h3>
+<p class="prompt-text">My campers found these bugs. Fix each one, and tell me which lines changed.
+1. Tapping Serve twice fast scores two points for one drink.
+2. After a wrong drink, the next order appears after 1 second. Kids can't read why they were wrong. Keep the wrong cup on screen so they can fix just the wrong part.
+3. On a small phone, the Serve button is below the bottom of the screen.</p>
+<dl>
+<dt>What Claude gave</dt>
+<dd>A lock on Serve while the customer talks. A wrong cup now stays. On narrow screens, the order and the buttons stack, with Serve right under the choices. It listed the changed lines for each fix, as asked.</dd>
+<dt>What I changed</dt>
+<dd>The customer's words. Claude wrote "Incorrect milk selection." I rewrote each message to give the rule, like "C means evaporated milk. You gave me condensed milk."</dd>
+<dt>How I checked</dt>
+<dd>I asked the camper who found each bug to try again. Bug 1's finder tapped Serve as fast as she could. One point.</dd>
+</dl>
+<p class="small">Why it's in my best three: numbered bugs, each with what happened and what should happen. Asking "which lines changed" let me check each fix.</p>
+</article>
+
+<article class="prompt-card">
+<h3>7. Tests</h3>
+<p class="prompt-text">Write a test function that builds every valid order name, turns it back into a drink, and checks it matches. Also check that "Kopi kosong" is refused. Show the results on the page as "x of y passed". Do not use a test library.</p>
+<dl>
+<dt>What Claude gave</dt>
+<dd>A <code>parse()</code> function that reads an order, and the tests. They run when the page loads.</dd>
+<dt>What I changed</dt>
+<dd>Nothing. I added a few test names in plain English, so a camper can read them.</dd>
+<dt>How I checked</dt>
+<dd>I broke the table on purpose, putting C back on condensed milk. Tests failed. I put it back, and all 50 passed.</dd>
+</dl>
+</article>
+
+<article class="prompt-card">
+<h3>8. Kopi and teh look the same</h3>
+<p class="prompt-text">Campers say kopi and teh look the same colour in the cup. Make the six drink colours easier to tell apart, in light and dark mode. Keep the words under the cup.</p>
+<dl>
+<dt>What Claude gave</dt>
+<dd>A colour table: darker browns for kopi, redder browns for teh.</dd>
+<dt>What I changed</dt>
+<dd>A comment, to say the words matter more than the colours.</dd>
+<dt>How I checked</dt>
+<dd>Showed two cups side by side to three campers. All three got them right.</dd>
+</dl>
+</article>
+
+<article class="prompt-card">
+<h3>9. Rush mode</h3>
+<p class="prompt-text">Add a Rush mode for early finishers: 90 seconds, all 44 orders, code board hidden. A Peek button shows the board for 5 seconds. A wrong drink moves on to the next order. At the end, list each mistake with the right answer.</p>
+<dl>
+<dt>What Claude gave</dt>
+<dd>A timer bar, the Peek button, and an end screen of mix-ups.</dd>
+<dt>What I changed</dt>
+<dd>Peek went from 5 seconds to 3. With 5, campers just waited it out.</dd>
+<dt>How I checked</dt>
+<dd>Played three rushes. Made mistakes on purpose and checked the end list.</dd>
+</dl>
+</article>
+
+<article class="prompt-card">
+<h3>10. Call it mode</h3>
+<p class="prompt-text">Add a third mode called Call it. Show a finished drink and three order codes. One is right. The other two are each one part away from it. If the player picks a wrong one, tell them what that code would mean.</p>
+<dl>
+<dt>What Claude gave</dt>
+<dd>The mode, with "near miss" answers. A wrong answer greys out, so you can try again.</dd>
+<dt>What I changed</dt>
+<dd>The wrong-answer message, to be shorter.</dd>
+<dt>How I checked</dt>
+<dd>Watched two of the youngest campers play it for five minutes. Neither asked me a single question.</dd>
+</dl>
+</article>
+
+<article class="prompt-card">
+<h3>11. The demo</h3>
+<p class="prompt-text">Add a demo mode that plays the game by itself for exactly 90 seconds, for a parents' showcase screen. Use the real buttons, and show a ring where it taps. Put a caption under each part. Use these captions and times: [I pasted my script here]. Add play, pause, a seek bar and chapter buttons.</p>
+<dl>
+<dt>What Claude gave</dt>
+<dd>A timeline of steps, each with a second and an action. Seeking restarts the game and replays every step up to that second.</dd>
+<dt>What I changed</dt>
+<dd>Nothing in the code. I rewrote my captions twice, because the first ones were too long to read in time.</dd>
+<dt>How I checked</dt>
+<dd>Watched it to the end, then jumped to each chapter.</dd>
+</dl>
+</article>
+
+<h2>What I learned about prompting</h2>
+<ul class="tight">
+  <li>Ask for the structure you'll need to fix things, early. Prompt 2 should have been part of prompt 1.</li>
+  <li>Claude was confident and wrong about the one fact I cared most about. Check facts outside the code too.</li>
+  <li>Kids' bug reports make great prompts once you add "what should happen instead".</li>
+  <li>"Tell me which lines changed" turns a fix I'd have to trust into one I can check.</li>
+</ul>
+
+<h2>Sources</h2>
+<ul class="tight small">
+  <li><a href="https://en.wikipedia.org/wiki/Kopi_(drink)">Wikipedia, Kopi (drink)</a>, ordering table.</li>
+  <li><a href="https://thehoneycombers.com/singapore/order-kopi-singapore/">Honeycombers, How to order kopi in Singapore</a>.</li>
+  <li><a href="https://thehoneycombers.com/singapore/order-teh-singapore/">Honeycombers, How to order teh in Singapore</a>.</li>
+</ul>
+</main>
+</body>
+</html>

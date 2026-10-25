@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Box Box: the code, by Marcus Lee</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Marcus Lee is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<p><a href="index.html">Back to Box Box</a></p>
+<p class="kicker">Deliverable: code</p>
+<h1>The code</h1>
+<p class="lede">Three parts: one Arduino sketch for the M5Stack Core, one secrets file and the dashboard setup. The secrets file never goes into git. It is the final version. Version 1 is described at the bottom, so you can see what changed.</p>
+
+<h2><span class="num">01</span>Before you start</h2>
+<ul class="tight">
+  <li>Arduino IDE with the ESP32 board package from Espressif.</li>
+  <li>Libraries, from the Library Manager: <a href="https://github.com/m5stack/M5Unified">M5Unified</a> and <a href="https://github.com/adafruit/Adafruit_MQTT_Library">Adafruit MQTT Library</a>.</li>
+  <li>A free <a href="https://io.adafruit.com/">Adafruit IO</a> account. Make it in the coach's name, not a student's. In my team, I own the account. Students use the dashboard on my laptop.</li>
+  <li>Three feeds: <code>robot-volts</code>, <code>robot-status</code> and <code>pit-call</code>. The free plan allows 10 feeds and 5 dashboards.</li>
+</ul>
+
+<h2><span class="num">02</span>secrets.h</h2>
+<p>Make this file next to the sketch. Add <code>secrets.h</code> to <code>.gitignore</code> before your first commit. The root certificate lets the board check it is really talking to Adafruit IO. Copy it from Adafruit's <a href="https://github.com/adafruit/Adafruit_MQTT_Library/blob/master/examples/adafruitio_secure_esp32/adafruitio_secure_esp32.ino">adafruitio_secure_esp32 example</a>. Certificates expire, so check the example again each season.</p>
+<pre><code><span class="c">// secrets.h: never commit this file. Never show it on a projector.</span>
+#pragma once
+#define WIFI_SSID    "practice-hotspot"
+#define WIFI_PASS    "a-long-hotspot-password"
+#define AIO_USERNAME "your_io_username"
+#define AIO_KEY      "your_io_key"   <span class="c">// regenerate it if it ever leaks</span>
+static const char *AIO_ROOT_CA =
+  "-----BEGIN CERTIFICATE-----\n"
+  "...copy from Adafruit's example...\n"
+  "-----END CERTIFICATE-----\n";</code></pre>
+
+<h2><span class="num">03</span>box_box.ino</h2>
+<pre><code><span class="c">// Box Box: robot battery telemetry for an M5Stack Core (ESP32).
+// Sends pack volts to Adafruit IO by MQTT over TLS.
+// Listens on pit-call for BOX, CLEAR, FAST and SLOW. Nothing else.
+// A cloud message can change the screen and beep. It never drives the robot.</span>
+#include &lt;M5Unified.h&gt;
+#include &lt;WiFi.h&gt;
+#include &lt;WiFiClientSecure.h&gt;
+#include "Adafruit_MQTT.h"
+#include "Adafruit_MQTT_Client.h"
+#include "secrets.h"
+
+const int      BATT_PIN = 36;      <span class="c">// Port B, white wire. G36 is ADC1; ADC2 is shared with Wi-Fi.</span>
+const float    DIVIDER  = 3.0;     <span class="c">// 20k over 10k: the pin sees a third of the pack</span>
+const float    CAL      = 1.00;    <span class="c">// set this after checking against a multimeter</span>
+const float    LOW_V    = 6.6;     <span class="c">// warn below this while running</span>
+const uint32_t NORMAL_MS = 5000;   <span class="c">// 12 a minute</span>
+const uint32_t FAST_MS   = 3000;   <span class="c">// 20 a minute</span>
+const uint32_t SLOW_MS   = 10000;  <span class="c">// 6 a minute</span>
+const int      OWN_BUDGET = 24;    <span class="c">// my own cap per minute, under Adafruit's 30</span>
+
+WiFiClientSecure net;
+Adafruit_MQTT_Client mqtt(&amp;net, "io.adafruit.com", 8883, AIO_USERNAME, AIO_KEY);
+Adafruit_MQTT_Publish   voltsFeed(&amp;mqtt, AIO_USERNAME "/feeds/robot-volts");
+Adafruit_MQTT_Publish   statusFeed(&amp;mqtt, AIO_USERNAME "/feeds/robot-status");
+Adafruit_MQTT_Publish   pitCallGet(&amp;mqtt, AIO_USERNAME "/feeds/pit-call/get");
+Adafruit_MQTT_Subscribe pitCall(&amp;mqtt, AIO_USERNAME "/feeds/pit-call");
+Adafruit_MQTT_Subscribe throttle(&amp;mqtt, AIO_USERNAME "/throttle");
+
+uint32_t sendEvery = NORMAL_MS, lastSend = 0, lastScreen = 0, lastPing = 0;
+uint32_t nextTry = 0, backoff = 5000, offlineSince = 0;
+uint32_t sentAt[OWN_BUDGET];       <span class="c">// times of my last sends, for the budget</span>
+int      sentIdx = 0, missed = 0, missedOffline = 0;
+float    volts = 0, vMin = 99, vMax = 0;
+bool     boxCall = false, wasOnline = false;
+String   note = "Booting";
+
+float readVolts() {
+  uint32_t mv = 0;
+  for (int i = 0; i &lt; 10; i++) {   <span class="c">// average 10 readings: smoother, a little slower</span>
+    mv += analogReadMilliVolts(BATT_PIN);
+    delay(2);
+  }
+  return (mv / 10.0f) / 1000.0f * DIVIDER * CAL;
+}
+
+bool underBudget() {               <span class="c">// true if my oldest of 24 sends is over a minute old</span>
+  return sentAt[sentIdx] == 0 || millis() - sentAt[sentIdx] &gt; 60000;
+}
+
+void handleCommand(const char *raw) {
+  String c = String(raw);
+  c.trim();
+  c.toUpperCase();
+  if (c == "BOX")        { boxCall = true;  note = "BOX BOX"; M5.Speaker.tone(2000, 400); }
+  else if (c == "CLEAR") { boxCall = false; note = "Clear"; }
+  else if (c == "FAST")  { sendEvery = FAST_MS; note = "FAST: every 3 s"; }
+  else if (c == "SLOW")  { sendEvery = SLOW_MS; note = "SLOW: every 10 s"; }
+  else                   { note = "Ignored a command"; }   <span class="c">// unknown text is never shown or run</span>
+}
+
+bool ensureMqtt() {
+  if (mqtt.connected()) return true;
+  if (millis() &lt; nextTry) return false;   <span class="c">// tries even with Wi-Fi off, so the wait keeps growing (trial 4)</span>
+  int8_t ret = mqtt.connect();     <span class="c">// 0 means connected</span>
+  if (ret != 0) {
+    note = String("Retry in ") + (backoff / 1000) + " s";
+    mqtt.disconnect();
+    nextTry = millis() + backoff;
+    backoff = min(backoff * 2, (uint32_t)60000);   <span class="c">// 5, 10, 20, 40, then 60 s</span>
+    return false;
+  }
+  backoff = 5000;
+  note = boxCall ? "BOX BOX" : "Online";
+  if (offlineSince) {              <span class="c">// say how long we were gone, then ask for any missed call</span>
+    String s = String("back after ") + (millis() - offlineSince) / 1000 + " s, missed " + missedOffline;
+    statusFeed.publish(s.c_str());
+    pitCallGet.publish("?");
+    offlineSince = 0;
+    missedOffline = 0;
+  }
+  return true;
+}
+
+void draw() {
+  M5.Display.startWrite();
+  M5.Display.fillScreen(boxCall ? TFT_RED : TFT_BLACK);
+  M5.Display.setTextColor(TFT_WHITE, boxCall ? TFT_RED : TFT_BLACK);
+  M5.Display.setTextDatum(textdatum_t::top_left);
+  M5.Display.setTextSize(2);
+  M5.Display.drawString(WiFi.status() == WL_CONNECTED ? "WiFi ok" : "WiFi --", 8, 8);
+  M5.Display.drawString(mqtt.connected() ? "IO ok" : "IO --", 130, 8);
+  M5.Display.drawString(String(sendEvery / 1000) + "s", 260, 8);
+  M5.Display.setTextDatum(textdatum_t::middle_center);
+  M5.Display.setTextSize(6);
+  M5.Display.drawString(String(volts, 2) + "V", 160, 100);
+  M5.Display.setTextSize(2);
+  M5.Display.drawString("min " + String(vMin, 2) + "   max " + String(vMax, 2), 160, 160);
+  String msg = note;
+  if (!boxCall &amp;&amp; volts &lt; LOW_V) msg = "LOW: under 6.6 V";
+  M5.Display.drawString(msg, 160, 200);
+  M5.Display.endWrite();
+}
+
+void setup() {
+  M5.begin();
+  analogSetPinAttenuation(BATT_PIN, ADC_11db);   <span class="c">// reads about 0.15 to 3.1 V</span>
+  WiFi.mode(WIFI_STA);
+  WiFi.setAutoReconnect(true);
+  WiFi.begin(WIFI_SSID, WIFI_PASS);
+  net.setCACert(AIO_ROOT_CA);      <span class="c">// TLS: check the server's certificate</span>
+  mqtt.subscribe(&amp;pitCall);        <span class="c">// subscribe before the first connect</span>
+  mqtt.subscribe(&amp;throttle);
+}
+
+void loop() {
+  M5.update();
+  if (M5.BtnA.wasPressed()) { vMin = 99; vMax = 0; note = "Min and max reset"; }
+
+  bool online = ensureMqtt();
+  if (wasOnline &amp;&amp; !online &amp;&amp; !offlineSince) offlineSince = millis();
+  wasOnline = online;
+
+  if (online) {
+    Adafruit_MQTT_Subscribe *sub;
+    while ((sub = mqtt.readSubscription(50))) {
+      if (sub == &amp;pitCall)  handleCommand((char *)pitCall.lastread);
+      if (sub == &amp;throttle) { sendEvery = SLOW_MS; note = "Throttled: SLOW"; }
+    }
+    if (millis() - lastPing &gt; 60000) { lastPing = millis(); if (!mqtt.ping()) mqtt.disconnect(); }
+  }
+
+  if (millis() - lastScreen &gt;= 1000) {   <span class="c">// the screen never waits for the cloud</span>
+    lastScreen = millis();
+    volts = readVolts();
+    vMin = min(vMin, volts);
+    vMax = max(vMax, volts);
+    draw();
+  }
+
+  if (millis() - lastSend &gt;= sendEvery) {
+    lastSend = millis();
+    if (!online) { missed++; missedOffline++; }
+    else if (!underBudget()) { missed++; }
+    else if (voltsFeed.publish(volts, 2)) {  <span class="c">// 2 decimal places, in volts</span>
+      sentAt[sentIdx] = millis();
+      sentIdx = (sentIdx + 1) % OWN_BUDGET;
+    } else { missed++; }
+  }
+}</code></pre>
+<p class="small">I wrote this sketch for this example. I checked it against the libraries' own examples and docs. I have not compiled it against every library version. If the compiler complains, the library examples are the place to compare.</p>
+
+<h2><span class="num">04</span>Walk through it</h2>
+<ol class="tight">
+  <li>Reading. The pack goes through a 20 kΩ and 10 kΩ divider. G36 sees a third of it. <code>analogReadMilliVolts</code> gives a calibrated reading. Ten readings are averaged. Then the multimeter check sets <code>CAL</code>.</li>
+  <li>Screen first. The screen updates every second from the local reading. A dropped link never blanks it. The driver can always see the volts.</li>
+  <li>Sending. One number, two decimal places, to <code>robot-volts</code>. Every 5 s normally, 12 a minute.</li>
+  <li>Budget. The board keeps the times of its last 24 sends. If the oldest is under a minute old, it skips a send and counts it. Adafruit IO's free limit is 30 a minute for the whole account. This leaves room for dashboard presses.</li>
+  <li>Control. <code>pit-call</code> takes 4 words. Anything else is ignored and never shown.</li>
+  <li>Reconnect. It waits 5, 10, 20, 40, then 60 s between tries. It never stops trying, and the screen keeps working. It also tries while Wi-Fi is off, so a long drop leaves a long wait. That is the flaw behind trial 4 in the test log.</li>
+  <li>After a gap. It posts how long it was gone to <code>robot-status</code>. Then it publishes to <code>pit-call/get</code>. Adafruit IO answers with the last pit call. So a BOX sent during the gap is not lost.</li>
+  <li>Throttle. If Adafruit IO ever posts on <code>/throttle</code>, the board drops to SLOW by itself.</li>
+</ol>
+
+<h2><span class="num">05</span>The dashboard</h2>
+<p>One Adafruit IO dashboard, called Pit Wall. Five blocks:</p>
+<ul class="tight">
+  <li>Line chart on <code>robot-volts</code>, last hour. Y axis from 5.8 to 8.4, labelled "Pack volts (V)".</li>
+  <li>Gauge on <code>robot-volts</code>, 5.8 to 8.4, with the low mark at 6.6.</li>
+  <li>Text block on <code>robot-status</code>, so a gap note is the first thing you read.</li>
+  <li>Four momentary buttons on <code>pit-call</code>: BOX, CLEAR, FAST, SLOW. Each sends its own word.</li>
+  <li>Keep the dashboard private. Only the coach's laptop is signed in.</li>
+</ul>
+
+<h2 id="json"><span class="num">06</span>Read the feed as JSON</h2>
+<p>Students check the last reading from a laptop with Adafruit IO's HTTP API. Send the key in the <code>X-AIO-Key</code> header, not in the address.</p>
+<pre><code>GET https://io.adafruit.com/api/v2/your_io_username/feeds/robot-volts/data/last
+X-AIO-Key: (your key)</code></pre>
+<p>The reply is a JSON data record. Here is the part we read, with made-up values:</p>
+<pre><code>{
+  "feed_key": "robot-volts",
+  "value": "7.12",
+  "created_at": "2026-10-20T09:41:05Z"
+}</code></pre>
+<p>Look at <code>"value"</code>. It is in quotes: a string, not a number. Adafruit IO stores values as text. Before you compare it with 6.6, turn it into a number. My students missed this twice.</p>
+
+<h2><span class="num">07</span>What version 1 was</h2>
+<p>Version 1 was Adafruit's ESP32 example with our feed names, plus a FAST button. It sent every 2 s, and every 1 s on FAST. Its connect function tries 3 times. Then it runs <code>while (1);</code> and waits for a watchdog reset. On our board the screen just froze. The <a href="index.html#reliability">test log</a> shows what that cost us. You can run version 1 in the <a href="index.html?v=1#sim">simulator</a>.</p>
+</main>
+</body>
+</html>

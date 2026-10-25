@@ -1,0 +1,6 @@
+{
+  "module": "iot-electronics",
+  "persona": "tom",
+  "title": "Lights On, Nobody Home: a classroom energy monitor",
+  "summary": "Two micro:bits and a Google Sheet track how long a classroom sits lit and quiet. The class turns the last-one-out nudge on or off from one cell. With a simulator, a gateway page, a demo video, a data-flow diagram and the code."
+}

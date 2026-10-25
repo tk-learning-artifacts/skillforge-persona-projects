@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pig Out README, by Kenji Watanabe</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Kenji Watanabe is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<ul class="menu">
+  <li><a href="index.html">Devlog</a></li>
+  <li><a href="readme.html" aria-current="page">README</a></li>
+  <li><a href="code.html">Code and tests</a></li>
+</ul>
+<h1>README</h1>
+<p class="lede">A push-your-luck dice game for iPad and iPhone. This is the README from the Playgrounds file, with screenshots. Plain text: <a href="README.md">README.md</a>.</p>
+
+<div class="shots">
+  <figure><img src="shots/title-light.png" width="420" height="815" alt="The title screen. A die showing five, the words Pig Out in pink, four rules, a choice between Porkchop the bot and a friend, a target of 50 with minus and plus buttons, and a Play button."><figcaption>Screen 1: rules, opponent and target.</figcaption></figure>
+  <figure><img src="shots/game-light.png" width="420" height="815" alt="The game screen. You have 27 and an arrow and outline show it is your turn. Porkchop has 18. The die shows five. Turn: 9. The message says You rolled 5. Turn total 9. Roll and Hold buttons."><figcaption>Screen 2: your turn, with 9 at risk.</figcaption></figure>
+  <figure><img src="shots/pigout-light.png" width="420" height="815" alt="The game screen after a 1. The die shows a single pink pip. Turn: 0. The message says Pig out! You rolled a 1 and lost the turn. Porkchop's turn. Roll and Hold are greyed out."><figcaption>A pig out. The buttons wait for Porkchop.</figcaption></figure>
+  <figure><img src="shots/game-dark.png" width="420" height="815" alt="The game screen in dark mode, with the same scores."><figcaption>Screen 2 in dark mode.</figcaption></figure>
+</div>
+<p class="small">These screenshots come from the Swift code in the Playgrounds file. It was built and run as a Mac app, in a phone-sized window. The game state was set by hand.</p>
+
+<h2 class="plain">How to play</h2>
+<ul class="tight">
+  <li>Roll as often as you like. Each roll adds to your turn total.</li>
+  <li>Roll a 1 and you lose the whole turn. Pig out!</li>
+  <li>Hold to bank your turn total and pass the die.</li>
+  <li>First to the target wins. The target starts at 50. You can set 20 to 100.</li>
+</ul>
+
+<h2 class="plain">The two screens</h2>
+<ul class="tight">
+  <li>Screen 1, the title: the rules, who you play against, and the target.</li>
+  <li>Screen 2, the game: two score cards, the die, your turn total and a message.</li>
+  <li>Play against Porkchop the bot, or pass the iPad to a friend.</li>
+</ul>
+
+<h2 class="plain">What you need</h2>
+<ul class="tight">
+  <li>An iPad or Mac with <a href="https://developer.apple.com/swift-playground/">Swift Playgrounds</a>, or a Mac with Xcode.</li>
+  <li>iPadOS 17 or later. The app uses <code>sensoryFeedback</code> and <code>AccessibilityNotification</code>, which need 17.</li>
+</ul>
+
+<h2 class="plain">How to open it</h2>
+<ol class="tight">
+  <li>Download <a href="PigOut.swiftpm.zip" download>PigOut.swiftpm.zip</a>.</li>
+  <li>Unzip it. You get <code>Pig Out.swiftpm</code>.</li>
+  <li>Open it in Swift Playgrounds, or in Xcode on a Mac.</li>
+  <li>Run it.</li>
+</ol>
+
+<h2 class="plain">The files</h2>
+<ul class="tight">
+  <li><code>PigGame.swift</code>: the rules and the bot. No SwiftUI in here.</li>
+  <li><code>TitleView.swift</code>: screen 1.</li>
+  <li><code>GameView.swift</code>: screen 2, the score cards and the shake effect.</li>
+  <li><code>DieView.swift</code>: a die face drawn with circles.</li>
+  <li><code>PigOutApp.swift</code>: where the app starts.</li>
+  <li><code>Package.swift</code>: made by Swift Playgrounds. Do not edit it by hand.</li>
+</ul>
+
+<h2 class="plain">Tests</h2>
+<p>The rules are tested on their own. The test file, <a href="main.swift">main.swift</a>, is on this site, not in the package. It must keep that name. On a Mac with Swift installed, put it next to <code>PigGame.swift</code> and run:</p>
+<pre><code>swiftc PigGame.swift main.swift -o pigtests &amp;&amp; ./pigtests</code></pre>
+
+<h2 class="plain">Accessibility</h2>
+<ul class="tight">
+  <li>Every event is said in words on screen, and VoiceOver announces it.</li>
+  <li>The die says "Die showing 4" to VoiceOver.</li>
+  <li>Each score card reads as one line, like "You, 27 of 50, playing now".</li>
+  <li>The active player gets an arrow and an outline, not only a colour.</li>
+  <li>With Reduce Motion on, the die does not spin or shake.</li>
+  <li>Roll and Hold are 56 points tall.</li>
+</ul>
+
+<h2 class="plain">Known problems</h2>
+<ul class="tight">
+  <li>In dark mode, pink text on black is about 3.7 to 1. Apple asks for 4.5 to 1 for small text.</li>
+  <li>Porkchop only has one plan: hold at 20. Good players learn to beat it.</li>
+  <li>Games are not saved. Leave screen 2 and the game is gone.</li>
+</ul>
+</main>
+</body>
+</html>

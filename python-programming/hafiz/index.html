@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Check the claim: is Changi getting warmer? A Python notebook, by Hafiz Ismail</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="minipy.js" defer></script>
+<script src="editor.js" defer></script>
+<script src="code.js" defer></script>
+<script src="data.js" defer></script>
+<script src="notebook.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Hafiz Ismail is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<h1><span class="kicker">A Python data project for adult beginners</span>Check the claim: is Changi getting warmer?</h1>
+<p class="lede">A Python notebook that reads NEA's own monthly temperature file. It checks three things NEA has said about Singapore's warming. Then a PRIMM lesson turns it into a first data lesson for adults.</p>
+<p>I'm Hafiz. I teach data and AI to secondary students and to adult learners. This project is for my adult evening class: working adults, most of them new to code. They all have views on the weather. Few have ever checked a claim against the data behind it. So this program checks three claims first, and draws the chart last.</p>
+<ul class="toc">
+  <li><a href="#claims">The three claims</a></li>
+  <li><a href="#notebook">Run the notebook</a></li>
+  <li><a href="#found">What the program found</a></li>
+  <li><a href="#chart">Is the chart fair?</a></li>
+  <li><a href="#share">Share link and Colab</a></li>
+  <li><a href="worksheet.html">PRIMM starter and worksheet</a></li>
+  <li><a href="lesson.html">2-hour lesson plan</a></li>
+  <li><a href="#rubric">Rubric check</a></li>
+</ul>
+
+<h2 id="claims">The three claims</h2>
+<p>All three come from the National Environment Agency (NEA). I picked claims with exact numbers, because exact numbers can be checked.</p>
+<div class="claims">
+  <div class="claim"><span class="tag">Claim 1</span><p>"In 2024, Singapore's annual average temperature was 28.4 degrees Celsius, making it the warmest year on record (tied with 2019 and 2016)."</p><p class="small"><a href="https://www.nea.gov.sg/media/news/news/index/2024-is-singapore-s-warmest-year-on-record">NEA, 23 March 2025</a></p></div>
+  <div class="claim"><span class="tag">Claim 2</span><p>"The preceding decade (2015-2024) was Singapore's warmest decade on record at 28.11 degrees Celsius."</p><p class="small"><a href="https://www.nea.gov.sg/media/news/news/index/2024-is-singapore-s-warmest-year-on-record">NEA, 23 March 2025</a></p></div>
+  <div class="claim"><span class="tag">Claim 3</span><p>"Singapore's annual mean temperature has risen by 0.24 degrees Celsius per decade since 1984."</p><p class="small"><a href="https://www.nea.gov.sg/media/news/news/index/spore-records-wettest-ever-march-and-hottest-ever-june-and-november-in-2025">NEA, 23 March 2026</a></p></div>
+</div>
+
+<h3>The data</h3>
+<p>The file is <a href="https://data.gov.sg/datasets/d_755290a24afe70c8f9e8bcbf9f251573/view">Surface Air Temperature - Monthly Mean</a> on data.gov.sg. NEA manages it. Each row is one month at the Changi Climate Station: a month like <code>1982-01</code> and a mean temperature like <code>25.9</code>. I downloaded it on 24 October 2026. It had 537 rows, from January 1982 to September 2026. NEA adds a row each month, so a newer copy will be longer.</p>
+<p class="small">Contains information from Surface Air Temperature - Monthly Mean accessed on 24 October 2026 from data.gov.sg, which is made available under the terms of the <a href="https://data.gov.sg/open-data-licence">Singapore Open Data Licence version 1.0</a>.</p>
+
+<h2 id="notebook">Run the notebook</h2>
+<p>Press "Run all cells", or run them one by one from the top. Like Colab, a cell can use what earlier cells made. You can change any cell and run it again.</p>
+<div class="notebook">
+  <div class="nb-bar row">
+    <button type="button" class="run-all primary">Run all cells</button>
+    <button type="button" class="restart">Restart</button>
+    <a class="btn" href="changi_temperature.ipynb" download>Notebook (.ipynb)</a>
+    <a class="btn" href="changi_monthly_mean_temp.csv" download>The CSV file</a>
+  </div>
+
+  <p>Cell 1 reads the file with Python's <code>csv</code> module. Each row becomes a dictionary. Its keys are the column names from the first line. Every value comes in as text, so <code>float()</code> turns the temperature into a number.</p>
+  <div class="cell" data-file="cell1.py" data-title="Load the file">
+    <div class="cell-head"><span class="prompt">In [ ]</span><span class="title">1. Load the file</span><button type="button" class="run">Run</button></div>
+    <div class="editor-host"></div><div class="console-host"></div><div class="figs"></div>
+  </div>
+
+  <p>Cell 2 groups the months by year in a dictionary of lists. It keeps only years with all 12 months. Then it keeps years from 1984, when the station moved to Changi Airport. I explain why under the notebook.</p>
+  <div class="cell" data-file="cell2.py" data-title="Average each year">
+    <div class="cell-head"><span class="prompt">In [ ]</span><span class="title">2. Average each year</span><button type="button" class="run">Run</button></div>
+    <div class="editor-host"></div><div class="console-host"></div><div class="figs"></div>
+  </div>
+
+  <p>Cell 3 checks claim 1. <code>sorted()</code> with <code>key=yearly.get</code> sorts the years by their mean temperature, warmest first.</p>
+  <div class="cell" data-file="cell3.py" data-title="Claim 1: the warmest years">
+    <div class="cell-head"><span class="prompt">In [ ]</span><span class="title">3. Claim 1: the warmest years</span><button type="button" class="run">Run</button></div>
+    <div class="editor-host"></div><div class="console-host"></div><div class="figs"></div>
+  </div>
+
+  <p>Cell 4 checks claim 2. It also works out the first ten years at Changi Airport, to compare.</p>
+  <div class="cell" data-file="cell4.py" data-title="Claim 2: the warmest decade">
+    <div class="cell-head"><span class="prompt">In [ ]</span><span class="title">4. Claim 2: the warmest decade</span><button type="button" class="run">Run</button></div>
+    <div class="editor-host"></div><div class="console-host"></div><div class="figs"></div>
+  </div>
+
+  <p>Cell 5 checks claim 3. "Per decade" means the slope of the best straight line through the yearly means. This is the least squares slope, times 10. My learners don't need the formula. They need to see it's just a loop that adds things up.</p>
+  <div class="cell" data-file="cell5.py" data-title="Claim 3: the trend">
+    <div class="cell-head"><span class="prompt">In [ ]</span><span class="title">5. Claim 3: the trend</span><button type="button" class="run">Run</button></div>
+    <div class="editor-host"></div><div class="console-host"></div><div class="figs"></div>
+  </div>
+
+  <p>Cell 6 draws the chart with matplotlib.</p>
+  <div class="cell" data-file="cell6.py" data-title="Chart it">
+    <div class="cell-head"><span class="prompt">In [ ]</span><span class="title">6. Chart it</span><button type="button" class="run">Run</button></div>
+    <div class="editor-host"></div><div class="console-host"></div><div class="figs"></div>
+  </div>
+</div>
+<p class="small">This page runs the code with MiniPy, a small Python written in JavaScript. It needs no login and nothing to install. Its matplotlib is a stand-in that draws the same kind of chart. I also ran every cell in Python 3.13 on the same file. The numbers matched. In Colab, the real libraries run.</p>
+
+<h2 id="found">What the program found</h2>
+<div class="table-wrap">
+<table class="results">
+  <tr><th>Claim</th><th>NEA says</th><th>The program says</th><th>Match?</th></tr>
+  <tr><td>Warmest years</td><td>2024, tied with 2019 and 2016, at 28.4 °C</td><td class="num">2024: 28.44<br>2019: 28.43<br>2016: 28.42</td><td class="yes">Yes, all three round to 28.4</td></tr>
+  <tr><td>Warmest decade</td><td>2015 to 2024, at 28.11 °C</td><td class="num">28.11</td><td class="yes">Yes</td></tr>
+  <tr><td>Trend since 1984</td><td>0.24 °C per decade</td><td class="num">0.24 (1984 to 2025)</td><td class="yes">Yes</td></tr>
+</table>
+</div>
+<p>For scale: the first ten years at Changi Airport, 1984 to 1993, averaged 27.23 °C. The 2015 to 2024 decade was 0.88 °C warmer.</p>
+<p>Three things in the data surprised me. Each one is now a question for my class.</p>
+<ul class="tight">
+  <li>The file starts in 1982, but NEA's trends start in 1984. The Meteorological Service Singapore's <a href="https://file.go.gov.sg/nea-acar-2025.pdf">2025 climate report</a> says why. The climate station has been at Changi Airport since 1984. My first version started in 1982. Its trend came out at 0.22 °C per decade, not 0.24. Reading the footnote changed my code.</li>
+  <li>2026 has only 9 months. Its mean leaves out November and December, which are cooler months at Changi. So cell 2 drops any year without 12 months.</li>
+  <li>Look at 1997 in cell 3: 28.25 "rounds to" 28.2, not 28.3. The mean is exactly 28.25, and Python rounds an exact tie to the even digit. The <a href="https://docs.python.org/3/library/functions.html#round">round() docs</a> explain it. My adult learners always ask about this.</li>
+</ul>
+<p>What it does not show: why. The data shows Changi getting warmer. It says nothing about the cause. That is a different claim, and it needs different evidence.</p>
+
+<h2 id="chart">Is the chart fair?</h2>
+<p>The line chart's y axis runs from about 26.7 °C to 28.5 °C. It doesn't start at 0. In this module we met charts with a hidden cut axis. It makes a change look big. So is this one a trick?</p>
+<p>I say it's fair here, for two reasons. First, 0 °C means nothing in Singapore's weather. A bar chart from 0 would squash a 1.7-degree range into a flat row. Second, the axis is labelled, and the numbers are printed above it. matplotlib picks this kind of range for line charts by itself. For bar charts, it starts at 0. I ask my class to try <code>plt.bar</code> in cell 6. Then they argue about which is more fair.</p>
+
+<h2 id="share">Share link and Colab</h2>
+<p>My share link is this page. It runs the whole notebook in any browser, with no account. To run the real thing in <a href="https://colab.research.google.com/">Google Colab</a>:</p>
+<ol class="steps">
+  <li>Download the <a href="changi_temperature.ipynb" download>notebook</a> and the <a href="changi_monthly_mean_temp.csv" download>CSV file</a>.</li>
+  <li>In Colab, choose File, then Upload notebook. The <a href="https://research.google.com/colaboratory/faq.html">Colab FAQ</a> describes this.</li>
+  <li>Open the Files panel on the left and upload the CSV. Then run the cells from the top.</li>
+</ol>
+<ul class="tight">
+  <li>The CSV won't stay. Colab runs on a virtual machine. The FAQ says these machines are deleted when idle for a while. Upload the file again each session, or keep it in Drive.</li>
+  <li>Colab needs a Google account. In Singapore, 13 is the minimum age to manage your own Google account (<a href="https://support.google.com/accounts/answer/1350409?hl=en">Google</a>). For school accounts, the FAQ says the school's admin turns Colab on or off. Schools must also get parental consent for students under 18.</li>
+</ul>
+<p>That last point is why this version is for adults. My secondary classes would use this page, or the Raspberry Pi Code Editor, instead.</p>
+
+<h2 id="brief">How it meets the brief</h2>
+<ul class="tight">
+  <li>A data project for a topic I teach: checking a claim with a real public dataset.</li>
+  <li>Functions: <code>mean()</code>, <code>yearly_means()</code> and <code>trend_per_decade()</code>.</li>
+  <li>Loops: <code>for</code> loops over the rows, the months, the years and the ranked list.</li>
+  <li>Lists and dictionaries: <code>months</code>, <code>temps</code> and <code>years</code> are lists. <code>by_year</code> is a dictionary of lists, and <code>yearly</code> maps each year to its mean.</li>
+  <li>A library: matplotlib for the chart, and the <code>csv</code> module to read the file.</li>
+  <li>The <a href="worksheet.html">PRIMM worksheet</a> uses a 17-line starter cut from cells 1 and 2. The <a href="lesson.html">lesson plan</a> is one 2-hour evening session.</li>
+</ul>
+
+<h2 id="trial">Trying it out</h2>
+<p class="note">The learners below and their words are made up, like me. The numbers and error messages are real. I ran every one.</p>
+<p>I tried the worksheet on four adults from an earlier class, in one evening.</p>
+<ul class="tight">
+  <li>Note 1. Learner A works with spreadsheets all day. She said, "I'd do this in Excel in two minutes." Then she found the 1984 problem before anyone else.</li>
+  <li>Note 2. Learner B hit the <code>TypeError</code> in I1 and froze. He thought he had broken the laptop. He read the error only when I asked him for its last line.</li>
+  <li>Note 3. Learner C asked a chatbot for Singapore's warmest year before we started. It named one year, with no tie. Our program found the three-way tie.</li>
+  <li>Note 4. Uploading the CSV to Colab took 12 minutes for the group. One work laptop blocked Google Drive.</li>
+</ul>
+<div class="card">
+<p><strong>What I changed</strong></p>
+<ul class="tight">
+  <li>From note 4: the lesson now starts with the upload. This page is the backup for blocked laptops.</li>
+  <li>From note 2: an error card on every desk. It says "read the last line first".</li>
+  <li>From note 1: the Make task lets learners pick their own question. Spreadsheet users get a real challenge.</li>
+  <li>From note 3: nothing. It's the best opening to the lesson I could ask for.</li>
+</ul>
+</div>
+
+<h2 id="rubric">Rubric check</h2>
+<ul class="tight">
+  <li><span class="yes">Program runs without errors.</span> All six cells run in Python 3.13 and on this page, with the same output. The file's whole numbers, like <code>29</code>, read fine with <code>float()</code>.</li>
+  <li><span class="yes">Uses functions, loops and a list or dictionary.</span> Three functions, eight <code>for</code> loops, several lists and two dictionaries.</li>
+  <li><span class="yes">Worksheet questions make students read code.</span> Every Predict question is about one line of the starter. I1 and I3 make learners predict an error and then read its traceback.</li>
+  <li><span class="part">Plan fits your students and devices: mostly.</span> It fits adults with their own laptops and Google accounts. Work laptops are the risk. Some block Colab or Drive, so the backup is this page.</li>
+</ul>
+
+<h2 id="limits">Limits, and what I would change</h2>
+<ul class="tight">
+  <li>One station is not all of Singapore. Changi is NEA's climate station, but other places may have warmed more or less.</li>
+  <li>The monthly means are rounded to 0.1 °C. So 2024 "beating" 2019 by 0.01 °C means nothing. NEA calls it a tie, and so should we.</li>
+  <li>A straight-line trend is a summary. It doesn't explain the bumps, like the warm years of 1997 and 1998.</li>
+  <li>Two learners asked why we don't use pandas. It would be shorter. I chose the <code>csv</code> module so the loop is in plain sight. Next time I'd add a last cell that does the same in pandas. Then they can compare.</li>
+</ul>
+
+<h2 id="sources">Sources</h2>
+<ul class="tight small">
+  <li>Data: <a href="https://data.gov.sg/datasets/d_755290a24afe70c8f9e8bcbf9f251573/view">Surface Air Temperature - Monthly Mean, NEA, on data.gov.sg</a>, under the <a href="https://data.gov.sg/open-data-licence">Singapore Open Data Licence</a>.</li>
+  <li>Claims 1 and 2: <a href="https://www.nea.gov.sg/media/news/news/index/2024-is-singapore-s-warmest-year-on-record">NEA, "2024 is Singapore's warmest year on record", 23 March 2025</a>.</li>
+  <li>Claim 3: <a href="https://www.nea.gov.sg/media/news/news/index/spore-records-wettest-ever-march-and-hottest-ever-june-and-november-in-2025">NEA release, 23 March 2026</a>. Also <a href="https://www.nccs.gov.sg/singapores-climate-action/impact-of-climate-change-in-singapore/">NCCS, Impact of climate change in Singapore</a>.</li>
+  <li>The station at Changi Airport since 1984: <a href="https://file.go.gov.sg/nea-acar-2025.pdf">MSS Annual Climate Assessment Report 2025</a>.</li>
+  <li>Python: <a href="https://docs.python.org/3/library/csv.html">csv module</a> and <a href="https://docs.python.org/3/library/functions.html#round">round()</a>.</li>
+  <li>Colab: <a href="https://research.google.com/colaboratory/faq.html">Colab FAQ</a>. Google account ages: <a href="https://support.google.com/accounts/answer/1350409?hl=en">Google Account Help</a>.</li>
+</ul>
+</main>
+</body>
+</html>

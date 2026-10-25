@@ -1,0 +1,6 @@
+{
+  "module": "swift",
+  "persona": "kenji",
+  "title": "Pig Out: a push-your-luck dice game in SwiftUI",
+  "summary": "A two-screen SwiftUI dice game against a bot that holds at 20, made for a Sec 2 game design CCA, with a playable web copy, a video devlog, the Playgrounds file, tests and a README."
+}

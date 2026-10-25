@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Still on the road: a crossing that waits for slower walkers, by Hafiz Ismail</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="sim.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Hafiz Ismail is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<h1>Still on the road</h1>
+<p class="lede">A pedestrian crossing that checks if anyone is still crossing before cars get green. It is built for older walkers, but it serves anyone who walks slowly.</p>
+<p>I'm Hafiz. I teach data and AI to secondary students and adult learners. My evening class meets near a wet market. The road outside has four lanes and a signalled crossing. Each week I watch older residents hurry as the green man flashes. So I picked this problem for my Future of Transportation project.</p>
+<p>My rule for this project: start with the data. Then pick the simplest tech that fixes the problem. That turned out not to be AI.</p>
+
+<ul class="toc">
+  <li><a href="#problem">1. Problem analysis<span>Singapore road data and walking speeds</span></a></li>
+  <li><a href="#sim">2. Try the crossing<span>A simulator of three signal designs</span></a></li>
+  <li><a href="design.html">3. Design: specs and mockups<span>Sensor, timing rules, signs, privacy</span></a></li>
+  <li><a href="rollout.html">4. Rollout plan<span>Timeline, people, kit and costs</span></a></li>
+</ul>
+
+<h2 id="problem"><span class="num">1</span>Problem analysis</h2>
+
+<h3>Older pedestrians die far out of proportion</h3>
+<p>The Traffic Police publish road accident figures every year. "Elderly" there means aged 65 and above.</p>
+<div class="stats">
+  <div class="stat"><b>12.9%</b><span>of Singapore's population was 65 or over in 2025</span></div>
+  <div class="stat"><b>75.0%</b><span>of pedestrian deaths in 2025 were people 65 or over</span></div>
+  <div class="stat"><b>27</b><span>older pedestrians died in 2025, up from 11 in 2024</span></div>
+</div>
+
+<figure>
+<svg class="chart" viewBox="0 0 520 250" role="img" aria-labelledby="f1t">
+  <title id="f1t">Bar chart. Older pedestrians killed each year: 2021, 14. 2022, 19. 2023, 23. 2024, 11. 2025, 27.</title>
+  <line class="axis" x1="40" y1="210" x2="510" y2="210"/>
+  <g>
+    <rect class="bar" x="62" y="106" width="56" height="104" rx="4"><title>2021: 14 deaths</title></rect>
+    <rect class="bar" x="156" y="69" width="56" height="141" rx="4"><title>2022: 19 deaths</title></rect>
+    <rect class="bar" x="250" y="39" width="56" height="171" rx="4"><title>2023: 23 deaths</title></rect>
+    <rect class="bar" x="344" y="128" width="56" height="82" rx="4"><title>2024: 11 deaths</title></rect>
+    <rect class="bar" x="438" y="9" width="56" height="201" rx="4"><title>2025: 27 deaths</title></rect>
+  </g>
+  <g text-anchor="middle">
+    <text class="val" x="90" y="98">14</text><text class="val" x="184" y="61">19</text><text class="val" x="278" y="31">23</text>
+    <text class="val" x="372" y="120">11</text><text class="val" x="466" y="34" style="fill: var(--paper)">27</text>
+    <text x="90" y="236">2021</text><text x="184" y="236">2022</text><text x="278" y="236">2023</text><text x="372" y="236">2024</text><text x="466" y="236">2025</text>
+  </g>
+</svg>
+<figcaption><b>Fig. 1.</b> Pedestrians aged 65 and over killed on Singapore roads. Source: <a href="https://www.police.gov.sg/-/media/SPF/Media-Room/Statistics/Annual-Road-Traffic-Situation-2025/Annual-Road-Traffic-Situation-2025.pdf">Traffic Police, Annual Road Traffic Situation 2025</a>, Annex.</figcaption>
+<details><summary>Show the numbers as a table</summary>
+<div class="scroll"><table>
+<caption>Older pedestrians (65 and over), Singapore</caption>
+<tr><th>Year</th><th class="n">Deaths</th><th class="n">Accidents involving them</th><th class="n">Killed or injured</th></tr>
+<tr><td>2021</td><td class="n">14</td><td class="n">158</td><td class="n">159</td></tr>
+<tr><td>2022</td><td class="n">19</td><td class="n">167</td><td class="n">169</td></tr>
+<tr><td>2023</td><td class="n">23</td><td class="n">228</td><td class="n">226</td></tr>
+<tr><td>2024</td><td class="n">11</td><td class="n">203</td><td class="n">204</td></tr>
+<tr><td>2025</td><td class="n">27</td><td class="n">247</td><td class="n">249</td></tr>
+</table></div>
+</details>
+</figure>
+
+<div class="claim"><strong>How I read this, and how I don't</strong>
+The headline says deaths rose 145% in a year. That is true, but 11 was an unusually low year. The <a href="https://www.mot.gov.sg/news-resources/newsroom/review-of-pedestrian-crossing-infrastructure-including-signal-timings--crossing-distances-and-physical-design-given-increase-in-elderly-pedestrian-fatalities/">Acting Minister for Transport</a> made the same point: 2021 to 2023 averaged 18 a year. Small counts jump about. The steadier signal is the accident count, which went from 158 to 247 in five years. The share is high even in a "good" year. In 2024, people 65 or over were 12.5% of the population. They were 44% of pedestrian deaths (<a href="https://www.police.gov.sg/Media-Hub/Police-Life/2025/02/Three-Things-You-Should-Know-about-the-Annual-Road-Traffic-Situation-2024">Police Life, 2025</a>).</div>
+
+<h3>Not every death is at a crossing</h3>
+<p>In 2025, 15 of the 27 fatal accidents with older pedestrians involved jaywalking. So more than half happened away from a green man. A better crossing can only help with the rest.</p>
+<p>I still think crossings matter. People sometimes jaywalk because the crossing feels too slow or too short. But the data can't tell me how often that is the reason. I am flagging it as a guess.</p>
+
+<h3>The green man assumes a walking speed</h3>
+<p>In 2017 the <a href="https://www.mot.gov.sg/news-resources/newsroom/written-reply-by-minister-for-transport-khaw-boon-wan-to-parliamentary-question-on-longer-pre-defined-time-period-at-signalised-pedestrian-crossings/">Minister for Transport explained</a> how crossings are timed:</p>
+<ul class="tight">
+  <li>A steady green man of 6 to 10 seconds, for people at the kerb to step off.</li>
+  <li>Then a flashing green man of 1 second per metre of road.</li>
+</ul>
+<p><a href="https://www.lta.gov.sg/content/ltagov/en/getting_around/driving_in_singapore/intelligent_transport_systems.html">LTA says</a> the flashing part is the time "a typical pedestrian" needs to finish crossing. One second per metre means a walking speed of 1 metre per second.</p>
+<p>How fast do older people walk? Two studies give two answers.</p>
+<div class="scroll"><table>
+<caption>Walking speed of people 65 and over, two studies</caption>
+<tr><th>Study</th><th>Who was measured</th><th class="n">Average speed (m/s)</th></tr>
+<tr><td><a href="https://researchonline.lshtm.ac.uk/id/eprint/1726195">Asher and others, 2012</a></td><td>A random sample of 3,145 people aged 65+ in England</td><td class="n">0.9 men<br>0.8 women</td></tr>
+<tr><td><a href="https://www.physicaltherapy.utoronto.ca/sites/default/files/assets/files/11walking-speed-age-and-sex-specific-normative-values-final.pdf">Bohannon and Andrews, 2011</a></td><td>Healthy adults from 41 studies, aged 70 to 79</td><td class="n">1.26 men<br>1.13 women</td></tr>
+</table></div>
+<p>The gap makes sense. Healthy volunteers walk faster than a random sample of everyone. The people at my market are everyone. In Asher's study, 76% of older men walked slower than 1.2 m/s. So did 85% of older women. The team said 1.2 m/s is the wrong speed to assume for older people.</p>
+
+<div class="sheet">
+<p><strong>A worked example.</strong> Take a 14 m road and an 8-second steady green man.</p>
+<ul class="tight">
+  <li>Total time: 8 + 14 = 22 seconds of green man.</li>
+  <li>A woman walking at 0.8 m/s needs 14 ÷ 0.8 = 17.5 seconds.</li>
+  <li>If she steps off at once, she has 4.5 seconds spare.</li>
+  <li>If she arrives 5 seconds into the green man, she needs until 22.5 seconds. She is still on the road.</li>
+</ul>
+<p class="small">The 14 m road is my example, not a measured site.</p>
+</div>
+
+<h3>What Singapore already does</h3>
+<ul class="tight">
+  <li><a href="https://www.lta.gov.sg/content/ltagov/en/getting_around/driving_in_singapore/intelligent_transport_systems.html">Green Man+</a>: people 60 or over, and people with disabilities, tap a concession card at the pole. The green man gets 3 to 13 more seconds, depending on width. Over 1,000 crossings have it. LTA plans 1,500 more by the end of 2027.</li>
+  <li><a href="https://www.lta.gov.sg/content/ltagov/en/who_we_are/statistics_and_publications/Connect/silverzones.html">Silver Zones</a>, since 2014: lower speed limits, narrower roads, and crossings timed for slower walkers. LTA reports about 80% fewer accidents with older pedestrians in finished zones.</li>
+  <li><a href="https://www.lta.gov.sg/content/ltagov/en/upcoming_projects/road_commuter_facilities/friendly-streets.html">Friendly Streets</a>: the same ideas near markets, schools and MRT stations, planned with residents.</li>
+</ul>
+
+<h3>Who the current fix leaves out</h3>
+<p>Green Man+ works well for people who have the card and remember to tap. It needs a tap before you cross. It does nothing for:</p>
+<ul class="tight">
+  <li>someone who slows down halfway, because of a stumble, a heavy trolley or a dropped bag;</li>
+  <li>an older person without the card, or a visitor;</li>
+  <li>a parent with a pram and a toddler;</li>
+  <li>someone on crutches after an injury, who has no disability card;</li>
+  <li>someone who arrives after the green man has started, too late to tap.</li>
+</ul>
+
+<div class="madeup"><strong>What residents told me (made up, like me)</strong>
+I spoke to six older residents outside the market, one morning. "Mdm L", 74, said: "I don't tap. Tapping is for people who are really old." "Mr T", 81, has the card but keeps it at home. "Mdm S" pushes her husband's wheelchair. She waits for the next green man so she can start at once. These people are invented for this example. Real interviews would come first in the rollout.</div>
+
+<div class="claim"><strong>Problem statement</strong>
+At busy crossings, slow walkers can still be on the road when cars get green. Anyone slower than 1 m/s is at risk. The current fix depends on a card and a tap. I want a crossing that notices who is still on the road, without anyone doing anything.</div>
+
+<h2 id="sim"><span class="num">2</span>Try the crossing</h2>
+<p>This simulator compares three designs on the same people. Squares are people aged 65 or over. Circles are younger. Run one cycle to watch, or compare 2,000 cycles.</p>
+
+<div class="sim">
+  <div class="modes" role="group" aria-label="Signal design">
+    <button type="button" data-mode="today" aria-pressed="true">Today</button>
+    <button type="button" data-mode="gmplus" aria-pressed="false">Green Man+ (card tap)</button>
+    <button type="button" data-mode="sensor" aria-pressed="false">Sensor waits</button>
+  </div>
+  <div class="signal"><span id="sig" aria-live="off">Green man</span><span class="clock" id="clock">0.0 s</span></div>
+  <canvas id="crossing" width="640" height="400" aria-label="Top view of a road with a crossing. People walk across from both sides."></canvas>
+  <div class="timeline" id="timeline" aria-hidden="true"></div>
+  <div class="legend"><span><i class="k-under"></i>Under 65</span><span><i class="k-over"></i>65 or over</span><span><i class="k-tap"></i>Tapped a Green Man+ card</span><span>Yellow ring and ! : still on the road when cars get green</span></div>
+  <div class="runrow">
+    <button type="button" class="primary" id="play">Run one cycle</button>
+    <label>Speed <select id="speed"><option value="1">Real time</option><option value="2" selected>2 times</option><option value="4">4 times</option></select></label>
+  </div>
+  <p class="live" id="live" aria-live="polite"></p>
+  <div class="controls">
+    <label for="width">Road width: <output id="width-out">14 m</output>
+      <input type="range" id="width" min="7" max="24" step="1" value="14"></label>
+    <label for="steady">Steady green man: <output id="steady-out">8 s</output>
+      <input type="range" id="steady" min="6" max="10" step="1" value="8"></label>
+    <label for="seniors">Walkers aged 65 or over: <output id="seniors-out">40%</output>
+      <input type="range" id="seniors" min="0" max="80" step="5" value="40"></label>
+    <label for="tap">Of them, who tap a card: <output id="tap-out">50%</output>
+      <input type="range" id="tap" min="0" max="100" step="10" value="50"></label>
+  </div>
+  <div class="runrow"><button type="button" id="compare">Compare all three, 2,000 cycles each</button></div>
+  <p class="small" id="cmp-note" aria-live="polite"></p>
+  <div class="scroll" id="results" hidden>
+  <table class="results">
+    <caption>People still on the road when cars get green, per 100 crossers</caption>
+    <thead><tr><th>Design</th><th class="n">Everyone</th><th class="n">65 or over</th><th class="n">Under 65</th><th class="n">Cycles made longer</th><th class="n">Seconds added per cycle</th></tr></thead>
+    <tbody id="results-body"></tbody>
+  </table>
+  </div>
+</div>
+
+<details class="sheet">
+<summary>How the simulator works, and what I made up</summary>
+<ul class="tight">
+  <li>Real: the timing rule. Steady green man of 6 to 10 s, then 1 s of flashing per metre. Green Man+ adds 3 to 13 s.</li>
+  <li>Real: average speeds. Under 65 walk at 1.35 m/s on average, from Bohannon and Andrews. People 65 or over walk at 0.85 m/s, between Asher's figures for men and women.</li>
+  <li>Assumed: the spread of speeds. I used a bell curve with a spread of 0.2 m/s in each group.</li>
+  <li>Assumed: about 4 people wait at the kerb. About 1.5 more arrive during the steady green man. Nobody starts on the flashing green man.</li>
+  <li>Assumed: only people waiting at the kerb can tap a card in time.</li>
+  <li>Assumed: how Green Man+ extra time grows with width. LTA gives the range, not the formula. I drew a straight line from 3 s at 7 m to 13 s at 24 m.</li>
+  <li>Assumed: cars get green the moment the green man phase ends. Real junctions may add a short gap. Then real results would be a little better for every design.</li>
+  <li>The sensor holds cars only while someone is on the road, for at most 13 s. It never misses anyone. A real sensor will.</li>
+</ul>
+<p>Use the output to compare designs. It is not a forecast for a real junction.</p>
+</details>
+
+<h3>What I learned from the simulator</h3>
+<p>These are model results at the default settings, not counts from a real road.</p>
+<ul class="tight">
+  <li>Today's timing left about 27 in 100 older walkers on the road at car green. Fewer than 1 in 100 younger walkers.</li>
+  <li>Green Man+ cut that to about 12 in 100 older walkers. It only helps in cycles where someone tapped, so late arrivals still get caught.</li>
+  <li>The sensor cut it to under 1 in 100. It added about 2 seconds per cycle on average, against about 4 for Green Man+. It only waits when someone is there.</li>
+  <li>Try a 20 m road with 60% older walkers. The 13-second cap starts to matter: about 5 in 100 older walkers are still caught. Very wide roads need a centre island too.</li>
+</ul>
+
+<h2 id="next">Next: the design and the rollout</h2>
+<p>The <a href="design.html">design page</a> has the sensor specs, timing rules and mockups. It also shows how the design serves different walkers. The <a href="rollout.html">rollout page</a> has an 18-month plan, the people, the kit and the tests.</p>
+
+<h2 id="change">What I would change</h2>
+<p>The data says more than half of older pedestrian deaths in 2025 involved jaywalking. My design does nothing for them. A fuller answer would ask why people cross away from the lights. It would fix the walk to the crossing too. My simulator also treats the sensor as perfect. Before I'd trust the numbers, I want a month of real detector logs.</p>
+
+<h2 id="sources">Sources</h2>
+<ul class="tight small">
+  <li>Accident figures, 2021 to 2025: <a href="https://www.police.gov.sg/-/media/SPF/Media-Room/Statistics/Annual-Road-Traffic-Situation-2025/Annual-Road-Traffic-Situation-2025.pdf">Singapore Police Force, Annual Road Traffic Situation 2025</a>.</li>
+  <li>The 2021 to 2023 average: <a href="https://www.mot.gov.sg/news-resources/newsroom/review-of-pedestrian-crossing-infrastructure-including-signal-timings--crossing-distances-and-physical-design-given-increase-in-elderly-pedestrian-fatalities/">MOT written reply, 6 May 2026</a>.</li>
+  <li>Crossing timing rule: <a href="https://www.mot.gov.sg/news-resources/newsroom/written-reply-by-minister-for-transport-khaw-boon-wan-to-parliamentary-question-on-longer-pre-defined-time-period-at-signalised-pedestrian-crossings/">MOT written reply, 2 October 2017</a>.</li>
+  <li>Steady and flashing green man, Green Man+ and its expansion: <a href="https://www.lta.gov.sg/content/ltagov/en/getting_around/driving_in_singapore/intelligent_transport_systems.html">LTA, Intelligent Transport Systems</a>.</li>
+  <li>Silver Zones: <a href="https://www.lta.gov.sg/content/ltagov/en/who_we_are/statistics_and_publications/Connect/silverzones.html">LTA Connect, Silver Zones</a>.</li>
+  <li>Friendly Streets: <a href="https://www.lta.gov.sg/content/ltagov/en/upcoming_projects/road_commuter_facilities/friendly-streets.html">LTA, Friendly Streets</a>.</li>
+  <li>Older walking speeds: <a href="https://researchonline.lshtm.ac.uk/id/eprint/1726195">Asher L, Aresu M, Falaschetti E, Mindell J. Most older pedestrians are unable to cross the road in time. Age and Ageing, 2012</a>.</li>
+  <li>Healthy walking speeds by age: Bohannon RW, Andrews AW. Normal walking speed: a descriptive meta-analysis. Physiotherapy, 2011. Figures as tabled by the <a href="https://www.physicaltherapy.utoronto.ca/sites/default/files/assets/files/11walking-speed-age-and-sex-specific-normative-values-final.pdf">University of Toronto</a>.</li>
+</ul>
+</main>
+</body>
+</html>

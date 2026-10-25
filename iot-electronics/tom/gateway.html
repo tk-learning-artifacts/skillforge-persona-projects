@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lights On, Nobody Home: the gateway page, by Tom Brennan</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="gateway.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Tom Brennan is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<p><a href="index.html">Back to Lights On, Nobody Home</a></p>
+<h1>The gateway page<span class="sub">Runs in Chrome on the classroom PC</span></h1>
+<p class="lede">This is the real page from the project. Plug the gateway micro:bit into this computer and press Connect. It turns radio readings into one row every 5 minutes. Then it posts each row to your Sheet.</p>
+<p>No micro:bit with you? Press "Made-up readings". A minute passes every 2 seconds, and a pretend web app in this page answers. Nothing leaves your computer in that mode.</p>
+
+<div class="lab">
+  <p class="status" id="support"></p>
+  <div class="row">
+    <button type="button" class="primary" id="connect">Connect micro:bit</button>
+    <button type="button" id="demo">Made-up readings</button>
+    <button type="button" id="stop">Stop</button>
+    <button type="button" id="flush">Send waiting rows now</button>
+  </div>
+  <div class="totals">
+    <div class="total"><div class="k">Source</div><div class="v" id="source">none</div></div>
+    <div class="total"><div class="k">Node last heard</div><div class="v" id="heard">never</div></div>
+    <div class="total"><div class="k">Rows waiting</div><div class="v" id="waiting">0</div></div>
+    <div class="total"><div class="k">Mode from B1</div><div class="v sun" id="mode">unknown</div></div>
+  </div>
+  <div class="control" id="fake-control" hidden>
+    <span class="cellref">Pretend Control!B1</span>
+    <select id="fake-mode" aria-label="Pretend mode in B1"><option>remind</option><option>quiet</option><option>test</option></select>
+  </div>
+  <h3>This 5-minute block</h3>
+  <div class="scroll">
+  <table class="sheet">
+    <thead><tr><th>minute</th><th class="n">light</th><th class="n">sound</th><th class="n">temp</th><th>lit and quiet?</th></tr></thead>
+    <tbody id="block"></tbody>
+  </table>
+  </div>
+  <h3>Rows sent</h3>
+  <div class="scroll">
+  <table class="sheet">
+    <thead><tr><th>time</th><th class="n">light</th><th class="n">sound_peak</th><th class="n">temp_c</th><th class="n">lit_quiet_min</th><th>status</th><th>reply</th></tr></thead>
+    <tbody id="sent"></tbody>
+  </table>
+  </div>
+  <h3>Log, newest first</h3>
+  <ul class="serial" id="log" aria-live="polite"></ul>
+</div>
+
+<h2>Settings</h2>
+<p>These stay in this browser on this computer, in its local storage. They are not in the page's code. This page sends them only to your web app.</p>
+<form class="card" id="settings">
+  <p><label for="url">Web app address</label><br><input id="url" type="url" inputmode="url" placeholder="https://script.google.com/macros/s/.../exec" style="width:100%"></p>
+  <p><label for="token">Token</label><br><input id="token" type="password" autocomplete="off" style="width:100%"></p>
+  <p><label for="room">Room code</label><br><input id="room" maxlength="8" value="2E"></p>
+  <p><label for="lit">Lit above</label> <input id="lit" type="number" min="0" max="255" value="70" style="width:90px">
+     <label for="quiet">Quiet below</label> <input id="quiet" type="number" min="0" max="255" value="80" style="width:90px"></p>
+  <div class="row"><button type="submit" class="primary">Save</button><button type="button" id="forget">Forget settings and queue</button></div>
+  <p class="small" id="saved"></p>
+</form>
+
+<h2>Before you leave it running</h2>
+<ul class="tight">
+  <li>Turn off sleep on this computer for school hours. If it sleeps, nothing is sent.</li>
+  <li>Leave this tab open. It can sit behind other windows.</li>
+  <li>Web Serial works in Chrome on desktop computers and Chromebooks. It does not work on iPads.</li>
+  <li>Web Serial needs the page to come from an https address, like GitHub Pages.</li>
+  <li>Check the first two rows in your Sheet before you walk away.</li>
+</ul>
+</main>
+</body>
+</html>

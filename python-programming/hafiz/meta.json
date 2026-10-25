@@ -1,0 +1,6 @@
+{
+  "module": "python-programming",
+  "persona": "hafiz",
+  "title": "Check the claim: is Changi getting warmer?",
+  "summary": "A runnable Python notebook that reads NEA's real Changi temperature file and checks three NEA claims, with a 17-line PRIMM starter and worksheet, and a 2-hour evening lesson for adult learners in Colab."
+}

@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>One locked door: a 60-minute PRIMM lesson for Sec 2, by Daniel Ong</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Daniel Ong is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<p><a href="index.html">Back to Lost in the Lab</a></p>
+<h1>One locked door</h1>
+<p class="lede">A 60-minute PRIMM lesson for Sec 2 beginners. Students read a 22-line Python program before they change it. It ends with the full game.</p>
+
+<div class="card">
+<ul class="tight">
+  <li>Class: my Wednesday coding enrichment class. 28 Sec 2 students, in 14 pairs.</li>
+  <li>What they know: print, variables, input and if, from 3 lessons on Python. Binary place values, from paper cards last month.</li>
+  <li>Time: one 60-minute lesson in the computer lab.</li>
+  <li>Devices: every secondary student has a school PLD. Ours are Chromebooks. One Chromebook per pair is open. The other stays shut for notes.</li>
+  <li>Tool: the <a href="https://editor.raspberrypi.org/en/">Raspberry Pi Code Editor</a>, with no logins.</li>
+  <li>Printouts: one <a href="worksheet.html">worksheet</a> per student. A mini whiteboard and marker per pair. One error hint card per pair (below).</li>
+  <li>On the board: the short link to the worksheet page, so nobody types the starter.</li>
+</ul>
+</div>
+
+<h2>Before the lesson</h2>
+<ul class="tight">
+  <li>Open the Code Editor on a student Chromebook, at school, on the school network. PLDs run device management apps, and sites can be blocked. If it's blocked, ask the ICT team a week ahead.</li>
+  <li>Paste the starter, run it, and type 4 then 6. Check the output matches P3.</li>
+  <li>Print the worksheets and hint cards. Set a timer to ring at minutes 23 and 43 for driver swaps.</li>
+</ul>
+
+<h2>By the end, students can</h2>
+<ul class="tight">
+  <li>Predict what a short program prints before they run it.</li>
+  <li>Trace a <code>for</code> loop in a table, one row per pass.</li>
+  <li>Explain why text from <code>input()</code> needs <code>str()</code> or <code>int()</code> before a comparison.</li>
+  <li>Change a program so a <code>while</code> loop stops after 3 tries.</li>
+</ul>
+
+<h2>Success criteria, in student words</h2>
+<ol class="steps">
+  <li>I wrote my predictions before I ran the code.</li>
+  <li>My trace table gives 6 for "0110".</li>
+  <li>I can say why "6" and 6 are different.</li>
+  <li>My door locks after 3 wrong tries.</li>
+</ol>
+
+<h2>The lesson, minute by minute</h2>
+<ol class="timeline">
+  <li><span class="t">0 to 5</span><span><span class="stage">Settle</span>Pairs sit together. One Chromebook opens to the Code Editor. Worksheets out. I name the first driver: the student whose birthday is sooner.</span></li>
+  <li><span class="t">5 to 10</span><span><span class="stage">Hook</span>I play Lost in the Lab on the projector. The class calls out the denary for 0110 and 1101. I stop at the 8-bit door. "Today you'll read the code behind one door."</span></li>
+  <li><span class="t">10 to 18</span><span><span class="stage">Predict</span>Lids down. Each student writes P1 to P3 alone for 4 minutes. Then pairs agree on one answer for each, on the mini whiteboard. Boards up on my signal. I note the spread and say nothing yet.</span></li>
+  <li><span class="t">18 to 23</span><span><span class="stage">Run</span>Lids up. Copy the starter from the worksheet page and run it three times. Tick right predictions. I ask who wrote quote marks in P1 or missed them in P3. Two pairs explain.</span></li>
+  <li><span class="t">23 to 35</span><span><span class="stage">Investigate</span>Swap driver. I1, the trace table, first, on paper. Then I2 and I3 on the laptop. For I2, they predict before they change the line. I show how to press Stop.</span></li>
+  <li><span class="t">35 to 50</span><span><span class="stage">Modify</span>M1, then M2. Swap driver at minute 43 when the timer rings. I walk the room with my class list.</span></li>
+  <li><span class="t">50 to 56</span><span><span class="stage">Make</span>Pairs who finished M2 start the Make task. Others finish M2. Anyone done plays the full game and looks for its bugs.</span></li>
+  <li><span class="t">56 to 60</span><span><span class="stage">Exit</span>One line on the back of the sheet: "Why does line 17 need str()?" Sheets in the tray. Close the Code Editor tab.</span></li>
+</ol>
+<p class="small">Check: 5 + 5 + 8 + 5 + 12 + 15 + 6 + 4 = 60 minutes.</p>
+
+<h2>Support ideas</h2>
+<h3>Slow typists</h3>
+<ul class="tight">
+  <li>Nobody types the starter. They copy it from the worksheet page. In my first try, typing it by hand took three pairs 12 minutes.</li>
+  <li>M1 is a one-line change. M2 changes about four lines. A slow typist can do both.</li>
+  <li>The navigator reads each line aloud before the driver types it. Fewer typos, and both students think about the code.</li>
+</ul>
+<h3>Typos and errors</h3>
+<p>Each pair gets this card. It comes from my own <a href="index.html#bugs">bug diary</a>.</p>
+<div class="sticky">
+<p><strong>Got an error? Read the LAST line first.</strong></p>
+<ul class="tight">
+  <li><code>SyntaxError: expected ':'</code> Add a colon to the end of the if, while, for or def line.</li>
+  <li><code>IndentationError</code> The line after a colon moves in 4 spaces.</li>
+  <li><code>NameError ... Did you mean</code> Check your spelling. Python is guessing for you.</li>
+  <li><code>TypeError ... str ... int</code> Text and a number got mixed. Use commas in print, or str().</li>
+  <li>No error, but it never stops? Press Stop. Print the type of each value.</li>
+</ul>
+</div>
+<p>A pair with a hand up must tell me the error's name and line number. Most fix it while they tell me.</p>
+
+<h3>Checking that every student codes</h3>
+<ul class="tight">
+  <li>Each student writes P1 to P3 alone first, on their own sheet. Nobody can copy a partner's guess.</li>
+  <li>Drivers swap when the timer on the screen rings, at minutes 23 and 43. I announce it every time.</li>
+  <li>I walk with my class list. At minutes 30 and 45, I tick who is driving. I ask the navigator, not the driver, to explain the line just typed. Anyone with no tick by minute 45 drives for the rest of the lesson.</li>
+  <li>The exit line is written alone. It tells me who understood I2.</li>
+</ul>
+
+<h3>Other students</h3>
+<ul class="tight">
+  <li>Stuck on M2: I give a hint strip. It says: "Add <code>and len(wrong) &lt; 2</code> to line 17. Then use if and else after the loop."</li>
+  <li>Finished early: the Make task. Then find a bug in the full game. There is one about the dark server room.</li>
+  <li>Not confident with English: I read each question aloud at the start of each stage. The story words are short on purpose.</li>
+  <li>Laptop or Code Editor won't load: the pair runs the starter on the <a href="worksheet.html">worksheet page</a>. It runs there with nothing to install.</li>
+</ul>
+
+<h2>Why PRIMM, and what I'm unsure about</h2>
+<p>PRIMM stands for Predict, Run, Investigate, Modify, Make. The <a href="https://static.raspberrypi.org/files/curriculum/quickreads/11-Pedagogy_Summary_PRIMM_V4_2023.pdf">PRIMM Quick Read</a> explains it. I chose it because my old lessons started with a blank screen. Half the class froze.</p>
+<p>What I'm unsure about: 8 minutes of Predict with lids down felt long for some students. Two of them wanted to "just try it". I don't know yet if the wait helps them or loses them. I'll ask my mentor to watch the next lesson.</p>
+
+<h2>Sources</h2>
+<ul class="tight small">
+  <li>PLDs and device management apps: <a href="https://www.moe.gov.sg/news/press-releases/20201229-blended-learning-to-enhance-schooling-experience-and-further-develop-students-into-self-directed-learners">MOE press release, 29 December 2020</a>.</li>
+  <li>PRIMM: <a href="https://static.raspberrypi.org/files/curriculum/quickreads/11-Pedagogy_Summary_PRIMM_V4_2023.pdf">Raspberry Pi Foundation, PRIMM Quick Read</a>.</li>
+  <li>Using the Code Editor without an account: <a href="https://codeclub.org/en/resources/accounts-for-children">Code Club, accounts for children</a>.</li>
+</ul>
+</main>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Four 60-minute session plans for a Kattis starter team, by Rajan Pillai</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Rajan Pillai is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<p class="crumb"><a href="index.html">index.html</a> / sessions.html</p>
+<h1>Four session plans</h1>
+<p class="lede">Four Thursdays, 60 minutes each, in the computer lab. 12 students from Sec 2 and Sec 3. Every timing below adds up to 60.</p>
+
+<div class="panel">
+<ul class="spec">
+  <li><b>Each time</b><span>Settle, a short idea, 25 to 28 minutes of solving, the debugging log. Two verdict cards from session 2 on.</span></li>
+  <li><b>Materials</b><span>The <a href="problems.html">problem page</a> on the projector. One paper debugging log per student, kept in a class folder.</span></li>
+  <li><b>Log columns</b><span>Problem, verdict, test number, cause, fix. One row for every submission that is not Accepted.</span></li>
+  <li><b>Hint rule</b><span>Try for 10 minutes before you open Hint 1. Then 5 minutes between hints. Write which hint you used in the log.</span></li>
+</ul>
+</div>
+
+<h2 id="before">Before week 1 <span class="tag">// 28 Jun to 7 Jul</span></h2>
+<ul class="tight">
+  <li>Monday of Term 3 week 1: a consent letter goes home. It explains Kattis, its age rule and why a parent must accept the terms.</li>
+  <li>Students make their accounts at home, with a parent, using their real names.</li>
+  <li>By Wednesday 7 July, each student emails me their Kattis username. I check the list against the consent slips.</li>
+  <li>I book the lab and test that the school network does not block open.kattis.com.</li>
+</ul>
+
+<h2 id="s1">Session 1: Judges and verdicts <span class="tag">// 8 Jul</span></h2>
+<p>Problems: <a href="problems.html#p1">Quadrant Selection</a>, <a href="problems.html#p2">R2</a>, <a href="problems.html#p3">Spavanac</a>.</p>
+<p>By the end, students can read a problem page and submit. They can say what a verdict means.</p>
+<ol class="timeline">
+  <li><span class="t">0 to 5 min</span>Settle. Log in to Kattis. Logs out of the folder.</li>
+  <li><span class="t">5 to 20 min</span>Demo on the projector. I read Quadrant Selection top to bottom: limits, input, output, samples. Then I submit three times. First with <code>x, y = map(int, input().split())</code>, which crashes because x and y are on separate lines: Run Time Error. Then a version that prints "Quadrant 1": Wrong Answer. Then the right one: Accepted. Each time we read which test number failed.</li>
+  <li><span class="t">20 to 25 min</span>How to fill the debugging log. I fill in my two failed submissions as the example rows.</li>
+  <li><span class="t">25 to 50 min</span>Solve the three problems, in order. I walk the room and ask one question: "What did you expect Kattis to say?"</li>
+  <li><span class="t">50 to 57 min</span>Two students read one log row aloud. The class names the cause before they say it.</li>
+  <li><span class="t">57 to 60 min</span>Exit line on the log: what is the difference between Wrong Answer and Run Time Error? Log off.</li>
+</ol>
+<p class="check">Check: 5 + 15 + 5 + 25 + 7 + 3 = 60 minutes.</p>
+
+<h2 id="s2">Session 2: Sets, sorting and Big O <span class="tag">// 15 Jul</span></h2>
+<p>Problems: <a href="problems.html#p4">No Duplicates</a>, <a href="problems.html#p5">Secure Doors</a>, <a href="problems.html#p6">Shopaholic</a>.</p>
+<p>By the end, students can say the Big O of their code. They check it against the limits.</p>
+<ol class="timeline">
+  <li><span class="t">0 to 5 min</span>Settle and log in.</li>
+  <li><span class="t">5 to 12 min</span>Verdict cards 1 and 2 from the <a href="index.html#verdict-lab">verdict lab</a>: Spavanac and No Duplicates. Hands up for each verdict before I reveal it.</li>
+  <li><span class="t">12 to 22 min</span>Big O by counting. I time 1,000 lookups in a list and in a set of 100,000 numbers, live. The set wins by a mile. Then the rule of thumb from the USACO Guide: about 10<sup>8</sup> simple steps a second, and it calls that a conservative guess. Python is slower than C++. That is why USACO gives Python twice the time.</li>
+  <li><span class="t">22 to 50 min</span>Solve the three problems. Shopaholic has up to 200,000 prices, so a loop inside a loop will not do.</li>
+  <li><span class="t">50 to 57 min</span>In the log, students write the biggest n from each statement. Next to it goes the Big O of their code. Do the two fit together?</li>
+  <li><span class="t">57 to 60 min</span>Log off and file the logs.</li>
+</ol>
+<p class="check">Check: 5 + 7 + 10 + 28 + 7 + 3 = 60 minutes.</p>
+
+<h2 id="s3">Session 3: Brute force, recursion and binary search <span class="tag">// 22 Jul</span></h2>
+<p>Problems: <a href="problems.html#p7">Tri</a>, <a href="problems.html#p8">Perket</a>, <a href="problems.html#p9">Guess the Number</a>.</p>
+<p>By the end, students try every case when there are few. When there are many, they halve the search.</p>
+<ol class="timeline">
+  <li><span class="t">0 to 5 min</span>Settle and log in.</li>
+  <li><span class="t">5 to 12 min</span>Verdict cards 3 and 5: Shopaholic, then Tri. The Tri card is about floats. Most students guess wrong, which is the point.</li>
+  <li><span class="t">12 to 24 min</span>Three short boards. Tri: there are only 8 possible equations, so try them all. Perket: I draw the "in or out" tree for 3 ingredients. It has 8 leaves; 10 ingredients give 1,024. Guess: the class guesses my number from 1 to 1,000 with higher or lower. Someone always says "pick the middle". 2<sup>10</sup> is 1,024, so 10 guesses are enough.</li>
+  <li><span class="t">24 to 52 min</span>Solve the three problems. Guess is interactive: remind them about <code>flush=True</code>.</li>
+  <li><span class="t">52 to 57 min</span>Pairs swap screens. Each reads the other's Perket function aloud and points to the line where it stops.</li>
+  <li><span class="t">57 to 60 min</span>Log off and file the logs.</li>
+</ol>
+<p class="check">Check: 5 + 7 + 12 + 28 + 5 + 3 = 60 minutes.</p>
+
+<h2 id="s4">Session 4: Grids and BFS <span class="tag">// 29 Jul</span></h2>
+<p>Problems: <a href="problems.html#p10">Knight Jump</a>, <a href="problems.html#p11">Counting Stars</a>, <a href="problems.html#p12">Grid</a>.</p>
+<p>By the end, students can run a BFS with a deque. They can do it by hand and in code.</p>
+<ol class="timeline">
+  <li><span class="t">0 to 5 min</span>Settle and log in.</li>
+  <li><span class="t">5 to 12 min</span>Verdict cards 4 and 7: Perket, then Knight Jump. The second one previews today's trap.</li>
+  <li><span class="t">12 to 24 min</span>BFS on a 5 by 5 grid on the whiteboard. The queue is a row of sticky notes: add at the right, take from the left. One rule I repeat: mark a cell as seen when you add it, not when you take it out. Then the same thing in code with <code>collections.deque</code> and <code>popleft()</code>.</li>
+  <li><span class="t">24 to 50 min</span>Solve the three problems. Counting Stars is the one most will finish. Grid is the stretch.</li>
+  <li><span class="t">50 to 57 min</span>Hand out the <a href="noi.html">NOI note</a>. Each student picks 3 Kattis problems rated 1.5 to 2.5 for the holidays. They write them in the log.</li>
+  <li><span class="t">57 to 60 min</span>Last log rows. Log off.</li>
+</ol>
+<p class="check">Check: 5 + 7 + 12 + 26 + 7 + 3 = 60 minutes.</p>
+<p>Verdict cards 6 and 8, Counting Stars and Grid, are homework. They are on the <a href="index.html#verdict-lab">index page</a>, so students can do them at home.</p>
+
+<h2 id="levels">Strong and new coders in one room</h2>
+<ul class="tight">
+  <li>Finished early: solve the same problem a second way, then compare the Big O. Or start next week's first problem.</li>
+  <li>Stuck: use the hint ladder in order. After Hint 3, a classmate may explain the idea in words. They never type or dictate code.</li>
+  <li>New to reading input: they start with Hello World and Solving for Carrots before Quadrant Selection.</li>
+</ul>
+
+<h2 id="rules">Club rules</h2>
+<ol class="tight">
+  <li>No AI tools during sessions. The judge tests what you understand; a chatbot's code tests the chatbot.</li>
+  <li>Never paste someone else's code. Kattis keeps every submission, and so does your log.</li>
+  <li>Help in words, not keystrokes. Explaining an idea teaches you too.</li>
+  <li>Every wrong submission gets a log row. A row with no cause is not finished.</li>
+</ol>
+
+<h2 id="check">How I know it worked</h2>
+<ul class="tight">
+  <li>By week 4, each student has at least 8 of the 12 Accepted.</li>
+  <li>Every log row names a cause, not only "fixed it".</li>
+  <li>The class gets at least 6 of the 8 verdict cards right by week 4.</li>
+</ul>
+
+<h2 id="sources">Sources</h2>
+<ul class="sources">
+  <li>10<sup>8</sup> steps a second as a conservative estimate: <a href="https://usaco.guide/bronze/time-comp">USACO Guide, Time Complexity</a>.</li>
+  <li>2 seconds for C++ and 4 seconds for Python in most USACO contests: <a href="http://www.usaco.org/index.php?page=instructions">USACO contest instructions</a>.</li>
+  <li>deque appends and pops at either end in about O(1): <a href="https://docs.python.org/3/library/collections.html#collections.deque">Python docs, collections.deque</a>.</li>
+  <li>The flush argument of print: <a href="https://docs.python.org/3/library/functions.html#print">Python docs, print()</a>.</li>
+  <li>Kattis account rules: <a href="https://open.kattis.com/contracts/current/tos">Kattis Terms of Service</a>.</li>
+  <li>Term 3 2027 starts on 28 June: <a href="https://www.moe.gov.sg/news/press-releases/20260714-school-terms-and-holidays-for-2027">MOE, School terms and holidays for 2027</a>.</li>
+</ul>
+</main>
+</body>
+</html>

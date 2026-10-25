@@ -1,0 +1,6 @@
+{
+  "module": "swift",
+  "persona": "daniel",
+  "title": "Team Points: a SwiftUI scoreboard for my class quizzes",
+  "summary": "A two-screen SwiftUI app built in Swift Playgrounds for keeping team scores in Sec 1 quizzes, with a web copy to try, a video walkthrough, the Playgrounds file and a README."
+}

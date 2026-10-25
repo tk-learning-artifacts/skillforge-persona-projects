@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pig Out: a push-your-luck dice game in SwiftUI, by Kenji Watanabe</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="app.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Kenji Watanabe is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<ul class="menu">
+  <li><a href="index.html" aria-current="page">Devlog</a></li>
+  <li><a href="readme.html">README</a></li>
+  <li><a href="code.html">Code and tests</a></li>
+</ul>
+
+<h1>Pig Out</h1>
+<p class="lede">A push-your-luck dice game in SwiftUI. Roll to grow your turn. Roll a 1 and you lose it all.</p>
+<p>I'm Kenji. I make games for a living and teach game design part-time. My Sec 2 game design CCA uses the school iPads. I wanted a game they could open in Swift Playgrounds and change. I built it in Xcode on my Mac, as a Swift Playgrounds app project. The same project opens in both.</p>
+<p>Pig is an old folk dice game. John Scarne first described it in print in 1945. I picked it because one choice drives the whole game: roll again, or stop? Every roll is a small bet, and students feel the risk in their stomach. That feeling is what I wanted them to code.</p>
+<div class="panel">
+<p><strong>The brief, part by part</strong></p>
+<ul class="tight">
+  <li>Two screens: a title screen with the rules, and the game. A NavigationLink joins them.</li>
+  <li>The interactive feature: Roll and Hold, against Porkchop the bot or a friend.</li>
+  <li>Styling: one pink, a die drawn in code, a spin, a shake and score bars.</li>
+  <li>Deliverables: the <a href="#video">video devlog</a>, the <a href="#get">Playgrounds file</a> and the <a href="readme.html">README</a>.</li>
+</ul>
+</div>
+
+<h2 id="play">Play it</h2>
+<p>This is a web copy of the app. It has the same rules, bot and messages as the Swift code. Porkchop holds at 20.</p>
+<div class="arena">
+  <div data-pig-out></div>
+  <div>
+    <h3>Try this</h3>
+    <ol class="tight">
+      <li>Play one game where you hold at 10 every time. Then one where you hold at 30. Which felt better? Which won?</li>
+      <li>Set the target to 20. Can you win in one turn?</li>
+      <li>Watch Porkchop. Can you guess when it will stop?</li>
+    </ol>
+    <p class="small">The web copy is not the real app. The real one is the Swift code in the <a href="#get">Playgrounds file</a>. The screenshots in the <a href="readme.html">README</a> come from that code.</p>
+  </div>
+</div>
+
+<h2 id="video">Video devlog</h2>
+<p>A 65-second devlog. The game plays on the left. The Swift lines that run at each moment light up on the right. Captions are in the video, and it has no sound.</p>
+<video controls preload="none" playsinline poster="poster.jpg" src="devlog.mp4" aria-describedby="devlog-note"></video>
+<p class="small" id="devlog-note">The video records the web copy above. Fixed die rolls make it play the same game every time. On a Mac, I would press Shift, Command and 5, then pick part of the screen.</p>
+<details class="panel">
+<summary><strong>Transcript</strong></summary>
+<ol class="tight">
+  <li>0:00. Pig Out is a push-your-luck dice game. Two screens, built in SwiftUI.</li>
+  <li>0:05. Screen 1 has the rules. I play against Porkchop the bot.</li>
+  <li>0:09. For this video, first to 20. In class we play to 50.</li>
+  <li>0:13. Play is a NavigationLink. It pushes the game screen.</li>
+  <li>0:17. Each roll adds to my turn total. A 4, then a 6. Turn total 10.</li>
+  <li>0:22. Hold banks the 10 and passes the die.</li>
+  <li>0:24. Porkchop keeps rolling until its turn reaches 20.</li>
+  <li>0:26. Porkchop rolls a 1. Pig out! Its 8 points are gone.</li>
+  <li>0:29. A 5. Do I push my luck?</li>
+  <li>0:32. A 1. I lose my 5. The die shakes. A phone with haptics buzzes too.</li>
+  <li>0:37. Porkchop rolls 6, 2, then 1. Pig out again.</li>
+  <li>0:40. My turn. A 6 and a 5 make 11.</li>
+  <li>0:45. I hold. 21 is over the target, so I win.</li>
+  <li>0:50. Every event gets words and motion. VoiceOver reads the words out.</li>
+  <li>0:56. Back returns to the title screen.</li>
+  <li>1:00. The Playgrounds file, README and tests are on this page.</li>
+</ol>
+</details>
+
+<h2 id="feel">Game feel: every event, three ways</h2>
+<p>A player should never wonder what just happened. So each event in <code>GameView</code> goes through one function, <code>report</code>, and comes out three ways:</p>
+<ul class="tight">
+  <li>Words: a message under the die, like "Pig out! Porkchop rolled a 1 and lost the turn."</li>
+  <li>Motion: the die spins on a roll and shakes on a 1. The turn total rolls to its new number.</li>
+  <li>Touch: <code>sensoryFeedback</code> taps on each roll and buzzes on a pig out. This needs a device with haptics, like an iPhone.</li>
+</ul>
+<p>VoiceOver also reads every message out loud, through <code>AccessibilityNotification.Announcement</code>. That matters most on Porkchop's turn. Nobody touches the screen then, so VoiceOver would say nothing.</p>
+<p>The rules live in their own file, <code>PigGame.swift</code>, with no SwiftUI in it. The screens ask the rules what happened, then decide how to show it. That split is the most useful thing in the project for students. They can change how the game feels without breaking how it works.</p>
+
+<h2 id="maths">Why Porkchop holds at 20</h2>
+<p>Say your turn total is t. Roll again, and one time in six you get a 1 and lose t. Five times in six you get a 2, 3, 4, 5 or 6. Those average 4.</p>
+<p>So one more roll gains 4 × 5/6, about 3.33 points. It loses t × 1/6. Those are equal when t is 20. Below 20, rolling gains points on average. Above 20, it loses them. That is the rule Porkchop plays by.</p>
+<div class="stats">
+  <div class="stat"><b>8.14</b><span>points a turn, on average, if you hold at 20. My own exact sum.</span></div>
+  <div class="stat"><b>8.16 to 8.19</b><span>what my tests got over 100,000 bot turns, in four runs.</span></div>
+  <div class="stat"><b>62%</b><span>of hold-at-20 turns still end in a pig out. Exact sum: 62.5%.</span></div>
+</div>
+<p>The last number surprised my CCA most. A good plan still fails most of the time. It wins because the turns that work bank a lot.</p>
+<p>Hold at 20 is not the best way to play a whole game. Near the end, the score matters more than the average. Todd Neller and Clifton Presser worked out perfect play for Pig. Wikipedia puts the disadvantage of hold at 20 against perfect play at 8%.</p>
+
+<h2 id="playtests">Playtest notes</h2>
+<p class="note">My CCA and its students are made up, like me. The game, its numbers and its code are real.</p>
+<h3>Round 1: four Sec 2 students, version 1</h3>
+<ul class="tight">
+  <li>Note 1. Version 1 played to 100, like the classic game. One game took about 20 minutes. Our CCA slot is 90 minutes, and they wanted to play, then code.</li>
+  <li>Note 2. A 1 just changed the number. Student A didn't notice she had lost her turn. She kept tapping Roll, and nothing happened.</li>
+  <li>Note 3. The active player was shown by colour only. Student B, who is colour blind, asked whose turn it was, twice.</li>
+  <li>Note 4. Version 1's bot rolled at random. Student C called it "dumb" and stopped trying.</li>
+</ul>
+<div class="panel">
+<p><strong>Changes for version 2, the one here</strong></p>
+<ul class="tight">
+  <li>From note 1: the target starts at 50, and a stepper sets 20 to 100.</li>
+  <li>From note 2: a pig out shakes the die and says so in words. Phones also buzz.</li>
+  <li>From note 3: an arrow and an outline on the active card.</li>
+  <li>From note 4: Porkchop holds at 20. Students now argue about whether to copy it.</li>
+</ul>
+</div>
+<h3>Round 2: the same four, version 2</h3>
+<ul class="tight">
+  <li>Note 1. A game to 50 took about 6 minutes.</li>
+  <li>Note 2. Student C beat Porkchop twice by rolling more when behind. He found the end-of-game idea on his own.</li>
+  <li>Note 3. Student D played with VoiceOver on, as a test. Porkchop's turns were silent until I added the announcements.</li>
+</ul>
+
+<h2 id="access">Accessibility basics</h2>
+<p>I checked Pig Out against <a href="https://developer.apple.com/design/human-interface-guidelines/accessibility">Apple's accessibility guidelines</a> and the <a href="https://gameaccessibilityguidelines.com/basic/">basic Game Accessibility Guidelines</a>.</p>
+<ul class="score">
+  <li>"Ensure no essential information is conveyed by a fixed colour alone." Met: an arrow and an outline mark the active player.</li>
+  <li>"Ensure no essential information is conveyed by sounds alone." Met: the game has no sound. Haptics come with words too.</li>
+  <li>VoiceOver: the die says "Die showing 4". Each score card reads as one line: "You, 27 of 50, playing now". Every message is announced.</li>
+  <li>Reduce Motion: the die does not spin or shake. The game checks <code>accessibilityReduceMotion</code> first.</li>
+  <li>"Ensure interactive elements / virtual controls are large and well spaced." Met: Roll and Hold are 56 points tall, with a 16-point gap. Apple's default control size is 44 by 44.</li>
+  <li>"Use simple clear language." Met: four short rules on the title screen.</li>
+  <li>Text contrast in light mode: white on the pink buttons is 5.6 to 1. Apple asks for 4.5 to 1.</li>
+  <li class="two">"Offer a wide choice of difficulty levels." Partly met. The target changes game length, but Porkchop has one plan only.</li>
+  <li class="two">Dark mode: pink text on black is about 3.7 to 1. That is fine for the big buttons, but not for the 17-point Back button.</li>
+</ul>
+
+<h2 id="rubric">How it meets the rubric</h2>
+<ul class="score">
+  <li>Functionality. Both screens work. You can play the bot or a friend, to any target from 20 to 100. Ten tests check the rules.</li>
+  <li>Code clarity. The rules are in one file with no SwiftUI, and the screens only show them. One function turns every event into words and motion.</li>
+  <li>UI polish. One pink, a die drawn in code, a spin, a shake and score bars that fill.</li>
+  <li class="two">Accessibility basics. VoiceOver labels, announcements, Reduce Motion and big controls are in. Dark mode contrast for small pink text is not good enough yet.</li>
+</ul>
+
+<h2 id="change">What I would change</h2>
+<p>Porkchop is too easy to read. After two games, my best student knew exactly when it would stop. A bot that rolls more when it is behind would be a better opponent. It would also be a better lesson, because students would have to write the plan.</p>
+<p>I would also pick a lighter pink for dark mode. Then small text would pass 4.5 to 1. In SwiftUI, that means a colour with a light and a dark version. That is one more thing for students to learn.</p>
+<p>A question for other trainers: is a dice game too lucky for a CCA? I think the luck is the lesson. Students learn to judge risk. But I can see the other side.</p>
+
+<h2 id="get">Get the code</h2>
+<p>
+  <a class="get" href="PigOut.swiftpm.zip" download>PigOut.swiftpm.zip (8 KB)</a>
+  <a class="get" href="main.swift" download>Tests: main.swift</a>
+</p>
+<p>Unzip the file and open <code>Pig Out.swiftpm</code>. It works in Swift Playgrounds on iPad or Mac, or in Xcode. It needs iPadOS 17 or later. Read every file, and the tests, on the <a href="code.html">code page</a>.</p>
+<h3>Ideas for students to change</h3>
+<ol class="tight">
+  <li>Change Porkchop's 20 to 25. Does it win more against you?</li>
+  <li>Add a second die. Two 1s at once wipe your whole score.</li>
+  <li>Give the game a sound for a pig out. Then check it still says it in words.</li>
+</ol>
+
+<h2 class="plain" id="sources">Sources</h2>
+<ul class="tight small">
+  <li>Pig's rules, John Scarne's 1945 description, and the 8% disadvantage of hold at 20: <a href="https://en.wikipedia.org/wiki/Pig_(dice_game)">Wikipedia, Pig (dice game)</a>.</li>
+  <li>Pig as a folk game and the ancestor of Pass the Pigs: <a href="https://cs.gettysburg.edu/projects/pig/index.html">Todd Neller, The Game of Pig, Gettysburg College</a>.</li>
+  <li>Neller and Presser's later paper on simple human strategies: <a href="https://cupola.gettysburg.edu/csfac/7/">Practical Play of the Dice Game Pig, 2010</a>.</li>
+  <li>Swift Playgrounds builds SwiftUI apps, and app projects open in Xcode: <a href="https://developer.apple.com/swift-playground/">Apple Developer, Swift Playground</a>.</li>
+  <li>APIs that need iOS and iPadOS 17: <a href="https://developer.apple.com/documentation/swiftui/view/sensoryfeedback(_:trigger:)">sensoryFeedback(_:trigger:)</a> and <a href="https://developer.apple.com/documentation/accessibility/accessibilitynotification/announcement">AccessibilityNotification.Announcement</a>.</li>
+  <li>Reduce Motion in code: <a href="https://developer.apple.com/documentation/swiftui/environmentvalues/accessibilityreducemotion">accessibilityReduceMotion</a>.</li>
+  <li>Control sizes and contrast ratios: <a href="https://developer.apple.com/design/human-interface-guidelines/accessibility">Human Interface Guidelines, Accessibility</a>.</li>
+  <li>Guideline quotes: <a href="https://gameaccessibilityguidelines.com/basic/">Game Accessibility Guidelines, Basic</a>.</li>
+  <li>Recording a Mac screen: <a href="https://support.apple.com/en-us/102618">Apple Support, How to record the screen on Mac</a>.</li>
+  <li>The 8.14 points, the 62.5% and the contrast ratios are my own sums. The 100,000-turn runs come from <a href="main.swift">the tests</a>.</li>
+</ul>
+</main>
+</body>
+</html>

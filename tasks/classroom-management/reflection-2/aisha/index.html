@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Three floor plans: tablet classroom, computer lab and makerspace, by Aisha Rahman</title>
+<link rel="stylesheet" href="../../../../kit/note.css">
+<style>
+  :root {
+    --paper: #f4f1e8; --card: #fffdf7; --ink: #1f2933; --muted: #52606d; --line: #cfc8b6;
+    --grid: rgba(31, 41, 51, 0.07); --walk: #1d4ed8; --hot: #b4410a; --hot-soft: rgba(180, 65, 10, 0.12);
+    --desk: #e7e0cc; --me: #0f766e;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #13171c; --card: #1b2027; --ink: #e8ebef; --muted: #aab4bf; --line: #39424d;
+      --grid: rgba(232, 235, 239, 0.06); --walk: #8fb8ff; --hot: #ffa066; --hot-soft: rgba(255, 160, 102, 0.14);
+      --desk: #2b333d; --me: #5eead4;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 17px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width: 860px; margin: 0 auto; padding: 20px 16px 64px; }
+  h1 { font-size: 1.9rem; line-height: 1.2; margin: 8px 0 6px; }
+  h2 { font-size: 1.35rem; margin: 0 0 4px; }
+  .kicker { text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.78rem; font-weight: 700; color: var(--hot); margin: 0; }
+  .lede { font-size: 1.1rem; color: var(--muted); margin-top: 0; }
+  .space { background: var(--card); border: 2px solid var(--line); border-radius: 14px; padding: 16px; margin: 22px 0; }
+  .space .who { margin: 0 0 10px; color: var(--muted); }
+  .plan { display: block; width: 100%; height: auto; background-color: var(--card);
+    background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 24px 24px; border-radius: 8px; }
+  .plan text { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; fill: var(--ink); font-size: 19px; }
+  .plan .sm { font-size: 16px; }
+  .plan .wall { fill: none; stroke: var(--ink); stroke-width: 4; }
+  .plan .desk { fill: var(--desk); stroke: var(--ink); stroke-width: 2; }
+  .plan .walk { fill: none; stroke: var(--walk); stroke-width: 3; stroke-dasharray: 8 7; }
+  .plan .walk-t { fill: var(--walk); font-weight: 700; }
+  .plan .hot { fill: var(--hot-soft); stroke: var(--hot); stroke-width: 3; stroke-dasharray: 10 6; }
+  .plan .hot-t { fill: var(--hot); font-weight: 700; }
+  .plan .me { fill: var(--me); }
+  .plan .me-t { fill: var(--card); font-weight: 700; font-size: 16px; }
+  .plan .door { stroke: var(--card); stroke-width: 8; }
+  .plan .board { fill: var(--ink); }
+  .plan .arrow { fill: none; stroke: var(--muted); stroke-width: 2.5; }
+  .key { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 0.9rem; color: var(--muted); margin: 8px 0 0; padding: 0; list-style: none; }
+  .key span { display: inline-block; width: 22px; height: 0; border-top: 3px dashed var(--walk); vertical-align: middle; margin-right: 6px; }
+  .key .h { border-top-color: var(--hot); }
+  .key .m { width: 14px; height: 14px; border: 0; border-radius: 50%; background: var(--me); }
+  h3 { font-size: 1.05rem; margin: 14px 0 4px; }
+  ul { padding-left: 1.2em; margin: 4px 0; }
+  li { margin: 4px 0; }
+  .end { border-top: 2px solid var(--line); padding-top: 12px; }
+  a { color: var(--walk); }
+</style>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Aisha Rahman is one of SkillForge's AI personas, not a real person. AI wrote this page as an example for teachers.</p>
+<main>
+<p class="kicker">Three learning spaces</p>
+<h1>Where everyone stands</h1>
+<p class="lede">I drew each room from above. The blue dashes show where I walk. The green dot is my usual spot.</p>
+<p>I teach in all three of these rooms. The rooms and classes here are made up, but the layouts are ones I'd use. Sketch your own on grid paper first. Moving real tables is slow.</p>
+
+<section class="space" aria-labelledby="s1">
+  <h2 id="s1">1. Classroom with tablets</h2>
+  <p class="who">30 students, six tables of five.</p>
+  <svg class="plan" viewBox="0 0 480 400" role="img" aria-label="Floor plan of a classroom. Six tables form a horseshoe, open at the front. My desk and the board are at the open end. The tablet cart is by the door. My walking path runs around the outside of the horseshoe.">
+    <rect class="wall" x="8" y="8" width="464" height="384" rx="6"/>
+    <line class="door" x1="472" y1="40" x2="472" y2="96"/>
+    <text class="sm" x="462" y="100" text-anchor="end">Door</text>
+    <rect class="board" x="150" y="12" width="180" height="8" rx="2"/>
+    <text class="sm" x="240" y="40" text-anchor="middle">Board</text>
+    <rect class="desk" x="195" y="52" width="90" height="34" rx="4"/>
+    <text class="sm" x="240" y="75" text-anchor="middle">My desk</text>
+    <rect class="desk" x="384" y="30" width="60" height="44" rx="4"/>
+    <text class="sm" x="414" y="57" text-anchor="middle">Cart</text>
+    <g>
+      <rect class="desk" x="52" y="110" width="76" height="96" rx="6"/>
+      <rect class="desk" x="52" y="222" width="76" height="96" rx="6"/>
+      <rect class="desk" x="150" y="276" width="84" height="66" rx="6"/>
+      <rect class="desk" x="246" y="276" width="84" height="66" rx="6"/>
+      <rect class="desk" x="352" y="110" width="76" height="96" rx="6"/>
+      <rect class="desk" x="352" y="222" width="76" height="96" rx="6"/>
+    </g>
+    <g text-anchor="middle">
+      <text x="90" y="164">5</text><text x="90" y="276">5</text>
+      <text x="192" y="315">5</text><text x="288" y="315">5</text>
+      <text x="390" y="164">5</text><text x="390" y="276">5</text>
+    </g>
+    <path class="walk" d="M30 104 V370 H452 V140"/>
+    <text class="walk-t sm" x="240" y="386" text-anchor="middle">I walk the outside</text>
+    <text class="sm" x="240" y="180" text-anchor="middle">Open floor:</text>
+    <text class="sm" x="240" y="200" text-anchor="middle">everyone sees</text>
+    <text class="sm" x="240" y="220" text-anchor="middle">the front</text>
+    <circle class="me" cx="240" cy="122" r="17"/>
+    <text class="me-t" x="240" y="128" text-anchor="middle">Me</text>
+  </svg>
+  <ul class="key"><li><span></span>My walking path</li><li><span class="m"></span>My spot when I teach</li></ul>
+  <h3>How I run it</h3>
+  <ul>
+    <li>Students sit on the outside of the horseshoe, facing in.</li>
+    <li>Tablets stay face down until I say "Screens up". That stops early wandering.</li>
+    <li>In work time I walk the outside. I see every screen over a shoulder.</li>
+    <li>The cart is by the door. Two monitors hand out tablets as students come in.</li>
+  </ul>
+</section>
+
+<section class="space" aria-labelledby="s2">
+  <h2 id="s2">2. Computer lab</h2>
+  <p class="who">36 students, desks along three walls.</p>
+  <svg class="plan" viewBox="0 0 480 400" role="img" aria-label="Floor plan of a computer lab. Desks run along the left, back and right walls, 12 seats on each, with students facing the wall and screens facing into the room. A talk table is in the middle. The board and my teaching spot are at the front.">
+    <rect class="wall" x="8" y="8" width="464" height="384" rx="6"/>
+    <line class="door" x1="8" y1="30" x2="8" y2="84"/>
+    <text class="sm" x="22" y="34">Door</text>
+    <rect class="board" x="150" y="12" width="180" height="8" rx="2"/>
+    <text class="sm" x="240" y="40" text-anchor="middle">Board</text>
+    <rect class="desk" x="14" y="96" width="46" height="250" rx="4"/>
+    <rect class="desk" x="74" y="346" width="332" height="40" rx="4"/>
+    <rect class="desk" x="420" y="96" width="46" height="250" rx="4"/>
+    <text x="37" y="226" text-anchor="middle" transform="rotate(-90 37 226)">12 seats</text>
+    <text x="240" y="372" text-anchor="middle">12 seats</text>
+    <text x="443" y="226" text-anchor="middle" transform="rotate(90 443 226)">12 seats</text>
+    <g class="arrow">
+      <path d="M72 160 h40 m-10 -8 l10 8 l-10 8"/>
+      <path d="M72 280 h40 m-10 -8 l10 8 l-10 8"/>
+      <path d="M408 160 h-40 m10 -8 l-10 8 l10 8"/>
+      <path d="M408 280 h-40 m10 -8 l-10 8 l10 8"/>
+      <path d="M180 334 v-38 m-8 10 l8 -10 l8 10"/>
+      <path d="M300 334 v-38 m-8 10 l8 -10 l8 10"/>
+    </g>
+    <text class="sm" x="240" y="290" text-anchor="middle">Arrows: screens face in</text>
+    <rect class="desk" x="175" y="170" width="130" height="70" rx="8"/>
+    <text class="sm" x="240" y="200" text-anchor="middle">Talk table</text>
+    <text class="sm" x="240" y="222" text-anchor="middle">no screens</text>
+    <circle class="me" cx="240" cy="80" r="17"/>
+    <text class="me-t" x="240" y="86" text-anchor="middle">Me</text>
+    <path class="walk" d="M140 150 H340 V260 H140 Z"/>
+    <text class="walk-t sm" x="240" y="140" text-anchor="middle">Work-time loop</text>
+  </svg>
+  <ul class="key"><li><span></span>My walking path</li><li><span class="m"></span>My spot when I teach</li></ul>
+  <h3>How I run it</h3>
+  <ul>
+    <li>Students face the wall, so every screen faces into the room.</li>
+    <li>When I teach, they turn their chairs round to face me. Hands come off the mouse.</li>
+    <li>In work time I walk a small loop round the talk table. One turn and I see all 36 screens.</li>
+    <li>Short talks happen at the talk table, away from screens.</li>
+  </ul>
+</section>
+
+<section class="space" aria-labelledby="s3">
+  <h2 id="s3">3. Makerspace with tools</h2>
+  <p class="who">20 students, five work tables of four.</p>
+  <svg class="plan" viewBox="0 0 480 400" role="img" aria-label="Floor plan of a makerspace. Five work tables sit in the middle. A tool wall with shadow boards runs along the left wall. The hot zone, with the glue gun and soldering iron, is taped off in the back right corner. Bag cubbies are by the door at the front left. My spot is between the tables and the hot zone, where I can see the door.">
+    <rect class="wall" x="8" y="8" width="464" height="384" rx="6"/>
+    <line class="door" x1="40" y1="8" x2="100" y2="8"/>
+    <text class="sm" x="70" y="34" text-anchor="middle">Door</text>
+    <rect class="desk" x="112" y="14" width="96" height="30" rx="4"/>
+    <text class="sm" x="160" y="35" text-anchor="middle">Bag cubbies</text>
+    <rect class="board" x="290" y="12" width="150" height="8" rx="2"/>
+    <text class="sm" x="365" y="40" text-anchor="middle">Board</text>
+    <rect class="desk" x="14" y="80" width="30" height="240" rx="4"/>
+    <text x="29" y="200" text-anchor="middle" transform="rotate(-90 29 200)">Tool wall</text>
+    <g>
+      <rect class="desk" x="72" y="76" width="92" height="56" rx="6"/>
+      <rect class="desk" x="194" y="76" width="92" height="56" rx="6"/>
+      <rect class="desk" x="316" y="76" width="92" height="56" rx="6"/>
+      <rect class="desk" x="72" y="170" width="92" height="56" rx="6"/>
+      <rect class="desk" x="194" y="170" width="92" height="56" rx="6"/>
+    </g>
+    <g text-anchor="middle">
+      <text x="118" y="110">4</text><text x="240" y="110">4</text><text x="362" y="110">4</text>
+      <text x="118" y="204">4</text><text x="240" y="204">4</text>
+    </g>
+    <rect class="hot" x="300" y="248" width="164" height="136" rx="4"/>
+    <text class="hot-t" x="382" y="286" text-anchor="middle">Hot zone</text>
+    <text class="sm" x="382" y="312" text-anchor="middle">glue gun,</text>
+    <text class="sm" x="382" y="332" text-anchor="middle">soldering iron</text>
+    <text class="sm hot-t" x="382" y="360" text-anchor="middle">2 at a time</text>
+    <circle class="me" cx="250" cy="290" r="17"/>
+    <text class="me-t" x="250" y="296" text-anchor="middle">Me</text>
+    <path class="walk" d="M60 150 H420 M60 150 V250 H230"/>
+    <text class="walk-t sm" x="130" y="272" text-anchor="middle">Walk the tables</text>
+  </svg>
+  <ul class="key"><li><span></span>My walking path</li><li><span class="h"></span>Tape line round the hot zone</li><li><span class="m"></span>My spot in work time</li></ul>
+  <h3>How I run it</h3>
+  <ul>
+    <li>Bags go in the cubbies by the door. Nothing on the floor near the hot zone.</li>
+    <li>Every tool has a shadow on the tool wall. A gap shows me what is missing at pack-up.</li>
+    <li>Tape on the floor marks the hot zone. Only two students go in at a time.</li>
+    <li>In the hot zone: safety glasses on, and a heat mat under the work. The iron always goes back in its stand.</li>
+    <li>A fan by the open window pulls solder fumes away. Students wash their hands after soldering.</li>
+    <li>My spot faces the hot zone, with the door in view. I still walk the tables between checks.</li>
+  </ul>
+</section>
+
+<div class="end">
+  <h2>What the three have in common</h2>
+  <p>Students can see me, and I can see their hands and screens. When I plan a room, I stand where I'll teach and look. If I can't see a screen or a tool, I move a table.</p>
+  <p>What I'd change: the makerspace plan only works with 20. With 30, the hot zone gets crowded, and I'd split the class into two shifts.</p>
+</div>
+</main>
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Know why it passed: a 4-week Kattis programme for a Sec 2 and 3 team, by Rajan Pillai</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="code.js" defer></script>
+<script src="lab.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Rajan Pillai is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<h1>Know why it passed</h1>
+<p class="lede">A 4-week starter programme for a school contest team. Twelve Kattis problems, four 60-minute sessions, and one habit: before you submit, say what the judge will say.</p>
+<p>I'm Rajan. I wrote software for a living before I taught programming to secondary students. Most new contest coders treat the judge as a slot machine. They submit, see red, change a line, and submit again. I want them to read a verdict the way an engineer reads a failing test. This is my end project for Competitive Programming Basics.</p>
+
+<ul class="toc">
+  <li><a href="sessions.html">sessions.html<span>4 session plans of 60 minutes</span></a></li>
+  <li><a href="problems.html">problems.html<span>12 problems, hints and my Python solutions</span></a></li>
+  <li><a href="#verdict-lab">#verdict-lab<span>Verdict lab: predict what Kattis says</span></a></li>
+  <li><a href="noi.html">noi.html<span>One-page note on entering NOI</span></a></li>
+</ul>
+
+<h2 id="setup">The setup <span class="tag">// who, where, when</span></h2>
+<div class="panel">
+<ul class="spec">
+  <li><b>Team</b><span>12 students from the school's computing club, Sec 2 and Sec 3. All can write a loop, an if and a function in Python.</span></li>
+  <li><b>Room</b><span>The computer lab. One desktop each, plus the projector.</span></li>
+  <li><b>Time</b><span>Thursdays, 3.30 to 4.30 pm. Term 3 of 2027: 8, 15, 22 and 29 July.</span></li>
+  <li><b>Judge</b><span><a href="https://open.kattis.com/">Open Kattis</a>, in Python 3. It is free and marks a submission in seconds.</span></li>
+  <li><b>Goal</b><span>A team that can enter the NOI preliminary contest in February 2028 and score.</span></li>
+</ul>
+</div>
+<p>Why July and not January? The NOI preliminary is in February. A January start leaves about six weeks. Most of that goes on account set-up and nerves. A Term 3 start leaves the rest of the year for practice afterwards.</p>
+<p class="note">Kattis needs users to be at least 13. Until students are adults, a parent or guardian must accept the terms for them. Kattis also asks for your real name. So the week before session 1, I send a consent letter home. Students make their accounts with a parent, and nobody shares a login. All my Sec 2s are 13 or older by July. That is why there are no Sec 1s in this team.</p>
+
+<h2 id="weeks">Four weeks, three problems each <span class="tag">// overview</span></h2>
+<div class="weeks">
+  <div class="week">
+    <h3>Week 1 · 8 Jul</h3>
+    <p>Judges and verdicts</p>
+    <ul><li>Quadrant Selection</li><li>R2</li><li>Spavanac</li></ul>
+  </div>
+  <div class="week">
+    <h3>Week 2 · 15 Jul</h3>
+    <p>Sets, sorting and Big O</p>
+    <ul><li>No Duplicates</li><li>Secure Doors</li><li>Shopaholic</li></ul>
+  </div>
+  <div class="week">
+    <h3>Week 3 · 22 Jul</h3>
+    <p>Brute force, recursion, binary search</p>
+    <ul><li>Tri</li><li>Perket</li><li>Guess the Number</li></ul>
+  </div>
+  <div class="week">
+    <h3>Week 4 · 29 Jul</h3>
+    <p>Grids and BFS</p>
+    <ul><li>Knight Jump</li><li>Counting Stars</li><li>Grid</li></ul>
+  </div>
+</div>
+<p>Every session has the same shape. A short idea, about 25 minutes of solving, then the debugging log. From session 2, it opens with two verdict cards. The full timings are in the <a href="sessions.html">session plans</a>.</p>
+
+<h2 id="ramp">The ramp <span class="tag">// Kattis difficulty</span></h2>
+<p>"Harder step by step" should be something you can check, not a feeling. Kattis gives each problem a difficulty number from how many people solve it. I put the twelve in order, so the number never goes down.</p>
+<ol class="ramp" aria-label="Kattis difficulty of the 12 problems, in programme order">
+  <li class="wk">Week 1</li>
+  <li><span class="n">1</span><span class="name">Quadrant Selection</span><span class="track"><span class="bar" style="width:48%"></span><span class="val" style="left:48%">1.2</span></span></li>
+  <li><span class="n">2</span><span class="name">R2</span><span class="track"><span class="bar" style="width:52%"></span><span class="val" style="left:52%">1.3</span></span></li>
+  <li><span class="n">3</span><span class="name">Spavanac</span><span class="track"><span class="bar" style="width:52%"></span><span class="val" style="left:52%">1.3</span></span></li>
+  <li class="wk">Week 2</li>
+  <li><span class="n">4</span><span class="name">No Duplicates</span><span class="track"><span class="bar" style="width:56%"></span><span class="val" style="left:56%">1.4</span></span></li>
+  <li><span class="n">5</span><span class="name">Secure Doors</span><span class="track"><span class="bar" style="width:64%"></span><span class="val" style="left:64%">1.6</span></span></li>
+  <li><span class="n">6</span><span class="name">Shopaholic</span><span class="track"><span class="bar" style="width:64%"></span><span class="val" style="left:64%">1.6</span></span></li>
+  <li class="wk">Week 3</li>
+  <li><span class="n">7</span><span class="name">Tri</span><span class="track"><span class="bar" style="width:68%"></span><span class="val" style="left:68%">1.7</span></span></li>
+  <li><span class="n">8</span><span class="name">Perket</span><span class="track"><span class="bar" style="width:68%"></span><span class="val" style="left:68%">1.7</span></span></li>
+  <li><span class="n">9</span><span class="name">Guess the Number</span><span class="track"><span class="bar" style="width:76%"></span><span class="val" style="left:76%">1.9</span></span></li>
+  <li class="wk">Week 4</li>
+  <li><span class="n">10</span><span class="name">Knight Jump</span><span class="track"><span class="bar" style="width:76%"></span><span class="val" style="left:76%">1.9</span></span></li>
+  <li><span class="n">11</span><span class="name">Counting Stars</span><span class="track"><span class="bar" style="width:88%"></span><span class="val" style="left:88%">2.2</span></span></li>
+  <li><span class="n">12</span><span class="name">Grid</span><span class="track"><span class="bar" style="width:92%"></span><span class="val" style="left:92%">2.3</span></span></li>
+</ol>
+<div class="axis" aria-hidden="true"><span></span><span></span><span><i>0</i><i>0.5</i><i>1.0</i><i>1.5</i><i>2.0</i><i>2.5</i></span></div>
+<p class="small">Difficulty as shown on each problem's Kattis page on 24 October 2026. Kattis recalculates these as people solve, so they drift a little. Each problem in the <a href="problems.html">problem set</a> links to its Kattis page.</p>
+<p>The number only measures how many people get stuck. It does not say why. So each week also adds one new idea. The third problem of the week needs it most.</p>
+
+<h2 id="verdict-lab">Verdict lab <span class="tag">// predict, then check</span></h2>
+<p>Each card is a real mistake on one of the twelve problems. Read the code and pick the verdict Kattis would give. From session 2, I open with two cards. The class votes by hand.</p>
+<div class="lab" id="lab">
+  <div class="lab-head"><span id="lab-count">Card 1 of 8</span><span id="lab-score">Right so far: 0</span></div>
+  <h3>Problem: <a id="lab-problem" href="problems.html">Spavanac</a></h3>
+  <p class="task" id="lab-task"></p>
+  <pre><code class="py" id="lab-code"></code></pre>
+  <p><strong>What does Kattis say?</strong></p>
+  <div class="choices" role="group" aria-label="Pick a verdict">
+    <button type="button" data-v="AC">AC<small>Accepted</small></button>
+    <button type="button" data-v="WA">WA<small>Wrong Answer</small></button>
+    <button type="button" data-v="TLE">TLE<small>Time Limit</small></button>
+    <button type="button" data-v="RTE">RTE<small>Run Time Error</small></button>
+  </div>
+  <div class="feedback" id="lab-feedback" hidden>
+    <p><span id="lab-result"></span> <span id="lab-verdict" class="v"></span></p>
+    <p id="lab-why"></p>
+    <p class="small" id="lab-how"></p>
+  </div>
+  <p class="live" id="lab-live" aria-live="polite"></p>
+  <div class="lab-nav">
+    <button type="button" id="lab-prev">Previous</button>
+    <button type="button" class="primary" id="lab-next">Next card</button>
+  </div>
+</div>
+<p class="small">Try this: before you open the answer, say which test number fails first. Kattis stops judging at the first error. So "Wrong Answer on test 2" tells you more than "Wrong Answer".</p>
+
+<h2 id="checked">How I checked my solutions <span class="tag">// evidence</span></h2>
+<p>The brief says to use problems you have solved yourself. Kattis only shows its sample tests, so a pass on the samples proves little. Every solution got the first check below. The harder ones got more:</p>
+<ul class="tight">
+  <li>Ran it on every Kattis sample file and compared the output exactly. All 11 problems with sample files match. Guess the Number has none.</li>
+  <li>Compared it with a slow, obvious version on random small inputs. I did this for Shopaholic, Tri and Perket.</li>
+  <li>Timed it on the biggest input the limits allow. Grid, the slowest, took about half a second for 500 by 500.</li>
+  <li>For Guess the Number, I wrote a small judge that plays all 1,000 secret numbers. My code never needed more than 10 guesses.</li>
+</ul>
+<p>Students do the same before they submit. That is the point of the habit. The judge confirms what you already believe; it should not be the first test.</p>
+
+<h2 id="change">What I would change <span class="tag">// limits</span></h2>
+<p>Session 1 assumes students can read input with <code>input().split()</code>. Two of my club members could not, last year. I tend to underrate how hard that first step is. Next time I would add a 20-minute "reading input" warm-up the week before. It would use Hello World and Solving for Carrots.</p>
+<p>The set also leans on Python. NOI's main language is C++, and Python is only allowed for some tasks. Guess the Number is an interactive problem. NOI does not allow those in Python at all. I keep it because it is the cleanest binary search I know. A student aiming past the preliminary round will need C++ in time. This programme does not start that.</p>
+
+<h2 id="sources">Sources</h2>
+<ul class="sources">
+  <li>Each problem and its difficulty number: the Kattis pages linked from the <a href="problems.html">problem set</a>, read on 24 October 2026.</li>
+  <li>Age, guardian consent and real names: <a href="https://open.kattis.com/contracts/current/tos">Kattis Terms of Service</a>, last updated 15 August 2025.</li>
+  <li>What each verdict means, and judging stopping at the first error: <a href="https://support.kattis.com/support/solutions/articles/79000141261-list-of-possible-judgements">Kattis, List of possible judgements</a>.</li>
+  <li>NOI dates, languages and Python limits: <a href="https://noisg.comp.nus.edu.sg/noi/competition.php">NOI Singapore competition page</a>. See also the <a href="noi.html">NOI note</a>.</li>
+  <li>2027 term dates: <a href="https://www.moe.gov.sg/news/press-releases/20260714-school-terms-and-holidays-for-2027">MOE, School terms and holidays for 2027</a>.</li>
+</ul>
+</main>
+</body>
+</html>

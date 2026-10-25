@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My Python solutions to the 12 USACO problems, tested on official data, by Marcus Lee</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Marcus Lee is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<div class="hazard" aria-hidden="true"></div>
+<main>
+<p class="back"><a href="index.html">Back to Sprint to NOI</a></p>
+<p class="kicker">Solutions</p>
+<h1>My code, <em>on the clock</em></h1>
+<p class="lede">All 12 solutions, in plain Python 3. Each one passes every official USACO test case. The times are the slowest test on my laptop.</p>
+<p class="callout">Squad: do not read a solution before the sprint for that problem is over. A solution you read is a problem you can no longer practise on.</p>
+
+<h2 id="tester">Test like the judge</h2>
+<p>USACO publishes each old contest's test data as a zip. The contest results page links to it. Unzip it into a folder with your solution and this script. Then run, for example, <code>python runtests.py lostcow.py lostcow</code>. It prints OK, X, T or ! for every test, like the judge's boxes.</p>
+<pre><code># Run a solution against USACO's official test data.
+# Usage: python runtests.py lostcow.py lostcow
+# Unzip the contest's test data into the same folder first.
+import glob, os, shutil, subprocess, sys, time
+
+solution, name = sys.argv[1], sys.argv[2]
+numbered = [f for f in glob.glob("*.in") if f.split(".")[0].isdigit()]
+cases = sorted(numbered, key=lambda f: int(f.split(".")[0]))
+
+for case in cases:
+    shutil.copy(case, name + ".in")
+    start = time.time()
+    try:
+        with open(case) as stdin:
+            run = subprocess.run([sys.executable, solution], stdin=stdin,
+                                 capture_output=True, text=True, timeout=4)
+    except subprocess.TimeoutExpired:
+        print(case, "T  (over 4 seconds)")
+        continue
+    seconds = time.time() - start
+    if os.path.exists(name + ".out"):
+        with open(name + ".out") as f:
+            got = f.read()
+        os.remove(name + ".out")
+    else:
+        got = run.stdout  # newer problems print to the screen
+    with open(case[:-3] + ".out") as f:
+        want = f.read()
+    if run.returncode != 0:
+        verdict = "!  (crashed)"
+    elif got.split() == want.split():
+        verdict = "OK"
+    else:
+        verdict = "X  (wrong answer)"
+    print(case, verdict, round(seconds, 2), "s")</code></pre>
+<p class="small">I used this script to check every solution below. The 4-second cut-off matches USACO's usual Python limit. But my laptop is not the judge's machine. Treat anything over 2 seconds as a risk.</p>
+
+<h2 id="wk1">Week 1: Simulate it</h2>
+
+<section class="sol" id="s1">
+<h3>1. The Lost Cow</h3>
+<p><span class="result">10 of 10 official tests</span> <span class="small">slowest 0.02 s · <a href="http://www.usaco.org/current/data/lostcow_bronze_open17.zip">test data</a></span></p>
+<pre><code>with open("lostcow.in") as fin:
+    x, y = map(int, fin.read().split())
+
+pos = x          # where Farmer John is now
+step = 1         # how far from x the next turn is
+direction = 1    # 1 = right, -1 = left
+total = 0
+
+while True:
+    target = x + step * direction
+    # Does this leg walk past Bessie?
+    if min(pos, target) &lt;= y &lt;= max(pos, target):
+        total += abs(y - pos)
+        break
+    total += abs(target - pos)
+    pos = target
+    step *= 2
+    direction *= -1
+
+with open("lostcow.out", "w") as fout:
+    print(total, file=fout)</code></pre>
+<p class="why">x and y are at most 1,000. So the zigzag ends after a handful of legs. Checking "is Bessie between here and the turn?" avoids walking one step at a time.</p>
+</section>
+
+<section class="sol" id="s2">
+<h3>2. Speeding Ticket</h3>
+<p><span class="result">10 of 10 official tests</span> <span class="small">slowest 0.02 s · <a href="http://www.usaco.org/current/data/speeding_bronze_dec15.zip">test data</a></span></p>
+<pre><code>with open("speeding.in") as fin:
+    n, m = map(int, fin.readline().split())
+    road = [tuple(map(int, fin.readline().split())) for _ in range(n)]
+    bessie = [tuple(map(int, fin.readline().split())) for _ in range(m)]
+
+# Write out all 100 miles, one entry per mile.
+limit = []
+for length, speed in road:
+    limit += [speed] * length
+driven = []
+for length, speed in bessie:
+    driven += [speed] * length
+
+worst = max(d - l for d, l in zip(driven, limit))
+
+with open("speeding.out", "w") as fout:
+    print(max(worst, 0), file=fout)</code></pre>
+<p class="why">100 miles means 100 entries. Spelling out every mile is simpler than matching up segments, and just as fast here.</p>
+</section>
+
+<section class="sol" id="s3">
+<h3>3. The Bucket List</h3>
+<p><span class="result">10 of 10 official tests</span> <span class="small">slowest 0.02 s · <a href="http://www.usaco.org/current/data/blist_bronze_dec18.zip">test data</a></span></p>
+<pre><code>with open("blist.in") as fin:
+    n = int(fin.readline())
+    cows = [tuple(map(int, fin.readline().split())) for _ in range(n)]
+
+# Buckets in use at each moment from time 1 to 1000.
+in_use = [0] * 1001
+for s, t, b in cows:
+    for time in range(s, t + 1):
+        in_use[time] += b
+
+# Returned buckets get reused, so the answer is the busiest moment.
+with open("blist.out", "w") as fout:
+    print(max(in_use), file=fout)</code></pre>
+<p class="why">At most 100 cows times 1,000 moments: 100,000 steps. The answer is the busiest moment, because buckets that come back are reused.</p>
+</section>
+
+<h2 id="wk2">Week 2: Try everything</h2>
+
+<section class="sol" id="s4">
+<h3>4. Milk Pails</h3>
+<p><span class="result">10 of 10 official tests</span> <span class="small">slowest 0.02 s · <a href="http://www.usaco.org/current/data/pails_bronze_feb16.zip">test data</a></span></p>
+<pre><code>with open("pails.in") as fin:
+    x, y, m = map(int, fin.read().split())
+
+best = 0
+# Try every number of small pails, then every number of medium pails.
+for small in range(m // x + 1):
+    for medium in range(m // y + 1):
+        total = small * x + medium * y
+        if total &lt;= m:
+            best = max(best, total)
+
+with open("pails.out", "w") as fout:
+    print(best, file=fout)</code></pre>
+<p class="why">x is at least 1, so at most 1,001 values for each loop: about a million tries in the worst case, well inside the limit.</p>
+</section>
+
+<section class="sol" id="s5">
+<h3>5. Diamond Collector</h3>
+<p><span class="result">10 of 10 official tests</span> <span class="small">slowest 0.07 s · <a href="http://www.usaco.org/current/data/diamond_bronze_open16.zip">test data</a></span></p>
+<pre><code>with open("diamond.in") as fin:
+    n, k = map(int, fin.readline().split())
+    sizes = [int(fin.readline()) for _ in range(n)]
+
+best = 0
+# Try each diamond as the smallest one in the case.
+for low in sizes:
+    count = 0
+    for s in sizes:
+        if low &lt;= s &lt;= low + k:
+            count += 1
+    best = max(best, count)
+
+with open("diamond.out", "w") as fout:
+    print(best, file=fout)</code></pre>
+<p class="why">N is at most 1,000, so two loops make at most a million checks. Sorting would be faster. But this is the version a beginner writes in a sprint, and it passes.</p>
+</section>
+
+<section class="sol" id="s6">
+<h3>6. Daisy Chains</h3>
+<p><span class="result">10 of 10 official tests</span> <span class="small">slowest 0.02 s · <a href="http://www.usaco.org/current/data/prob2_bronze_dec20.zip">test data</a></span></p>
+<pre><code>n = int(input())
+petals = list(map(int, input().split()))
+
+count = 0
+# Every photo is a pair (i, j). N is at most 100, so try them all.
+for i in range(n):
+    for j in range(i, n):
+        photo = petals[i:j + 1]
+        total = sum(photo)
+        size = len(photo)
+        # The average must be a whole number to match a flower.
+        if total % size == 0 and total // size in photo:
+            count += 1
+
+print(count)</code></pre>
+<p class="why">About 5,000 photos when N is 100, each up to 100 flowers long. The whole-number check skips most of the searching.</p>
+</section>
+
+<h2 id="wk3">Week 3: Sort and search</h2>
+
+<section class="sol" id="s7">
+<h3>7. Where Am I?</h3>
+<p><span class="result">10 of 10 official tests</span> <span class="small">slowest 0.02 s · <a href="http://www.usaco.org/current/data/whereami_bronze_dec19.zip">test data</a></span></p>
+<pre><code>with open("whereami.in") as fin:
+    n = int(fin.readline())
+    road = fin.readline().strip()
+
+for k in range(1, n + 1):
+    seen = set()
+    unique = True
+    for start in range(n - k + 1):
+        piece = road[start:start + k]
+        if piece in seen:
+            unique = False
+            break
+        seen.add(piece)
+    if unique:
+        answer = k
+        break
+
+with open("whereami.out", "w") as fout:
+    print(answer, file=fout)</code></pre>
+<p class="why">A set answers "seen this piece before?" fast. It takes about the same time however many pieces it holds.</p>
+</section>
+
+<section class="sol" id="s8">
+<h3>8. Why Did the Cow Cross the Road III</h3>
+<p><span class="result">10 of 10 official tests</span> <span class="small">slowest 0.02 s · <a href="http://www.usaco.org/current/data/cowqueue_bronze_feb17.zip">test data</a></span></p>
+<pre><code>with open("cowqueue.in") as fin:
+    n = int(fin.readline())
+    cows = [tuple(map(int, fin.readline().split())) for _ in range(n)]
+
+cows.sort()  # by arrival time; the input is not in order
+
+time = 0
+for arrive, questions in cows:
+    # Wait for the cow if the gate is free, then question her.
+    time = max(time, arrive) + questions
+
+with open("cowqueue.out", "w") as fout:
+    print(time, file=fout)</code></pre>
+<p class="why">Drop the <code>sort()</code> line and even the sample fails: 18 instead of 15. The cows in the sample arrive out of order on purpose.</p>
+</section>
+
+<section class="sol" id="s9">
+<h3>9. Counting Haybales</h3>
+<p><span class="result">10 of 10 official tests</span> <span class="small">slowest 0.14 s · <a href="http://www.usaco.org/current/data/haybales_silver_dec16.zip">test data</a></span></p>
+<pre><code>from bisect import bisect_left, bisect_right
+
+with open("haybales.in") as fin:
+    n, q = map(int, fin.readline().split())
+    bales = sorted(map(int, fin.readline().split()))
+    queries = [tuple(map(int, fin.readline().split())) for _ in range(q)]
+
+answers = []
+for a, b in queries:
+    # bisect_right(b): bales at or before b. bisect_left(a): bales before a.
+    answers.append(bisect_right(bales, b) - bisect_left(bales, a))
+
+with open("haybales.out", "w") as fout:
+    fout.write("\n".join(map(str, answers)) + "\n")</code></pre>
+<p class="why">Sorting once costs O(N log N). Each question is then two binary searches, O(log N). My brute force checks every bale for every question. It passed only 3 of the 10 tests in 4 seconds.</p>
+</section>
+
+<h2 id="wk4">Week 4: Flood the grid</h2>
+
+<section class="sol" id="s10">
+<h3>10. Bucket Brigade</h3>
+<p><span class="result">10 of 10 official tests</span> <span class="small">slowest 0.02 s · <a href="http://www.usaco.org/current/data/buckets_bronze_open19.zip">test data</a></span></p>
+<pre><code>from collections import deque
+
+with open("buckets.in") as fin:
+    farm = [fin.readline().strip() for _ in range(10)]
+
+for r in range(10):
+    for c in range(10):
+        if farm[r][c] == "L":
+            lake = (r, c)
+        elif farm[r][c] == "B":
+            barn = (r, c)
+
+# BFS from the lake. dist counts steps, so cows = steps to barn - 1.
+dist = {lake: 0}
+queue = deque([lake])
+while queue:
+    r, c = queue.popleft()
+    for nr, nc in ((r + 1, c), (r - 1, c), (r, c + 1), (r, c - 1)):
+        if 0 &lt;= nr &lt; 10 and 0 &lt;= nc &lt; 10 and farm[nr][nc] != "R" \
+                and (nr, nc) not in dist:
+            dist[(nr, nc)] = dist[(r, c)] + 1
+            queue.append((nr, nc))
+
+with open("buckets.out", "w") as fout:
+    print(dist[barn] - 1, file=fout)</code></pre>
+<p class="why">BFS reaches squares in order of distance. So the first way it finds to a square is the shortest.</p>
+</section>
+
+<section class="sol" id="s11">
+<h3>11. Icy Perimeter</h3>
+<p><span class="result">11 of 11 official tests</span> <span class="small">slowest 1.2 s · <a href="http://www.usaco.org/current/data/perimeter_silver_jan19.zip">test data</a></span></p>
+<pre><code>from collections import deque
+
+with open("perimeter.in") as fin:
+    n = int(fin.readline())
+    grid = [fin.readline().strip() for _ in range(n)]
+
+seen = [[False] * n for _ in range(n)]
+best_area, best_perim = 0, 0
+
+for sr in range(n):
+    for sc in range(n):
+        if grid[sr][sc] != "#" or seen[sr][sc]:
+            continue
+        # New blob: flood it with BFS, counting area and edges.
+        area, perim = 0, 0
+        seen[sr][sc] = True
+        queue = deque([(sr, sc)])
+        while queue:
+            r, c = queue.popleft()
+            area += 1
+            for nr, nc in ((r + 1, c), (r - 1, c), (r, c + 1), (r, c - 1)):
+                if 0 &lt;= nr &lt; n and 0 &lt;= nc &lt; n and grid[nr][nc] == "#":
+                    if not seen[nr][nc]:
+                        seen[nr][nc] = True
+                        queue.append((nr, nc))
+                else:
+                    perim += 1  # this side faces empty space or the edge
+        if area &gt; best_area or (area == best_area and perim &lt; best_perim):
+            best_area, best_perim = area, perim
+
+with open("perimeter.out", "w") as fout:
+    print(best_area, best_perim, file=fout)</code></pre>
+<p class="why">The slowest solution here. A million cells, each looked at a few times. A recursive flood fill would hit Python's recursion limit on a big blob. So this one uses a queue.</p>
+</section>
+
+<section class="sol" id="s12">
+<h3>12. Mooyo Mooyo</h3>
+<p><span class="result">10 of 10 official tests</span> <span class="small">slowest 0.02 s · <a href="http://www.usaco.org/current/data/mooyomooyo_silver_dec18.zip">test data</a></span></p>
+<pre><code>from collections import deque
+
+with open("mooyomooyo.in") as fin:
+    n, k = map(int, fin.readline().split())
+    board = [list(fin.readline().strip()) for _ in range(n)]
+
+
+def remove_big_regions():
+    """Clear every region of k or more cells. Return True if any went."""
+    seen = [[False] * 10 for _ in range(n)]
+    removed = False
+    for sr in range(n):
+        for sc in range(10):
+            colour = board[sr][sc]
+            if colour == "0" or seen[sr][sc]:
+                continue
+            region = [(sr, sc)]
+            seen[sr][sc] = True
+            queue = deque([(sr, sc)])
+            while queue:
+                r, c = queue.popleft()
+                for nr, nc in ((r + 1, c), (r - 1, c), (r, c + 1), (r, c - 1)):
+                    if 0 &lt;= nr &lt; n and 0 &lt;= nc &lt; 10 and not seen[nr][nc] \
+                            and board[nr][nc] == colour:
+                        seen[nr][nc] = True
+                        region.append((nr, nc))
+                        queue.append((nr, nc))
+            if len(region) &gt;= k:
+                removed = True
+                for r, c in region:
+                    board[r][c] = "0"
+    return removed
+
+
+def gravity():
+    for c in range(10):
+        column = [board[r][c] for r in range(n) if board[r][c] != "0"]
+        column = ["0"] * (n - len(column)) + column
+        for r in range(n):
+            board[r][c] = column[r]
+
+
+while remove_big_regions():
+    gravity()
+
+with open("mooyomooyo.out", "w") as fout:
+    for row in board:
+        print("".join(row), file=fout)</code></pre>
+<p class="why">Two small functions, each easy to test alone. In a sprint, that split saves you: when it breaks, you know which half to look at.</p>
+</section>
+
+<h2 id="sources">Sources</h2>
+<ul class="sources">
+  <li>Official test data: the zip under each solution. It comes from the USACO results pages, such as the <a href="http://www.usaco.org/index.php?page=dec18results">December 2018 results</a>.</li>
+  <li>Python time limits and the feedback letters X, T and !: <a href="http://www.usaco.org/index.php?page=instructions">USACO contest instructions</a>.</li>
+  <li><code>bisect_left</code> and <code>bisect_right</code>: <a href="https://docs.python.org/3/library/bisect.html">Python docs, bisect</a>. The recursion limit: <a href="https://docs.python.org/3/library/sys.html#sys.setrecursionlimit">Python docs, sys.setrecursionlimit</a>.</li>
+</ul>
+</main>
+</body>
+</html>

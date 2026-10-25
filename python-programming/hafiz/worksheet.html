@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PRIMM worksheet: twelve months a year, by Hafiz Ismail</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+<script src="minipy.js" defer></script>
+<script src="editor.js" defer></script>
+<script src="code.js" defer></script>
+<script src="data.js" defer></script>
+<script src="notebook.js" defer></script>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Hafiz Ismail is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<div class="noprint">
+<p><a href="index.html">Back to the notebook</a></p>
+<p>The worksheet for my <a href="lesson.html">2-hour evening lesson</a>. It prints on one A4 page. The starter, a place to run it, and my answers are below the sheet. They don't print.</p>
+<div class="row"><button type="button" class="primary" data-print>Print the worksheet</button><a class="btn" href="starter.py" download>starter.py</a><a class="btn" href="changi_monthly_mean_temp.csv" download>The CSV file</a></div>
+</div>
+
+<div class="sheet">
+<h1>Twelve months a year: reading a CSV with Python</h1>
+<p>Name: ______________________ &nbsp; Partner: ______________________</p>
+<p>The file has one row per month at Changi. Its first row is <code>month,mean_temp</code>. The next is <code>1982-01,25.9</code>.</p>
+<pre class="listing" aria-label="starter.py with line numbers"><code><span class="ln">1</span>import csv
+<span class="ln">2</span>
+<span class="ln">3</span>
+<span class="ln">4</span>def mean(values):
+<span class="ln">5</span>    return sum(values) / len(values)
+<span class="ln">6</span>
+<span class="ln">7</span>
+<span class="ln">8</span>by_year = {}
+<span class="ln">9</span>with open(&quot;changi_monthly_mean_temp.csv&quot;) as f:
+<span class="ln">10</span>    for row in csv.DictReader(f):
+<span class="ln">11</span>        year = row[&quot;month&quot;][:4]
+<span class="ln">12</span>        if year not in by_year:
+<span class="ln">13</span>            by_year[year] = []
+<span class="ln">14</span>        by_year[year].append(float(row[&quot;mean_temp&quot;]))
+<span class="ln">15</span>
+<span class="ln">16</span>for year in [&quot;1984&quot;, &quot;2004&quot;, &quot;2024&quot;]:
+<span class="ln">17</span>    print(year, len(by_year[year]), round(mean(by_year[year]), 2))</code></pre>
+<div class="cols">
+<div>
+<h3>Predict (alone, on paper, before you run anything)</h3>
+<p>P1. For the row <code>1982-01,25.9</code>, what is <code>year</code> on line 11? Is it a number or text?</p>
+<div class="write"></div>
+<p>P2. How many lines will the program print? What will the middle number on each line be?</p>
+<div class="write"></div>
+<p>P3. The last number on each line is a mean temperature. Will 2024's be higher or lower than 1984's? Guess the gap.</p>
+<div class="write"></div>
+<h3>Run</h3>
+<p>Run the cell. Circle each prediction you got right. Talk to your partner about one you got wrong.</p>
+<h3>Investigate</h3>
+<p>I1. On line 14, change <code>float(row["mean_temp"])</code> to <code>row["mean_temp"]</code>. Predict: which line will the error point to? Run it. Why isn't it line 14?</p>
+<div class="write"></div><div class="write"></div>
+</div>
+<div>
+<p>I2. Add <code>"2026"</code> to the list on line 16. What is different about its line? Should you compare it with the others?</p>
+<div class="write"></div>
+<p>I3. Change <code>"1984"</code> to <code>1984</code>, with no quote marks. Predict, then run. Which line made the keys text?</p>
+<div class="write"></div>
+<h3>Modify</h3>
+<p>M1. Print every year that has all 12 months, instead of three.</p>
+<div class="write"></div>
+<p>M2. For each of the three years, count the months at 28.5 °C or above.</p>
+<div class="write"></div><div class="write"></div>
+<h3>Make</h3>
+<p>Ask your own question of the file, and answer it with a new program. For example: from 1984 to 2025, which month of the year is warmest on average?</p>
+<div class="write"></div><div class="write"></div>
+</div>
+</div>
+</div>
+
+<div class="noprint">
+<h2>Run the starter here</h2>
+<p>For anyone whose laptop blocks Colab. It is the same 17 lines, reading the same file.</p>
+<div class="notebook">
+  <div class="cell" data-file="starter.py" data-title="starter.py">
+    <div class="cell-head"><span class="prompt">In [ ]</span><span class="title">starter.py</span><button type="button" class="reset">Undo my changes</button><button type="button" class="run primary">Run</button></div>
+    <div class="editor-host"></div><div class="console-host"></div><div class="figs"></div>
+  </div>
+</div>
+
+<h2>Answers for teachers</h2>
+<p>I checked each answer in Python 3.13. I used the copy of the file from 24 October 2026.</p>
+<dl class="answers">
+  <dt>P1</dt>
+  <dd><code>"1982"</code>, as text. <code>[:4]</code> takes the first four characters of a string. The csv module gives every value as text.</dd>
+  <dt>P2</dt>
+  <dd>Three lines, one per year in the list. The middle number is 12 on each, the number of months.</dd>
+  <dt>P3</dt>
+  <dd>The program prints <code>1984 12 26.77</code>, <code>2004 12 27.86</code> and <code>2024 12 28.44</code>. 2024 is 1.67 °C warmer than 1984. Collect guesses before anyone runs it. 1984 was the coolest year at Changi Airport. So this gap is bigger than the trend suggests. That is worth a talk: picking the end points changes the story.</dd>
+  <dt>I1</dt>
+  <dd><code>TypeError: unsupported operand type(s) for +: 'int' and 'str'</code>. The traceback shows line 17, then line 5, inside <code>mean()</code>. The mistake is on line 14, but nothing goes wrong until <code>sum()</code> tries to add text. Errors show where data is used, not where it went wrong.</dd>
+  <dt>I2</dt>
+  <dd><code>2026 9 28.56</code>. It has only 9 months, January to September. It leaves out November and December, which are cooler. So its mean looks warmer than a full year would be. Don't compare it.</dd>
+  <dt>I3</dt>
+  <dd><code>KeyError: 1984</code>, from line 17. The keys are text, because line 11 slices a string. <code>1984</code> the number is not the same key as <code>"1984"</code> the text.</dd>
+  <dt>M1</dt>
+  <dd>
+<pre class="listing"><code>for year in by_year:
+    if len(by_year[year]) == 12:
+        print(year, round(mean(by_year[year]), 2))</code></pre>
+  </dd>
+  <dt>M2</dt>
+  <dd>
+    <p>It prints 0 for 1984, 3 for 2004 and 8 for 2024.</p>
+<pre class="listing"><code>for year in ["1984", "2004", "2024"]:
+    warm = 0
+    for t in by_year[year]:
+        if t &gt;= 28.5:
+            warm = warm + 1
+    print(year, warm, "months at 28.5 °C or above")</code></pre>
+  </dd>
+  <dt>Make (one example)</dt>
+  <dd>
+    <p>May is warmest, at 28.55 °C. January is coolest, at 26.70 °C.</p>
+<pre class="listing"><code>import csv
+
+names = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+         "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+by_month = {}
+with open("changi_monthly_mean_temp.csv") as f:
+    for row in csv.DictReader(f):
+        year = int(row["month"][:4])
+        month = int(row["month"][5:])
+        if year &gt;= 1984 and year &lt;= 2025:
+            if month not in by_month:
+                by_month[month] = []
+            by_month[month].append(float(row["mean_temp"]))
+
+for month in range(1, 13):
+    temps = by_month[month]
+    print(names[month - 1], f"{sum(temps) / len(temps):.2f}")</code></pre>
+  </dd>
+</dl>
+</div>
+</main>
+</body>
+</html>

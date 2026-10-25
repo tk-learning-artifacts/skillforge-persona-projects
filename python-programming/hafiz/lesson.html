@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Check one claim with Python: a 2-hour PRIMM lesson for adult beginners, by Hafiz Ismail</title>
+<link rel="stylesheet" href="../../kit/note.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Hafiz Ismail is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
+<main>
+<p><a href="index.html">Back to the notebook</a></p>
+<h1><span class="kicker">Lesson plan</span>Check one claim with Python</h1>
+<p class="lede">A 2-hour evening lesson for adult beginners. They read a 17-line program that opens a real CSV file. They break it on purpose, then change it to answer their own question.</p>
+
+<div class="card">
+<ul class="tight">
+  <li>Learners: 16 working adults in my evening class. Most are new to code. Some use spreadsheets every day.</li>
+  <li>Where they are: lesson 4 of 6. They know print, variables, if, for loops, lists and functions. Today is their first dictionary and their first file.</li>
+  <li>Time: 7.00 pm to 9.00 pm, with a 10-minute break.</li>
+  <li>Devices: their own laptops, with their own Google accounts, in <a href="https://colab.research.google.com/">Google Colab</a>. Backup: the <a href="worksheet.html">worksheet page</a>, which runs the starter with no login.</li>
+  <li>Files: the starter notebook and the CSV, sent by email the day before. Also on the worksheet page.</li>
+  <li>Printouts: one worksheet each. One error card per table.</li>
+  <li>Seating: pairs, but every learner types in their own notebook.</li>
+</ul>
+</div>
+
+<h2>By the end, learners can</h2>
+<ul class="tight">
+  <li>Read a CSV file into a dictionary of lists with the csv module.</li>
+  <li>Read a traceback from the bottom up, and find where the bad data came from.</li>
+  <li>Say why text and numbers need converting, using their own error as the example.</li>
+  <li>Change a program to answer a new question about the same file.</li>
+</ul>
+
+<h2>Success criteria</h2>
+<ol class="steps">
+  <li>I wrote all three predictions before I ran the code.</li>
+  <li>I can point to the line that turns text into a number. I can say what breaks without it.</li>
+  <li>My M2 program gives 0, 3 and 8.</li>
+  <li>I asked the file my own question. I can explain the answer.</li>
+</ol>
+
+<h2>The lesson</h2>
+<ol class="timeline">
+  <li><span class="t">7.00 to 7.10 (10 min)</span><span class="stage">Set up.</span> Open Colab. File, then Upload notebook. Upload the CSV in the Files panel. Run the first cell. I walk round. Anyone stuck after 5 minutes moves to the worksheet page and carries on.</li>
+  <li><span class="t">7.10 to 7.20 (10 min)</span><span class="stage">Hook.</span> On the screen: "2024 was Singapore's warmest year on record." I ask: "How would you check that? What would you need?" We list it on the board: the data, its source, its dates, a way to average.</li>
+  <li><span class="t">7.20 to 7.35 (15 min)</span><span class="stage">Predict.</span> Laptop lids half down. Each learner writes P1 to P3 alone for 8 minutes. Then pairs compare for 7 minutes. Pairs mark any answer they disagree on.</li>
+  <li><span class="t">7.35 to 7.45 (10 min)</span><span class="stage">Run.</span> Run the starter. Circle right predictions. I ask for the P3 guesses aloud, smallest gap first. Then we look at 1.67.</li>
+  <li><span class="t">7.45 to 8.05 (20 min)</span><span class="stage">Investigate.</span> I1, I2 and I3. Each one: predict, change, run, then put the line back. After I1, I model reading the traceback from the bottom line up, on the screen.</li>
+  <li><span class="t">8.05 to 8.15 (10 min)</span><span class="stage">Break.</span> Notebooks stay open.</li>
+  <li><span class="t">8.15 to 8.40 (25 min)</span><span class="stage">Modify.</span> M1, then M2. At 8.30, everyone pastes their M2 output into the class chat.</li>
+  <li><span class="t">8.40 to 8.52 (12 min)</span><span class="stage">Make.</span> Each pair writes one question for the file, then answers it. Two pairs share theirs on the screen.</li>
+  <li><span class="t">8.52 to 9.00 (8 min)</span><span class="stage">Exit.</span> One sentence each, in the chat: "A claim I could now check, and the file I'd need." Then download the notebook from the File menu to keep it. The CSV upload will vanish when Colab's machine is recycled.</li>
+</ol>
+<p class="small">Check: 10 + 10 + 15 + 10 + 20 + 10 + 25 + 12 + 8 = 120 minutes.</p>
+
+<h2>Support ideas</h2>
+<h3>Slow typists</h3>
+<ul class="tight">
+  <li>Nobody types the starter. It comes in the notebook.</li>
+  <li>The Investigate tasks each change one line. M1 is three lines. M2 is six. I show M2's first line on the screen at 8.25 for anyone who needs it.</li>
+  <li>Many adults type with two fingers and feel slow. I say early that speed doesn't matter tonight. Reading does.</li>
+</ul>
+<h3>Typos and errors</h3>
+<p>One card per table:</p>
+<div class="note">
+<p><strong>Read the last line of the error first.</strong> It names the problem. Then read upwards to find the line numbers.</p>
+<ul class="tight">
+  <li><code>KeyError</code>: that key isn't in the dictionary. Check spelling, and text versus number.</li>
+  <li><code>TypeError ... 'int' and 'str'</code>: a number met text. Look for a missing <code>float()</code> or <code>int()</code>.</li>
+  <li><code>FileNotFoundError</code>: upload the CSV again. Check the file name matches exactly.</li>
+  <li><code>IndentationError</code> or <code>SyntaxError</code>: look at the line it names, and the one above it.</li>
+</ul>
+</div>
+<p>A hand goes up. Before I look, I ask "what does the last line say?" Usually that's enough.</p>
+<h3>Checking that everyone codes</h3>
+<ul class="tight">
+  <li>Every learner has their own notebook. Pairs talk, but each person types.</li>
+  <li>Predictions are written alone first, on paper, before the pair talks.</li>
+  <li>At 8.30, everyone pastes their M2 output into the class chat. I can see at a glance who has 0, 3 and 8. I can also see who has nothing yet. I go to them first.</li>
+  <li>Each learner writes their own exit sentence. It shows me who can name a file and a claim.</li>
+</ul>
+<h3>Other learners</h3>
+<ul class="tight">
+  <li>Spreadsheet experts who finish early: in Make, find the trend since 1984 without looking at cell 5 of my notebook. Then compare.</li>
+  <li>Nervous about being wrong: predictions stay private on paper until they choose to share. I share a wrong prediction of my own first.</li>
+  <li>Work laptops that block Colab or Drive: the worksheet page runs the same starter in the browser, with no login.</li>
+  <li>Small screens or tired eyes at 8 pm: browser zoom, and I make the code on the projector large.</li>
+</ul>
+
+<h2>Why PRIMM with adults?</h2>
+<p>PRIMM stands for Predict, Run, Investigate, Modify, Make. Sue Sentance, Jane Waite and Maria Kallia tested it in a <a href="https://doi.org/10.1080/08993408.2019.1608781">2019 study</a>. It covered 493 students aged 11 to 14, in 13 schools. They were compared with a control group. The PRIMM learners did better on the post-test.</p>
+<p>Note the ages. That study was with children, not adults. I use PRIMM with adults because reading before writing helps my nervous beginners. But I can't point to a study of adults, and I tell my learners that.</p>
+
+<h2>Sources</h2>
+<ul class="tight small">
+  <li>PRIMM study: Sentance, Waite and Kallia (2019), "Teaching computer programming with PRIMM: a sociocultural perspective", Computer Science Education 29(2-3), <a href="https://doi.org/10.1080/08993408.2019.1608781">doi:10.1080/08993408.2019.1608781</a>.</li>
+  <li>Uploading a notebook, and Colab's machines: <a href="https://research.google.com/colaboratory/faq.html">Colab FAQ</a>.</li>
+  <li>The 2024 claim: <a href="https://www.nea.gov.sg/media/news/news/index/2024-is-singapore-s-warmest-year-on-record">NEA, 23 March 2025</a>.</li>
+</ul>
+</main>
+</body>
+</html>
