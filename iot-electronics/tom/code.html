@@ -12,7 +12,7 @@
 <main>
 <p><a href="index.html">Back to Lights On, Nobody Home</a></p>
 <h1>The code<span class="sub">Four pieces: two micro:bits, a web page and a script</span></h1>
-<p class="lede">The micro:bit programs are MakeCode JavaScript. Paste them into the JavaScript tab at <a href="https://makecode.microbit.org/">makecode.microbit.org</a>, then switch to Blocks if your class prefers blocks. The gateway page is <a href="gateway.html">its own page</a>, and its code is <a href="gateway.js">gateway.js</a>.</p>
+<p class="lede">The micro:bit programs are MakeCode JavaScript. Paste them into the JavaScript tab at <a href="https://makecode.microbit.org/">makecode.microbit.org</a>. Then switch to Blocks if your class prefers blocks. The gateway page is <a href="gateway.html">its own page</a>, and its code is <a href="gateway.js">gateway.js</a>.</p>
 <ol class="tight">
   <li><a href="#node">Sensor node</a></li>
   <li><a href="#gateway">Gateway micro:bit</a></li>
@@ -83,7 +83,7 @@ basic.forever(function () {
 input.onButtonPressed(Button.A, function () {
     basic.showNumber(control.deviceSerialNumber())   <span class="c">// handy during setup</span>
 })</code></pre>
-<p class="small">The nudge pauses the loop for 3 seconds, so that minute is a little longer. The light is read while the screen is off, because the screen's LEDs do the sensing.</p>
+<p class="small">The nudge pauses the loop for 3 seconds, so that minute is a little longer. The light is read while the screen is off. The screen's LEDs do the sensing.</p>
 
 <h2 id="gateway">2. Gateway micro:bit</h2>
 <p>Plugged into the classroom PC by USB. It passes readings from the node to the PC as <code>name:value</code> lines. It passes modes from the PC to the node by radio.</p>
@@ -200,7 +200,7 @@ function doPost(e) {
   "token": "(from this PC's browser)"
 }</code></pre>
 <p>Notice the numbers have no quotes. If a student's code sends <code>"light": "112"</code>, the script refuses it: a string is not a number. Control tab: A1 says "mode", B1 holds remind, quiet or test. Protect the tab so only the eco monitors and the teacher can edit it.</p>
-<p class="small">I wrote these programs for this example and checked the blocks and calls against the MakeCode and Apps Script references. I have not run them on every micro:bit firmware. If a block name differs in your editor, check the MakeCode reference.</p>
+<p class="small">I wrote these programs for this example. I checked the blocks and calls against the MakeCode and Apps Script references. I have not run them on every micro:bit firmware. If a block name differs in your editor, check the MakeCode reference.</p>
 </main>
 </body>
 </html>

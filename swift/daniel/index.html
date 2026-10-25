@@ -30,7 +30,7 @@
 </ul>
 
 <h2 id="try">Try it here</h2>
-<p>This is a web copy of the app, so you can try it without an iPad. It follows the Swift code screen by screen. Tap a team, give some points, then go back.</p>
+<p>This is a web copy of the app. You can try it without an iPad. It follows the Swift code screen by screen. Tap a team, give some points, then go back.</p>
 <div class="try">
   <div data-team-points></div>
   <div>
@@ -79,7 +79,7 @@
 <h3>1. The score that reset itself</h3>
 <p>My first screen 2 kept its own score: <code>@State private var points = 0</code>. The buttons worked. The big number went up. Then I tapped Back, and the list still said 0 for every team.</p>
 <p>It took me a while to see why. <code>@State</code> is a view's own copy. Screen 2 had a copy, and the list had another. Nothing joined them.</p>
-<p>The fix is to keep the scores in one place, the list, and lend screen 2 one team. Apple's docs say a <code>@Binding</code> can "read and write a value owned by a source of truth". Here the source of truth is the <code>teams</code> array on screen 1.</p>
+<p>The fix is to keep the scores in one place: the list. Screen 2 borrows one team. Apple's docs say a <code>@Binding</code> can "read and write a value owned by a source of truth". Here the source of truth is the <code>teams</code> array on screen 1.</p>
 <h3>2. The error I didn't understand</h3>
 <p>So I changed screen 2 to <code>@Binding var team: Team</code>. Then the list would not build. Swift Playgrounds said:</p>
 <pre><code class="err">cannot convert value of type 'Team' to expected argument type 'Binding&lt;Team&gt;'</code></pre>
@@ -100,7 +100,7 @@
 <h2 id="access">Accessibility basics</h2>
 <p>I turned on VoiceOver and went through every screen. On iPad it is in Settings, then Accessibility, then VoiceOver. Then I checked each item against <a href="https://developer.apple.com/design/human-interface-guidelines/accessibility">Apple's accessibility guidelines</a>.</p>
 <ul class="check">
-  <li>Each row reads as one line: "Milo, 15 points, in the lead". Without <code>.accessibilityElement(children: .ignore)</code>, VoiceOver read the shape, the name and the number one at a time.</li>
+  <li>Each row reads as one line: "Milo, 15 points, in the lead". Before I added <code>.accessibilityElement(children: .ignore)</code>, VoiceOver read the shape, name and number apart.</li>
   <li>The point buttons say "Add 1 point", "Add 3 points" and "Take away 1 point". VoiceOver doesn't say "plus one".</li>
   <li>The shapes are hidden from VoiceOver on screen 2. They add nothing when read aloud.</li>
   <li>Colour is never the only clue. Apple's guide says to "convey information with more than color alone".</li>
@@ -108,7 +108,7 @@
   <li>White text on the team colours is 5.5 to 1 or more. Apple asks for 4.5 to 1 for text up to 17 points. The grey −1 button is 3.3 to 1, but its text is 28 points bold. Apple asks for 3 to 1 there.</li>
   <li>Names and list scores use system text styles. They grow when you make text bigger in Settings.</li>
   <li>With Reduce Motion on, the score changes with no roll and no pop.</li>
-  <li class="part">In dark mode the team shapes are hard to see. I measured between 2 and 3 to 1 against the dark rows. The names still say which team is which.</li>
+  <li class="part">In dark mode the team shapes are hard to see. I measured about 2 to 3 to 1 against the dark rows. The names still say which team is which.</li>
   <li class="part">The big score on screen 2 is a fixed 120 points. It does not grow with text size.</li>
 </ul>
 
@@ -121,8 +121,8 @@
 </ul>
 
 <h2 id="change">What I would change</h2>
-<p>The scores only live in memory. If the iPad sleeps for a long time, or someone closes the app, the scores are gone. That happened to me once, mid-lesson. Saving them would need the teams stored on the iPad, and I haven't learnt that yet. I would also give each team a lighter colour for dark mode.</p>
-<p>A question I still have: is a scoreboard enough of an app for Sec 1 students to build? It taught me <code>@State</code> and <code>@Binding</code>. But it has no game in it. I'd like to hear from someone who has tried both.</p>
+<p>The scores only live in memory. If someone closes the app, the scores are gone. A long sleep can do it too. That happened to me once, mid-lesson. Saving them means storing the teams on the iPad. I haven't learnt that yet. I would also give each team a lighter colour for dark mode.</p>
+<p>A question I still have: is a scoreboard enough of an app for Sec 1? It taught me <code>@State</code> and <code>@Binding</code>. But it has no game in it. I'd like to hear from someone who has tried both.</p>
 
 <h2 id="starter">As a starter for my class</h2>
 <p>To turn it into a starter, I would remove three things. Students then add them back:</p>

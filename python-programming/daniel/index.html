@@ -16,7 +16,7 @@
 <main>
 <h1>Lost in the Lab</h1>
 <p class="lede">A Python text adventure about binary. You stayed late and the school is locked. Every door has a keypad that shows a binary number. Type it in denary to get out.</p>
-<p>I'm Daniel. I've been a trainer for six months. I teach a Sec 2 coding enrichment class on Wednesday afternoons, and I'm learning Python alongside them. Last month we did binary with paper cards. So I built a game where binary opens every door.</p>
+<p>I'm Daniel. I've been a trainer for six months. I teach a Sec 2 coding enrichment class on Wednesday afternoons. I'm learning Python alongside them. Last month we did binary with paper cards. So I built a game where binary opens every door.</p>
 <p>This is my end project for the Python module. It has the game, a PRIMM worksheet and a lesson plan. It also has the bugs I hit, because there were a lot of them.</p>
 <ul class="toc">
   <li><a href="#play">Play the game</a></li>
@@ -49,7 +49,7 @@
     </div>
   </details>
 </div>
-<p class="small">This page runs the code with MiniPy, a small Python written in JavaScript, so nothing needs installing. It covers what these programs use. I ran the same answers through Python 3.13 and got the same output, line for line. Change the code and press Run to try your own version.</p>
+<p class="small">This page runs the code with MiniPy, a small Python written in JavaScript. Nothing needs installing. It covers what these programs use. I ran the same answers through Python 3.13. The output matched line for line. Change the code and press Run to try your own version.</p>
 
 <h2 id="how">How the code works</h2>
 <p>The whole game is 102 lines. Open "Read and change the code" above to follow along.</p>
@@ -67,9 +67,9 @@
 <p>The brief asks for a share link to the working program. This part took me longest, so here is what I found.</p>
 <ul class="tight">
   <li>I looked for a Share button in the <a href="https://editor.raspberrypi.org/en/">Raspberry Pi Code Editor</a>. There isn't one for your own projects. In July 2023 the Raspberry Pi Foundation <a href="https://www.raspberrypi.org/blog/code-editor-open-source/">decided not to add code sharing</a>. It said that without moderation, sharing is a safeguarding risk.</li>
-  <li>You can use the Code Editor without an account. The same post says your changes last for the session, even if you refresh or close the tab. To save your code properly, you log in.</li>
-  <li>Under 13, a parent or guardian sets up the account with their email. From 13, you can sign up alone (<a href="https://codeclub.org/en/resources/accounts-for-children">Code Club</a>). My Sec 2s are 13 or 14, but my school prefers no student accounts, so we don't log in.</li>
-  <li>The school version is now called <a href="https://www.raspberrypi.org/teach">Code Classroom</a>. There, a teacher can <a href="https://help.editor.raspberrypi.org/hc/en-us/articles/41052886370068-How-to-share-a-direct-link-to-a-project-or-class">copy a direct link</a> to a class or project. Students then sign in with a school code, username and password. My school hasn't set it up yet.</li>
+  <li>You can use the Code Editor without an account. The same post says your changes last for the session. They survive a refresh or a closed tab. To save your code properly, you log in.</li>
+  <li>Under 13, a parent or guardian sets up the account with their email. From 13, you can sign up alone (<a href="https://codeclub.org/en/resources/accounts-for-children">Code Club</a>). My Sec 2s are 13 or 14. But my school prefers no student accounts, so we don't log in.</li>
+  <li>The school version is called <a href="https://www.raspberrypi.org/teach">Code Classroom</a>. There, a teacher can <a href="https://help.editor.raspberrypi.org/hc/en-us/articles/41052886370068-How-to-share-a-direct-link-to-a-project-or-class">copy a direct link</a> to a class or project. Students then sign in with a school code, username and password (<a href="https://help.editor.raspberrypi.org/hc/en-us/articles/42528515894036-How-to-resolve-student-login-issues">help page</a>). My school hasn't set it up yet.</li>
 </ul>
 <p>So my share link is this page. Anyone can open it and play. To run the game in the real Code Editor:</p>
 <ol class="steps">
@@ -77,7 +77,7 @@
   <li>Open the <a href="https://editor.raspberrypi.org/en/">Code Editor</a> and start a new Python project.</li>
   <li>Delete what is there, paste the game in and press Run.</li>
 </ol>
-<p>For programs like this one, the Code Editor runs standard Python in the browser, called Pyodide (<a href="https://github.com/RaspberryPiFoundation/editor-ui/blob/main/src/components/Editor/Runners/PythonRunner/PythonRunner.jsx">its source code</a>). So the error messages look like the ones in my bug diary below.</p>
+<p>For programs like this one, the Code Editor runs standard Python in the browser. It is called Pyodide (<a href="https://github.com/RaspberryPiFoundation/editor-ui/blob/main/src/components/Editor/Runners/PythonRunner/PythonRunner.jsx">its source code</a>). So the error messages look like the ones in my bug diary below.</p>
 
 <h2 id="bugs">Bug diary: what broke while I wrote it</h2>
 <p>I kept a note of every error. These six cost me the most time. The messages are exactly what Python 3.13 printed. Older versions word some of them differently.</p>
@@ -121,7 +121,7 @@
 <p>I only learned about PRIMM in this module. It stands for Predict, Run, Investigate, Modify, Make. It was developed by Sue Sentance and colleagues (<a href="https://www.raspberrypi.org/blog/primm-talk-in-programming-lessons-research-seminar/">Raspberry Pi Foundation</a>). The first three stages are all about reading code. I used to start lessons with a blank screen.</p>
 
 <h2 id="lesson">The lesson plan</h2>
-<p>The <a href="lesson.html">lesson plan</a> is one 60-minute lesson for my 28 Sec 2 students, in pairs, on their school Chromebooks. It has timings that add up, a plan for slow typists and typos, and how I check that every student codes.</p>
+<p>The <a href="lesson.html">lesson plan</a> is one 60-minute lesson for my 28 Sec 2 students. They work in pairs on school Chromebooks. Its timings add up. It has a plan for slow typists and typos. It also shows how I check that every student codes.</p>
 
 <h2 id="tests">Testing it on people</h2>
 <p class="sticky">The colleague, the students and their words are made up, like me. The bugs and outputs are real. I ran every one.</p>
@@ -155,7 +155,7 @@
   <li>From note 1: the worksheet page has a Copy code button. I put its link on the board.</li>
   <li>From note 2: predictions go on paper with laptop lids down. Lids open at minute 18.</li>
   <li>From note 3: it became question I3. The full game uses <code>.strip()</code> on line 23 to fix it.</li>
-  <li>From note 4: drivers swap when the timer on the screen rings, every 10 to 15 minutes.</li>
+  <li>From note 4: drivers swap when the timer on the screen rings, at minutes 23 and 43.</li>
 </ul>
 </div>
 
@@ -177,12 +177,12 @@
 
 <h2 id="sources">Sources</h2>
 <ul class="tight small">
-  <li>No sharing, and saving without an account: <a href="https://www.raspberrypi.org/blog/code-editor-open-source/">Raspberry Pi Foundation, "The Code Editor is now open source", 11 July 2023</a>.</li>
+  <li>No sharing, and saving without an account: <a href="https://www.raspberrypi.org/blog/code-editor-open-source/">Raspberry Pi Foundation, "Our Code Editor is open source", 11 July 2023</a>.</li>
   <li>Account age rules: <a href="https://codeclub.org/en/resources/accounts-for-children">Code Club, accounts for children</a>.</li>
   <li>Code Classroom: <a href="https://www.raspberrypi.org/teach">Raspberry Pi Foundation, Teach</a> and <a href="https://help.editor.raspberrypi.org/hc/en-us/articles/41052886370068-How-to-share-a-direct-link-to-a-project-or-class">How to share a direct link to a project or class</a>.</li>
   <li>The Code Editor's Python engine: <a href="https://github.com/RaspberryPiFoundation/editor-ui/blob/main/src/components/Editor/Runners/PythonRunner/PythonRunner.jsx">editor-ui source, PythonRunner</a>.</li>
   <li>PRIMM: <a href="https://www.raspberrypi.org/blog/primm-talk-in-programming-lessons-research-seminar/">Raspberry Pi Foundation research seminar post</a> and the <a href="https://static.raspberrypi.org/files/curriculum/quickreads/11-Pedagogy_Summary_PRIMM_V4_2023.pdf">PRIMM Quick Read</a>.</li>
-  <li>School devices: <a href="https://www.moe.gov.sg/news/press-releases/20201229-blended-learning-to-enhance-schooling-experience-and-further-develop-students-into-self-directed-learners">MOE press release, 29 December 2020</a>, on PLDs for all secondary students by end-2021, with device management apps.</li>
+  <li>School devices: <a href="https://www.moe.gov.sg/news/press-releases/20201229-blended-learning-to-enhance-schooling-experience-and-further-develop-students-into-self-directed-learners">MOE press release, 29 December 2020</a>. It covers PLDs for all secondary students by end-2021, with device management apps.</li>
   <li>Python: <a href="https://docs.python.org/3/library/functions.html#input">input()</a> and <a href="https://docs.python.org/3/faq/programming.html#why-am-i-getting-an-unboundlocalerror-when-the-variable-has-a-value">UnboundLocalError</a> in the Python docs. Error messages from running each bug in Python 3.13.</li>
 </ul>
 </main>

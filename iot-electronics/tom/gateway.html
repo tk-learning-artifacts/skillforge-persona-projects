@@ -13,7 +13,7 @@
 <main>
 <p><a href="index.html">Back to Lights On, Nobody Home</a></p>
 <h1>The gateway page<span class="sub">Runs in Chrome on the classroom PC</span></h1>
-<p class="lede">This is the real page from the project. Plug the gateway micro:bit into this computer and press Connect. It turns radio readings into one row every 5 minutes and posts them to your Sheet.</p>
+<p class="lede">This is the real page from the project. Plug the gateway micro:bit into this computer and press Connect. It turns radio readings into one row every 5 minutes. Then it posts each row to your Sheet.</p>
 <p>No micro:bit with you? Press "Made-up readings". A minute passes every 2 seconds, and a pretend web app in this page answers. Nothing leaves your computer in that mode.</p>
 
 <div class="lab">
@@ -53,7 +53,7 @@
 </div>
 
 <h2>Settings</h2>
-<p>These stay in this browser on this computer, in its local storage. They are not in the page's code, and this page sends them nowhere except your web app.</p>
+<p>These stay in this browser on this computer, in its local storage. They are not in the page's code. This page sends them only to your web app.</p>
 <form class="card" id="settings">
   <p><label for="url">Web app address</label><br><input id="url" type="url" inputmode="url" placeholder="https://script.google.com/macros/s/.../exec" style="width:100%"></p>
   <p><label for="token">Token</label><br><input id="token" type="password" autocomplete="off" style="width:100%"></p>
@@ -69,7 +69,7 @@
   <li>Turn off sleep on this computer for school hours. If it sleeps, nothing is sent.</li>
   <li>Leave this tab open. It can sit behind other windows.</li>
   <li>Web Serial works in Chrome on desktop computers and Chromebooks. It does not work on iPads.</li>
-  <li>The page must come from an https address, like GitHub Pages, for Web Serial to work.</li>
+  <li>Web Serial needs the page to come from an https address, like GitHub Pages.</li>
   <li>Check the first two rows in your Sheet before you walk away.</li>
 </ul>
 </main>

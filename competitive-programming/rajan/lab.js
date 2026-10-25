@@ -36,7 +36,7 @@
     },
     {
       problem: 'Tri', href: 'problems.html#p7',
-      task: 'Put an = sign and one of + - * / between three numbers to make a true equation.',
+      task: 'Put back the = sign and one operation to make a true equation.',
       code: 'a, b, c = map(int, input().split())\n...\nelif a / b == c:\n    print(f"{a}/{b}={c}")\n...',
       answer: 'AC',
       why: 'Floats worry people, and fairly. Here the numbers are whole and under 100. When b divides a, the result is exact. When it does not, the result is far from any whole number.',
@@ -56,15 +56,15 @@
       code: '# BFS fills steps, a dict of cell -> moves\nprint(steps[(0, 0)])',
       answer: 'RTE',
       why: 'When (1, 1) cannot be reached, it is never put in the dict. Looking it up raises KeyError. An uncaught exception is a crash, and Kattis calls a crash Run Time Error.',
-      how: 'Sample 2 has the knight walled off. Python stops with "KeyError: (0, 0)". The fix is steps.get((0, 0), -1).'
+      how: 'In sample 2, the knight can never reach (1, 1). Python stops with "KeyError: (0, 0)". The fix is steps.get((0, 0), -1).'
     },
     {
       problem: 'Grid', href: 'problems.html#p12',
-      task: 'Fewest jumps from the top-left to the bottom-right of a grid up to 500 by 500.',
+      task: 'Fewest jumps from top-left to bottom-right, on a grid up to 500 by 500.',
       code: 'visited = [(0, 0)]\n# ... inside the BFS loop:\nif (nr, nc) not in visited:\n    visited.append((nr, nc))\n    queue.append((nr, nc, d + 1))',
       answer: 'TLE',
       why: '"in" on a list checks items one by one. The list grows to 250,000 cells, so each check gets slower. The whole search is about O(n\u00b2) in the number of cells.',
-      how: 'It passes all 3 samples, which are tiny. On a 500 by 500 grid of 1s, my real solution took about half a second. This one was still running after 30 seconds. The limit is 1 second.'
+      how: 'It passes all 3 samples, which are tiny. On a 500 by 500 grid of 1s, mine took about half a second. This one was still running after 30 seconds. The limit is 1 second.'
     }
   ];
 

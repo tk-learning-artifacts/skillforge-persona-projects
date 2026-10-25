@@ -102,6 +102,7 @@ pre.listing .ln { display: inline-block; width: 2.2em; color: var(--muted); user
 .sheet p { margin: 3px 0; }
 .sheet pre.listing { background: #f4f5f5; border-color: #ccc; color: #111; }
 .sheet pre.listing .ln { color: #777; }
+.sheet :not(pre) > code { background: #eef0f0; color: #111; }
 .sheet .write { border-bottom: 1px solid #999; height: 22px; margin: 0 0 4px; }
 .sheet .cols { display: grid; grid-template-columns: 1fr; gap: 0 22px; }
 @media (min-width: 760px) { .sheet .cols { grid-template-columns: 1fr 1fr; } }

@@ -53,7 +53,7 @@
       var need = Math.ceil(on / 8), ok = state.adults >= Math.max(2, need) && on <= 16;
       html += '<p class="count">Walking with ' + on + ' children</p>';
       html += '<p class="notice">' + (ok ? 'Ratio check: ' + state.adults + ' adults for ' + on + ' children. OK.' : 'Ratio check: need ' + Math.max(2, need) + ' adults. Wait for another volunteer.') + '</p>';
-      html += '<ol class="steps"><li class="done">Block 214, left ' + hhmm(state.left) + '</li><li class="done">Drop-and-Walk point, ' + hhmm(state.left + 5) + '</li><li>Signalled crossing</li><li>School gate</li></ol>';
+      html += '<ol class="steps"><li class="done">Block 214, left ' + hhmm(state.left) + '</li><li>Drop-and-Walk point, about ' + hhmm(state.left + 5) + '</li><li>Signalled crossing</li><li>School gate</li></ol>';
       html += '<div class="row"><button type="button" class="primary" id="gate">At the gate: teacher taps tags</button></div>';
     } else {
       var arrived = state.kids.filter(function (k) { return k.at !== null; }).length;

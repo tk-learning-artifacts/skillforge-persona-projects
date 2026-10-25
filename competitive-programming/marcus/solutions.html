@@ -18,7 +18,7 @@
 <p class="callout">Squad: do not read a solution before the sprint for that problem is over. A solution you read is a problem you can no longer practise on.</p>
 
 <h2 id="tester">Test like the judge</h2>
-<p>USACO publishes each old contest's test data as a zip, linked from the contest results page. Unzip it into a folder with your solution and this script. Then run, for example, <code>python runtests.py lostcow.py lostcow</code>. It prints OK, X, T or ! for every test, like the judge's boxes.</p>
+<p>USACO publishes each old contest's test data as a zip. The contest results page links to it. Unzip it into a folder with your solution and this script. Then run, for example, <code>python runtests.py lostcow.py lostcow</code>. It prints OK, X, T or ! for every test, like the judge's boxes.</p>
 <pre><code># Run a solution against USACO's official test data.
 # Usage: python runtests.py lostcow.py lostcow
 # Unzip the contest's test data into the same folder first.
@@ -54,7 +54,7 @@ for case in cases:
     else:
         verdict = "X  (wrong answer)"
     print(case, verdict, round(seconds, 2), "s")</code></pre>
-<p class="small">I used this script to check every solution below. The 4-second cut-off matches USACO's usual Python limit, but my laptop is not the judge's machine. Treat anything over 2 seconds as a risk.</p>
+<p class="small">I used this script to check every solution below. The 4-second cut-off matches USACO's usual Python limit. But my laptop is not the judge's machine. Treat anything over 2 seconds as a risk.</p>
 
 <h2 id="wk1">Week 1: Simulate it</h2>
 
@@ -82,7 +82,7 @@ while True:
 
 with open("lostcow.out", "w") as fout:
     print(total, file=fout)</code></pre>
-<p class="why">x and y are at most 1,000, so the zigzag ends after a handful of legs. Checking "is Bessie between here and the turn?" avoids walking one step at a time.</p>
+<p class="why">x and y are at most 1,000. So the zigzag ends after a handful of legs. Checking "is Bessie between here and the turn?" avoids walking one step at a time.</p>
 </section>
 
 <section class="sol" id="s2">
@@ -166,7 +166,7 @@ for low in sizes:
 
 with open("diamond.out", "w") as fout:
     print(best, file=fout)</code></pre>
-<p class="why">N is at most 1,000, so two loops make at most a million checks. Sorting would be faster, but this is the version a beginner writes in a sprint, and it passes.</p>
+<p class="why">N is at most 1,000, so two loops make at most a million checks. Sorting would be faster. But this is the version a beginner writes in a sprint, and it passes.</p>
 </section>
 
 <section class="sol" id="s6">
@@ -214,7 +214,7 @@ for k in range(1, n + 1):
 
 with open("whereami.out", "w") as fout:
     print(answer, file=fout)</code></pre>
-<p class="why">A set answers "seen this piece before?" in about the same time however many pieces it holds.</p>
+<p class="why">A set answers "seen this piece before?" fast. It takes about the same time however many pieces it holds.</p>
 </section>
 
 <section class="sol" id="s8">
@@ -253,7 +253,7 @@ for a, b in queries:
 
 with open("haybales.out", "w") as fout:
     fout.write("\n".join(map(str, answers)) + "\n")</code></pre>
-<p class="why">Sorting once costs O(N log N). Each question is then two binary searches, O(log N). My brute force, checking every bale for every question, passed only 3 of the 10 tests in 4 seconds.</p>
+<p class="why">Sorting once costs O(N log N). Each question is then two binary searches, O(log N). My brute force checks every bale for every question. It passed only 3 of the 10 tests in 4 seconds.</p>
 </section>
 
 <h2 id="wk4">Week 4: Flood the grid</h2>
@@ -286,7 +286,7 @@ while queue:
 
 with open("buckets.out", "w") as fout:
     print(dist[barn] - 1, file=fout)</code></pre>
-<p class="why">BFS reaches squares in order of distance, so the first time it finds a square, that is the shortest way there.</p>
+<p class="why">BFS reaches squares in order of distance. So the first way it finds to a square is the shortest.</p>
 </section>
 
 <section class="sol" id="s11">
@@ -324,7 +324,7 @@ for sr in range(n):
 
 with open("perimeter.out", "w") as fout:
     print(best_area, best_perim, file=fout)</code></pre>
-<p class="why">The slowest solution here. A million cells, each looked at a few times. A recursive flood fill would also hit Python's recursion limit on a big blob, so this one uses a queue.</p>
+<p class="why">The slowest solution here. A million cells, each looked at a few times. A recursive flood fill would hit Python's recursion limit on a big blob. So this one uses a queue.</p>
 </section>
 
 <section class="sol" id="s12">
@@ -383,7 +383,7 @@ with open("mooyomooyo.out", "w") as fout:
 
 <h2 id="sources">Sources</h2>
 <ul class="sources">
-  <li>Official test data: the zip linked under each solution, from the USACO contest results pages, such as the <a href="http://www.usaco.org/index.php?page=dec18results">December 2018 results</a>.</li>
+  <li>Official test data: the zip under each solution. It comes from the USACO results pages, such as the <a href="http://www.usaco.org/index.php?page=dec18results">December 2018 results</a>.</li>
   <li>Python time limits and the feedback letters X, T and !: <a href="http://www.usaco.org/index.php?page=instructions">USACO contest instructions</a>.</li>
   <li><code>bisect_left</code> and <code>bisect_right</code>: <a href="https://docs.python.org/3/library/bisect.html">Python docs, bisect</a>. The recursion limit: <a href="https://docs.python.org/3/library/sys.html#sys.setrecursionlimit">Python docs, sys.setrecursionlimit</a>.</li>
 </ul>

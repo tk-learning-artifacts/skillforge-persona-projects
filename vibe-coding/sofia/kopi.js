@@ -33,7 +33,7 @@ window.Kopi = (function () {
     return PARTS[part].find((p) => p.key === key);
   }
 
-  // Kosong only goes with O or C. My sources only list those two, so the game // Sofia
+  // Kosong only goes with O or C. My sources disagree on plain kosong, so the game // Sofia
   // never asks for plain "Kopi kosong". // Sofia
   function isValid(drink) {
     return ORDER.every((part) => find(part, drink[part])) &&

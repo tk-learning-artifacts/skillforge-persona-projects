@@ -19,10 +19,10 @@
 <p class="lede">Every Swift file in <a href="TeamPoints.swiftpm.zip" download>TeamPoints.swiftpm.zip</a>, with a note on what to look at.</p>
 <div class="card">
 <p><strong>Where the state lives</strong></p>
-<p>There is one list of teams. It lives in <code>TeamsView</code>, marked <code>@State</code>. <code>TeamView</code> never owns a score. It gets a <code>@Binding</code> to one team, so when it changes the score, it changes the list's copy. That is why the score is still there when you tap Back.</p>
+<p>There is one list of teams. It lives in <code>TeamsView</code>, marked <code>@State</code>. <code>TeamView</code> never owns a score. It gets a <code>@Binding</code> to one team. So when it changes the score, the list's copy changes. That is why the score is still there when you tap Back.</p>
 <p>Read the files in this order: <a href="#Team-swift">Team.swift</a>, <a href="#TeamsView-swift">TeamsView.swift</a>, <a href="#TeamView-swift">TeamView.swift</a>.</p>
 </div>
-<p class="small">I checked that every file builds against Apple's iOS SDK with Swift 6.3. <code>Package.swift</code> is left out here. Swift Playgrounds writes it for you.</p>
+<p class="small">Every file was checked with the Swift 6.3 compiler on a Mac. The inline title line only works on iPad and iPhone, so the check skipped it. <code>Package.swift</code> is left out here. Swift Playgrounds writes it for you.</p>
 <h2 id="TeamPointsApp-swift">TeamPointsApp.swift</h2>
 <p>Where the app starts. It opens on the list of teams.</p>
 <p class="small">11 lines.</p>

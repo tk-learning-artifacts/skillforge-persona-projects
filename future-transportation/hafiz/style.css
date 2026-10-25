@@ -100,7 +100,7 @@ canvas#crossing { display: block; width: 100%; aspect-ratio: 640 / 400; border-r
 .live { min-height: 1.6em; font-weight: 600; }
 .results td.best { background: var(--good-soft); font-weight: 700; }
 .timeline { position: relative; height: 26px; border-radius: 6px; overflow: hidden; display: flex; border: 1px solid var(--line); margin-top: 6px; }
-.timeline span { display: block; height: 100%; font-size: 0.72rem; line-height: 26px; padding-left: 4px; white-space: nowrap; overflow: hidden; color: #10141a; }
+.timeline span { display: block; height: 100%; font-size: 0.8rem; line-height: 26px; padding-left: 4px; white-space: nowrap; overflow: hidden; color: #10141a; }
 .timeline .t-steady { background: #7fd6a2; }
 .timeline .t-flash { background: repeating-linear-gradient(90deg, #7fd6a2 0 6px, #c8eed7 6px 12px); }
 .timeline .t-ext { background: repeating-linear-gradient(45deg, #f2c27a 0 6px, #fbe3b8 6px 12px); }
@@ -116,13 +116,20 @@ canvas#crossing { display: block; width: 100%; aspect-ratio: 640 / 400; border-r
 /* Signal head mockups */
 .heads { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
 .heads figure { margin: 0; text-align: center; }
+.heads svg text { font-size: 14px; }
+@media (max-width: 480px) { .heads figure { padding: 6px; } }
 
 /* Wide diagrams scroll sideways on a phone instead of shrinking their labels */
 .wide { overflow-x: auto; }
 .wide svg { min-width: 600px; }
+.swipe { display: none; margin: 0 0 6px; font-size: 0.85rem; color: var(--muted); }
+@media (max-width: 640px) { .swipe { display: block; } }
 svg.chart { max-width: 560px; margin: 0 auto; }
 svg.chart text { font-size: 20px; }
 @media (max-width: 480px) {
   .gantt { grid-template-columns: 1fr; gap: 2px; }
   .gantt > span { margin-top: 8px; font-weight: 600; }
 }
+
+/* Let number cells wrap on a phone so tables fit the screen */
+@media (max-width: 640px) { td.n, th.n { white-space: normal; } table { font-size: 0.9rem; } }

@@ -33,8 +33,8 @@
   <li><b>Goal</b><span>A team that can enter the NOI preliminary contest in February 2028 and score.</span></li>
 </ul>
 </div>
-<p>Why July and not January? The NOI preliminary is in February. A January start leaves about six weeks, and most of that goes on account set-up and nerves. Starting in Term 3 gives the team the rest of the year to practise after these four weeks.</p>
-<p class="note">Kattis needs users to be at least 13. Under the age of majority, a parent or guardian must accept the terms for the student. Kattis also asks for your real name. So the week before session 1, I send a consent letter home. Students make their accounts with a parent, and nobody shares a login. All my Sec 2s are 13 or older by July. That is why there are no Sec 1s in this team.</p>
+<p>Why July and not January? The NOI preliminary is in February. A January start leaves about six weeks. Most of that goes on account set-up and nerves. A Term 3 start leaves the rest of the year for practice afterwards.</p>
+<p class="note">Kattis needs users to be at least 13. Until students are adults, a parent or guardian must accept the terms for them. Kattis also asks for your real name. So the week before session 1, I send a consent letter home. Students make their accounts with a parent, and nobody shares a login. All my Sec 2s are 13 or older by July. That is why there are no Sec 1s in this team.</p>
 
 <h2 id="weeks">Four weeks, three problems each <span class="tag">// overview</span></h2>
 <div class="weeks">
@@ -59,7 +59,7 @@
     <ul><li>Knight Jump</li><li>Counting Stars</li><li>Grid</li></ul>
   </div>
 </div>
-<p>Every session has the same shape. A short idea, two verdict cards, 30 minutes of solving, then the debugging log. The full timings are in the <a href="sessions.html">session plans</a>.</p>
+<p>Every session has the same shape. A short idea, about 25 minutes of solving, then the debugging log. From session 2, it opens with two verdict cards. The full timings are in the <a href="sessions.html">session plans</a>.</p>
 
 <h2 id="ramp">The ramp <span class="tag">// Kattis difficulty</span></h2>
 <p>"Harder step by step" should be something you can check, not a feeling. Kattis gives each problem a difficulty number from how many people solve it. I put the twelve in order, so the number never goes down.</p>
@@ -83,10 +83,10 @@
 </ol>
 <div class="axis" aria-hidden="true"><span></span><span></span><span><i>0</i><i>0.5</i><i>1.0</i><i>1.5</i><i>2.0</i><i>2.5</i></span></div>
 <p class="small">Difficulty as shown on each problem's Kattis page on 24 October 2026. Kattis recalculates these as people solve, so they drift a little. Each problem in the <a href="problems.html">problem set</a> links to its Kattis page.</p>
-<p>The number only measures how many people get stuck. It does not say why. So I also made sure each week adds one new idea, and the third problem of each week needs it most.</p>
+<p>The number only measures how many people get stuck. It does not say why. So each week also adds one new idea. The third problem of the week needs it most.</p>
 
 <h2 id="verdict-lab">Verdict lab <span class="tag">// predict, then check</span></h2>
-<p>Each card is a real mistake on one of the twelve problems. Read the code and pick the verdict Kattis would give. I use two cards at the start of each session, with the class voting by hand.</p>
+<p>Each card is a real mistake on one of the twelve problems. Read the code and pick the verdict Kattis would give. From session 2, I open with two cards. The class votes by hand.</p>
 <div class="lab" id="lab">
   <div class="lab-head"><span id="lab-count">Card 1 of 8</span><span id="lab-score">Right so far: 0</span></div>
   <h3>Problem: <a id="lab-problem" href="problems.html">Spavanac</a></h3>
@@ -110,10 +110,10 @@
     <button type="button" class="primary" id="lab-next">Next card</button>
   </div>
 </div>
-<p class="small">Try this: before you open the answer, say which test number fails first. Kattis stops judging at the first error, so "Wrong Answer on test 2" tells you more than "Wrong Answer".</p>
+<p class="small">Try this: before you open the answer, say which test number fails first. Kattis stops judging at the first error. So "Wrong Answer on test 2" tells you more than "Wrong Answer".</p>
 
 <h2 id="checked">How I checked my solutions <span class="tag">// evidence</span></h2>
-<p>The brief says to use problems you have solved yourself. Kattis only shows its sample tests, so a pass on the samples proves little. For each solution I did at least two of these:</p>
+<p>The brief says to use problems you have solved yourself. Kattis only shows its sample tests, so a pass on the samples proves little. Every solution got the first check below. The harder ones got more:</p>
 <ul class="tight">
   <li>Ran it on every Kattis sample file and compared the output exactly. All 11 problems with sample files match. Guess the Number has none.</li>
   <li>Compared it with a slow, obvious version on random small inputs. I did this for Shopaholic, Tri and Perket.</li>
@@ -123,8 +123,8 @@
 <p>Students do the same before they submit. That is the point of the habit. The judge confirms what you already believe; it should not be the first test.</p>
 
 <h2 id="change">What I would change <span class="tag">// limits</span></h2>
-<p>Session 1 assumes students can read input with <code>input().split()</code>. Two of my club members could not, last year. I tend to underrate how hard that first step is. Next time I would add a 20-minute "reading input" warm-up the week before, with Hello World and Solving for Carrots.</p>
-<p>The set also leans on Python. NOI's main language is C++, and Python is only allowed for some tasks. Guess the Number is an interactive problem, and NOI does not allow those in Python at all. I keep it because it is the cleanest binary search I know. But a student aiming past the preliminary round will need C++ in time, and this programme does not start that.</p>
+<p>Session 1 assumes students can read input with <code>input().split()</code>. Two of my club members could not, last year. I tend to underrate how hard that first step is. Next time I would add a 20-minute "reading input" warm-up the week before. It would use Hello World and Solving for Carrots.</p>
+<p>The set also leans on Python. NOI's main language is C++, and Python is only allowed for some tasks. Guess the Number is an interactive problem. NOI does not allow those in Python at all. I keep it because it is the cleanest binary search I know. A student aiming past the preliminary round will need C++ in time. This programme does not start that.</p>
 
 <h2 id="sources">Sources</h2>
 <ul class="sources">

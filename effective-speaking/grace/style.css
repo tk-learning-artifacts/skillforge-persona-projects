@@ -170,3 +170,18 @@ select { font: inherit; min-height: 44px; padding: 0 10px; border-radius: 8px; b
 @media print { .ai-note { display: block; } button, .controls, .chapters { display: none; } }
 .tally div > span:last-child { display: grid; grid-template-columns: 1fr 2.2em; align-items: center; gap: 8px; }
 .calc output { overflow-wrap: anywhere; }
+/* Rubric table on a phone: the scores sit in a row, and the comments get the full width below. */
+@media (max-width: 560px) {
+  .rubric, .rubric thead, .rubric tbody { display: block; }
+  .rubric tr { display: grid; grid-template-columns: 1fr repeat(3, 3.9em); }
+  .rubric th, .rubric td { padding: 6px; }
+  .rubric td.n { width: auto; }
+  .rubric th:last-child { display: none; }
+  .rubric td:last-child { grid-column: 1 / -1; border-top: 0; background: var(--card); }
+  .rubric tbody tr { margin-top: 8px; }
+}
+/* Slides: keep the password chain on one line, and give wrapped list lines a hanging indent. */
+.sl-chain { gap: 1.4cqi; flex-wrap: nowrap; }
+.sl-chain .sl-chip { font-size: 3.4cqi; padding: 1.2cqi 1.8cqi; }
+.sl-list li { position: relative; padding-left: 1.3em; }
+.sl-list li::before { position: absolute; left: 0; margin-right: 0; }

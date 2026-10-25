@@ -14,7 +14,7 @@
 <h1>Still on the road</h1>
 <p class="lede">A pedestrian crossing that checks if anyone is still crossing before cars get green. It is built for older walkers, but it serves anyone who walks slowly.</p>
 <p>I'm Hafiz. I teach data and AI to secondary students and adult learners. My evening class meets near a wet market. The road outside has four lanes and a signalled crossing. Each week I watch older residents hurry as the green man flashes. So I picked this problem for my Future of Transportation project.</p>
-<p>My rule for this project: start with the data, and pick the simplest tech that fixes the problem. That turned out not to be AI.</p>
+<p>My rule for this project: start with the data. Then pick the simplest tech that fixes the problem. That turned out not to be AI.</p>
 
 <ul class="toc">
   <li><a href="#problem">1. Problem analysis<span>Singapore road data and walking speeds</span></a></li>
@@ -65,7 +65,7 @@
 </figure>
 
 <div class="claim"><strong>How I read this, and how I don't</strong>
-The headline says deaths rose 145% in a year. That is true, but 11 was an unusually low year. The <a href="https://www.mot.gov.sg/news-resources/newsroom/review-of-pedestrian-crossing-infrastructure-including-signal-timings--crossing-distances-and-physical-design-given-increase-in-elderly-pedestrian-fatalities/">Acting Minister for Transport</a> made the same point: 2021 to 2023 averaged 18 a year. Small counts jump about. The steadier signal is the accident count, which went from 158 to 247 in five years. The share is high even in a "good" year. In 2024, people 65 or over were 12.5% of the population and 44% of pedestrian deaths (<a href="https://www.police.gov.sg/Media-Hub/Police-Life/2025/02/Three-Things-You-Should-Know-about-the-Annual-Road-Traffic-Situation-2024">Police Life, 2025</a>).</div>
+The headline says deaths rose 145% in a year. That is true, but 11 was an unusually low year. The <a href="https://www.mot.gov.sg/news-resources/newsroom/review-of-pedestrian-crossing-infrastructure-including-signal-timings--crossing-distances-and-physical-design-given-increase-in-elderly-pedestrian-fatalities/">Acting Minister for Transport</a> made the same point: 2021 to 2023 averaged 18 a year. Small counts jump about. The steadier signal is the accident count, which went from 158 to 247 in five years. The share is high even in a "good" year. In 2024, people 65 or over were 12.5% of the population. They were 44% of pedestrian deaths (<a href="https://www.police.gov.sg/Media-Hub/Police-Life/2025/02/Three-Things-You-Should-Know-about-the-Annual-Road-Traffic-Situation-2024">Police Life, 2025</a>).</div>
 
 <h3>Not every death is at a crossing</h3>
 <p>In 2025, 15 of the 27 fatal accidents with older pedestrians involved jaywalking. So more than half happened away from a green man. A better crossing can only help with the rest.</p>
@@ -81,11 +81,11 @@ The headline says deaths rose 145% in a year. That is true, but 11 was an unusua
 <p>How fast do older people walk? Two studies give two answers.</p>
 <div class="scroll"><table>
 <caption>Walking speed of people 65 and over, two studies</caption>
-<tr><th>Study</th><th>Who was measured</th><th class="n">Average speed</th></tr>
-<tr><td><a href="https://researchonline.lshtm.ac.uk/id/eprint/1726195">Asher and others, 2012</a></td><td>A random sample of 3,145 people aged 65+ in England</td><td class="n">0.9 m/s men, 0.8 m/s women</td></tr>
-<tr><td><a href="https://www.physicaltherapy.utoronto.ca/sites/default/files/assets/files/11walking-speed-age-and-sex-specific-normative-values-final.pdf">Bohannon and Andrews, 2011</a></td><td>Healthy adults from 41 studies, aged 70 to 79</td><td class="n">1.26 m/s men, 1.13 m/s women</td></tr>
+<tr><th>Study</th><th>Who was measured</th><th class="n">Average speed (m/s)</th></tr>
+<tr><td><a href="https://researchonline.lshtm.ac.uk/id/eprint/1726195">Asher and others, 2012</a></td><td>A random sample of 3,145 people aged 65+ in England</td><td class="n">0.9 men<br>0.8 women</td></tr>
+<tr><td><a href="https://www.physicaltherapy.utoronto.ca/sites/default/files/assets/files/11walking-speed-age-and-sex-specific-normative-values-final.pdf">Bohannon and Andrews, 2011</a></td><td>Healthy adults from 41 studies, aged 70 to 79</td><td class="n">1.26 men<br>1.13 women</td></tr>
 </table></div>
-<p>The gap makes sense. Healthy volunteers walk faster than a random sample of everyone. The people at my market are everyone. Asher's team found 76% of older men and 85% of older women walked slower than 1.2 m/s. They suggested crossings assume 0.8 m/s.</p>
+<p>The gap makes sense. Healthy volunteers walk faster than a random sample of everyone. The people at my market are everyone. In Asher's study, 76% of older men walked slower than 1.2 m/s. So did 85% of older women. The team said 1.2 m/s is the wrong speed to assume for older people.</p>
 
 <div class="sheet">
 <p><strong>A worked example.</strong> Take a 14 m road and an 8-second steady green man.</p>
@@ -101,7 +101,7 @@ The headline says deaths rose 145% in a year. That is true, but 11 was an unusua
 <h3>What Singapore already does</h3>
 <ul class="tight">
   <li><a href="https://www.lta.gov.sg/content/ltagov/en/getting_around/driving_in_singapore/intelligent_transport_systems.html">Green Man+</a>: people 60 or over, and people with disabilities, tap a concession card at the pole. The green man gets 3 to 13 more seconds, depending on width. Over 1,000 crossings have it. LTA plans 1,500 more by the end of 2027.</li>
-  <li><a href="https://www.lta.gov.sg/content/ltagov/en/who_we_are/statistics_and_publications/Connect/silverzones.html">Silver Zones</a>, since 2014: lower speed limits, narrower roads, and crossings timed for a slower walking speed. LTA reports about 80% fewer accidents with older pedestrians in finished zones.</li>
+  <li><a href="https://www.lta.gov.sg/content/ltagov/en/who_we_are/statistics_and_publications/Connect/silverzones.html">Silver Zones</a>, since 2014: lower speed limits, narrower roads, and crossings timed for slower walkers. LTA reports about 80% fewer accidents with older pedestrians in finished zones.</li>
   <li><a href="https://www.lta.gov.sg/content/ltagov/en/upcoming_projects/road_commuter_facilities/friendly-streets.html">Friendly Streets</a>: the same ideas near markets, schools and MRT stations, planned with residents.</li>
 </ul>
 
@@ -119,7 +119,7 @@ The headline says deaths rose 145% in a year. That is true, but 11 was an unusua
 I spoke to six older residents outside the market, one morning. "Mdm L", 74, said: "I don't tap. Tapping is for people who are really old." "Mr T", 81, has the card but keeps it at home. "Mdm S" pushes her husband's wheelchair. She waits for the next green man so she can start at once. These people are invented for this example. Real interviews would come first in the rollout.</div>
 
 <div class="claim"><strong>Problem statement</strong>
-At busy crossings, people who walk slower than 1 m/s can still be on the road when cars get green. The current fix depends on a card and a tap. I want a crossing that notices who is still on the road, without anyone doing anything.</div>
+At busy crossings, slow walkers can still be on the road when cars get green. Anyone slower than 1 m/s is at risk. The current fix depends on a card and a tap. I want a crossing that notices who is still on the road, without anyone doing anything.</div>
 
 <h2 id="sim"><span class="num">2</span>Try the crossing</h2>
 <p>This simulator compares three designs on the same people. Squares are people aged 65 or over. Circles are younger. Run one cycle to watch, or compare 2,000 cycles.</p>
@@ -166,36 +166,36 @@ At busy crossings, people who walk slower than 1 m/s can still be on the road wh
   <li>Real: the timing rule. Steady green man of 6 to 10 s, then 1 s of flashing per metre. Green Man+ adds 3 to 13 s.</li>
   <li>Real: average speeds. Under 65 walk at 1.35 m/s on average, from Bohannon and Andrews. People 65 or over walk at 0.85 m/s, between Asher's figures for men and women.</li>
   <li>Assumed: the spread of speeds. I used a bell curve with a spread of 0.2 m/s in each group.</li>
-  <li>Assumed: about 4 people wait at the kerb, and about 1.5 more arrive during the steady green man. Nobody starts on the flashing green man.</li>
+  <li>Assumed: about 4 people wait at the kerb. About 1.5 more arrive during the steady green man. Nobody starts on the flashing green man.</li>
   <li>Assumed: only people waiting at the kerb can tap a card in time.</li>
   <li>Assumed: how Green Man+ extra time grows with width. LTA gives the range, not the formula. I drew a straight line from 3 s at 7 m to 13 s at 24 m.</li>
-  <li>Assumed: cars get green the moment the green man phase ends. Real junctions may add a short gap, so real results would be a little better for every design.</li>
+  <li>Assumed: cars get green the moment the green man phase ends. Real junctions may add a short gap. Then real results would be a little better for every design.</li>
   <li>The sensor holds cars only while someone is on the road, for at most 13 s. It never misses anyone. A real sensor will.</li>
 </ul>
-<p>Treat the output as a way to compare designs, not as a forecast for a real junction.</p>
+<p>Use the output to compare designs. It is not a forecast for a real junction.</p>
 </details>
 
 <h3>What I learned from the simulator</h3>
 <p>These are model results at the default settings, not counts from a real road.</p>
 <ul class="tight">
-  <li>Today's timing left about 27 in 100 older walkers on the road when cars got green. Fewer than 1 in 100 younger walkers.</li>
+  <li>Today's timing left about 27 in 100 older walkers on the road at car green. Fewer than 1 in 100 younger walkers.</li>
   <li>Green Man+ cut that to about 12 in 100 older walkers. It only helps in cycles where someone tapped, so late arrivals still get caught.</li>
   <li>The sensor cut it to under 1 in 100. It added about 2 seconds per cycle on average, against about 4 for Green Man+. It only waits when someone is there.</li>
   <li>Try a 20 m road with 60% older walkers. The 13-second cap starts to matter: about 5 in 100 older walkers are still caught. Very wide roads need a centre island too.</li>
 </ul>
 
 <h2 id="next">Next: the design and the rollout</h2>
-<p>The <a href="design.html">design page</a> has the sensor specs, timing rules, mockups of the signal and signs, and how it serves different walkers. The <a href="rollout.html">rollout page</a> has an 18-month plan, the people and kit, and how we would know it works.</p>
+<p>The <a href="design.html">design page</a> has the sensor specs, timing rules and mockups. It also shows how the design serves different walkers. The <a href="rollout.html">rollout page</a> has an 18-month plan, the people, the kit and the tests.</p>
 
 <h2 id="change">What I would change</h2>
-<p>The data says more than half of older pedestrian deaths in 2025 involved jaywalking. My design does nothing for them. A fuller answer would ask why people cross away from the lights, and fix the walk to the crossing too. My simulator also treats the sensor as perfect. Before I'd trust the numbers, I want a month of real detector logs.</p>
+<p>The data says more than half of older pedestrian deaths in 2025 involved jaywalking. My design does nothing for them. A fuller answer would ask why people cross away from the lights. It would fix the walk to the crossing too. My simulator also treats the sensor as perfect. Before I'd trust the numbers, I want a month of real detector logs.</p>
 
 <h2 id="sources">Sources</h2>
 <ul class="tight small">
   <li>Accident figures, 2021 to 2025: <a href="https://www.police.gov.sg/-/media/SPF/Media-Room/Statistics/Annual-Road-Traffic-Situation-2025/Annual-Road-Traffic-Situation-2025.pdf">Singapore Police Force, Annual Road Traffic Situation 2025</a>.</li>
-  <li>The 2021 to 2023 average, Silver Zones, Friendly Streets and Green Man+ expansion: <a href="https://www.mot.gov.sg/news-resources/newsroom/review-of-pedestrian-crossing-infrastructure-including-signal-timings--crossing-distances-and-physical-design-given-increase-in-elderly-pedestrian-fatalities/">MOT written reply, 6 May 2026</a>.</li>
+  <li>The 2021 to 2023 average: <a href="https://www.mot.gov.sg/news-resources/newsroom/review-of-pedestrian-crossing-infrastructure-including-signal-timings--crossing-distances-and-physical-design-given-increase-in-elderly-pedestrian-fatalities/">MOT written reply, 6 May 2026</a>.</li>
   <li>Crossing timing rule: <a href="https://www.mot.gov.sg/news-resources/newsroom/written-reply-by-minister-for-transport-khaw-boon-wan-to-parliamentary-question-on-longer-pre-defined-time-period-at-signalised-pedestrian-crossings/">MOT written reply, 2 October 2017</a>.</li>
-  <li>Steady and flashing green man, Green Man+: <a href="https://www.lta.gov.sg/content/ltagov/en/getting_around/driving_in_singapore/intelligent_transport_systems.html">LTA, Intelligent Transport Systems</a>.</li>
+  <li>Steady and flashing green man, Green Man+ and its expansion: <a href="https://www.lta.gov.sg/content/ltagov/en/getting_around/driving_in_singapore/intelligent_transport_systems.html">LTA, Intelligent Transport Systems</a>.</li>
   <li>Silver Zones: <a href="https://www.lta.gov.sg/content/ltagov/en/who_we_are/statistics_and_publications/Connect/silverzones.html">LTA Connect, Silver Zones</a>.</li>
   <li>Friendly Streets: <a href="https://www.lta.gov.sg/content/ltagov/en/upcoming_projects/road_commuter_facilities/friendly-streets.html">LTA, Friendly Streets</a>.</li>
   <li>Older walking speeds: <a href="https://researchonline.lshtm.ac.uk/id/eprint/1726195">Asher L, Aresu M, Falaschetti E, Mindell J. Most older pedestrians are unable to cross the road in time. Age and Ageing, 2012</a>.</li>

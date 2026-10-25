@@ -85,7 +85,7 @@
     pie.setAttribute('d', piePath(left / (s[2] * 60)));
     var two = left <= 120 && left > 0;
     warn.className = 'nn-warn' + (two || left <= 0 ? ' on' : '');
-    warn.textContent = left <= 0 ? 'Time is up. Freeze, hands up, eyes on me.' : two ? '2 minutes left. Finish your step.' : '';
+    warn.textContent = left <= 0 ? 'Time is up. That is the end of the plan.' : two ? '2 minutes left. Finish your step.' : '';
     startBtn.textContent = running ? 'Pause' : 'Start';
     Array.prototype.forEach.call(list.children, function (li, i) {
       li.className = i === current ? 'current' : i < current ? 'past' : '';
@@ -205,6 +205,20 @@
   document.addEventListener('fullscreenchange', function () {
     if (!document.fullscreenElement && document.body.classList.contains('big-mode')) $('big').click();
   });
+
+  var freezeBtn = $('freeze'), freezeScreen = $('freeze-screen');
+  function setFreeze(on) {
+    if (on) running = false;
+    freezeScreen.hidden = !on;
+    document.body.classList.toggle('frozen', on);
+    freezeBtn.setAttribute('aria-pressed', String(on));
+    live.textContent = on ? 'Freeze. Hands up. Eyes on me.' : 'Now: ' + steps[current][1] + '.';
+    if (on) $('unfreeze').focus(); else freezeBtn.focus();
+    show();
+  }
+  freezeBtn.addEventListener('click', function () { setFreeze(freezeScreen.hidden); });
+  $('unfreeze').addEventListener('click', function () { setFreeze(false); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !freezeScreen.hidden) setFreeze(false); });
 
   renderList();
   goTo(0);

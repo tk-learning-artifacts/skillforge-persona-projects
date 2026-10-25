@@ -51,7 +51,7 @@
     <a class="btn" href="changi_monthly_mean_temp.csv" download>The CSV file</a>
   </div>
 
-  <p>Cell 1 reads the file with Python's <code>csv</code> module. Each row becomes a dictionary, with the column names from the first line as its keys. Every value comes in as text, so <code>float()</code> turns the temperature into a number.</p>
+  <p>Cell 1 reads the file with Python's <code>csv</code> module. Each row becomes a dictionary. Its keys are the column names from the first line. Every value comes in as text, so <code>float()</code> turns the temperature into a number.</p>
   <div class="cell" data-file="cell1.py" data-title="Load the file">
     <div class="cell-head"><span class="prompt">In [ ]</span><span class="title">1. Load the file</span><button type="button" class="run">Run</button></div>
     <div class="editor-host"></div><div class="console-host"></div><div class="figs"></div>
@@ -87,7 +87,7 @@
     <div class="editor-host"></div><div class="console-host"></div><div class="figs"></div>
   </div>
 </div>
-<p class="small">This page runs the code with MiniPy, a small Python written in JavaScript. It needs no login and nothing to install. Its matplotlib is a stand-in that draws the same kind of chart. I ran every cell in Python 3.13 on the same file and got the same numbers. In Colab, the real libraries run.</p>
+<p class="small">This page runs the code with MiniPy, a small Python written in JavaScript. It needs no login and nothing to install. Its matplotlib is a stand-in that draws the same kind of chart. I also ran every cell in Python 3.13 on the same file. The numbers matched. In Colab, the real libraries run.</p>
 
 <h2 id="found">What the program found</h2>
 <div class="table-wrap">
@@ -101,15 +101,15 @@
 <p>For scale: the first ten years at Changi Airport, 1984 to 1993, averaged 27.23 °C. The 2015 to 2024 decade was 0.88 °C warmer.</p>
 <p>Three things in the data surprised me. Each one is now a question for my class.</p>
 <ul class="tight">
-  <li>The file starts in 1982, but NEA's trends start in 1984. The Meteorological Service Singapore's <a href="https://file.go.gov.sg/nea-acar-2025.pdf">2025 climate report</a> says the climate station has been at Changi Airport since 1984. My first version started in 1982, and its trend came out at 0.22 °C per decade, not 0.24. Reading the footnote changed my code.</li>
+  <li>The file starts in 1982, but NEA's trends start in 1984. The Meteorological Service Singapore's <a href="https://file.go.gov.sg/nea-acar-2025.pdf">2025 climate report</a> says why. The climate station has been at Changi Airport since 1984. My first version started in 1982. Its trend came out at 0.22 °C per decade, not 0.24. Reading the footnote changed my code.</li>
   <li>2026 has only 9 months. Its mean leaves out November and December, which are cooler months at Changi. So cell 2 drops any year without 12 months.</li>
   <li>Look at 1997 in cell 3: 28.25 "rounds to" 28.2, not 28.3. The mean is exactly 28.25, and Python rounds an exact tie to the even digit. The <a href="https://docs.python.org/3/library/functions.html#round">round() docs</a> explain it. My adult learners always ask about this.</li>
 </ul>
 <p>What it does not show: why. The data shows Changi getting warmer. It says nothing about the cause. That is a different claim, and it needs different evidence.</p>
 
 <h2 id="chart">Is the chart fair?</h2>
-<p>The line chart's y axis runs from about 26.7 °C to 28.5 °C. It doesn't start at 0. In this module we met charts that hide a cut axis to make a change look big. So is this one a trick?</p>
-<p>I say it's fair here, for two reasons. First, 0 °C means nothing in Singapore's weather. A bar chart from 0 would squash a 1.7-degree range into a flat row. Second, the axis is labelled, and the numbers are printed above it. matplotlib picks this kind of range for line charts by itself. For bar charts, it starts at 0. I ask my class to try <code>plt.bar</code> in cell 6 and argue about which is more fair.</p>
+<p>The line chart's y axis runs from about 26.7 °C to 28.5 °C. It doesn't start at 0. In this module we met charts with a hidden cut axis. It makes a change look big. So is this one a trick?</p>
+<p>I say it's fair here, for two reasons. First, 0 °C means nothing in Singapore's weather. A bar chart from 0 would squash a 1.7-degree range into a flat row. Second, the axis is labelled, and the numbers are printed above it. matplotlib picks this kind of range for line charts by itself. For bar charts, it starts at 0. I ask my class to try <code>plt.bar</code> in cell 6. Then they argue about which is more fair.</p>
 
 <h2 id="share">Share link and Colab</h2>
 <p>My share link is this page. It runs the whole notebook in any browser, with no account. To run the real thing in <a href="https://colab.research.google.com/">Google Colab</a>:</p>
@@ -119,8 +119,8 @@
   <li>Open the Files panel on the left and upload the CSV. Then run the cells from the top.</li>
 </ol>
 <ul class="tight">
-  <li>The CSV won't stay. Colab runs on a virtual machine, and the FAQ says machines are deleted when idle for a while. Upload the file again each session, or keep it in Drive.</li>
-  <li>Colab needs a Google account. In Singapore, 13 is the minimum age to manage your own Google account (<a href="https://support.google.com/accounts/answer/1350409?hl=en">Google</a>). For school accounts, the FAQ says Colab is off by default. Schools must get parental consent for students under 18.</li>
+  <li>The CSV won't stay. Colab runs on a virtual machine. The FAQ says these machines are deleted when idle for a while. Upload the file again each session, or keep it in Drive.</li>
+  <li>Colab needs a Google account. In Singapore, 13 is the minimum age to manage your own Google account (<a href="https://support.google.com/accounts/answer/1350409?hl=en">Google</a>). For school accounts, the FAQ says the school's admin turns Colab on or off. Schools must also get parental consent for students under 18.</li>
 </ul>
 <p>That last point is why this version is for adults. My secondary classes would use this page, or the Raspberry Pi Code Editor, instead.</p>
 
@@ -146,9 +146,9 @@
 <div class="card">
 <p><strong>What I changed</strong></p>
 <ul class="tight">
-  <li>From note 4: the lesson now starts with the upload, and this page is the backup for blocked laptops.</li>
+  <li>From note 4: the lesson now starts with the upload. This page is the backup for blocked laptops.</li>
   <li>From note 2: an error card on every desk. It says "read the last line first".</li>
-  <li>From note 1: the Make task lets learners pick their own question, so spreadsheet users get a real challenge.</li>
+  <li>From note 1: the Make task lets learners pick their own question. Spreadsheet users get a real challenge.</li>
   <li>From note 3: nothing. It's the best opening to the lesson I could ask for.</li>
 </ul>
 </div>
@@ -166,7 +166,7 @@
   <li>One station is not all of Singapore. Changi is NEA's climate station, but other places may have warmed more or less.</li>
   <li>The monthly means are rounded to 0.1 °C. So 2024 "beating" 2019 by 0.01 °C means nothing. NEA calls it a tie, and so should we.</li>
   <li>A straight-line trend is a summary. It doesn't explain the bumps, like the warm years of 1997 and 1998.</li>
-  <li>Two learners asked why we don't use pandas. It would be shorter. I chose the <code>csv</code> module so the loop is in plain sight. Next time I'd add a last cell that does the same in pandas, so they can compare.</li>
+  <li>Two learners asked why we don't use pandas. It would be shorter. I chose the <code>csv</code> module so the loop is in plain sight. Next time I'd add a last cell that does the same in pandas. Then they can compare.</li>
 </ul>
 
 <h2 id="sources">Sources</h2>

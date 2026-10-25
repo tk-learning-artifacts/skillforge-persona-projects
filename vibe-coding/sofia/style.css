@@ -93,9 +93,9 @@ pre code { background: none; padding: 0; }
 .kr-cup .sugar { fill: var(--sugar); stroke: var(--sugar-edge); stroke-width: 2; }
 .kr-cuptext { margin: 4px 0; font-size: 0.95rem; color: var(--ink-2); }
 .kr-say { min-height: 3em; margin: 6px 0; padding: 8px 12px; border-radius: 12px; font-weight: 700; text-align: center; }
-.kr-say:empty { background: transparent; }
 .kr-say.good { background: var(--green-soft); color: var(--good); }
 .kr-say.bad { background: var(--red-soft); color: var(--bad); }
+.kr-say:empty { background: transparent; }
 .kr-builder fieldset { border: 0; padding: 0; margin: 0 0 8px; }
 .kr-builder legend { font-weight: 800; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); padding: 0; margin-bottom: 4px; }
 .kr-choices { display: grid; grid-template-columns: repeat(auto-fit, minmax(96px, 1fr)); gap: 6px; }

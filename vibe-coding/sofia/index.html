@@ -70,21 +70,21 @@
 
 <h2 id="build">How I built it</h2>
 <ul class="tight">
-  <li>I used Claude in a browser. When Claude writes a small web app, it can show it in an artifact window beside the chat. I could play each version the moment it was written.</li>
+  <li>I used Claude in a browser. Claude can show a small web app in an artifact window beside the chat. I could play each version the moment it was written.</li>
   <li>11 prompts in all, over about two hours on two evenings. The <a href="prompts.html">prompt log</a> has every one, word for word.</li>
   <li>My campers never used Claude. Its terms say users must be 18 or over. They played the game on camp iPads, with no accounts and nothing saved.</li>
 </ul>
 
 <h3>The 2-minute bug hunt</h3>
-<p>On day 3, I ran my favourite CodePen game with the campers. Pairs got the game for two minutes. Their job was to break it. Tap fast, tap everything, do silly things. Each pair wrote one bug on a sticky note. Here is what they found, and what each note became.</p>
+<p>On day 3, I ran my favourite camp game: the bug hunt. Pairs got the game for two minutes. Their job was to break it. Tap fast, tap everything, do silly things. Each pair wrote one bug on a sticky note. Here is what they found, and what each note became.</p>
 <p class="small">My campers and their notes are made up, like me. The bugs and fixes are real parts of the code.</p>
 <div class="scroll">
 <table>
   <thead><tr><th>Sticky note</th><th>What was wrong</th><th>What I did</th></tr></thead>
   <tbody>
-    <tr><td>"Tap Serve two times = 2 points!!"</td><td>A fast double tap scored one drink twice.</td><td>Prompt 6. Serve now locks while the customer talks.</td></tr>
+    <tr><td>"Tap Serve two times = 2 points!"</td><td>A fast double tap scored one drink twice.</td><td>Prompt 6. Serve now locks while the customer talks.</td></tr>
     <tr><td>"The new order came too fast. I didn't read why I was wrong."</td><td>A wrong drink skipped to the next order after 1 second.</td><td>Prompt 6. A wrong cup stays, so you fix only the wrong part.</td></tr>
-    <tr><td>"Serve is under the screen" (on a small phone)</td><td>On a narrow screen, Serve sat below the fold.</td><td>Prompt 6. The order and buttons stack in one column, Serve right under the choices.</td></tr>
+    <tr><td>"Serve is under the screen" (on a small phone)</td><td>On a narrow screen, Serve sat off the bottom of the screen.</td><td>Prompt 6. The order and buttons stack in one column, Serve right under the choices.</td></tr>
     <tr><td>"Kopi and Teh look the same colour"</td><td>The cup colours were too close.</td><td>Prompt 8. Different browns, and words under the cup.</td></tr>
     <tr><td>"Too easy. I did 30 in a row."</td><td>One 11-year-old cleared level 3 in four minutes.</td><td>Prompt 9. Rush mode, with the board hidden.</td></tr>
   </tbody>
@@ -92,14 +92,15 @@
 </div>
 
 <h3>Checking the kopitiam facts</h3>
-<p>Claude's first code table was wrong in a way I'd have missed if I didn't drink kopi. It said C means condensed milk, and plain Kopi uses evaporated milk. It's the other way round. Plain Kopi has condensed milk, C means evaporated milk, and O means no milk. It also asked for "Kopi kosong". My sources only list kosong with O or C, like "Kopi O kosong". So I took plain kosong orders out. I fixed the table by hand, and I checked every word on the code board against the sources below.</p>
+<p>Claude's first code table was wrong in a way I'd have missed if I didn't drink kopi. It said C means condensed milk, and plain Kopi uses evaporated milk. It's the other way round. Plain Kopi has condensed milk, C means evaporated milk, and O means no milk. It also asked for "Kopi kosong". My sources use kosong with O or C, like "Kopi O kosong" or "Kopi C kosong peng". One guide says plain "Kopi kosong" has no milk at all. That clashes with plain Kopi having condensed milk. So I took plain kosong orders out. I fixed the table by hand. Then I checked every word on the code board against the sources below.</p>
 
 <h2 id="code">Under the hood</h2>
-<p>The code is in three plain JavaScript files, with no libraries.</p>
+<p>The code is in four plain JavaScript files, with no libraries.</p>
 <ul class="tight">
   <li><code>kopi.js</code> holds the order rules: the word table, the 44 drinks, and the customer's messages. No page code, so it can be tested on its own.</li>
   <li><code>game.js</code> draws the stall and runs the three modes.</li>
   <li><code>demo.js</code> runs the 90-second demo, using the real buttons.</li>
+  <li><code>tests.js</code> runs the order checker tests below.</li>
 </ul>
 <p>The word table sits at the top of <code>kopi.js</code>. To fix a word, you change one line. This was my prompt 2: I wanted to fix facts without reading the whole program. Here is the milk part:</p>
 <pre><code>milk: [
@@ -116,11 +117,11 @@
 <h2 id="reflection">Reflection: what I changed and why</h2>
 <ul class="tight">
   <li>I swapped condensed and evaporated milk in the word table. Claude had them the wrong way round.</li>
-  <li>I took out plain "Kopi kosong" and "Teh kosong" orders, because I couldn't find them in my sources.</li>
+  <li>I took out plain "Kopi kosong" and "Teh kosong" orders. My sources don't agree on what they mean.</li>
   <li>I rewrote every customer message. Claude's said "Incorrect milk selection." An 8-year-old needs the rule, like "C means evaporated milk."</li>
   <li>I cut the Peek time from 5 seconds to 3. Campers just waited with the board open.</li>
   <li>I stopped the same order coming twice in a row. Two campers thought the game was stuck.</li>
-  <li>Every bug-hunt note above became a prompt, and I tested each fix with the camper who found it.</li>
+  <li>Every bug-hunt note above became a prompt. I tested each fix with the camper who found it.</li>
 </ul>
 
 <h3>How much was AI and how much was me</h3>
@@ -130,19 +131,20 @@
 <h3>Rubric check</h3>
 <ul class="tight">
   <li><b>App works in the browser.</b> Yes. All three modes, on a phone-width screen and a laptop, in light and dark mode. The tests pass on load.</li>
-  <li><b>Readable code that follows good practice.</b> Mostly. The rules are apart from the screen code, the word table is in one place, and the tests run without a library. But <code>game.js</code> has one long <code>mount()</code> function. If a camper asked me where Rush lives, I'd have to scroll.</li>
+  <li><b>Readable code that follows good practice.</b> Mostly. The rules are apart from the screen code. The word table is in one place. The tests run without a library. But <code>game.js</code> has one long <code>mount()</code> function. If a camper asked me where Rush lives, I'd have to scroll.</li>
   <li><b>Precise, reproducible prompts.</b> My first prompt names the age group, every button, the device and what I don't want. Claude will write different code each time. But anyone can check the result against the same list.</li>
   <li><b>Fair reflection on AI vs human effort.</b> I've given the line count and said why I think it undersells the human part. You might disagree. Typing is effort too.</li>
 </ul>
 
 <h2 id="change">What I would change</h2>
-<p>Kopi Rush needs reading. A 7-year-old who reads slowly can't play Learn mode alone, and Rush punishes slow readers most. Next camp I'd add a "read it to me" button. I'd also add Milo and a few more drinks, because the campers kept asking for them. Finally, the game teaches the code, not what's in the cup. A kopi with normal sugar has a lot of sugar. That's a good talk for another day.</p>
+<p>Kopi Rush needs reading. An 8-year-old who reads slowly can't play Learn mode alone, and Rush punishes slow readers most. Next camp I'd add a "read it to me" button. I'd also add Milo and a few more drinks, because the campers kept asking for them. Finally, the game teaches the code, not what's in the cup. A kopi with normal sugar has a lot of sugar. That's a good talk for another day.</p>
 
 <h2 id="sources">Sources</h2>
 <ul class="tight small">
   <li>Kopi, Kopi O, Kopi C, kosong, siew dai, gah dai and peng: <a href="https://en.wikipedia.org/wiki/Kopi_(drink)">Wikipedia, Kopi (drink)</a>, ordering table. Its table cites the Singapore Coffee Association.</li>
+  <li>Kopi C kosong peng, and plain "kopi kosong" as coffee with no milk: <a href="https://thehoneycombers.com/singapore/order-kopi-singapore/">Honeycombers, How to order kopi in Singapore</a>.</li>
   <li>The same words for teh: <a href="https://thehoneycombers.com/singapore/order-teh-singapore/">Honeycombers, How to order teh in Singapore</a>.</li>
-  <li>Claude artifacts: <a href="https://support.anthropic.com/en/articles/9487310-what-are-artifacts-and-how-do-i-use-them">Anthropic Help Center, What are artifacts and how do I use them?</a></li>
+  <li>Claude artifacts: <a href="https://support.claude.com/en/articles/9487310-what-are-artifacts-and-how-do-i-use-them">Anthropic Help Center, What are artifacts and how do I use them?</a></li>
   <li>Claude's minimum age of 18: <a href="https://www.anthropic.com/legal/consumer-terms">Anthropic Consumer Terms of Service</a>.</li>
 </ul>
 </main>

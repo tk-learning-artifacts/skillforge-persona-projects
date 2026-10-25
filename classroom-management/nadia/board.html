@@ -26,7 +26,7 @@
 
 <div class="nn">
   <div class="nn-card now">
-    <p class="tag">NOW</p>
+    <p class="tag">Now</p>
     <div id="now-icon"></div>
     <p class="word" id="now-word"></p>
     <div class="nn-timer">
@@ -35,19 +35,26 @@
     </div>
   </div>
   <div class="nn-card next">
-    <p class="tag">NEXT</p>
+    <p class="tag">Next</p>
     <div id="next-icon"></div>
     <p class="word" id="next-word"></p>
     <p class="nn-warn" id="warn"></p>
   </div>
 </div>
 <p class="small" id="live" aria-live="polite"></p>
+<div class="freeze" id="freeze-screen" hidden>
+  <svg viewBox="0 0 200 200" aria-hidden="true"><path d="M59 6 H141 L194 59 V141 L141 194 H59 L6 141 V59 Z" fill="#b3261e" stroke="#fff" stroke-width="8"/><path d="M66 100 h68" stroke="#fff" stroke-width="22" stroke-linecap="round"/></svg>
+  <p class="freeze-word">Freeze</p>
+  <p class="freeze-sub">Hands up. Eyes on me.</p>
+  <button type="button" id="unfreeze">Back to the board</button>
+</div>
 
 <div class="nn-controls">
   <button type="button" class="go" id="start">Start</button>
   <button type="button" id="prev">Back a step</button>
   <button type="button" id="next">Next step</button>
   <button type="button" id="restart">Start over</button>
+  <button type="button" class="stop" id="freeze" aria-pressed="false">Freeze</button>
   <button type="button" id="sound" aria-pressed="false">Chime: off</button>
   <button type="button" id="big" aria-pressed="false">Big screen: off</button>
   <button type="button" id="fast" aria-pressed="false" class="hide-big">Try it fast: off</button>
@@ -69,6 +76,7 @@
   <li>At 2 minutes, I also hold up two fingers. Pupils who aren't looking still get the warning.</li>
   <li>If the plan changes, I change the board first, then tell the class. A change on the board is easier to take than a surprise.</li>
   <li>Try it fast runs one minute in two seconds. Use it to try the board out, not in class.</li>
+  <li>Freeze is the emergency stop. It pauses the timer and fills the screen with a red stop sign. I say "Freeze, hands up" at the same time.</li>
 </ul>
 <p class="small">The board never flashes. Flashing lights can be hard for some pupils. So the warning is a steady orange box with words.</p>
 </div>

@@ -13,13 +13,13 @@
 <p><a href="index.html">Back to Box Box</a></p>
 <p class="kicker">Deliverable: code</p>
 <h1>The code</h1>
-<p class="lede">One Arduino sketch for the M5Stack Core, one secrets file that never goes into git, and the dashboard setup. It is the final version. Version 1 is described at the bottom, so you can see what changed.</p>
+<p class="lede">Three parts: one Arduino sketch for the M5Stack Core, one secrets file and the dashboard setup. The secrets file never goes into git. It is the final version. Version 1 is described at the bottom, so you can see what changed.</p>
 
 <h2><span class="num">01</span>Before you start</h2>
 <ul class="tight">
   <li>Arduino IDE with the ESP32 board package from Espressif.</li>
   <li>Libraries, from the Library Manager: <a href="https://github.com/m5stack/M5Unified">M5Unified</a> and <a href="https://github.com/adafruit/Adafruit_MQTT_Library">Adafruit MQTT Library</a>.</li>
-  <li>A free <a href="https://io.adafruit.com/">Adafruit IO</a> account. Adafruit IO accounts follow Adafruit's own age rules. In my team, I own the account and the students use the dashboard on my laptop.</li>
+  <li>A free <a href="https://io.adafruit.com/">Adafruit IO</a> account. Make it in the coach's name, not a student's. In my team, I own the account. Students use the dashboard on my laptop.</li>
   <li>Three feeds: <code>robot-volts</code>, <code>robot-status</code> and <code>pit-call</code>. The free plan allows 10 feeds and 5 dashboards.</li>
 </ul>
 
@@ -99,7 +99,7 @@ void handleCommand(const char *raw) {
 
 bool ensureMqtt() {
   if (mqtt.connected()) return true;
-  if (WiFi.status() != WL_CONNECTED || millis() &lt; nextTry) return false;
+  if (millis() &lt; nextTry) return false;   <span class="c">// tries even with Wi-Fi off, so the wait keeps growing (trial 4)</span>
   int8_t ret = mqtt.connect();     <span class="c">// 0 means connected</span>
   if (ret != 0) {
     note = String("Retry in ") + (backoff / 1000) + " s";
@@ -186,17 +186,17 @@ void loop() {
     } else { missed++; }
   }
 }</code></pre>
-<p class="small">I wrote this sketch for this example and checked it against the libraries' own examples and docs. I have not compiled it against every library version. If the compiler complains, the library examples are the place to compare.</p>
+<p class="small">I wrote this sketch for this example. I checked it against the libraries' own examples and docs. I have not compiled it against every library version. If the compiler complains, the library examples are the place to compare.</p>
 
 <h2><span class="num">04</span>Walk through it</h2>
 <ol class="tight">
-  <li>Reading. The pack goes through a 20 kΩ and 10 kΩ divider, so G36 sees a third of it. <code>analogReadMilliVolts</code> gives a calibrated reading. Ten readings are averaged. Then the multimeter check sets <code>CAL</code>.</li>
+  <li>Reading. The pack goes through a 20 kΩ and 10 kΩ divider. G36 sees a third of it. <code>analogReadMilliVolts</code> gives a calibrated reading. Ten readings are averaged. Then the multimeter check sets <code>CAL</code>.</li>
   <li>Screen first. The screen updates every second from the local reading. A dropped link never blanks it. The driver can always see the volts.</li>
   <li>Sending. One number, two decimal places, to <code>robot-volts</code>. Every 5 s normally, 12 a minute.</li>
-  <li>Budget. The board keeps the times of its last 24 sends. If the oldest is under a minute old, it skips a send and counts it. Adafruit IO's free limit is 30 a minute for the whole account, so this leaves room for dashboard presses.</li>
+  <li>Budget. The board keeps the times of its last 24 sends. If the oldest is under a minute old, it skips a send and counts it. Adafruit IO's free limit is 30 a minute for the whole account. This leaves room for dashboard presses.</li>
   <li>Control. <code>pit-call</code> takes 4 words. Anything else is ignored and never shown.</li>
-  <li>Reconnect. It waits 5, 10, 20, 40, then 60 s between tries. It never stops trying, and the screen keeps working.</li>
-  <li>After a gap. It posts how long it was gone to <code>robot-status</code>. Then it publishes to <code>pit-call/get</code>. Adafruit IO answers with the last pit call, so a BOX sent during the gap is not lost.</li>
+  <li>Reconnect. It waits 5, 10, 20, 40, then 60 s between tries. It never stops trying, and the screen keeps working. It also tries while Wi-Fi is off, so a long drop leaves a long wait. That is the flaw behind trial 4 in the test log.</li>
+  <li>After a gap. It posts how long it was gone to <code>robot-status</code>. Then it publishes to <code>pit-call/get</code>. Adafruit IO answers with the last pit call. So a BOX sent during the gap is not lost.</li>
   <li>Throttle. If Adafruit IO ever posts on <code>/throttle</code>, the board drops to SLOW by itself.</li>
 </ol>
 
@@ -223,7 +223,7 @@ X-AIO-Key: (your key)</code></pre>
 <p>Look at <code>"value"</code>. It is in quotes: a string, not a number. Adafruit IO stores values as text. Before you compare it with 6.6, turn it into a number. My students missed this twice.</p>
 
 <h2><span class="num">07</span>What version 1 was</h2>
-<p>Version 1 was Adafruit's ESP32 example with our feed names, plus a FAST button. It sent every 2 s, and every 1 s on FAST. Its connect function tries 3 times, then runs <code>while (1);</code> and waits for a watchdog reset. On our board the screen just froze. The <a href="index.html#reliability">test log</a> shows what that cost us. You can run version 1 in the <a href="index.html?v=1#sim">simulator</a>.</p>
+<p>Version 1 was Adafruit's ESP32 example with our feed names, plus a FAST button. It sent every 2 s, and every 1 s on FAST. Its connect function tries 3 times. Then it runs <code>while (1);</code> and waits for a watchdog reset. On our board the screen just froze. The <a href="index.html#reliability">test log</a> shows what that cost us. You can run version 1 in the <a href="index.html?v=1#sim">simulator</a>.</p>
 </main>
 </body>
 </html>

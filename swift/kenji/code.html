@@ -19,10 +19,10 @@
 <p class="lede">Every Swift file in <a href="PigOut.swiftpm.zip" download>PigOut.swiftpm.zip</a>, then the tests.</p>
 <div class="panel">
 <p><strong>Rules apart from screens</strong></p>
-<p><code>PigGame</code> is a plain <code>struct</code>. It knows the rules and nothing about SwiftUI. <code>roll</code> and <code>hold</code> change the game and return an event, like <code>.pigOut</code>. <code>GameView</code> keeps one <code>PigGame</code> in <code>@State</code> and turns each event into words and motion. Because the rules stand alone, <code>main.swift</code> can test them on a Mac with no screen at all.</p>
+<p><code>PigGame</code> is a plain <code>struct</code>. It knows the rules and nothing about SwiftUI. <code>roll</code> and <code>hold</code> change the game and return an event, like <code>.pigOut</code>. <code>GameView</code> keeps one <code>PigGame</code> in <code>@State</code> and turns each event into words and motion. The rules stand alone, so <code>main.swift</code> can test them on a Mac with no screen.</p>
 <p>Read in this order: <a href="#PigGame-swift">PigGame.swift</a>, <a href="#GameView-swift">GameView.swift</a>, then the rest.</p>
 </div>
-<p class="small">Every file builds against Apple's iOS SDK with Swift 6.3, and all ten tests pass. <code>Package.swift</code> is left out here. Swift Playgrounds writes it for you.</p>
+<p class="small">Every file was checked with the Swift 6.3 compiler on a Mac. Two lines only work on iPad and iPhone, so the check skipped them. All ten tests pass. <code>Package.swift</code> is left out here. Swift Playgrounds writes it for you.</p>
 <h2 class="plain" id="test-output">What the tests print</h2>
 <pre><code>PASS two rolls add up: 4 + 6 = 10
 PASS hold banks 10 for player 1
@@ -47,7 +47,7 @@ enum Player: Int {
     var other: Player { self == .one ? .two : .one }
 }
 
-// What just happened. The screen turns each event into words, a sound and a wiggle.
+// What just happened. The screen turns each event into words, a haptic and a wiggle.
 enum PigEvent: Equatable {
     case rolled(Int)
     case pigOut          // rolled a 1: turn points lost

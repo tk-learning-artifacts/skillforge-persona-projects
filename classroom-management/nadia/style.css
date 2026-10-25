@@ -65,7 +65,7 @@ button.go { background: var(--blue); border-color: var(--blue); color: var(--gro
 button[aria-pressed="true"] { border-color: var(--blue); background: var(--blue-soft); }
 select { font: inherit; font-size: 0.9em; min-height: 48px; border-radius: 12px; border: 2px solid var(--line); background: var(--raised); color: var(--ink); padding: 0 10px; }
 
-.parts { list-style: none; padding: 0; display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
+.parts { list-style: none; padding: 0; display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
 .parts li { background: var(--raised); border: 2px solid var(--line); border-radius: 16px; padding: 14px 16px; display: grid; grid-template-columns: 48px 1fr; gap: 12px; align-items: start; }
 .parts svg { width: 48px; height: 48px; }
 .parts a { font-weight: 700; }
@@ -139,6 +139,14 @@ select { font: inherit; font-size: 0.9em; min-height: 48px; border-radius: 12px;
 .plan-list svg { width: 30px; height: 30px; }
 .plan-list select, .plan-list input { font: inherit; font-size: 0.85em; min-height: 40px; width: 100%; border-radius: 10px; border: 2px solid var(--line); background: var(--ground); color: var(--ink); padding: 0 6px; }
 .plan-list button { min-height: 40px; min-width: 40px; padding: 0; }
+@media (max-width: 480px) { .plan-list li { grid-template-columns: 28px 1fr 56px 40px; gap: 6px; } }
+button.stop { background: #b3261e; border-color: #b3261e; color: #fff; }
+.freeze { position: fixed; inset: 0; z-index: 50; background: #fff8f6; color: #1a1a1a; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 24px; text-align: center; }
+.freeze[hidden] { display: none; }
+.freeze svg { width: min(46vh, 70vw); height: auto; }
+.freeze-word { font-size: clamp(2.4rem, 9vw, 5rem); font-weight: 700; margin: 0; color: #b3261e; }
+.freeze-sub { font-size: clamp(1.3rem, 4vw, 2.2rem); font-weight: 700; margin: 0 0 12px; }
+.freeze button { background: #fff; color: #1a1a1a; border-color: #1a1a1a; }
 .big-mode .options, .big-mode .ai-note, .big-mode .hide-big { display: none; }
 .big-mode main { max-width: none; }
 

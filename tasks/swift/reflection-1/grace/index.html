@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tap Counter user guide, by Grace Chua</title>
+<link rel="stylesheet" href="../../../../kit/note.css">
+<style>
+  :root {
+    --paper: #f5f7f2; --card: #ffffff; --ink: #1f2a24; --muted: #4f5d55; --line: #d3dbd2;
+    --accent: #2f6b4f; --mark: #2f6b4f; --mark-ink: #ffffff;
+    --phone: #2b2f2d; --screen: #f2f2f7; --btn: #b24a00; --num: #102a43; --soft: #e6efe8;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #121714; --card: #1b221e; --ink: #e8eee9; --muted: #b0bdb4; --line: #34403a;
+      --accent: #8fd1ad; --mark: #8fd1ad; --mark-ink: #102018;
+      --phone: #5b625e; --soft: #22302a;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 17px/1.6 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width: 820px; margin: 0 auto; padding: 20px 16px 64px; }
+  h1, h2 { font-family: Georgia, "Times New Roman", serif; line-height: 1.2; }
+  h1 { font-size: 2rem; margin: 10px 0 4px; }
+  h2 { font-size: 1.4rem; margin: 0 0 8px; color: var(--accent); }
+  .lede { color: var(--muted); font-size: 1.08rem; margin-top: 0; }
+  section { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 18px; margin: 20px 0; }
+  .step { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 240px); gap: 20px; align-items: start; }
+  @media (max-width: 620px) { .step { grid-template-columns: 1fr; } .step figure { max-width: 240px; margin: 0 auto; } }
+  figure { margin: 0; }
+  figure svg { display: block; width: 100%; height: auto; }
+  figcaption { font-size: .92rem; color: var(--muted); margin-top: 6px; }
+  .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 500px; margin: 12px auto 0; }
+  @media (max-width: 520px) { .pair { grid-template-columns: 1fr; max-width: 240px; } }
+  ol, ul { padding-left: 1.3em; margin: 0 0 8px; }
+  li { margin-bottom: 6px; }
+  .num { display: inline-flex; align-items: center; justify-content: center; width: 1.5em; height: 1.5em; border-radius: 50%;
+    background: var(--mark); color: var(--mark-ink); font-weight: 700; font-size: .85em; margin-right: 4px; }
+  .note { background: var(--soft); border-radius: 10px; padding: 10px 14px; font-size: .95rem; }
+  .small { font-size: .92rem; color: var(--muted); }
+  a { color: var(--accent); }
+  /* The drawn phone screens keep light iPad colours in both modes, like a printed screenshot. */
+  .ph-body { fill: var(--phone); }
+  .ph-screen { fill: var(--screen); }
+  .ph-btn { fill: var(--btn); }
+  .ph-num { fill: var(--num); }
+  .ph-text { fill: #1c1c1e; font-family: system-ui, -apple-system, sans-serif; }
+  .ph-card { fill: #ffffff; }
+  .ph-mark { fill: var(--mark); }
+  .ph-mark-t { fill: var(--mark-ink); font: 700 15px system-ui, sans-serif; }
+</style>
+</head>
+<body>
+<p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Grace Chua is one of SkillForge's AI personas, not a real person. AI wrote this page as an example for teachers.</p>
+<main>
+<h1>Tap Counter: a user guide</h1>
+<p class="lede">For someone who has never used the app. Read it from the top. Each step has a picture of the screen.</p>
+<p class="note">The pictures are drawings of my app's screens, made for this page. In a real guide, use screenshots. With no Home button, press the top button and a volume button together. The screenshot goes to the Photos app.</p>
+
+<section>
+<h2>What it is</h2>
+<p>Tap Counter adds one and takes away one. Use it to count things, such as students in the room. It has two screens: the counter and a short quiz.</p>
+</section>
+
+<section class="step">
+<div>
+<h2>Screen 1: the counter</h2>
+<ol>
+  <li>The big number in the middle is your count. It starts at 0.</li>
+  <li><span class="num">1</span>Tap the orange plus button to add one.</li>
+  <li><span class="num">2</span>Tap the orange minus button to take one away. It stops at 0.</li>
+  <li><span class="num">3</span>Tap Reset to go back to 0.</li>
+  <li><span class="num">4</span>Tap "Take the quiz" to open screen 2.</li>
+</ol>
+</div>
+<figure>
+<svg viewBox="0 0 240 440" role="img" aria-labelledby="p1">
+  <title id="p1">Drawing of screen 1. The count shows 7. Markers: 1 on plus, 2 on minus, 3 on Reset, 4 on Take the quiz.</title>
+  <rect class="ph-body" x="4" y="4" width="232" height="432" rx="30"/>
+  <rect class="ph-screen" x="14" y="14" width="212" height="412" rx="22"/>
+  <text class="ph-text" x="120" y="62" text-anchor="middle" font-size="18" font-weight="700">Tap Counter</text>
+  <text class="ph-num" x="120" y="170" text-anchor="middle" font-size="96" font-weight="800" font-family="system-ui, sans-serif">7</text>
+  <rect class="ph-btn" x="34" y="206" width="76" height="56" rx="14"/>
+  <text x="72" y="244" text-anchor="middle" font-size="30" font-weight="700" fill="#fff" font-family="system-ui, sans-serif">−</text>
+  <rect class="ph-btn" x="130" y="206" width="76" height="56" rx="14"/>
+  <text x="168" y="244" text-anchor="middle" font-size="30" font-weight="700" fill="#fff" font-family="system-ui, sans-serif">+</text>
+  <rect class="ph-card" x="70" y="282" width="100" height="40" rx="12"/>
+  <text class="ph-text" x="120" y="308" text-anchor="middle" font-size="16" font-weight="600">Reset</text>
+  <rect class="ph-card" x="44" y="340" width="152" height="44" rx="12"/>
+  <text class="ph-text" x="120" y="368" text-anchor="middle" font-size="16" font-weight="600">Take the quiz</text>
+  <circle class="ph-mark" cx="206" cy="206" r="12"/><text class="ph-mark-t" x="206" y="211" text-anchor="middle">1</text>
+  <circle class="ph-mark" cx="34" cy="206" r="12"/><text class="ph-mark-t" x="34" y="211" text-anchor="middle">2</text>
+  <circle class="ph-mark" cx="170" cy="282" r="12"/><text class="ph-mark-t" x="170" y="287" text-anchor="middle">3</text>
+  <circle class="ph-mark" cx="196" cy="340" r="12"/><text class="ph-mark-t" x="196" y="345" text-anchor="middle">4</text>
+</svg>
+<figcaption>Picture 1: the counter at 7.</figcaption>
+</figure>
+</section>
+
+<section>
+<h2>Screen 2: the quiz</h2>
+<ol>
+  <li>Read the question at the top.</li>
+  <li>Tap one of the three answers. The next question comes up.</li>
+  <li>After question 3, you see your score.</li>
+  <li>Tap "Back to counter" to go back to screen 1.</li>
+</ol>
+<div class="pair">
+<figure>
+<svg viewBox="0 0 240 440" role="img" aria-labelledby="p2">
+  <title id="p2">Drawing of screen 2. Question 2 of 3: What does Reset set the count to? Three answer buttons: 0, 1 and 10.</title>
+  <rect class="ph-body" x="4" y="4" width="232" height="432" rx="30"/>
+  <rect class="ph-screen" x="14" y="14" width="212" height="412" rx="22"/>
+  <text class="ph-text" x="30" y="54" font-size="15">‹ Back</text>
+  <text class="ph-text" x="120" y="100" text-anchor="middle" font-size="14">Question 2 of 3</text>
+  <text class="ph-text" x="120" y="140" text-anchor="middle" font-size="18" font-weight="700">What does Reset</text>
+  <text class="ph-text" x="120" y="164" text-anchor="middle" font-size="18" font-weight="700">set the count to?</text>
+  <rect class="ph-card" x="40" y="200" width="160" height="48" rx="12"/><text class="ph-text" x="120" y="230" text-anchor="middle" font-size="18" font-weight="600">0</text>
+  <rect class="ph-card" x="40" y="262" width="160" height="48" rx="12"/><text class="ph-text" x="120" y="292" text-anchor="middle" font-size="18" font-weight="600">1</text>
+  <rect class="ph-card" x="40" y="324" width="160" height="48" rx="12"/><text class="ph-text" x="120" y="354" text-anchor="middle" font-size="18" font-weight="600">10</text>
+</svg>
+<figcaption>Picture 2: a question with three answers.</figcaption>
+</figure>
+<figure>
+<svg viewBox="0 0 240 440" role="img" aria-labelledby="p3">
+  <title id="p3">Drawing of the score screen. It says You got 2 out of 3, with a Back to counter button.</title>
+  <rect class="ph-body" x="4" y="4" width="232" height="432" rx="30"/>
+  <rect class="ph-screen" x="14" y="14" width="212" height="412" rx="22"/>
+  <text class="ph-text" x="120" y="150" text-anchor="middle" font-size="16">Quiz done</text>
+  <text class="ph-text" x="120" y="196" text-anchor="middle" font-size="24" font-weight="800">You got 2</text>
+  <text class="ph-text" x="120" y="226" text-anchor="middle" font-size="24" font-weight="800">out of 3</text>
+  <rect class="ph-btn" x="40" y="270" width="160" height="50" rx="14"/>
+  <text x="120" y="301" text-anchor="middle" font-size="16" font-weight="700" fill="#fff" font-family="system-ui, sans-serif">Back to counter</text>
+</svg>
+<figcaption>Picture 3: the score screen.</figcaption>
+</figure>
+</div>
+</section>
+
+<section>
+<h2>If something looks wrong</h2>
+<ul>
+  <li>The words are too small: open Settings, then Accessibility, then Display &amp; Text Size. Tap Larger Text.</li>
+  <li>The number vanishes in dark mode: open Settings, then Appearance, and choose Light. On iPadOS 26 or earlier, Light is under Display &amp; Brightness.</li>
+  <li>You want to count again: tap Reset.</li>
+</ul>
+</section>
+
+<section>
+<h2>How I tested this guide</h2>
+<p>I gave it to a Secondary 3 student and a colleague, and watched. I did not help. They both found Reset. Neither found "Take the quiz" at first. So I moved that step up and made the button bigger.</p>
+<p class="small">The student, the colleague and the app are made up, like me. The iPad settings and screenshot buttons are real. See Apple's guides to <a href="https://support.apple.com/en-us/102500">taking a screenshot on iPad</a>, <a href="https://support.apple.com/en-us/102453">bigger text</a> and <a href="https://support.apple.com/en-us/108350">Dark Mode</a>.</p>
+</section>
+</main>
+</body>
+</html>

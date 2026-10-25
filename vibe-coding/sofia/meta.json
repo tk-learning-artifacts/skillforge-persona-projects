@@ -2,5 +2,5 @@
   "module": "vibe-coding",
   "persona": "sofia",
   "title": "Kopi Rush: a kopitiam drinks game I vibe-coded with Claude for camp",
-  "summary": "A playable game for mixed-age campers aged 8 to 12: read kopitiam order codes like Teh C siew dai peng and build the drink. Three modes, a self-playing 90-second demo, 11 prompts word for word, campers' bug-hunt fixes and in-page tests."
+  "summary": "A playable game for mixed-age campers aged 8 to 12. Read kopitiam codes like Teh C siew dai peng and build the drink. It has three modes, a self-playing 90-second demo, 11 prompts and campers' bug-hunt fixes."
 }

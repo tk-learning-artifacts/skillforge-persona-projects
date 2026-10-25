@@ -101,6 +101,7 @@ pre.listing .ln { display: inline-block; width: 2.2em; color: var(--muted); user
 .sheet p { margin: 3px 0; }
 .sheet pre.listing { background: #f6f6f2; border-color: #ccc; color: #111; }
 .sheet pre.listing .ln { color: #777; }
+.sheet :not(pre) > code { background: #eeede4; color: #111; }
 .sheet .q { margin: 5px 0 2px; }
 .sheet .write { border-bottom: 1px solid #999; height: 22px; margin: 0 0 4px; }
 .sheet table { border-collapse: collapse; width: 100%; font-size: 0.9rem; margin: 4px 0; }

@@ -137,7 +137,7 @@
         serial('out', 'to gateway: mode:' + mode);
         if (S.inRange) {
           if (mode === 'test') { S.icon = 'tick'; S.iconUntil = S.m + 3; }
-          else S.nodeMode = mode;
+          else { S.nodeMode = mode; S.modes.add(mode); }
           event('Control B1 is "' + mode + '". The node got it by radio.');
         } else event('Control B1 is "' + mode + '", but the node is out of range.');
       }
@@ -149,7 +149,7 @@
     S.done = true;
     const measured = S.rows.reduce((a, r) => a + (r.lit_quiet_min || 0), 0);
     const truth = S.truth.filter((x) => x === 'waste').length;
-    results.push({ n: results.length + 1, mode: S.everQuiet ? 'mixed' : S.nodeMode, measured, truth, nudges: S.nudges });
+    results.push({ n: results.length + 1, mode: S.modes.size > 1 ? 'mixed' : S.nodeMode, measured, truth, nudges: S.nudges });
     event('End of day. Measured ' + measured + ' lit, quiet minutes. True lit, empty minutes: ' + truth + '.');
     renderResults();
   }
@@ -208,10 +208,13 @@
     drawChart();
     $('events').innerHTML = S.events.slice(0, 4).map((e) => '<li>' + e + '</li>').join('');
     $('run').textContent = S.done ? 'Run the day again' : running ? 'Pause' : (S.m ? 'Resume' : 'Run the day');
+    $('net').textContent = S.netUp ? 'Unplug the network' : 'Plug the network back';
+    $('range').textContent = S.inRange ? 'Move it out of range' : 'Bring it back in range';
+    $('token').textContent = S.tokenOk ? 'Use a wrong token' : 'Fix the token';
   }
 
   function drawChart() {
-    const W = 400, H = 200, L = 30, R = 8, T = 10, B = 22;
+    const W = 400, H = 200, L = 40, R = 8, T = 10, B = 24;
     const x = (m) => L + (W - L - R) * (m / DAY);
     const y = (v) => T + (H - T - B) * (1 - v / 255);
     const css = getComputedStyle(document.documentElement);
@@ -262,7 +265,7 @@
     S = fresh();
     S.nodeMode = S.control === 'test' ? 'remind' : S.control;
     S.sentMode = S.control;
-    S.everQuiet = false;
+    S.modes = new Set([S.nodeMode]);
     $('net').setAttribute('aria-pressed', 'false');
     $('range').setAttribute('aria-pressed', 'false');
     $('token').setAttribute('aria-pressed', 'false');
@@ -280,7 +283,7 @@
     $('reset').addEventListener('click', () => { stopDemo(); running = false; reset(); });
     $('ffwd').addEventListener('click', () => { stopDemo(); while (!S.done) minuteTick(); running = false; render(); });
     $('speed').addEventListener('change', (e) => { speed = Number(e.target.value); });
-    $('control').addEventListener('change', (e) => { S.control = e.target.value; if (S.control === 'quiet') S.everQuiet = true; render(); });
+    $('control').addEventListener('change', (e) => { S.control = e.target.value; render(); });
     const toggle = (id, key, onText) => $(id).addEventListener('click', () => {
       S[key] = !S[key];
       $(id).setAttribute('aria-pressed', S[key] ? 'false' : 'true');
@@ -309,7 +312,7 @@
     [421, '14:30 The cleaner. Lights on, some noise, not counted.', null],
     [449, 'End of day. Compare what the sheet measured with what really happened.', null]
   ];
-  function setControl(v) { $('control').value = v; S.control = v; if (v === 'quiet') S.everQuiet = true; }
+  function setControl(v) { $('control').value = v; S.control = v; }
   function startDemo() {
     $('control').value = 'remind';
     reset();

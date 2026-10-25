@@ -12,7 +12,7 @@
 <p class="ai-note" data-ai-note><strong>Made by an AI persona.</strong> Tom Brennan is one of SkillForge's AI personas, not a real person. AI wrote this project as an example for teachers.</p>
 <main>
 <h1>Lights On, Nobody Home<span class="sub">A classroom energy monitor with two micro:bits and a Google Sheet</span></h1>
-<p class="lede">A micro:bit on the classroom wall listens and looks. When the room goes quiet with the lights still on, it plays a nudge for the last one out. Every 5 minutes, a summary goes to a Google Sheet. The class sets the nudge on or off from the Sheet.</p>
+<p class="lede">A micro:bit on the classroom wall listens and looks. Sometimes the room goes quiet with the lights still on. Then it plays a nudge for the last one out. Every 5 minutes, a summary goes to a Google Sheet. The class sets the nudge on or off from the Sheet.</p>
 <p>I'm Tom. I teach sustainability through projects. My Sec 2 class asked a simple question: how long does our room sit empty with the lights on? MOE wants a two-thirds cut in the schools sector's net carbon emissions by 2030. My students wanted to know what their own room adds. We also asked who a sensor like this helps, and who it leaves out.</p>
 <p>The brief: a mini telemetry demo. The device sends a sensor reading to the cloud and responds to a control message. Here the readings are light, sound and temperature. The control message is a mode, typed into one cell of the Sheet.</p>
 <ul class="toc">
@@ -30,7 +30,7 @@
 </ul>
 
 <h2 id="sim">Run a school day</h2>
-<p>A whole day in Room 2E takes 45 seconds. Change the mode in cell B1, unplug the network, or move the node out of range. Then run a second day with a different mode and compare.</p>
+<p>A whole day in Room 2E takes 45 seconds. Change the mode in cell B1. Unplug the network, or move the node out of range. Then run a second day with a different mode and compare.</p>
 <div class="lab" id="lab">
   <div class="lab-head">
     <span class="room">Room 2E · a made-up day</span>
@@ -104,7 +104,7 @@
 <p class="small">Try this: run one day with B1 set to quiet and one with remind. Then run a day with the node out of range from 10:00. What does the Sheet show for those hours?</p>
 
 <h2 id="video">Demo video</h2>
-<p>47 seconds, captions on the picture, no sound. It is a recording of the simulator above running its demo. These pages show no photos, so the real micro:bits are not in it. To film the real thing, put the node, the PC screen and the Sheet in one shot.</p>
+<p>47 seconds, captions on the picture, no sound. It is a recording of the simulator above running its demo. These pages show no photos, so the real micro:bits are not in it. To film the real thing, get the node, PC and Sheet in one shot.</p>
 <video controls preload="none" playsinline poster="poster.jpg" src="demo.mp4" aria-describedby="tom-transcript"></video>
 <details>
   <summary id="tom-transcript">Transcript and shot list</summary>
@@ -128,20 +128,20 @@
 <h2 id="flow">Data-flow diagram</h2>
 <p>Readings travel down. The mode comes back up on the right, inside the reply to each post.</p>
 <figure>
-<svg class="diagram flow" viewBox="0 0 360 730" role="img" aria-labelledby="tf-title tf-desc">
+<svg class="diagram flow" viewBox="0 0 360 882" role="img" aria-labelledby="tf-title tf-desc">
   <title id="tf-title">Data flow for Lights On, Nobody Home</title>
-  <desc id="tf-desc">The sensor node micro:bit sends light, sound and temperature by radio to the gateway micro:bit. The gateway writes name and value lines over USB to a web page in Chrome on the teacher's PC. Every 5 minutes the page posts a JSON summary over HTTPS to an Apps Script web app, which checks it and adds a row to the Google Sheet. The reply carries the mode from cell B1, which goes back over USB and radio to the node.</desc>
+  <desc id="tf-desc">The sensor node micro:bit sends light, sound and temperature by radio to the gateway micro:bit. The gateway writes name and value lines over USB. A web page in Chrome on the teacher's PC reads them. Every 5 minutes the page posts a JSON summary over HTTPS. An Apps Script web app checks it and adds a row to the Google Sheet. The reply carries the mode from cell B1. It goes back over USB and radio to the node.</desc>
   <style>
     .flow .bx { fill: var(--card); stroke: var(--accent); stroke-width: 1.5; }
     .flow .bx.cloud { fill: var(--sky-soft); stroke: var(--sky); }
     .flow .n { fill: var(--accent); }
-    .flow .nt { fill: var(--ground); font: 700 13px system-ui, sans-serif; }
-    .flow .t { fill: var(--ink); font: 700 13px system-ui, sans-serif; }
-    .flow .s { fill: var(--muted); font: 11.5px system-ui, sans-serif; }
-    .flow .m { fill: var(--accent); font: 11px ui-monospace, Menlo, monospace; }
+    .flow .nt { fill: var(--ground); font: 700 14px system-ui, sans-serif; }
+    .flow .t { fill: var(--ink); font: 700 15px system-ui, sans-serif; }
+    .flow .s { fill: var(--muted); font: 14px system-ui, sans-serif; }
+    .flow .m { fill: var(--accent); font: 12.5px ui-monospace, Menlo, monospace; }
     .flow .ln { stroke: var(--accent); stroke-width: 2.5; fill: none; }
     .flow .bk { stroke: var(--sun-ink); stroke-width: 2.5; fill: none; stroke-dasharray: 7 4; }
-    .flow .bt { fill: var(--sun-ink); font: 700 11.5px system-ui, sans-serif; }
+    .flow .bt { fill: var(--sun-ink); font: 700 13px system-ui, sans-serif; }
     .flow .ah { fill: var(--accent); }
     .flow .ah2 { fill: var(--sun-ink); }
   </style>
@@ -149,70 +149,71 @@
     <marker id="ta" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0 0 L10 5 L0 10 z"/></marker>
     <marker id="tb" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah2" d="M0 0 L10 5 L0 10 z"/></marker>
   </defs>
-  <g>
-    <rect class="bx" x="10" y="8" width="264" height="80" rx="10"/>
-    <circle class="n" cx="30" cy="30" r="12"/><text class="nt" x="30" y="35" text-anchor="middle">1</text>
-    <text class="t" x="50" y="34">Sensor node micro:bit V2</text>
-    <text class="s" x="22" y="54">On the wall by the light switches</text>
-    <text class="s" x="22" y="68">Light, loudest sound, chip temperature</text>
-    <text class="m" x="22" y="82">sendValue("light", 112)</text>
+    <g>
+    <rect class="bx" x="8" y="8" width="276" height="100" rx="10"/>
+    <circle class="n" cx="28" cy="29" r="12"/><text class="nt" x="28" y="34" text-anchor="middle">1</text>
+    <text class="t" x="48" y="34">Sensor node micro:bit V2</text>
+    <text class="s" x="20" y="54">On the wall by the light switches</text>
+    <text class="s" x="20" y="74">Light, sound peak, chip temperature</text>
+    <text class="m" x="20" y="94">sendValue("light", 112)</text>
   </g>
-  <path class="ln" d="M142 88 V110" marker-end="url(#ta)"/>
+  <path class="ln" d="M146 108 V130" marker-end="url(#ta)"/>
   <g>
-    <rect class="bx" x="10" y="112" width="264" height="66" rx="10"/>
-    <circle class="n" cx="30" cy="134" r="12"/><text class="nt" x="30" y="139" text-anchor="middle">2</text>
-    <text class="t" x="50" y="138">micro:bit radio, group 83</text>
-    <text class="s" x="22" y="158">2.4 GHz, sender's serial number on</text>
-    <text class="s" x="22" y="172">Not encrypted</text>
+    <rect class="bx" x="8" y="132" width="276" height="80" rx="10"/>
+    <circle class="n" cx="28" cy="153" r="12"/><text class="nt" x="28" y="158" text-anchor="middle">2</text>
+    <text class="t" x="48" y="158">micro:bit radio, group 83</text>
+    <text class="s" x="20" y="178">2.4 GHz, sender's serial number on</text>
+    <text class="s" x="20" y="198">Not encrypted</text>
   </g>
-  <path class="ln" d="M142 178 V200" marker-end="url(#ta)"/>
+  <path class="ln" d="M146 212 V234" marker-end="url(#ta)"/>
   <g>
-    <rect class="bx" x="10" y="202" width="264" height="80" rx="10"/>
-    <circle class="n" cx="30" cy="224" r="12"/><text class="nt" x="30" y="229" text-anchor="middle">3</text>
-    <text class="t" x="50" y="228">Gateway micro:bit, on USB</text>
-    <text class="s" x="22" y="248">Checks the sender's serial number</text>
-    <text class="s" x="22" y="262">Writes a line at 115200 baud</text>
-    <text class="m" x="22" y="276">light:112</text>
+    <rect class="bx" x="8" y="236" width="276" height="100" rx="10"/>
+    <circle class="n" cx="28" cy="257" r="12"/><text class="nt" x="28" y="262" text-anchor="middle">3</text>
+    <text class="t" x="48" y="262">Gateway micro:bit, on USB</text>
+    <text class="s" x="20" y="282">Checks the sender's serial number</text>
+    <text class="s" x="20" y="302">Writes a line at 115200 baud</text>
+    <text class="m" x="20" y="322">light:112</text>
   </g>
-  <path class="ln" d="M142 282 V304" marker-end="url(#ta)"/>
+  <path class="ln" d="M146 336 V358" marker-end="url(#ta)"/>
   <g>
-    <rect class="bx" x="10" y="306" width="264" height="80" rx="10"/>
-    <circle class="n" cx="30" cy="328" r="12"/><text class="nt" x="30" y="333" text-anchor="middle">4</text>
-    <text class="t" x="50" y="332">Gateway page, Chrome on the PC</text>
-    <text class="s" x="22" y="352">Web Serial. A 5-minute summary.</text>
-    <text class="s" x="22" y="366">Queues rows if the network drops</text>
-    <text class="m" x="22" y="380">lit_quiet_min: 3</text>
+    <rect class="bx" x="8" y="360" width="276" height="120" rx="10"/>
+    <circle class="n" cx="28" cy="381" r="12"/><text class="nt" x="28" y="386" text-anchor="middle">4</text>
+    <text class="t" x="48" y="386">Gateway page in Chrome</text>
+    <text class="s" x="20" y="406">On the teacher's PC, by Web Serial</text>
+    <text class="s" x="20" y="426">Makes a 5-minute summary</text>
+    <text class="s" x="20" y="446">Queues rows if the network drops</text>
+    <text class="m" x="20" y="466">lit_quiet_min: 3</text>
   </g>
-  <path class="ln" d="M142 386 V408" marker-end="url(#ta)"/>
+  <path class="ln" d="M146 480 V502" marker-end="url(#ta)"/>
   <g>
-    <rect class="bx cloud" x="10" y="410" width="264" height="96" rx="10"/>
-    <circle class="n" cx="30" cy="432" r="12"/><text class="nt" x="30" y="437" text-anchor="middle">5</text>
-    <text class="t" x="50" y="436">HTTPS POST, JSON body</text>
-    <text class="m" x="22" y="456">{"room":"2E","light":112,</text>
-    <text class="m" x="22" y="470"> "sound_peak":64,"temp_c":30,</text>
-    <text class="m" x="22" y="484"> "lit_quiet_min":3,"token":"…"}</text>
-    <text class="s" x="22" y="500">Plain text type, so no preflight</text>
+    <rect class="bx cloud" x="8" y="504" width="276" height="120" rx="10"/>
+    <circle class="n" cx="28" cy="525" r="12"/><text class="nt" x="28" y="530" text-anchor="middle">5</text>
+    <text class="t" x="48" y="530">HTTPS POST, JSON body</text>
+    <text class="m" x="20" y="550">{"room":"2E","light":112,</text>
+    <text class="m" x="32" y="570">"sound_peak":64,"temp_c":30,</text>
+    <text class="m" x="32" y="590">"lit_quiet_min":3,"token":"…"}</text>
+    <text class="s" x="20" y="610">Plain text type, so no preflight</text>
   </g>
-  <path class="ln" d="M142 506 V528" marker-end="url(#ta)"/>
+  <path class="ln" d="M146 624 V646" marker-end="url(#ta)"/>
   <g>
-    <rect class="bx cloud" x="10" y="530" width="264" height="80" rx="10"/>
-    <circle class="n" cx="30" cy="552" r="12"/><text class="nt" x="30" y="557" text-anchor="middle">6</text>
-    <text class="t" x="50" y="556">Apps Script web app, doPost</text>
-    <text class="s" x="22" y="576">Token, ranges, room, no repeats</text>
-    <text class="s" x="22" y="590">Adds a row. Reads Control!B1.</text>
-    <text class="m" x="22" y="604">{"ok":true,"mode":"quiet"}</text>
+    <rect class="bx cloud" x="8" y="648" width="276" height="100" rx="10"/>
+    <circle class="n" cx="28" cy="669" r="12"/><text class="nt" x="28" y="674" text-anchor="middle">6</text>
+    <text class="t" x="48" y="674">Apps Script web app, doPost</text>
+    <text class="s" x="20" y="694">Token, ranges, room, no repeats</text>
+    <text class="s" x="20" y="714">Adds a row. Reads Control!B1.</text>
+    <text class="m" x="20" y="734">{"ok":true,"mode":"quiet"}</text>
   </g>
-  <path class="ln" d="M142 610 V632" marker-end="url(#ta)"/>
+  <path class="ln" d="M146 748 V770" marker-end="url(#ta)"/>
   <g>
-    <rect class="bx cloud" x="10" y="634" width="264" height="80" rx="10"/>
-    <circle class="n" cx="30" cy="656" r="12"/><text class="nt" x="30" y="661" text-anchor="middle">7</text>
-    <text class="t" x="50" y="660">Google Sheet</text>
-    <text class="s" x="22" y="680">Data tab: the class can view</text>
-    <text class="s" x="22" y="694">Control tab: protected, B1 = mode</text>
-    <text class="s" x="22" y="708">Eco monitors and I can edit</text>
+    <rect class="bx cloud" x="8" y="772" width="276" height="100" rx="10"/>
+    <circle class="n" cx="28" cy="793" r="12"/><text class="nt" x="28" y="798" text-anchor="middle">7</text>
+    <text class="t" x="48" y="798">Google Sheet</text>
+    <text class="s" x="20" y="818">Data tab: the class can view</text>
+    <text class="s" x="20" y="838">Control tab: protected, B1 = mode</text>
+    <text class="s" x="20" y="858">Eco monitors and I can edit</text>
   </g>
-  <path class="bk" d="M274 590 H320 V48 H282" marker-end="url(#tb)"/>
-  <text class="bt" transform="translate(340 330) rotate(-90)" text-anchor="middle">mode: in the reply, then USB, then radio</text>
+  <path class="bk" d="M284 698 H312 V58 H292" marker-end="url(#tb)"/>
+  <text class="bt" transform="translate(340 378) rotate(-90)" text-anchor="middle">mode: in the reply, then USB, then radio</text>
 </svg>
 <figcaption>Solid arrows: one reading, from the wall to the Sheet. Dashed: the mode, from cell B1 back to the wall. There is no separate control channel. The mode rides home on each reply.</figcaption>
 </figure>
@@ -243,8 +244,8 @@
   <li>Every row carries the time it was measured, not the time it arrived. A row sent late still lands in the right place.</li>
   <li>Rows that fail wait in a queue, saved in the browser. They go up oldest first when the network is back.</li>
   <li>Each row has an id, like <code>2E-10:05</code> plus the date. The script ignores an id it has already stored. A retry never makes a double row.</li>
-  <li>If no reading arrives for 5 minutes, the row is still posted, with blanks and "node silent". A gap is recorded, not hidden.</li>
-  <li>Chrome slows timers in a tab that has been hidden for 5 minutes. So the page builds each row when readings arrive. A backup check every 30 seconds catches a silent node. In a hidden tab it may run only once a minute, which is still in time.</li>
+  <li>If no reading arrives for 5 minutes, the row is still posted. It has blanks and "node silent". A gap is recorded, not hidden.</li>
+  <li>Chrome slows timers in a tab that has been hidden for 5 minutes. So the page builds each row when readings arrive. A backup check every 30 seconds catches a silent node. In a hidden tab it may run only once a minute. That is still in time.</li>
   <li>The script uses a lock, so two posts at once can't write over each other.</li>
 </ul>
 <p class="note">The test results below are made up, like my class. They are the tests I would run.</p>
@@ -275,7 +276,7 @@
   </tbody>
 </table>
 </div>
-<p>The column is called <code>lit_quiet_min</code>, not "wasted minutes". The Sheet cannot see people. A student reading quietly looks the same as an empty room. Fans make noise in an empty room too. So we picked thresholds from our own room: lights on read about 110, daylight alone about 38, an empty room with fans about 50, a class about 150. Those are our made-up numbers. Measure your own room first.</p>
+<p>The column is called <code>lit_quiet_min</code>, not "wasted minutes". The Sheet cannot see people. A student reading quietly looks the same as an empty room. Fans make noise in an empty room too. So we picked thresholds from our own room. Lights on read about 110, and daylight alone about 38. An empty room with fans read about 50, and a class about 150. Those are our made-up numbers. Measure your own room first.</p>
 
 <h2 id="security">Security and privacy</h2>
 <div class="card">
@@ -317,7 +318,7 @@
 <h3>Parts</h3>
 <ul class="tight">
   <li>Two micro:bit V2 boards. The sound sensor needs V2.</li>
-  <li>A battery pack with 2 AAA batteries for the node, and a USB cable for the gateway.</li>
+  <li>A battery pack with 2 AAA batteries for the node. A USB cable for the gateway.</li>
   <li>A classroom PC or Chromebook that stays on, with Chrome.</li>
   <li>A Google account that can make a Sheet and an Apps Script web app.</li>
   <li>Removable mounting putty, and a card sign: "Energy sensor. No camera. No recording."</li>
@@ -328,7 +329,7 @@
   <li>Paste the Apps Script. Add a TOKEN in Script Properties. Deploy it as a web app. Copy the address.</li>
   <li>Flash the node and the gateway micro:bits. Both use radio group 83.</li>
   <li>Open the gateway page, connect, and read each board's serial number from the log. Put them into the two programs. Flash again.</li>
-  <li>Calibrate. Read the light with lights on and off, and the sound with the room empty and full. Set LIT and QUIET between them.</li>
+  <li>Calibrate. Read the light with lights on and off. Read the sound with the room empty and full. Set LIT and QUIET between them.</li>
   <li>Put the node on the wall near the switches, at shoulder height. Leave the gateway page open. Check the first rows in the Sheet.</li>
 </ol>
 <div class="card">
@@ -349,7 +350,7 @@
   <tbody>
     <tr><td>Reliability</td><td>Times travel with the data, a queue, no double rows, "node silent" rows, a lock. 440 of 450 rows in a test week.</td><td>Met, but the PC is a single point of failure.</td></tr>
     <tr><td>Data clarity</td><td>Every column has a scale. Blanks are not zeros. The name says "lit and quiet", not "wasted".</td><td>Met.</td></tr>
-    <tr><td>Security basics</td><td>A token, checks on every value, serial-number checks on the radio, three modes only, a protected cell, no personal data.</td><td>Met for a class project. The radio is still open.</td></tr>
+    <tr><td>Security basics</td><td>A token and checks on every value. Serial-number checks on the radio. Three modes only, a protected cell, no personal data.</td><td>Met for a class project. The radio is still open.</td></tr>
     <tr><td>Documentation</td><td>This page, the code page, the diagram, the gateway page, build steps and safety.</td><td>Met. The video is a simulation, not the real room.</td></tr>
   </tbody>
 </table>
@@ -358,7 +359,7 @@
 <h2 id="change">What I would change</h2>
 <ul class="tight">
   <li>Move the gateway off the PC. An ESP32 board could post straight to the web app. Then a sleeping PC can't stop the data.</li>
-  <li>Count the false alarms. We should log when someone is in the room but quiet, and see how often it happens.</li>
+  <li>Count the false alarms. We should log when someone is in the room but quiet. Then we see how often it happens.</li>
   <li>Find a fair way to sense fans. A student suggested a paper strip and the micro:bit's accelerometer. It is worth a test.</li>
   <li>The nudge comes after the class has left the doorway about half the time. A sensor at the door would be earlier.</li>
 </ul>

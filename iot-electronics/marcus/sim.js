@@ -1,8 +1,8 @@
 // Box Box simulator: the M5Stack, the Wi-Fi, Adafruit IO and the pit wall.
 // Everything is simulated in this page. The rules follow the real sketch on
 // code.html and Adafruit IO's published limits: 30 data points a minute on a
-// free account, a rejected MQTT publish disconnects the client, and bans
-// start at 30 seconds.
+// free account, a rejected MQTT publish disconnects the client, and more than
+// 10 rejected publishes in a minute starts a ban of 30 seconds.
 (function () {
   'use strict';
   const $ = (id) => document.getElementById(id);
@@ -34,7 +34,7 @@
       ownSends: [],                 // device publish times, for the local guard
       points: [],                   // cloud feed robot-volts: {t, v}
       account: [],                  // every data point on the account, for the rate limit
-      banUntil: -1, lastSeen: 0, statusText: 'booted',
+      banUntil: -1, rejects: [], lastSeen: 0, statusText: 'booted',
       inbox: [],                    // control messages on their way to the device
       lastCommand: null,
       log: []
@@ -68,13 +68,18 @@
     if (S.account.length >= RATE_LIMIT) {
       log('err', 'IO: rate limit, publish from ' + from + ' rejected. Notice on /throttle.');
       if (from === 'device') {
-        S.mqtt = false; S.banUntil = S.t + BAN_S;
+        S.mqtt = false;
         S.offlineSince = S.offlineSince == null ? S.t : S.offlineSince;
-        log('err', 'IO: device disconnected and banned for ' + BAN_S + ' s.');
+        S.rejects = S.rejects.filter((x) => S.t - x < 60);
+        S.rejects.push(S.t);
+        if (S.rejects.length > 10) {
+          S.banUntil = S.t + BAN_S; S.rejects = [];
+          log('err', 'IO: more than 10 rejected in a minute. Device banned for ' + BAN_S + ' s.');
+        } else log('err', 'IO: rejected publish. Device disconnected.');
         S.msg = 'THROTTLED';
-        if (S.cfg.guard) { setMode('SLOW', true); }
-        else { S.tries = 0; }
-        S.nextTry = S.t + 5;
+        // The final version slows down and waits. Version 1 reconnects at once and keeps sending.
+        if (S.cfg.guard) { setMode('SLOW', true); S.nextTry = S.t + 5; }
+        else { S.tries = 0; S.nextTry = S.t + 0.5; }
       }
       return false;
     }
@@ -320,7 +325,7 @@
     });
     $('btn-a').addEventListener('click', () => { if (S.frozen) return; S.vMin = null; S.vMax = null; S.msg = 'Min and max reset'; render(); });
     $('btn-reset').addEventListener('click', () => {
-      const keep = { soc: S.soc, running: S.running, wifiOn: S.wifiOn, points: S.points, account: S.account, banUntil: S.banUntil, t: S.t, log: S.log, lastCloudCommand: S.lastCloudCommand, statusText: S.statusText };
+      const keep = { soc: S.soc, running: S.running, wifiOn: S.wifiOn, points: S.points, account: S.account, banUntil: S.banUntil, rejects: S.rejects, t: S.t, log: S.log, lastCloudCommand: S.lastCloudCommand, statusText: S.statusText };
       S = Object.assign(fresh(S.version), keep);
       S.wifiUp = S.wifiOn; S.mqtt = false; S.offlineSince = S.t; S.nextTry = S.t + 1;
       log('sys', 'device: reset pressed. Booting.');

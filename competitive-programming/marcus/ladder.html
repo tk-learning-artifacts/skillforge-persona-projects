@@ -17,10 +17,10 @@
 <p class="lede">Twelve USACO problems, three a week, each rung a little higher. Every one has two hint cards: a Nudge and a Push.</p>
 <div class="card">
 <p>A Nudge points you at what to look at. A Push names the idea. Neither one is code. Flip the Nudge after 10 minutes stuck, and the Push 5 minutes after that.</p>
-<p>The level tags come from the <a href="https://usaco.guide/bronze/">USACO Guide</a>, which rates each practice problem in a module. The ones I used run from Easy to Medium. Two of mine are not in the Guide's tables, so they say "not rated". The colour bar on the left shows the same thing: green for Bronze Easy, yellow for Bronze Medium, orange for Silver, and plain for the unrated Bronze one.</p>
+<p>The level tags come from the <a href="https://usaco.guide/bronze/">USACO Guide</a>. It rates each practice problem in a module. The ones I used run from Easy to Medium. One of mine is not in the Guide's tables, so it says "not rated". The colour bar on the left shows the same thing. Green is Bronze Easy, yellow is Bronze Medium, orange is Silver. Plain is the unrated Bronze one.</p>
 </div>
-<p>How the ladder climbs: Bronze Easy for seven rungs, then Bronze Medium, then Silver. Rung 10 steps back to Bronze on purpose. BFS is new that week, so it starts on a 10 by 10 grid before the 1,000 by 1,000 one.</p>
-<p class="small">Older problems, up to 2019 here, read from a file such as <code>lostcow.in</code> and write to <code>lostcow.out</code>. Daisy Chains, from December 2020, uses the keyboard and screen. The tags say which.</p>
+<p>How the ladder climbs: Bronze Easy for seven rungs, then Bronze Medium, then Silver. Rung 10 steps back to Bronze on purpose. BFS is new that week. So it starts on a 10 by 10 grid, then moves to 1,000 by 1,000.</p>
+<p class="small">Older problems, up to 2019 here, read from a file such as <code>lostcow.in</code>. They write to <code>lostcow.out</code>. Daisy Chains, from December 2020, uses the keyboard and screen. The tags say which.</p>
 
 <h2 id="wk1">Week 1: Simulate it</h2>
 
@@ -69,7 +69,7 @@
 <section class="rung e" id="r5">
 <h3><span class="n">5</span><a href="http://www.usaco.org/index.php?page=viewproblem2&amp;cpid=639">Diamond Collector</a></h3>
 <ul class="tags"><li class="lvl">Bronze · Easy</li><li>2016 US Open</li><li>complete search</li><li>file input</li></ul>
-<p>Put as many diamonds as you can in a case, as long as no two differ in size by more than K.</p>
+<p>Put as many diamonds as you can in a case. No two may differ in size by more than K.</p>
 <div class="hints">
 <details class="hint"><summary>Nudge</summary><p>In the best case, one diamond is the smallest. You do not know which, so try each one.</p></details>
 <details class="hint"><summary>Push</summary><p>Once you fix the smallest size, which other diamonds can join it? Count them.</p></details>
@@ -79,7 +79,7 @@
 <section class="rung e" id="r6">
 <h3><span class="n">6</span><a href="http://www.usaco.org/index.php?page=viewproblem2&amp;cpid=1060">Daisy Chains</a></h3>
 <ul class="tags"><li class="lvl">Bronze · Easy</li><li>2020 December</li><li>complete search</li><li>keyboard input</li><li>week 2 sprint</li></ul>
-<p>For every run of flowers in a row, is there a flower with exactly the average number of petals?</p>
+<p>Take every run of flowers in a row. Does one flower have exactly the average number of petals?</p>
 <div class="hints">
 <details class="hint"><summary>Nudge</summary><p>N is at most 100. How many runs of flowers are there? Small enough to check every one?</p></details>
 <details class="hint"><summary>Push</summary><p>An average can only match a flower if it is a whole number. Check that first, then look for it in the run.</p></details>
@@ -91,7 +91,7 @@
 <section class="rung e" id="r7">
 <h3><span class="n">7</span><a href="http://www.usaco.org/index.php?page=viewproblem2&amp;cpid=964">Where Am I?</a></h3>
 <ul class="tags"><li class="lvl">Bronze · Easy</li><li>2019 December</li><li>sets, strings</li><li>file input</li></ul>
-<p>Find the smallest K so that every K mailboxes in a row look different from every other K in a row.</p>
+<p>Find the smallest K so that every run of K mailboxes is unique.</p>
 <div class="hints">
 <details class="hint"><summary>Nudge</summary><p>Try K = 1, then 2, then 3. The first K that works is the answer.</p></details>
 <details class="hint"><summary>Push</summary><p>For one K, put every piece of length K into a set. If a piece is already there, that K fails.</p></details>
@@ -110,7 +110,7 @@
 
 <section class="rung s" id="r9">
 <h3><span class="n">9</span><a href="http://www.usaco.org/index.php?page=viewproblem2&amp;cpid=666">Counting Haybales</a></h3>
-<ul class="tags"><li class="lvl">Silver · not rated</li><li>2016 December</li><li>sorting, binary search</li><li>file input</li><li>week 3 sprint</li></ul>
+<ul class="tags"><li class="lvl">Silver · Easy</li><li>2016 December</li><li>sorting, binary search</li><li>file input</li><li>week 3 sprint</li></ul>
 <p>100,000 haybales and 100,000 questions: how many bales lie between A and B?</p>
 <div class="hints">
 <details class="hint"><summary>Nudge</summary><p>Checking every bale for every question is 100,000 times 100,000. Is that inside the time limit?</p></details>
@@ -133,10 +133,10 @@
 <section class="rung s" id="r11">
 <h3><span class="n">11</span><a href="http://www.usaco.org/index.php?page=viewproblem2&amp;cpid=895">Icy Perimeter</a></h3>
 <ul class="tags"><li class="lvl">Silver · Easy</li><li>2019 January</li><li>flood fill</li><li>file input</li></ul>
-<p>Find the biggest blob of ice cream in a grid up to 1,000 by 1,000, and its perimeter.</p>
+<p>Find the biggest blob of ice cream and its perimeter. The grid is up to 1,000 by 1,000.</p>
 <div class="hints">
 <details class="hint"><summary>Nudge</summary><p>Find each blob with a flood fill. Count its cells as you go.</p></details>
-<details class="hint"><summary>Push</summary><p>Each cell has 4 sides. A side counts for the perimeter when the next cell is not ice, or is off the grid.</p></details>
+<details class="hint"><summary>Push</summary><p>Each cell has 4 sides. A side counts when the next cell is not ice, or is off the grid.</p></details>
 </div>
 </section>
 
@@ -153,7 +153,7 @@
 <h2 id="sources">Sources</h2>
 <ul class="sources">
   <li>Each problem's statement, contest and division: its USACO page, linked in the title.</li>
-  <li>Level labels: the USACO Guide modules <a href="https://usaco.guide/bronze/simulation">Simulation</a>, <a href="https://usaco.guide/bronze/intro-complete">Basic Complete Search</a>, <a href="https://usaco.guide/bronze/intro-sets">Introduction to Sets and Maps</a>, <a href="https://usaco.guide/bronze/intro-sorting">Introduction to Sorting</a> and <a href="https://usaco.guide/silver/flood-fill">Flood Fill</a>, read on 24 October 2026.</li>
+  <li>Level labels: the USACO Guide modules <a href="https://usaco.guide/bronze/simulation">Simulation</a>, <a href="https://usaco.guide/bronze/intro-complete">Basic Complete Search</a>, <a href="https://usaco.guide/bronze/intro-sets">Introduction to Sets and Maps</a>, <a href="https://usaco.guide/bronze/intro-sorting">Introduction to Sorting</a>, <a href="https://usaco.guide/silver/binary-search-sorted-array">Binary Search on a Sorted Array</a> and <a href="https://usaco.guide/silver/flood-fill">Flood Fill</a>. I read them on 24 October 2026.</li>
   <li>File input for problems before December 2020: <a href="http://www.usaco.org/index.php?page=instructions">USACO contest instructions</a>.</li>
 </ul>
 </main>

@@ -79,7 +79,7 @@ Write comments a beginner can follow. Text must be big enough to read on a class
 <dt>Prompt</dt>
 <dd><p class="prompt">Save the class list and the picks in this round in localStorage, so a page refresh in the middle of a lesson loses nothing. First explain localStorage in two sentences for a beginner.</p></dd>
 <dt>What ChatGPT gave</dt>
-<dd>A clear explanation: it keeps text in this browser, even after you close it, and it only stores strings, so objects go through <code>JSON.stringify</code>. But the code saved only the names, and only when I pressed Save list.</dd>
+<dd>A clear explanation: it keeps text in this browser, even after you close it. It only stores strings, so objects go through <code>JSON.stringify</code>. But the code saved only the names, and only when I pressed Save list.</dd>
 <dt>What I changed</dt>
 <dd>I added who is left and who was picked to what gets saved. Every change now saves at once. I wrapped loading in <code>try</code> and <code>catch</code>, in case storage is blocked.</dd>
 <dt>Why</dt>
@@ -104,7 +104,7 @@ Write comments a beginner can follow. Text must be big enough to read on a class
 <dt>Why</dt>
 <dd>28 in groups of 3 worked now. But 5 students in pairs gave 2, 2 and 1. <code>Math.round(2.5)</code> is 3, so it made three groups. Rounding down makes two groups, of 3 and 2.</dd>
 <dt>How I checked</dt>
-<dd>I asked ChatGPT for a loop that tries every class size from 2 to 30 with every group size from 2 to 6, and prints any group smaller than the size. After my change, it printed nothing. The only exception is a class smaller than the group size, which makes one group.</dd>
+<dd>I asked ChatGPT for a test loop. It tries every class size from 2 to 30, with group sizes 2 to 6. It prints any group smaller than the size I chose. After my change, it printed nothing. The only exception is a class smaller than the group size, which makes one group.</dd>
 </dl>
 </article>
 
@@ -130,7 +130,7 @@ Write comments a beginner can follow. Text must be big enough to read on a class
 <dt>Prompt</dt>
 <dd><p class="prompt">Rewrite shuffle using the Fisher-Yates shuffle. Put a short comment on the line that picks the random spot.</p></dd>
 <dt>What ChatGPT gave</dt>
-<dd>A loop that walks back from the end of the list and swaps each name with a random one at or before it.</dd>
+<dd>A loop that walks back from the end of the list. It swaps each name with a random one at or before it.</dd>
 <dt>What I changed</dt>
 <dd>I made it copy the list first, with <code>list.slice()</code>.</dd>
 <dt>Why</dt>

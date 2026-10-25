@@ -16,7 +16,7 @@
 <p class="lede">Twelve Kattis problems, easiest first. Each has a hint ladder of three steps and my own Python solution.</p>
 <div class="panel">
 <p><strong>How the hints work.</strong> Hint 1 points you at the right part of the problem. Hint 2 names the idea. Hint 3 tells you where people trip. None of them is code. Open them in order, and only after 10 minutes of trying.</p>
-<p>My solution sits below the hints, closed. Open it after you have an Accepted, or after you have used all three hints and a full session.</p>
+<p>My solution sits below the hints, closed. Open it after you get Accepted. Or open it after all three hints and a full session.</p>
 </div>
 <p class="small">The difficulty is Kattis's own number, read on 24 October 2026. It changes a little over time. Time limits are per test file.</p>
 
@@ -27,7 +27,7 @@
 <ul class="meta"><li class="diff">Kattis 1.2</li><li>1 s</li><li>if and elif</li><li>O(1)</li></ul>
 <p>Read a point and say which quadrant it is in. The skill is reading input exactly as the statement lays it out.</p>
 <details><summary>Hint 1</summary><div><p>Look at the input section again. How many lines does it have, and what is on each?</p></div></details>
-<details><summary>Hint 2</summary><div><p>Draw the two axes on paper. Write the sign of x and the sign of y in each of the four quadrants.</p></div></details>
+<details><summary>Hint 2</summary><div><p>Draw the two axes on paper. Write the signs of x and y in each of the four quadrants.</p></div></details>
 <details><summary>Hint 3</summary><div><p>Neither number is ever 0. So every point is in exactly one quadrant, and your branches should cover all four.</p></div></details>
 <details class="sol"><summary>My solution</summary><div>
 <pre><code class="py">x = int(input())
@@ -73,7 +73,7 @@ print(2 * s - r1)</code></pre>
 # Work in minutes since midnight. The % wraps 0:10 back to 23:25.
 minutes = (h * 60 + m - 45) % (24 * 60)
 print(minutes // 60, minutes % 60)</code></pre>
-<p class="small">Checked on the 3 Kattis samples, and on all 1,440 times of day against Python's datetime module.</p>
+<p class="small">Checked on the 3 Kattis samples. I also checked all 1,440 times of day against Python's datetime module.</p>
 </div></details>
 </section>
 
@@ -94,7 +94,7 @@ if len(set(words)) == len(words):
     print("yes")
 else:
     print("no")</code></pre>
-<p class="small">Checked on the 3 Kattis samples. A set lookup takes about the same time however big the set is, so this is O(n) in the number of words.</p>
+<p class="small">Checked on the 3 Kattis samples. A set lookup takes about the same time however big the set is. So this is O(n) in the number of words.</p>
 </div></details>
 </section>
 
@@ -103,7 +103,7 @@ else:
 <ul class="meta"><li class="diff">Kattis 1.6</li><li>1 s</li><li>set, state</li><li>O(n)</li></ul>
 <p>Read an access log and flag anyone who enters twice or leaves without entering.</p>
 <details><summary>Hint 1</summary><div><p>At any moment, what is the one thing you need to remember?</p></div></details>
-<details><summary>Hint 2</summary><div><p>Which structure answers "is this name in here?" quickly, and lets you add and remove names?</p></div></details>
+<details><summary>Hint 2</summary><div><p>Which structure answers "is this name in here?" quickly? It must also let you add and remove names.</p></div></details>
 <details><summary>Hint 3</summary><div><p>Read the second paragraph again. After an anomaly, is the person inside or outside?</p></div></details>
 <details class="sol"><summary>My solution</summary><div>
 <pre><code class="py">n = int(input())
@@ -140,7 +140,7 @@ prices = sorted(map(int, data[1:n + 1]), reverse=True)
 # Group the dearest three, then the next three, and so on.
 # The cheapest of each group is free: positions 2, 5, 8, ...
 print(sum(prices[2::3]))</code></pre>
-<p class="small">Checked on the Kattis sample, and against a slow version that tries every way to group up to 7 items, on 60 random cases. 200,000 prices take well under a second.</p>
+<p class="small">Checked on the Kattis sample. I also compared it with a slow version on 60 random cases. The slow one tries every way to group up to 7 items. 200,000 prices take well under a second.</p>
 </div></details>
 </section>
 
@@ -213,7 +213,7 @@ print(best)</code></pre>
 <section class="prob" id="p9">
 <h3><span class="num">09</span> <a href="https://open.kattis.com/problems/guess">Guess the Number</a></h3>
 <ul class="meta"><li class="diff">Kattis 1.9</li><li>1 s</li><li>binary search, interactive</li><li>O(log n)</li></ul>
-<p>Find a number from 1 to 1,000 in 10 guesses, with "lower" or "higher" after each. Your program talks to the judge.</p>
+<p>Find a number from 1 to 1,000 in 10 guesses. The judge says "lower" or "higher" after each. Your program talks to the judge.</p>
 <details><summary>Hint 1</summary><div><p>Play it with a partner first. What first guess leaves the fewest numbers in the worst case?</p></div></details>
 <details><summary>Hint 2</summary><div><p>Keep two numbers: the lowest and highest the secret could still be. Each reply moves one of them.</p></div></details>
 <details><summary>Hint 3</summary><div><p>The judge cannot reply until it sees your guess. Look up the <code>flush</code> argument of <code>print</code>.</p></div></details>
@@ -318,7 +318,7 @@ while pos &lt; len(lines) and lines[pos].strip():
 <section class="prob" id="p12">
 <h3><span class="num">12</span> <a href="https://open.kattis.com/problems/grid">Grid</a></h3>
 <ul class="meta"><li class="diff">Kattis 2.3</li><li>1 s</li><li>BFS, speed</li><li>O(n × m)</li></ul>
-<p>Each square says how far you must jump. Find the fewest jumps from corner to corner, on a grid up to 500 by 500.</p>
+<p>Each square says how far you must jump. Find the fewest jumps from corner to corner. The grid is up to 500 by 500.</p>
 <details><summary>Hint 1</summary><div><p>A jump of k squares is still one move. Does that change which search you use?</p></div></details>
 <details><summary>Hint 2</summary><div><p>What can you do from a square with 0 on it?</p></div></details>
 <details><summary>Hint 3</summary><div><p>500 by 500 is 250,000 squares, and the limit is 1 second. How fast is your "have I been here?" check?</p></div></details>
@@ -349,7 +349,7 @@ while queue:
                 queue.append(nxt)
 
 print(dist[n * m - 1])</code></pre>
-<p class="small">Checked on the 3 Kattis samples. A 500 by 500 grid of 1s, the slowest case I could build, took about half a second on my laptop. The judge's machine may be slower, which is why I used a flat list.</p>
+<p class="small">Checked on the 3 Kattis samples. The slowest case I could build was a 500 by 500 grid of 1s. It took about half a second on my laptop. The judge's machine may be slower, which is why I used a flat list.</p>
 </div></details>
 </section>
 

@@ -12,6 +12,7 @@
 
   let settings = load(KEY, { url: '', token: '', room: '2E', lit: 70, quiet: 80 });
   let queue = load(QKEY, []);
+  let demoQueue = [];            // made-up rows never mix with real ones, and are never saved
   let source = 'none';           // 'none', 'serial' or 'demo'
   let port = null, reader = null, writer = null;
   let demoTimer = null, demoClock = 0;
@@ -21,6 +22,8 @@
   function load(k, fallback) {
     try { const v = JSON.parse(localStorage.getItem(k)); return v == null ? fallback : v; } catch (e) { return fallback; }
   }
+  function q() { return source === 'demo' ? demoQueue : queue; }
+  function saveQ() { if (source !== 'demo') save(QKEY, queue); }
   function save(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { log('bad', 'Could not save to local storage.'); } }
 
   // In made-up mode a minute passes every 2 seconds.
@@ -71,8 +74,8 @@
     while (now() >= blockStart + BLOCK_MS) {
       const inBlock = minutes.filter((x) => x.at < blockStart + BLOCK_MS);
       minutes = minutes.filter((x) => x.at >= blockStart + BLOCK_MS);
-      queue.push(buildRow(blockStart, inBlock));
-      save(QKEY, queue);
+      q().push(buildRow(blockStart, inBlock));
+      saveQ();
       blockStart += BLOCK_MS;
     }
     renderStatus();
@@ -97,8 +100,8 @@
   }
 
   // ---------- Posting ----------
-  async function post(row) {
-    if (source === 'demo') return fakeWebApp(row);
+  async function post(row, demo) {
+    if (demo) return fakeWebApp(row);
     if (!settings.url) throw new Error('no web app address in Settings');
     // A string body is sent as text/plain, a "simple" request: no preflight.
     const res = await fetch(settings.url, { method: 'POST', body: JSON.stringify(Object.assign({}, row, { token: settings.token })) });
@@ -110,21 +113,22 @@
   }
 
   async function flush() {
-    if (sending || !queue.length) return;
+    const list = q(), demo = list === demoQueue;
+    if (sending || !list.length) return;
     sending = true;
     try {
-      while (queue.length) {
-        const row = queue[0];
+      while (list.length) {
+        const row = list[0];
         let reply;
-        try { reply = await post(row); }
+        try { reply = await post(row, demo); }
         catch (e) { log('bad', 'Post ' + row.time.slice(11, 16) + ' failed: ' + e.message + '. Kept in the queue.'); break; }
         if (reply && reply.ok) {
-          queue.shift(); save(QKEY, queue);
+          list.shift(); if (!demo) save(QKEY, queue);
           sent.unshift({ row, reply }); if (sent.length > 10) sent.pop();
           log('ok', 'Row ' + row.time.slice(11, 16) + ' saved. Mode: ' + reply.mode);
           setMode(reply.mode);
         } else if (reply && reply.error === 'value out of range') {
-          queue.shift(); save(QKEY, queue);
+          list.shift(); if (!demo) save(QKEY, queue);
           log('bad', 'Row ' + row.time.slice(11, 16) + ' refused (value out of range). Dropped.');
         } else {
           log('bad', 'Web app said: ' + JSON.stringify(reply) + '. Check Settings. Kept in the queue.');
@@ -198,7 +202,7 @@
     await stopAll();
     source = 'demo';
     demoClock = Math.floor(Date.now() / BLOCK_MS) * BLOCK_MS;
-    demoMinute = 0; blockStart = null; minutes = []; cur = {};
+    demoMinute = 0; blockStart = null; minutes = []; cur = {}; demoQueue = [];
     $('fake-control').hidden = false;
     log('ok', 'Made-up readings: one minute every 2 seconds. Nothing leaves this computer.');
     demoTimer = setInterval(demoTick, 2000);
@@ -231,7 +235,7 @@
       const ago = Math.max(0, Math.round((now() - lastHeard) / 60000));
       $('heard').textContent = ago >= SILENT_MS / 60000 ? 'silent ' + ago + ' min' : ago + ' min ago';
     }
-    $('waiting').textContent = queue.length;
+    $('waiting').textContent = q().length;
     $('mode').textContent = mode || 'unknown';
   }
   function cellOf(v) { return v == null ? '<td class="n blank"></td>' : '<td class="n">' + v + '</td>'; }

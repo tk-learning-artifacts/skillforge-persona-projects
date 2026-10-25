@@ -155,6 +155,9 @@
   function draw() {
     var tm = cycle.timing, roadH = params.width * PX, top = (H - roadH) / 2, bottom = top + roadH;
     var cx0 = 250, cx1 = 390;
+    // On a narrow phone the canvas shrinks, so draw labels and people bigger.
+    var k = Math.max(1, Math.min(1.6, 0.7 * W / (canvas.clientWidth || W)));
+    var big = Math.round(18 * k) + 'px system-ui, sans-serif';
     ctx.clearRect(0, 0, W, H);
     // pavements
     ctx.fillStyle = css('--kerb'); ctx.fillRect(0, 0, W, top); ctx.fillRect(0, bottom, W, H - bottom);
@@ -176,8 +179,8 @@
     // detector zone
     if (params.mode === 'sensor') {
       ctx.fillStyle = css('--accent'); ctx.globalAlpha = 0.18; ctx.fillRect(cx0 + 3, top, cx1 - cx0 - 6, roadH); ctx.globalAlpha = 1;
-      ctx.fillStyle = css('--ink'); ctx.font = '600 18px system-ui, sans-serif';
-      ctx.fillText('detector zone', cx0 + 8, top + 16);
+      ctx.fillStyle = css('--ink'); ctx.font = '600 ' + big;
+      ctx.fillText(k > 1.1 ? 'detector' : 'detector zone', cx0 + 8, top + 18 * k);
     }
     // cars
     var ph = phaseAt(t), go = ph === 'cars' ? Math.min(1, (t - tm.carsGreen) / 1.5) : 0;
@@ -191,7 +194,7 @@
     }
     // people
     var stuckCount = 0;
-    cycle.people.forEach(function (p, k) {
+    cycle.people.forEach(function (p) {
       var px = cx0 + 14 + p.lane * (cx1 - cx0 - 28);
       var walked = clamp((t - p.start) * p.speed, 0, params.width);
       var y0 = p.up ? bottom + 14 : top - 14, y1 = p.up ? top - 14 : bottom + 14;
@@ -201,17 +204,18 @@
       if (stuck) stuckCount++;
       if (!onRoad && walked >= params.width && t > p.finish + 2) ctx.globalAlpha = 0.35;
       ctx.fillStyle = p.senior ? css('--over') : css('--under');
-      if (p.senior) ctx.fillRect(px - 7, y - 7, 14, 14);
-      else { ctx.beginPath(); ctx.arc(px, y, 7, 0, Math.PI * 2); ctx.fill(); }
-      if (p.tapper && params.mode === 'gmplus') { ctx.strokeStyle = css('--ink'); ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(px, y, 11, 0, Math.PI * 2); ctx.stroke(); }
+      var r7 = 7 * k;
+      if (p.senior) ctx.fillRect(px - r7, y - r7, 2 * r7, 2 * r7);
+      else { ctx.beginPath(); ctx.arc(px, y, r7, 0, Math.PI * 2); ctx.fill(); }
+      if (p.tapper && params.mode === 'gmplus') { ctx.strokeStyle = css('--ink'); ctx.lineWidth = 2 * k; ctx.beginPath(); ctx.arc(px, y, 11 * k, 0, Math.PI * 2); ctx.stroke(); }
       ctx.globalAlpha = 1;
       if (stuck) {
-        ctx.strokeStyle = '#ffd34d'; ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(px, y, 13, 0, Math.PI * 2); ctx.stroke();
-        ctx.fillStyle = '#ffd34d'; ctx.font = '700 15px system-ui, sans-serif'; ctx.fillText('!', px + 14, y - 8);
+        ctx.strokeStyle = '#ffd34d'; ctx.lineWidth = 3 * k; ctx.beginPath(); ctx.arc(px, y, 13 * k, 0, Math.PI * 2); ctx.stroke();
+        ctx.fillStyle = '#ffd34d'; ctx.font = '700 ' + Math.round(16 * k) + 'px system-ui, sans-serif'; ctx.fillText('!', px + 14 * k, y - 8 * k);
       }
     });
-    ctx.fillStyle = css('--ink'); ctx.font = '600 18px system-ui, sans-serif';
-    ctx.fillText(params.width + ' m of road', 8, top - 6 > 14 ? top - 6 : 14);
+    ctx.fillStyle = css('--ink'); ctx.font = '600 ' + big;
+    ctx.fillText(params.width + ' m of road', 8, top - 6 > 18 * k ? top - 6 : 18 * k);
     var marker = $('marker');
     if (marker) marker.style.left = (100 * Math.min(t, tm.carsGreen + 6) / (tm.carsGreen + 6)) + '%';
     return stuckCount;
@@ -265,7 +269,7 @@
         '<td class="n">' + (s.added / RUNS).toFixed(1) + '</td></tr>';
     }).join('');
     $('results').hidden = false;
-    $('cmp-note').textContent = 'Ran ' + RUNS + ' cycles in each mode, with the same people each time.';
+    $('cmp-note').textContent = 'Ran ' + RUNS.toLocaleString('en-GB') + ' cycles in each mode, with the same people each time.';
   });
 
   if (window.matchMedia) {

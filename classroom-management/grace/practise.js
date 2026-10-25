@@ -62,7 +62,7 @@
         { q: 'What do you do first?', opts: [
           ['Catch their eye from where you are, and hold it for a second.', GOOD, 'The look costs nothing and stops nothing. If it fails, I go up one step.'],
           ['Walk over and teach from beside them.', GOOD, "Also my choice. On a day I'm at the far side of the room, I'd start here."],
-          ['Stop the class: "Some people are still on Step 1."', BAD, "Everyone looks round. You've told the whole class who to watch, and the two of them now have an audience."],
+          ['Stop the class: "Some people are still on Step 1."', BAD, "Everyone looks round. You've shown the whole class who to watch. Now the two of them have an audience."],
           ['Move them apart straight away.', MEH, "It works, but it's a big step for a first chat. Keep it for the seating plan change."]
         ] }
       ]

@@ -16,6 +16,7 @@
 
 <h2><span class="num">3.1</span>The idea in one picture</h2>
 <figure>
+<p class="swipe">Swipe sideways to see the whole plan.</p>
 <div class="wide"><svg viewBox="0 0 640 420" role="img" aria-labelledby="planT">
   <title id="planT">Plan view of the crossing. A four-lane road runs left to right. Two poles stand on opposite kerbs. Each pole has a detector aimed across the road. Their zones cover the crossing between the two white lines, kerb to kerb, but not the waiting areas on the pavements.</title>
   <rect class="kerb" x="0" y="0" width="640" height="95"/>
@@ -49,18 +50,18 @@
 <p>I did not invent this. The UK has used it for years in its Puffin crossings. The Department for Transport's guide, <a href="https://www.tsrgd.co.uk/pdf/tal/2002/tal-1-02.pdf">Traffic Advisory Leaflet 1/02</a>, describes it:</p>
 <ul class="tight">
   <li>On-crossing detectors are "normally mounted one on each side" and focused on the crossing area.</li>
-  <li>The clearance time after the green man "can be extended" while people are detected on the crossing.</li>
+  <li>After the green man, the clearance time "can be extended" while people are on the crossing.</li>
   <li>It "can also give more time to slower moving pedestrians."</li>
-  <li>If the detector sees nothing, which may mean a fault, the controller gives the longest preset time.</li>
+  <li>If the detector sees nothing, it may be broken. Then the controller gives the longest preset time.</li>
 </ul>
 <p>Singapore poles already carry sensors. LTA has <a href="https://www.lta.gov.sg/content/ltagov/en/who_we_are/statistics_and_publications/Connect/GLIDE.html">trialled crossings where a wave of the hand calls the green man</a>. So a pole-mounted detector is not a strange new object here.</p>
 
 <h2><span class="num">3.3</span>Why not an AI camera?</h2>
-<p>Every vendor pitch I read says "AI". An AI camera could spot a walking stick or a wheelchair, and give time only to them. I don't think that is better.</p>
+<p>Every vendor pitch I read says "AI". An AI camera could spot a walking stick or a wheelchair. It could give time only to them. I don't think that is better.</p>
 <ul class="tight">
   <li>I don't need to know who you are. I need to know if someone is still on the road. A presence detector answers that.</li>
-  <li>A camera that sees faces collects personal data. The PDPC expects a clear purpose and a <a href="https://www.pdpc.gov.sg/-/media/files/pdpc/pdf-files/advisory-guidelines/ag-on-selected-topics/advisory-guidelines-on-the-pdpa-for-selected-topics-(revised-may-2024).pdf">plan for how long footage is kept</a>. A detector with no images avoids most of that.</li>
-  <li>Picking who "deserves" time is the Green Man+ problem again. The mother with the pram, the man on crutches and the tired teenager are all still on the road.</li>
+  <li>A camera that sees faces collects personal data about everyone who crosses. Singapore's PDPC has <a href="https://www.pdpc.gov.sg/-/media/files/pdpc/pdf-files/advisory-guidelines/ag-on-selected-topics/advisory-guidelines-on-the-pdpa-for-selected-topics-(revised-may-2024).pdf">guidelines on CCTV notices and footage</a>. A detector with no images avoids most of that.</li>
+  <li>Picking who "deserves" time is the Green Man+ problem again. The mother with the pram is still on the road. So are the man on crutches and the tired teenager.</li>
   <li>A model trained elsewhere may do worse in heavy rain, glare or crowds. I would need local test data before trusting it. The simpler detector has a long track record.</li>
 </ul>
 <p>If the trial shows the detector misses people, I would look at cameras again. With evidence, not because the word AI sounds modern.</p>
@@ -78,7 +79,7 @@
 <tr><td>Walkers at the kerb</td><td>See the red man during the hold, so nobody new starts.</td></tr>
 <tr><td>Countdown timer</td><td>Where a crossing has a pedestrian countdown, it reaches 0 as now. The hold happens after it.</td></tr>
 <tr><td>Green Man+</td><td>Kept. A card tap still adds time at the start. The sensor covers whoever is still crossing after that.</td></tr>
-<tr><td>Fault mode</td><td>If a detector fails its self-check, the controller gives the full 13 s every cycle and reports the fault. It fails on the safe side, as in the UK guide.</td></tr>
+<tr><td>Fault mode</td><td>If a detector fails its self-check, the controller reports the fault. It then gives the full 13 s every cycle. It fails on the safe side, as in the UK guide.</td></tr>
 <tr><td>Power</td><td>From the existing signal pole. No new cable under the road.</td></tr>
 <tr><td>Data kept</td><td>Per cycle: the date, time, and seconds held. No images and nothing that identifies a person. Kept for the trial plus 12 months, then deleted.</td></tr>
 </table></div>
@@ -137,6 +138,7 @@
 
 <h3>Kerb sign</h3>
 <figure>
+<p class="swipe">Swipe sideways to see the whole sign.</p>
 <div class="wide"><svg viewBox="0 0 520 220" role="img" aria-labelledby="signT"><title id="signT">Sign for the signal pole. It reads: This crossing waits for people still on the road. Do not start when the man is red. Cars wait up to 13 seconds. Below, a note says it is printed in four languages.</title>
   <rect x="10" y="10" width="500" height="200" rx="14" fill="#1d3f73"/>
   <rect x="24" y="24" width="472" height="172" rx="8" fill="none" stroke="#ffffff" stroke-width="2"/>
@@ -153,6 +155,7 @@
 
 <h3>The engineer's weekly view</h3>
 <figure>
+<p class="swipe">Swipe sideways to see the whole report.</p>
 <div class="wide"><svg viewBox="0 0 520 230" role="img" aria-labelledby="dashT"><title id="dashT">Mockup of a weekly report for one crossing, with made-up numbers. Cycles held per day, Monday to Sunday: 92, 88, 95, 90, 101, 126, 71. Average hold 3.1 seconds. Longest hold 13 seconds, 4 times. Detector faults: 0.</title>
   <rect class="paper" x="0" y="0" width="520" height="230" rx="10"/>
   <text x="16" y="26" class="ink" style="font-weight:700">Crossing 3, week 12: cycles where cars were held</text>
@@ -196,7 +199,7 @@
   <li>Puffin crossing detection: <a href="https://www.tsrgd.co.uk/pdf/tal/2002/tal-1-02.pdf">UK Department for Transport, Traffic Advisory Leaflet 1/02, The Installation of Puffin Pedestrian Crossings</a>.</li>
   <li>Wave-to-cross trial and GLIDE: <a href="https://www.lta.gov.sg/content/ltagov/en/who_we_are/statistics_and_publications/Connect/GLIDE.html">LTA Connect, GLIDE</a>.</li>
   <li>Green Man+, steady and flashing green man, countdown timers: <a href="https://www.lta.gov.sg/content/ltagov/en/getting_around/driving_in_singapore/intelligent_transport_systems.html">LTA, Intelligent Transport Systems</a>.</li>
-  <li>Keeping camera footage: <a href="https://www.pdpc.gov.sg/-/media/files/pdpc/pdf-files/advisory-guidelines/ag-on-selected-topics/advisory-guidelines-on-the-pdpa-for-selected-topics-(revised-may-2024).pdf">PDPC, Advisory Guidelines on the PDPA for Selected Topics, revised May 2024</a>.</li>
+  <li>CCTV notices and footage: <a href="https://www.pdpc.gov.sg/-/media/files/pdpc/pdf-files/advisory-guidelines/ag-on-selected-topics/advisory-guidelines-on-the-pdpa-for-selected-topics-(revised-may-2024).pdf">PDPC, Advisory Guidelines on the PDPA for Selected Topics, revised May 2024</a>.</li>
 </ul>
 </main>
 </body>

@@ -60,7 +60,7 @@ pre code { background: none; padding: 0; font-size: inherit; overflow-wrap: norm
 pre .c { color: var(--code-com); }
 figure { margin: 16px 0; }
 figcaption { font-size: .9rem; color: var(--muted); margin-top: 6px; }
-svg.diagram { width: 100%; max-width: 560px; height: auto; display: block; margin: 0 auto; }
+svg.diagram { width: 100%; max-width: 440px; height: auto; display: block; margin: 0 auto; }
 video { width: 100%; height: auto; display: block; border-radius: 10px; background: #000; }
 details { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; margin: 10px 0; }
 summary { cursor: pointer; font-weight: 700; }
@@ -106,6 +106,8 @@ button[aria-pressed="true"] { background: var(--warn-soft); border-color: var(--
 .control { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 8px 0; font-size: .9rem; }
 .control .cellref { font: 700 12px var(--mono); background: var(--cell-head); border: 1px solid var(--cell-line); padding: 2px 6px; border-radius: 4px; }
 .chart { width: 100%; height: auto; display: block; background: var(--ground); border: 1px solid var(--line); border-radius: 8px; }
+.chart text { font-size: 18px; }
+@media (min-width: 760px) { .chart text { font-size: 10px; } }
 .totals { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px; margin: 10px 0; }
 .total { background: var(--ground); border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; }
 .total .k { font-size: .78rem; color: var(--muted); }

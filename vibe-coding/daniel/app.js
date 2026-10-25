@@ -280,8 +280,8 @@
       groups = here.length >= 2 ? makeGroups(here, size, opts.random) : [];
       groupHelp.textContent = here.length < 2
         ? 'You need at least 2 students here to make groups.'
-        : here.length + ' students here, in ' + groups.length + ' groups. Groups have ' +
-          size + ' or ' + (size + 1) + ', so nobody is left alone.';
+        : here.length + ' students here, in ' + groups.length + ' groups, of ' +
+          groups.map((g) => g.length).join(', ') + '. Nobody is left alone.';
       if (here.length >= 2 && here.length < size) groupHelp.textContent = 'Fewer students than the group size: one group.';
       render();
     });
