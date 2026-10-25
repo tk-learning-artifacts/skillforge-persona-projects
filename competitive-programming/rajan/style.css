@@ -155,7 +155,7 @@ details.sol > summary { color: var(--ink); }
   pre { font-size: 13px; padding: 10px; }
 }
 @media print {
-  .ai-note, .noprint { display: none !important; }
+  .noprint { display: none !important; }
   body { background: #fff; color: #000; font-size: 11pt; }
   main { max-width: none; padding: 0; }
   h2 { border-top-color: #000; margin-top: 14px; }

@@ -132,7 +132,7 @@ p code, li code { background: var(--card); border: 1px solid var(--line); paddin
   pre { font-size: 13px; padding: 10px; }
 }
 @media print {
-  .ai-note, .hazard, .noprint, .board { display: none !important; }
+  .hazard, .noprint, .board { display: none !important; }
   body { background: #fff; color: #000; font-size: 11pt; }
   main { max-width: none; padding: 0; }
   details.hint { break-inside: avoid; }

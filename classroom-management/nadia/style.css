@@ -147,7 +147,7 @@ button.stop { background: #b3261e; border-color: #b3261e; color: #fff; }
 .freeze-word { font-size: clamp(2.4rem, 9vw, 5rem); font-weight: 700; margin: 0; color: #b3261e; }
 .freeze-sub { font-size: clamp(1.3rem, 4vw, 2.2rem); font-weight: 700; margin: 0 0 12px; }
 .freeze button { background: #fff; color: #1a1a1a; border-color: #1a1a1a; }
-.big-mode .options, .big-mode .ai-note, .big-mode .hide-big { display: none; }
+.big-mode .options, .big-mode .hide-big { display: none; }
 .big-mode main { max-width: none; }
 
 /* Posters: always printed colours */
@@ -173,7 +173,7 @@ button.stop { background: #b3261e; border-color: #b3261e; color: #fff; }
 .poster .foot { margin: 14px 0 0; color: #566273; font-size: 0.85em; }
 
 @media print {
-  .ai-note, .options, .noprint { display: none !important; }
+  .options, .noprint { display: none !important; }
   html, body { background: #fff !important; color: #000; }
   body { font-size: 12pt; line-height: 1.5; letter-spacing: 0.01em; word-spacing: 0.02em; }
   main { max-width: none; padding: 0; }
