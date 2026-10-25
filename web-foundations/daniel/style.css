@@ -78,7 +78,7 @@ summary { cursor: pointer; font-weight: 700; min-height: 44px; display: flex; al
 .boxes { list-style: none; padding: 0; margin: 4px 0; }
 .boxes li::before { content: "☐ "; }
 @media print {
-  .noprint, .ai-note { display: none; }
+  .noprint { display: none; }
   body { background: #fff; color: #000; font-size: 11pt; line-height: 1.38; }
   main { border: 0; padding: 0; max-width: none; min-height: 0; }
   .taskcard { padding: 10px 12px; border-width: 1.5px; }

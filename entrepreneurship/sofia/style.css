@@ -200,7 +200,7 @@ footer.sources li { font-size: 0.92rem; margin-bottom: 6px; }
 
 /* Printing the deck */
 @media print {
-  .ai-note, .noprint { display: none !important; }
+  .noprint { display: none !important; }
   body { background: #fff; color: #000; }
   main { max-width: none; padding: 0; }
   .print-sheet { display: grid; grid-template-columns: repeat(3, 64mm); grid-auto-rows: 70mm; gap: 0; justify-content: center; break-after: page; }

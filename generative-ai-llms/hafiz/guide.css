@@ -31,7 +31,7 @@ dl.risks dd { margin: 2px 0 0; }
 .after { margin-top: 28px; }
 
 @media print {
-  .ai-note, .noprint { display: none !important; }
+  .noprint { display: none !important; }
   :root { --ink: #141a2a; --ink-2: #3a4256; --muted: #4f586c; --line: #c9cfdc; --surface: #fff; --ground: #fff;
     --accent: #3644b8; --pass: #1d6b3a; --pass-soft: #e3f3e8; --warn: #865000; --warn-soft: #fbf0dc; }
   @page { size: A4; margin: 12mm 13mm; }

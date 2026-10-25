@@ -88,7 +88,7 @@ summary { cursor: pointer; font-weight: 700; min-height: 44px; display: flex; al
 .boxes { list-style: none; padding: 0; }
 .boxes li::before { content: "☐ "; font-size: 1.1em; }
 @media print {
-  .noprint, .ai-note { display: none; }
+  .noprint { display: none; }
   body { background: #fff; color: #000; font-size: 11.5pt; line-height: 1.4; }
   main { padding: 0; max-width: none; }
   .taskcard { border-width: 2px; padding: 10px 12px; }

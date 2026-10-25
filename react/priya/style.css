@@ -80,7 +80,7 @@ summary { cursor: pointer; font-weight: 700; min-height: 32px; }
 .checks li { padding-left: 30px; position: relative; margin-bottom: 8px; }
 .checks li::before { content: "☐"; position: absolute; left: 4px; top: -1px; font-size: 1.1rem; color: var(--accent); }
 @media print {
-  .ai-note, .noprint { display: none !important; }
+  .noprint { display: none !important; }
   body { background: #fff; color: #000; font-size: 11pt; line-height: 1.4; }
   main { max-width: none; padding: 0; }
   .taskcard { border-color: #000; }
