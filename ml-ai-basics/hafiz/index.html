@@ -54,8 +54,8 @@
 </section>
 
 <h2 id="how"><span class="n">··</span> How the model works</h2>
-<p>It is a naive Bayes model, an old and simple spam filter. In training, it counts how often each word shows up in spam texts and in normal texts. "Prize" showed up in spam far more than in normal texts, so it pushes toward spam. "Lor" showed up only in normal texts, so it pushes the other way. For a new message, it adds up the pushes of every word it knows. Words it has never seen count for nothing.</p>
-<p>It does not read meaning. "Pay now or lose your account" and "lose now or pay your account" get the same score.</p>
+<p>It is a naive Bayes model, an old and simple spam filter. In training, it counts each word in spam texts and in normal texts. "Prize" showed up far more in spam than in normal texts. So it pushes toward spam. "Lor" showed up only in normal texts, so it pushes the other way. For a new message, it adds up the pushes of every word it knows. Words it has never seen count for nothing.</p>
+<p>It does not read meaning. So "pay now or lose your account" scores the same as "lose now or pay your account".</p>
 
 <section id="score">
 <h2><span class="n">02</span> How good is it?</h2>
@@ -85,12 +85,12 @@
   <li>322 spam and 1,002 normal texts from an earlier spam corpus by Gómez Hidalgo.</li>
   <li>450 normal texts from Caroline Tagg's PhD thesis at the University of Birmingham.</li>
 </ul>
-<p>In total: 747 spam and 4,827 normal. It was added to the UCI repository in 2012. Look at that mix. Most normal texts are Singaporean students chatting. Most of the spam came from a UK forum, and much of it is about prizes and ringtones. Keep that in mind for the audit.</p>
+<p>In total: 747 spam and 4,827 normal. It was added to the UCI repository in 2012. Look at that mix. Most normal texts are Singaporean students chatting. Most of the spam came from a UK forum. Much of it is about prizes and ringtones. Keep that in mind for the audit.</p>
 </section>
 
 <section id="audit" class="panel">
 <h2><span class="n">03</span> The audit: 20 messages from 2025, made up</h2>
-<p>I wrote 10 scam texts modelled on the scam types the Singapore Police Force lists for 2025. I also wrote 10 normal texts a Sec 3 student might get. All 20 are made up. The links go nowhere: they are not real sites.</p>
+<p>I wrote 10 scam texts. Each follows a scam type in the Singapore Police Force's 2025 figures. They include phishing, job, investment, fake friend and fake official scams. I also wrote 10 normal texts a Sec 3 student might get. All 20 are made up. The links go nowhere: they are not real sites.</p>
 <button type="button" id="run-audit" class="go">Run the audit</button>
 <div id="audit-wrap" hidden>
   <p class="sum" id="audit-sum"></p>
@@ -123,7 +123,7 @@
   </tbody>
 </table>
 </div>
-<p>The bill scam drops from 99.6% to 5.6%. "Lor" and "leh" only ever appeared in normal texts. The Singapore texts in the data were all real chats, never spam. The model learnt "Singlish means safe". That is bias linked to people: it would protect a Singaporean less than a British user. Nobody wrote that rule. It came from who supplied the data.</p>
+<p>The bill scam drops from 99.6% to 5.6%. "Lor" and "leh" only ever appeared in normal texts. The Singapore texts in the data were all real chats, never spam. The model learnt "Singlish means safe". That is bias linked to people. It would protect a Singaporean less than a British user. Nobody wrote that rule. It came from who supplied the data.</p>
 </section>
 
 <section id="teach-it">
@@ -157,16 +157,16 @@
     With my 3 added, they scored 85.6% and 21.3%. Before, 60.1% and 13.7%.
   </li>
 </ul>
-<p>So 3 examples fixed the one I was aiming at. It learnt words like "earn" and "videos", not the idea of a job scam. That is close to overfitting: it fits my examples, and new wording slips past. One more trap: if I had added the audit's own job scam, the score would be perfect and mean nothing. Never teach the test.</p>
+<p>So 3 examples fixed the one I was aiming at. It learnt words like "earn" and "videos", not the idea of a job scam. That is close to overfitting: it fits my examples, and new wording slips past. One more trap. If I had added the audit's own job scam, the score would mean nothing. Never teach the test.</p>
 </section>
 
 <section id="file" class="panel">
 <h2><span class="n">05</span> The model file</h2>
-<p><a href="sms-model.json" download>sms-model.json</a> (34 KB) is the whole trained model. For each of 2,288 words it holds two counts: uses in spam, uses in normal texts. It also holds the number of messages of each kind. No message text is in it.</p>
+<p><a href="sms-model.json" download>sms-model.json</a> (34 KB) is the whole trained model. It holds two counts for each of 2,288 words: spam uses and normal uses. It also holds the number of messages of each kind. No message text is in it.</p>
 <ul class="tight">
   <li>Words: lower case. Runs of 5 or more digits, like phone numbers, become one word: "[long number]".</li>
   <li>I dropped words found in fewer than 3 training messages. That removes most typos and private details.</li>
-  <li>I also removed rude words and people's first names, so it is safe to open in class. This did not change the test results.</li>
+  <li>I also removed rude words and people's first names. So it is safe to open in class. This did not change the test results.</li>
   <li>"Download this model" saves your version, with the messages you added.</li>
 </ul>
 </section>
@@ -180,9 +180,9 @@
   </ul>
 </section>
 
-<h2 id="limits"><span class="n">!!</span> Limits, and what I would change</h2>
+<h2 id="limits"><span class="n">··</span> Limits, and what I would change</h2>
 <ul class="tight">
-  <li>My audit is 20 messages I wrote myself. That is a small test, and I know what the model likes, so I may have written around it. Next time, students should write the audit set before they see the model.</li>
+  <li>My audit is 20 messages I wrote myself. That is a small test. I know what the model likes, so I may have written around it. Next time, students should write the audit set before they see the model.</li>
   <li>The training data is old. The collection dates from 2011, and its spam is about prizes and ringtones. A model is only as current as its data.</li>
   <li>It reads words only. Real defences use much more. Singapore's SMS Sender ID Registry checks who sent a message, not what it says.</li>
   <li>This is a teaching model, not a scam checker. For a real message, use the ScamShield helpline on 1799.</li>
@@ -192,7 +192,7 @@
 <ul class="small src">
   <li>Data: Almeida, T. and Gómez Hidalgo, J. (2011). <a href="https://archive.ics.uci.edu/dataset/228/sms+spam+collection">SMS Spam Collection</a>, UCI Machine Learning Repository, CC BY 4.0, <a href="https://doi.org/10.24432/C5CC84">doi:10.24432/C5CC84</a>. Sources and counts from the collection's readme.</li>
   <li>Paper: Almeida, Gómez Hidalgo and Yamakami, "Contributions to the study of SMS spam filtering: new collection and results", ACM Symposium on Document Engineering, 2011, as listed on the UCI page.</li>
-  <li>Scam types: <a href="https://www.police.gov.sg/Media-Hub/Police-Life/2026/02/Scams-and-Cybercrime-Fell-by-Almost-a-Quarter-in-2025">Singapore Police Force, "Scams and cybercrime fell by almost a quarter in 2025"</a>, February 2026. Top five by money lost: investment, government official impersonation, job, phishing, business email compromise.</li>
+  <li>Scam types: <a href="https://www.police.gov.sg/Media-Hub/Police-Life/2026/02/Scams-and-Cybercrime-Fell-by-Almost-a-Quarter-in-2025">Singapore Police Force, "Scams and cybercrime fell by almost a quarter in 2025"</a>, February 2026. Top five by money lost: investment, government official impersonation, job, phishing, business email compromise. It also names fake friend scams.</li>
   <li>Sender ID Registry: <a href="https://www.imda.gov.sg/-/media/imda/images/content/news-and-events/press-releases/enhanced-measures-against-scam-sms/factsheet-on-full-sms-sender-id-registry-regime.pdf">IMDA factsheet on the Full SMS Sender ID Registry regime</a>.</li>
   <li>ScamShield helpline 1799: <a href="https://www.scamshield.gov.sg/check-for-scams/scamshield-helpline/">ScamShield</a>.</li>
 </ul>

@@ -4,6 +4,7 @@
 body { margin: 0; background: var(--bg); color: var(--ink); font: 18px/1.6 Georgia, "Times New Roman", serif; }
 header, main, footer { max-width: 40rem; margin: 0 auto; padding: 0 1rem; }
 header { padding-top: 1rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+header > a { display: flex; align-items: center; gap: .5rem; flex-basis: 100%; font-size: .95rem; }
 h1 { font-size: 1.8rem; line-height: 1.2; margin: .5rem 0; }
 h2, h3 { font-size: 1.25rem; margin: 1.5rem 0 .5rem; }
 a { color: var(--accent); }
@@ -17,3 +18,12 @@ a:focus-visible, select:focus-visible, button:focus-visible { outline: 3px solid
 select { font: inherit; padding: .4rem; }
 footer { padding-bottom: 2rem; font-size: .95rem; }
 img { max-width: 100%; height: auto; }
+.note { font-size: .95rem; }
+.panels { display: flex; flex-wrap: wrap; gap: 1rem; }
+.panel { flex: 1 1 15rem; border: 2px solid var(--ink); border-radius: 10px; padding: .25rem 1rem .75rem; }
+.panel h3 { margin-top: .75rem; }
+.panel ul { padding-left: 1.2rem; margin: .5rem 0 0; }
+.count span { font-size: 1.6rem; font-weight: bold; }
+.before .count span { color: #a3261b; }
+.after .count span { color: #1d6b34; }
+@media (prefers-color-scheme: dark) { .before .count span { color: #ff9b8f; } .after .count span { color: #8fe0a6; } }

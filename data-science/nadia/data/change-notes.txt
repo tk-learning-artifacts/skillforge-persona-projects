@@ -7,9 +7,9 @@ Change notes: Census 2020, how pupils get to school, cleaned by Nadia Hussain
 
 3. Kept only the Total columns. My question is not about boys and girls, so I dropped the Males and Females columns.
 
-4. Kept only Primary and Secondary. My P6 class is about to move from one to the other. I dropped the other six levels.
+4. Kept only Primary and Secondary. My P6 class is about to move from one to the other. I dropped the other five levels.
 
-5. Merged 11 ways of travel into 6 groups. Groups under 1% are hard to see and add reading load. Car Only and Taxi/Private Hire Car Only became Car, taxi or private-hire car. The three rail rows became MRT or LRT, with or without a bus. Lorry/Pickup, Motorcycle/Scooter and Others became Other ways. No Transport Required became No transport needed. The Groups tab shows every row.
+5. Merged 11 ways of travel into 6 groups. Groups under 1% are hard to see and add reading load. Car Only and Taxi/Private Hire Car Only became Car, taxi or private-hire car. The two rail rows, plus the mixed row (rail or bus with other ways), became MRT, LRT or mixed trips. Lorry/Pickup, Motorcycle/Scooter and Others became Other ways. No Transport Required became No transport needed. The Groups tab shows every row.
 
 6. Checked that the groups add up. Primary comes to 245,456 and secondary to 173,710, the same as the census totals. Then I worked out each group as a percent of its level, to 1 decimal place.
 

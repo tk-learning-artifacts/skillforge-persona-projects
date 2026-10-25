@@ -133,6 +133,7 @@ div.sl-sprite { cursor: default; }
 .printcards img { width: 100%; height: auto; display: block; }
 @media print {
   .noprint, h2::before { display: none !important; }
+  :root { --ink: #000; --ink-2: #222; --muted: #444; --line: #999; --ground: #fff; --surface: #f3f3f3; --paper: #fff; }
   body { background: #fff; color: #000; }
   .printarea { break-before: page; }
 }

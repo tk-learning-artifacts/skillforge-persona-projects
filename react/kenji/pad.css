@@ -2,7 +2,7 @@
 .pad-page { min-height: 100vh; }
 .pad-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 16px; padding: 10px 14px; border-bottom: 3px solid var(--ink); background: var(--panel); }
 .pad-bar h1 { margin: 0; font-size: 1.25rem; flex: 1 1 auto; text-transform: none; }
-.pad-logo { color: var(--cyan); }
+.pad-logo { color: var(--cyan); vertical-align: -3px; }
 .pad-project { font-size: 0.85rem; font-weight: 600; color: var(--ink-2); letter-spacing: 0; }
 .pad-back { font-weight: 700; min-height: 44px; display: inline-flex; align-items: center; }
 .pad-switch { display: flex; gap: 6px; }

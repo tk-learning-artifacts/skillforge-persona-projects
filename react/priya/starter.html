@@ -82,7 +82,7 @@
   <li>In the repository, open Settings and tick <a href="https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-template-repository">Template repository</a>.</li>
   <li>Open a fresh codespace from the template once, as a student would. Check that <code>npm run dev</code> opens the preview.</li>
 </ol>
-<p>Students then click Use this template, then Create a new repository. Each copy belongs to the student, so their commits are saved there. GitHub's guide to <a href="https://docs.github.com/en/codespaces/developing-in-a-codespace/creating-a-codespace-from-a-template">starting from a template</a> also offers "Open in a codespace" straight away. I don't use it in class, because that work only lives in the codespace until the student publishes it.</p>
+<p>Students then click Use this template, then Create a new repository. Each copy belongs to the student, so their commits are saved there. GitHub's guide to <a href="https://docs.github.com/en/codespaces/developing-in-a-codespace/creating-a-codespace-from-a-template">starting from a template</a> also offers "Open in a codespace" straight away. I don't use it in class. That work only lives in the codespace until the student publishes it.</p>
 
 <h2 id="inside">What is in the starter</h2>
 <ul class="tight">
@@ -93,7 +93,7 @@
 </ul>
 
 <h2 id="tested">Testing it on a colleague</h2>
-<p>The module's guide says to test a starter on a colleague for 10 minutes and say nothing. Ravi, one of my trainers, did it. Like the students in the lesson plan, Ravi is made up for this example.</p>
+<p>The module's guide says to test a starter on a colleague. You watch for 10 minutes and say nothing. Ravi, one of my trainers, did it. Like the students in the lesson plan, Ravi is made up for this example.</p>
 <ul class="tight">
   <li>The starter ran with no edits. Ravi predicted the CSS button would do nothing. It loads the demo set, which surprised him. That is the point of step 0.</li>
   <li>TODO 1 took him 2 minutes. He first wrote <code>'questions/setId.json'</code>, in plain quotes. I added the backticks to the hint.</li>
@@ -102,5 +102,11 @@
 </ul>
 </div>
 </main>
+<script>
+// Print the hints too: open every hint before printing.
+addEventListener('beforeprint', function () {
+  document.querySelectorAll('details').forEach(function (d) { d.open = true; });
+});
+</script>
 </body>
 </html>

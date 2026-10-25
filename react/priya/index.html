@@ -13,7 +13,7 @@
 <p class="eyebrow">Building Interfaces with React · end project</p>
 <h1>Checkpoint: am I ready for React?</h1>
 <p class="lede">A small React quiz that tells each student which course outcomes to revisit. Students take it, then build it themselves from a starter in GitHub Codespaces.</p>
-<p>I'm Priya. I plan courses for a team of four trainers. This term we run a 10-week web elective for four Sec 3 classes of about 30 students each. Before the React weeks, I want one short check that every class takes the same way. Then I want the students to see how that check is built. This project does both.</p>
+<p>I'm Priya. I plan courses for a team of four trainers. This term we run a 10-week web elective. It has four Sec 3 classes of about 30 students each. Before the React weeks, I want one short check that every class takes the same way. Then I want the students to see how that check is built. This project does both.</p>
 
 <ol class="deliver">
   <li><a href="app/index.html"><strong>The deployed app</strong><span>Checkpoint, built with Vite and live on GitHub Pages.</span></a></li>
@@ -30,9 +30,9 @@
 <h2 id="what">What it does</h2>
 <ul class="tight">
   <li>Three sets: HTML, CSS and JavaScript. Each has 5 questions on what students need before React.</li>
-  <li>Each question is tagged with an outcome from our course plan, like <span class="tag">J2</span> "Make functions run at the right time".</li>
+  <li>Each question is tagged with an outcome from our course plan. One is <span class="tag">J2</span> "Make functions run at the right time".</li>
   <li>After each answer, students see why, and a link to the MDN page that backs it.</li>
-  <li>The results screen marks each outcome Met or Revisit, then gives a one-line exit ticket, such as "JavaScript checkpoint: 4/5. Revisit: J2."</li>
+  <li>The results screen marks each outcome Met or Revisit. Then it gives a one-line exit ticket, such as "JavaScript checkpoint: 4/5. Revisit: J2."</li>
   <li>Students paste that line into the class form. I sort 120 lines by outcome, and every trainer knows which mini lesson to reteach.</li>
 </ul>
 <p class="small">The quiz stores nothing and sends nothing. The only data is the line a student chooses to paste.</p>
@@ -59,20 +59,20 @@
 
 <h2 id="editor">Why Codespaces, and not StackBlitz</h2>
 <p>The module suggests StackBlitz. I checked its terms before planning a cohort around it. StackBlitz's <a href="https://stackblitz.com/terms-of-service">Terms of Service</a> were updated in September 2026. Section 2.5 now says users must be at least 18. It also says the service may not be used by anyone under 18. Our students are 15, so StackBlitz is out.</p>
-<p>GitHub's terms allow accounts from age 13. <a href="https://docs.github.com/en/codespaces/overview">GitHub Codespaces</a> runs a full Vite project in the browser, so it works on Chromebooks. A personal account gets <a href="https://docs.github.com/en/billing/concepts/product-billing/github-codespaces">120 core hours and 15 GB-month of storage free each month</a>. A 2-core codespace uses 2 core hours per hour, so one 60-minute lesson costs about 2 of the 120.</p>
-<p>I would have handed the starter out with GitHub Classroom. GitHub <a href="https://github.blog/changelog/2026-08-27-github-classroom-deprecated">retired Classroom on 28 August 2026</a>. So the starter is a <a href="https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-template-repository">template repository</a>, owned by a school account, and each student makes their own copy.</p>
+<p>GitHub's terms allow accounts from age 13. <a href="https://docs.github.com/en/codespaces/overview">GitHub Codespaces</a> runs a full Vite project in the browser, so it works on Chromebooks. A personal account gets <a href="https://docs.github.com/en/billing/concepts/product-billing/github-codespaces">120 core hours and 15 GB-month of storage free each month</a>. A 2-core codespace uses 2 core hours per hour. So one 60-minute lesson costs about 2 of the 120.</p>
+<p>I would have handed the starter out with GitHub Classroom. GitHub <a href="https://github.blog/changelog/2026-08-27-github-classroom-deprecated">retired Classroom on 28 August 2026</a>. So the starter is a <a href="https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-template-repository">template repository</a>, owned by a school account. Each student makes their own copy.</p>
 <p class="note">The cost of this choice: every student needs a GitHub account, made with the school's consent process, before Week 5. Codespaces also needs several GitHub and Microsoft web addresses open on school Wi-Fi. The <a href="lesson.html#devices">device check</a> lists them.</p>
 
 <h2 id="rubric">How it meets the rubric</h2>
 <ul class="rubric">
-  <li><strong>App works from start to end</strong>Pick a set, answer 5 questions, see results, do it again or switch sets. A missing file shows an error with Try again, not a blank page. I tested every set at phone width, in light and dark mode, and with the keyboard only.</li>
+  <li><strong>App works from start to end</strong>Pick a set, answer 5 questions, see results, do it again or switch sets. A missing file shows an error with Try again, not a blank page. I tested every set at phone width, in light and dark mode. I also used the keyboard only.</li>
   <li><strong>Uses props, state, lists and effects</strong>All four, listed above. The fetch effect also handles loading, errors and a late answer.</li>
   <li><strong>Tasks fit students' level</strong>The three TODOs follow the levels in the module's starter guide: fill the gap, finish the idea, make it new. Each one uses a Week 1 to 4 skill. The entry check shows who needs the hints first.</li>
-  <li><strong>Plan works on school devices</strong>Everything runs in Chrome on a Chromebook. Nothing is installed. The lesson has a device check a week before, and a plan B if Codespaces won't load.</li>
+  <li><strong>Plan works on school devices</strong>Everything runs in Chrome on a Chromebook. Nothing is installed. The lesson has a device check a week before. It also has a plan B if Codespaces won't load.</li>
 </ul>
 
 <h2 id="change">What I would change</h2>
-<p>The lesson plan works on paper. A real Week 5 will be messier. Codespaces takes a minute or two to start, and 30 students starting at once on one school network is the risk I can't plan away. I gave it five minutes and a plan B. A trainer with a weaker network will need more.</p>
+<p>The lesson plan works on paper. A real Week 5 will be messier. Codespaces takes a minute or two to start. Thirty students starting at once on one school network is the risk I can't plan away. I gave it five minutes and a plan B. A trainer with a weaker network will need more.</p>
 <p>The quiz is also only as good as its 15 questions. Three questions per outcome would be fairer than one or two. Then one slip would not mark a whole outcome "Revisit".</p>
 
 <h2 id="sources">Sources</h2>
@@ -84,7 +84,7 @@
   <li>Template repositories: <a href="https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-template-repository">Creating a template repository</a>.</li>
   <li>Effects, cleanup and Strict Mode: <a href="https://react.dev/learn/synchronizing-with-effects">Synchronizing with Effects</a>. Keys: <a href="https://react.dev/learn/rendering-lists">Rendering Lists</a>.</li>
   <li>Deploying: <a href="https://vite.dev/guide/static-deploy">Vite, Deploying a Static Site</a>. The <code>base</code> option: <a href="https://vite.dev/config/shared-options#base">Vite shared options</a>.</li>
-  <li>Quiz answers: each question links its MDN page. They are listed on the <a href="source.html">source page</a>.</li>
+  <li>Quiz answers: each question links its MDN page in the app. The HTML set is on the <a href="source.html">source page</a>, and all three sets are in the .zip.</li>
   <li>The three TODO levels: SkillForge's guide, "Turn your build into a student starter", in this module.</li>
 </ul>
 </main>

@@ -64,6 +64,7 @@ html.short-only .long { display: none; }
 .chart text { fill: var(--ink-2); font-family: Verdana, Tahoma, system-ui, sans-serif; }
 .chart .name { fill: var(--ink); font-weight: 700; }
 .chart .val { fill: var(--ink); }
+.chart .name, .chart .val { paint-order: stroke; stroke: var(--card); stroke-width: 4px; stroke-linejoin: round; }
 .chart .grid { stroke: var(--line); stroke-width: 1; }
 .chart .base { stroke: var(--ink-2); stroke-width: 1.5; }
 .chart .pri { fill: var(--pri); }
@@ -112,5 +113,29 @@ summary { cursor: pointer; min-height: 44px; display: flex; align-items: center;
   body { background: #fff; color: #000; font-size: 12pt; }
   .noprint, .tools { display: none; }
   main { max-width: none; padding: 0; }
-  .slips { grid-template-columns: 1fr 1fr; }
+  .slips { grid-template-columns: 1fr 1fr; gap: 8px; }
+  /* Small enough that four slips fit on one A4 page */
+  .slip { font-size: 10.5pt; padding: 8px 10px; border-radius: 8px; }
+  .slip p { margin: 4px 0; }
+  .slip h3 { font-size: 11pt; margin: 0 0 2px; }
+  .opts { grid-template-columns: repeat(4, 1fr); gap: 5px; margin: 4px 0 6px; }
+  .opt { padding: 3px 2px; font-size: 8.5pt; line-height: 1.2; }
+  .opt svg { width: 28px; height: 28px; margin-bottom: 2px; }
+  .box-line { height: 24px; margin: 4px 0; }
+}
+
+/* Wide tables: stack each row as a card on a phone */
+@media (max-width: 600px) {
+  table.stack thead { display: none; }
+  table.stack, table.stack tbody, table.stack tfoot, table.stack tr, table.stack th, table.stack td { display: block; width: auto; text-align: left; white-space: normal; }
+  table.stack tr { border: 1px solid var(--line); border-radius: 10px; background: var(--card); margin: 0 0 12px; padding: 4px 0; }
+  table.stack th, table.stack td { border-bottom: 0; padding: 4px 10px; }
+  table.stack th:first-child { border-bottom: 1px solid var(--line); }
+  table.stack [data-label]::before { content: attr(data-label) ": "; font-weight: 700; }
+  table.stack [data-label]:empty { display: none; }
+}
+@media (max-width: 480px) {
+  .scroll table:not(.stack) { font-size: 0.85rem; }
+  .scroll table:not(.stack) th { overflow-wrap: anywhere; white-space: normal; }
+  .scroll table:not(.stack) th, .scroll table:not(.stack) td { padding: 6px 5px; }
 }

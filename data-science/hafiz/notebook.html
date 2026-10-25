@@ -151,7 +151,7 @@ min       59.4
 75%      158.0
 max      216.2
 Name: wettest_day_mm, dtype: float64</pre></div>
-<p class="why">groupby year with agg is a pivot table in one line. describe gives the five-number summary.</p>
+<p class="why">groupby year with agg makes a pivot table in one line. describe gives the five-number summary.</p>
 </div>
 <div class="cell">
 <div class="in"><div class="prompt">In [7]:</div><pre><code># 7. Compare the first 21 years with the last 21 years
@@ -188,7 +188,7 @@ for col in [&quot;total_mm&quot;, &quot;rain_days&quot;, &quot;mm_per_rain_day&q
 total_mm trend: 0.9 per decade
 rain_days trend: 4.4 per decade
 mm_per_rain_day trend: -0.3 per decade</pre></div>
-<p class="why">polyfit gives the slope of the trend line. The shuffle test asks: if years were in random order, how often would we see a slope this steep?</p>
+<p class="why">polyfit gives the slope of the trend line. The shuffle test asks a question. If years came in random order, how often is a slope this steep?</p>
 </div>
 <div class="cell">
 <div class="in"><div class="prompt">In [9]:</div><pre><code># 9. Chart 1: the wettest day of each year
@@ -205,7 +205,7 @@ ax.legend(frameon=False)
 fig.text(0.01, 0.01, &quot;Source: NEA via data.gov.sg&quot;, fontsize=8)
 plt.tight_layout()
 plt.show()</code></pre></div>
-<div class="out"><div class="prompt">Out[9]:</div><div class="paper"><img src="nb-chart-1.png" alt="Matplotlib bar chart of the wettest day of each year at Changi, 1984 to 2025, with a gently falling trend line." width="900" height="400" loading="lazy"></div></div>
+<div class="out"><div class="prompt">Out[9]:</div><div class="paper"><img src="nb-chart-1.png" alt="Matplotlib bar chart of the wettest day of each year at Changi, 1984 to 2025, with a gently falling trend line." width="896" height="403" loading="lazy"></div></div>
 <p class="why">Chart 1. The y-axis starts at zero, with a title, axis labels and a source line.</p>
 </div>
 <div class="cell">
@@ -220,8 +220,8 @@ ax.set_ylabel(&quot;Rain on the wettest day (mm)&quot;)
 ax.text(0.5, 8, &quot;Whiskers show the lowest and highest year. 21 years in each box.&quot;, fontsize=8)
 plt.tight_layout()
 plt.show()</code></pre></div>
-<div class="out"><div class="prompt">Out[10]:</div><div class="paper"><img src="nb-chart-2.png" alt="Matplotlib box plots of the wettest day of the year for 1984 to 2004 and 2005 to 2025. The boxes overlap." width="900" height="400" loading="lazy"></div></div>
-<p class="why">Chart 2. whis=(0, 100) makes the whiskers reach the lowest and highest year, which is easier to explain to Sec 3.</p>
+<div class="out"><div class="prompt">Out[10]:</div><div class="paper"><img src="nb-chart-2.png" alt="Matplotlib box plots of the wettest day of the year for 1984 to 2004 and 2005 to 2025. The boxes overlap." width="590" height="390" loading="lazy"></div></div>
+<p class="why">Chart 2. whis=(0, 100) makes the whiskers reach the lowest and highest year. That is easier to explain to Sec 3.</p>
 </div>
 <div class="cell">
 <div class="in"><div class="prompt">In [11]:</div><pre><code># 11. How to fool people: start the trend in 2018

@@ -51,7 +51,7 @@
     var h = document.createElement('div');
     h.textContent = d.y + ', thousand tonnes';
     tip.appendChild(h);
-    [['Generated', d.gen, null], ['Disposed of', d.dis, 'var(--s-disposed)'], ['Recycled', d.rec + ' (' + d.rate + '%)', 'var(--s-recycled)']].forEach(function (row) {
+    [['Total made', d.gen, null], ['Disposed of', d.dis, 'var(--s-disposed)'], ['Recycled', d.rec + ' (' + d.rate + '%)', 'var(--s-recycled)']].forEach(function (row) {
       var line = document.createElement('div');
       if (row[2]) { var k = document.createElement('span'); k.className = 'k'; k.style.background = row[2]; line.appendChild(k); }
       var b = document.createElement('b'); b.textContent = row[1]; line.appendChild(b);

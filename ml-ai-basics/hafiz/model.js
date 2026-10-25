@@ -25,7 +25,7 @@ var AUDIT = [
 {
 "truth": "scam",
 "kind": "Voucher",
-"text": "Congrats! You have been selected for a $50 shopping voucher. Claim it before midnight at bit.ly/sg-voucher"
+"text": "Congrats! You have been selected for a $50 shopping voucher. Claim it before midnight at sg-voucher-claim.com"
 },
 {
 "truth": "scam",

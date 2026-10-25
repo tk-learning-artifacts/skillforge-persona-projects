@@ -32,7 +32,7 @@ messages.forEach(function (msg, i) {
       choices.querySelectorAll('button').forEach(function (b) { b.disabled = true; });
       feedback.textContent = '';
       const head = document.createElement('b');
-      head.textContent = correct ? 'Correct.' : 'Not quite. It is ' + (msg.dataset.answer === 'scam' ? 'a scam.' : 'safe.');
+      head.textContent = correct ? 'Correct. ' : 'Not quite. It is ' + (msg.dataset.answer === 'scam' ? 'a scam. ' : 'safe. ');
       feedback.appendChild(head);
       feedback.appendChild(document.createTextNode(msg.dataset.clue));
       feedback.classList.add(correct ? 'right' : 'wrong');

@@ -25,7 +25,7 @@ h2 { margin: 40px 0 8px; font: 800 1.35rem/1.3 ui-monospace, Menlo, Consolas, mo
 h2::before { content: "▶ "; color: var(--pink); }
 h3 { margin: 20px 0 4px; line-height: 1.3; }
 .lede { font-size: 1.05rem; color: var(--ink-2); margin: 0; }
-.menu { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin: 16px 0; padding: 0; list-style: none; }
+.menu { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; margin: 16px 0; padding: 0; list-style: none; }
 .menu a { display: block; height: 100%; padding: 14px 16px; border-radius: 16px; border: 2px solid var(--line); border-top: 6px solid var(--c, var(--pink));
   background: var(--panel); color: var(--ink); text-decoration: none; }
 .menu a:hover { border-color: var(--c, var(--pink)); }
@@ -66,9 +66,13 @@ summary { cursor: pointer; font-weight: 700; min-height: 32px; }
   border-radius: 6px; padding: 0 8px; margin-right: 6px; }
 @media print {
   .ai-note, .noprint { display: none !important; }
-  body { background: #fff; color: #000; font-size: 11pt; line-height: 1.4; }
+  body { background: #fff; color: #000; font-size: 10.5pt; line-height: 1.35; }
   main { max-width: none; padding: 0; }
   .taskcard { border-color: #000; }
   details { border: 0; padding: 0; }
+  details::details-content { content-visibility: visible; display: block; }
+  .taskcard { padding: 10px 16px; }
+  .taskcard h2 { margin: 12px 0 4px; font-size: 1.05rem; }
+  .taskcard p, .taskcard details { margin: 4px 0; }
   @page { size: A4; margin: 14mm; }
 }

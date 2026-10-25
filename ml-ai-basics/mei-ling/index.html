@@ -17,8 +17,8 @@
   <h1>Sun, Fish or House?</h1>
   <p class="lede">Draw a doodle. Teach the computer what it is. Then try to fool it.</p>
 </header>
-<p>I'm Mei Ling. I run an after-school coding club for Primary 5 and 6 pupils. My kids love Teachable Machine and the webcam. But our webcams freeze, log-ins fail, and some pupils hate being on camera. So I made this doodle classifier. It needs no camera, no account and no internet once the page has loaded.</p>
-<p>It is a real model. You teach it with drawings, it guesses new ones, and it shows how sure it is.</p>
+<p>I'm Mei Ling. I run an after-school coding club for Primary 5 and 6 pupils. My kids love watching Teachable Machine learn from my webcam. But our webcams freeze, log-ins fail, and some pupils hate being on camera. So I made this doodle classifier. It needs no camera, no account and no internet once the page has loaded.</p>
+<p>It is a real model. You teach it with drawings. It guesses new ones and shows how sure it is.</p>
 
 <nav class="toc" aria-label="On this page">
   <a href="#try"><b>1</b> The demo and model</a>
@@ -105,7 +105,7 @@
   </div>
   <div class="card">
     <h3>What teachers should know</h3>
-    <p>This is a k-nearest neighbours classifier, with k = 5. It compares raw squares, so it has no idea of "rays" or "fins". Teachable Machine is different. Its FAQ says it uses transfer learning: a big network already trained on many pictures does most of the work, and your classes become the last step. Both learn only from the examples you give.</p>
+    <p>This is a k-nearest neighbours classifier, with k = 5. It compares raw squares, so it has no idea of "rays" or "fins". Teachable Machine is different. Its FAQ says it uses transfer learning. A big network, already trained on many pictures, does most of the work. Your classes become the last step. Both learn only from the examples you give.</p>
   </div>
 </div>
 <p>Four words I want pupils to use by the end:</p>
@@ -141,7 +141,7 @@
 
 <h3>How I improved it</h3>
 <ol class="steps">
-  <li>I looked at the wrong ones. Both were shapes my training data never had: a sun with no rays, a house taller than it is wide.</li>
+  <li>I looked at the wrong ones. My training data never had either shape. One was a sun with no rays. One was a house taller than it is wide.</li>
   <li>I drew 6 new drawings: 3 tall houses and 3 suns with no rays. I did not use the test drawings. If I teach it the test, the test means nothing.</li>
   <li>I ran the same 15 drawings again: 15 of 15. But the two fixed ones only got 60%. It is less sure, and that is fair.</li>
 </ol>
@@ -149,7 +149,7 @@
 <h2>Bias check: who drew it?</h2>
 <p>Every drawing in my model came from one hand: a small script that draws wobbly lines. So the model knows one drawing style. Things I check with the club, and what we find:</p>
 <ul class="tight">
-  <li><b>Style.</b> A sun drawn as a quarter in the corner of the page, the way some kids draw it, is new to the model. Try it.</li>
+  <li><b>Style.</b> Some kids draw a sun as a quarter circle in the corner. That style is new to the model. Try it.</li>
   <li><b>Detail.</b> Scales, bubbles or a smiley face add dark squares. A busy drawing can drift toward the wrong thing.</li>
   <li><b>Size and place.</b> These don't matter. The page cuts out and shrinks every drawing first.</li>
   <li><b>People.</b> If only 3 pupils add drawings, the model learns their style. Everyone in the pair should add some.</li>
@@ -160,15 +160,15 @@
   <h2>The three deliverables</h2>
   <ul class="tight">
     <li><b>Model file:</b> the trainer above, plus <a href="doodle-model-v1.json" download>version 1</a> and <a href="doodle-model-v2.json" download>version 2</a> as files. "Open a model file" loads them back.</li>
-    <li><b>Short demo video:</b> <a href="demo.html">a 60-second video</a> of the demo, with the 90-minute club plan it fits into.</li>
-    <li><b>Teacher note:</b> <a href="note.html">one printable page</a> on what it does, what it gets wrong and how to keep it safe.</li>
+    <li><b>Short demo video:</b> <a href="demo.html">a 44-second video</a> of the demo, with the 90-minute club plan it fits into.</li>
+    <li><b>Teacher note:</b> <a href="note.html">one printable page</a> on what it does, what it gets wrong and safety.</li>
   </ul>
 </section>
 
 <h2 id="limits">What it can't do, and what I would change</h2>
 <ul class="tight">
   <li>It only knows 3 things. Draw a cat and it still says sun, fish or house. A Teachable Machine model also picks only from your classes. That is why makers often add a "nothing" class.</li>
-  <li>It compares squares, not ideas. A real sun drawn as a yellow blob would fool it, since it can't see colour.</li>
+  <li>It compares squares, not ideas. A sun drawn as a filled blob would fool it. It also can't see colour.</li>
   <li>My test drawings came from the same script as my training ones. Real pupils' drawings are messier. I'd want a test set drawn by the club next term.</li>
   <li>Pupils who can't draw with a mouse can tap a test drawing to load it. But they can't teach it new drawings with a keyboard. I haven't solved that yet.</li>
 </ul>
@@ -178,7 +178,7 @@
   <li>How Teachable Machine trains, saves and shares models, and its fairness note: <a href="https://teachablemachine.withgoogle.com/faq">Teachable Machine FAQ</a>, checked 24 October 2026.</li>
   <li>The tool my club uses for webcam models: <a href="https://teachablemachine.withgoogle.com/">Teachable Machine</a>.</li>
 </ul>
-<p class="small">My club, my pupils and their drawings are made up, like me. The model, the test and the scores on this page are real: the page works them out as you watch.</p>
+<p class="small">My club, my pupils and their drawings are made up, like me. The model, the test and the scores on this page are real. The page works them out as you watch.</p>
 </main>
 </body>
 </html>

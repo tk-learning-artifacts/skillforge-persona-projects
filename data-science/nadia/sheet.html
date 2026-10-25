@@ -21,7 +21,7 @@
   <button type="button" id="short-toggle" aria-pressed="false">Short version</button>
 </div>
 <h1>The spreadsheet</h1>
-<div class="short"><p>I did all the work in one spreadsheet. Every number comes from a formula, so you can trace it back to the raw census file.</p></div>
+<div class="short"><p>I did all the work in one spreadsheet. Every number comes from a formula. You can trace each one back to the raw census file.</p></div>
 <div class="card">
   <p><strong><a href="getting-to-school.xlsx" download>Download getting-to-school.xlsx</a></strong></p>
   <p class="long">To open it in Google Sheets: in Google Drive, choose New, then File upload. Then open the file with Google Sheets. It also opens in Excel.</p>
@@ -30,7 +30,7 @@
 <ol class="tight long">
   <li>Read me: the question, the source and the licence.</li>
   <li>Raw: the census file exactly as downloaded. Nobody edits this tab.</li>
-  <li>Groups: each of the 11 census ways of travel, and the group I put it in.</li>
+  <li>Groups: the 11 census ways of travel, and the group for each.</li>
   <li>Clean: the tidy table, 12 rows.</li>
   <li>Summary: my checks.</li>
   <li>Change log: the 8 notes from the <a href="data.html">data page</a>.</li>
@@ -38,16 +38,16 @@
 </ol>
 
 <h2>The formulas that do the work</h2>
-<div class="short"><p>Three formulas: one looks numbers up, one adds up a group, one turns it into a percent.</p></div>
+<div class="short"><p>Three formulas: one looks up, one adds up a group, one makes a percent.</p></div>
 <h3>Groups tab: look up each number</h3>
 <p><code>=INDEX(Raw!$H$1:$H$13,MATCH($A2,Raw!$A$1:$A$13,0))</code></p>
 <p class="long">MATCH finds the row with this census label. INDEX takes the number from the Primary column, column H. If the census ever changes the row order, this still finds the right row.</p>
 <h3>Clean tab: add up each group</h3>
 <p><code>=SUMIF(Groups!$B$2:$B$12,$B2,Groups!C$2:C$12)</code></p>
-<p class="long">SUMIF adds the numbers for every census row in this group. For "MRT or LRT", that is three rows.</p>
+<p class="long">SUMIF adds the numbers for every census row in this group. For "MRT, LRT or mixed trips", that is three rows.</p>
 <h3>Clean tab: percent of the level</h3>
 <p><code>=C2/SUMIF($A$2:$A$13,$A2,$C$2:$C$13)</code></p>
-<p class="long">This divides by the total for that level, so primary and secondary each add up to 100%. The cell is formatted as a percent with 1 decimal place.</p>
+<p class="long">This divides by the total for that level. So primary and secondary each add up to 100%. The cell is formatted as a percent with 1 decimal place.</p>
 
 <h2>The Summary tab: my checks</h2>
 <div class="card"><p><strong>Primary groups add up</strong></p><p><code>=SUMIF(Clean!$A$2:$A$13,&quot;Primary&quot;,Clean!$C$2:$C$13)</code></p><p>Mine: 245,456. Census: 245,456. Same? TRUE</p></div>
@@ -62,7 +62,7 @@
   <p><strong>This data is made up.</strong> These are not real pupils. I wrote it so my class can practise cleaning before they see their own slips.</p>
   <p><a href="data/made-up-class-survey-messy.csv" download>Download the messy made-up survey as a CSV file</a></p>
 </div>
-<p class="long">It has the mess real slips have: words in a number box, a range, blanks, a number that can't be right, and one slip typed twice. The "minutes_clean" column is my fix. The last column says what I did.</p>
+<p class="long">It has the mess real slips have. There are words in a number box, a range and blanks. One number can't be right, and one slip is typed twice. The "minutes_clean" column is my fix. The last column says what I did.</p>
 <p class="long">Slip 19 says 200 minutes. That is over 3 hours, so it is almost certainly a slip of the pen. But the slips have no names, so I can't ask. I leave it blank. That is the price of keeping it anonymous, and I think it is worth it.</p>
 <details>
 <summary>Show all 31 rows</summary>
@@ -117,7 +117,7 @@
   </tbody>
 </table></div>
 <div class="short"><p>The average is 18 minutes but the middle value is 15. A few long trips pull the average up. The middle value stays put.</p></div>
-<p class="long">P6 pupils learn the average as the total divided by how many. The median is not in the primary syllabus, so I call it the middle value. Pupils find it by lining up number cards from shortest to longest. That is a good moment to ask: which number tells a new pupil what to expect?</p>
+<p class="long">P6 pupils learn the average as the total divided by how many. The median is not in the primary syllabus, so I call it the middle value. Pupils find it by lining up number cards from shortest to longest. Then I ask: which number tells a new pupil what to expect?</p>
 <p class="long">Then the count by way of travel: Walk 12, Car 6, School bus 5, Public bus 5, MRT and bus 1, Prefer not to say 1. The last two are under 5. So they become "Other or not said: 2" before the class sees the chart.</p>
 
 <h2>Sources</h2>

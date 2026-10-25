@@ -116,3 +116,13 @@ label { cursor: pointer; }
   body { background: #fff; }
   .toc, .noprint { display: none; }
 }
+
+/* Rubric: stack each criterion as a card on a phone */
+@media (max-width: 600px) {
+  table.rubric thead { display: none; }
+  table.rubric, table.rubric tbody, table.rubric tr, table.rubric th, table.rubric td { display: block; width: auto; }
+  table.rubric tr { border: 1px solid var(--line); border-radius: 10px; background: var(--card); margin: 0 0 12px; padding: 4px 0; }
+  table.rubric th { border-bottom: 1px solid var(--line); }
+  table.rubric td { border-bottom: 0; padding: 4px 8px; }
+  table.rubric td::before { content: attr(data-label) ": "; font-weight: 650; }
+}

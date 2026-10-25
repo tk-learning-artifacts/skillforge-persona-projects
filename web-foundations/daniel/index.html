@@ -12,8 +12,8 @@
 <main>
 <p class="kicker">Learning log · Web Foundations end project</p>
 <h1>Scam or Not?</h1>
-<p class="lede">A 3-page website for my Sec 2 class. It teaches 4 signs of a scam, tests them with a 6-message quiz, and says where to get help in Singapore.</p>
-<p>I'm Daniel. I have been a trainer for six months, and I learn alongside my classes. I teach a Sec 2 coding class. This term our school asked us to link one unit to cyber wellness. Scams felt like the topic my students would care about most. So I built the site I wanted to show them, and then turned it into their starter.</p>
+<p class="lede">A 3-page website for my Sec 2 class. It teaches 4 signs of a scam and tests them with a 6-message quiz. It also says where to get help in Singapore.</p>
+<p>I'm Daniel. I have been a trainer for six months, and I learn alongside my classes. I teach a Sec 2 coding class. This term our school asked us to link one unit to cyber wellness. Scams felt like the topic my students would care about most. So I built the site I wanted to show them. Then I turned it into their starter.</p>
 <p class="small">My class and colleague are made up, like me. The site, the facts on it and the WAVE fixes are real. Every scam message on the site is made up.</p>
 
 <ul class="toc">
@@ -34,13 +34,13 @@
 <ul class="pages">
   <li><a href="site/index.html">Spot the signs</a><br>The 4 signs as cards, the ACT reminder, and two numbers from the police.</li>
   <li><a href="site/quiz.html">Scam or not?</a><br>The JavaScript feature. Six made-up messages. Pick Scam or Looks safe, and get a clue each time.</li>
-  <li><a href="site/help.html">Get help</a><br>What to do if a message worries you, the 1799 helpline, and what to do if you already paid.</li>
+  <li><a href="site/help.html">Get help</a><br>What to do if a message worries you or you already paid. It also has the 1799 helpline.</li>
 </ul>
 
 <h3>How it meets the brief</h3>
 <ul class="tight">
-  <li>At least 2 linked pages: there are 3. The same header nav is on each page, and the current page is marked with <code>aria-current="page"</code>.</li>
-  <li>A flexbox layout that works on phones: the sign cards and the ACT cards sit in a row with <code>display: flex</code>. A media query at 600 px switches them to <code>flex-direction: column</code>, and wraps the nav. I did it the way the module's card layout task teaches, so my students see the same pattern.</li>
+  <li>At least 2 linked pages: there are 3. The same header nav is on each page. The current page is marked with <code>aria-current="page"</code>.</li>
+  <li>A flexbox layout that works on phones: the sign cards and ACT cards use <code>display: flex</code>. A media query at 600 px switches them to <code>flex-direction: column</code>, and wraps the nav. It is the module's card layout task, so my students see the same pattern.</li>
   <li>1 JavaScript feature: the quiz. It finds the messages with <code>querySelectorAll</code>, adds two buttons to each, and listens with <code>addEventListener</code>. It writes the clue and the score with <code>textContent</code>. The score line uses <code>aria-live</code>, so a screen reader reads out each new score.</li>
 </ul>
 
@@ -58,7 +58,7 @@
 <ul class="tight">
   <li>First draft: <a href="before/index.html">Spot the signs</a> and <a href="before/quiz.html">the quiz</a>.</li>
   <li>WAVE on the live draft: <a href="https://wave.webaim.org/report#/https://tk-learning-artifacts.github.io/skillforge-persona-projects/web-foundations/daniel/before/index.html">signs draft</a>, <a href="https://wave.webaim.org/report#/https://tk-learning-artifacts.github.io/skillforge-persona-projects/web-foundations/daniel/before/quiz.html">quiz draft</a>.</li>
-  <li>WAVE on the fixed site: <a href="https://wave.webaim.org/report#/https://tk-learning-artifacts.github.io/skillforge-persona-projects/web-foundations/daniel/site/quiz.html">quiz</a>.</li>
+  <li>WAVE on the fixed site: <a href="https://wave.webaim.org/report#/https://tk-learning-artifacts.github.io/skillforge-persona-projects/web-foundations/daniel/site/index.html">signs</a>, <a href="https://wave.webaim.org/report#/https://tk-learning-artifacts.github.io/skillforge-persona-projects/web-foundations/daniel/site/quiz.html">quiz</a>, <a href="https://wave.webaim.org/report#/https://tk-learning-artifacts.github.io/skillforge-persona-projects/web-foundations/daniel/site/help.html">help</a>.</li>
 </ul>
 <p class="card">These are redrawn summaries, not screenshots. An AI made this project and could not open the WAVE extension. Each summary counts what WAVE's published error rules find in that file, checked in Chrome. WAVE's own count may differ a little. Open the links above and compare.</p>
 
@@ -107,11 +107,11 @@
 <ol class="fixes">
   <li>Missing alternative text (4). The four sign icons had no alt. Each card's heading already says the sign, so the icons now have <code>alt=""</code>.
     <span class="who">Helps screen reader users, who no longer hear four file names.</span></li>
-  <li>Linked image missing alternative text (2). The logo was an image link with no words. The link now holds the words "Scam or Not?", and the icon is hidden from screen readers.
+  <li>Linked image missing alternative text (2). The logo was an image link with no words. The link now holds the words "Scam or Not?". The icon is hidden from screen readers.
     <span class="who">Helps screen reader users know the link goes home.</span></li>
   <li>Broken skip link (2). My skip link pointed to <code>#content</code>, but the main tag had <code>id="main"</code>. One typo, on every page. It now points to <code>#main</code>.
     <span class="who">Helps keyboard users jump past the nav.</span></li>
-  <li>Missing form label (6). The draft quiz used radio buttons with the words Scam and Safe beside them, not tied to them. I swapped them for two real buttons per message, which need no label. Each answer now gets its clue straight away, not after a Check button.
+  <li>Missing form label (6). The draft quiz used radio buttons. The words Scam and Safe sat beside them, not tied to them. I swapped them for two real buttons per message, which need no label. Each answer now gets its clue straight away, not after a Check button.
     <span class="who">Helps screen reader users, and anyone tapping on a small phone screen.</span></li>
   <li>Empty button (1). The Start again button was only a circular arrow icon. It now says "Start again".
     <span class="who">Helps everyone. Two colleagues guessed it meant refresh the page.</span></li>
@@ -124,29 +124,29 @@
   <li>The first Tab shows the skip link. Enter jumps to the main content.</li>
   <li>Tab reaches each Scam and Looks safe button in order. Space or Enter picks one.</li>
   <li>After an answer, both buttons are disabled, so Tab moves on to the next message.</li>
-  <li>Start again moves focus back to the first message, so you don't have to tab back up.</li>
-  <li>The 1799 number is a phone link, so it can be tapped or reached with Tab.</li>
+  <li>Start again moves focus back to the first message. You don't have to tab back up.</li>
+  <li>The 1799 number is a phone link. You can tap it or reach it with Tab.</li>
 </ul>
 
 <h2 id="starter">3. Starter project and task card</h2>
-<p>Students build their own Scam or not? page. The starter has 2 message cards and 3 TODOs: a third card in HTML, the flexbox layout in CSS, and the answer check in JavaScript. They copy it from a GitHub template repository, edit it in github.dev and publish it on GitHub Pages.</p>
+<p>Students build their own Scam or not? page. The starter has 2 message cards and 3 TODOs. They add a card in HTML, a flexbox layout in CSS and an answer check in JavaScript. They copy a GitHub template, edit it in github.dev and publish it on GitHub Pages.</p>
 <ul class="pages">
-  <li><a href="starter.html">The starter</a><br>The 3 files, how students copy and publish them, my 60-minute lesson and the answer key.</li>
+  <li><a href="starter.html">The starter</a><br>The 3 files and how students copy and publish them. Also my 60-minute lesson and the answer key.</li>
   <li><a href="starter/index.html">Run the starter</a><br>See what students start with: cards in a column and buttons that do nothing yet.</li>
-  <li><a href="card.html">The task card</a><br>One A4 page with a hint per TODO, a bug checklist, 3 extensions and publishing rules.</li>
+  <li><a href="card.html">The task card</a><br>One A4 page. It has a hint per TODO, a bug checklist, 3 extensions and publishing rules.</li>
 </ul>
 
 <h2 id="rubric">Rubric check</h2>
 <ul class="tight">
-  <li>Site works on phone and laptop: checked at 360 px and 1200 px, in light and dark mode. No sideways scrolling. Every button is at least 44 px tall.</li>
-  <li>Uses semantic HTML throughout: header, nav, main and footer on every page. Signs and steps are lists. The quiz messages are an ordered list, and each set of buttons is a labelled group.</li>
-  <li>No WAVE errors left: 0 errors and 0 contrast errors on all 3 pages, by WAVE's rules. Please run WAVE on the live links to confirm.</li>
-  <li>Starter tasks fit your students' level: TODO 1 everyone can do, TODO 2 adds one new idea, TODO 3 is a short if and else. My colleague test changed the task card twice.</li>
+  <li>Site works on phone and laptop: I checked it at 360 px and 1200 px. I tried light and dark mode. No sideways scrolling. Every button is at least 44 px tall.</li>
+  <li>Uses semantic HTML throughout: header, nav, main and footer on every page. Signs and steps are lists. The quiz messages are an ordered list. Each set of buttons is a labelled group.</li>
+  <li>No WAVE errors left: all 3 pages have 0 errors and 0 contrast errors by WAVE's rules. Please run WAVE on the live links to confirm.</li>
+  <li>Starter tasks fit your students' level: everyone can do TODO 1. TODO 2 adds one new idea. TODO 3 is a short if and else. My colleague test changed the task card twice.</li>
 </ul>
 
 <h2 id="change">What I'd change</h2>
 <p>The quiz has 4 scams and 2 safe messages. A student who presses Scam every time scores 4 out of 6. I only noticed when I tried to break my own quiz. Next time I'd balance it, 3 and 3, and shuffle the order.</p>
-<p>github.dev has no preview, so each change means commit, wait and refresh. That slow loop hurts beginners most. I'd also like a way to publish that doesn't put a student's GitHub username in the web address. Some students pick usernames close to their real names.</p>
+<p>github.dev has no preview, so each change means commit, wait and refresh. That slow loop hurts beginners most. I'd also like to publish without a student's GitHub username in the web address. Some students pick usernames close to their real names.</p>
 
 <h2 id="sources">Sources</h2>
 <ul class="tight small">

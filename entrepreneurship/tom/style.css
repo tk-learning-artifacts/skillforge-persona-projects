@@ -68,7 +68,7 @@ tr.total td { font-weight: 700; border-top: 2px solid var(--ink-2); }
 .vs > div { padding: 10px 12px; border-bottom: 1px solid var(--rule); }
 .vs > div:nth-child(odd) { background: var(--sheet); }
 .vs .head { font-weight: 700; background: var(--ink) !important; color: var(--paper); }
-@media (max-width: 520px) { .vs { grid-template-columns: 1fr; } .vs .head:nth-child(2) { display: none; }
+@media (max-width: 520px) { .vs { grid-template-columns: 1fr; } .vs .head { display: none; }
   .vs > div:nth-child(odd):not(.head)::before { content: "We thought: "; font-weight: 700; }
   .vs > div:nth-child(even):not(.head)::before { content: "We found: "; font-weight: 700; color: var(--forest); } }
 
@@ -184,3 +184,15 @@ footer.sources li { margin-bottom: 6px; font-size: 0.92rem; }
 .g-track b { height: 20px; border-radius: 4px; background: var(--forest); }
 .g-track b.r { background: var(--rust); }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* Results table: one card per measure on phones, so no column is hidden. */
+@media (max-width: 520px) {
+  table.results thead { display: none; }
+  table.results, table.results tbody, table.results tr, table.results td { display: block; width: 100%; }
+  table.results tr { border-bottom: 1px solid var(--rule); padding: 8px 0; }
+  table.results td { display: flex; justify-content: space-between; gap: 12px; border: 0; padding: 2px 0; text-align: right; }
+  table.results td::before { content: attr(data-label); color: var(--muted); text-align: left; font-weight: 400; }
+  table.results td:first-child { font-weight: 700; text-align: left; }
+  table.results td:first-child::before { content: none; }
+}
+@media (max-width: 400px) { th, td { padding: 7px 5px; } }

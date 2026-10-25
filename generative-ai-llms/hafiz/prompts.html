@@ -14,7 +14,7 @@
 <p class="back"><a href="index.html">Back to Claude, checked</a></p>
 <p class="kicker">Deliverable 2 · prompts and test log</p>
 <h1>Eight tested prompts</h1>
-<p class="lede">Each prompt ran 3 times in Claude Sonnet 5.5 on 24 October 2026, in a fresh session with web search off. Before each run, I wrote down what a good answer must do. Then I checked.</p>
+<p class="lede">Each prompt ran 3 times in Claude Sonnet 5.5 on 24 October 2026. Each run was a fresh session with web search off. Before each run, I wrote down what a good answer must do. Then I checked.</p>
 <p>The quotes in grey are copied from the runs. I cut some with "…" but changed no words. <span class="mark p">✓</span> passed. <span class="mark w">~</span> passed with a problem. <span class="mark f">✗</span> failed.</p>
 <p class="sr-status small" id="copy-status" aria-live="polite"></p>
 
@@ -89,7 +89,7 @@
 <button type="button" class="copy" data-copy="t6">Copy prompt</button>
 <dl class="check">
   <dt>Check</dt><dd>Every study is real and not retracted. Details match the record.</dd>
-  <dt>Result</dt><dd>All 3 runs named the same 3 papers. I looked up all 9 DOIs on Crossref. Authors, journals and volumes matched. In its notes, run 2 also cited a meta-analysis by Wang and Fan as positive evidence. That paper was <a href="https://doi.org/10.1057/s41599-026-07310-z">retracted on 22 April 2026</a>.</dd>
+  <dt>Result</dt><dd>All 3 runs named the same 3 papers. I looked up all 9 DOIs on Crossref. Authors, journals and volumes matched. In its notes, run 2 also cited a Wang and Fan meta-analysis as positive evidence. That paper was <a href="https://doi.org/10.1057/s41599-026-07310-z">retracted on 22 April 2026</a>.</dd>
   <dt>From run 1</dt><dd><blockquote class="out"><p>I'm giving the DOIs from memory and haven't checked them against a live database, so please confirm each one at doi.org before citing it.</p></blockquote></dd>
 </dl>
 </article>
@@ -100,7 +100,7 @@
 <div class="ptext" id="t6b">Give me 3 peer-reviewed studies on whether students who use AI chatbots for homework learn less. For each, give the authors, year, journal and DOI. If you are not sure a study or a detail is real, say so clearly instead of guessing. I will check every DOI myself.</div>
 <button type="button" class="copy" data-copy="t6b">Copy prompt</button>
 <dl class="check">
-  <dt>Result</dt><dd>Each answer now rated its own confidence, item by item. That part worked. But run 1 listed the retracted Wang and Fan paper as one of its 3 studies. Run 2 shortened one title, writing "generative AI" for "generative artificial intelligence". Run 3 was clean.</dd>
+  <dt>Result</dt><dd>Each answer now rated its own confidence, item by item. That part worked. But run 1 listed the retracted Wang and Fan paper among its 3 studies. Run 2 shortened one title, writing "generative AI" for "generative artificial intelligence". Run 3 was clean.</dd>
   <dt>From run 1</dt><dd><blockquote class="out"><p>Confidence: Moderate. I'm fairly sure the paper exists, but I'm unsure of the article number and the DOI. Check this one most carefully.</p></blockquote></dd>
   <dt>What I learnt</dt><dd>The DOI was right. The paper exists. It was retracted. Claude's doubt pointed at the wrong thing. A better prompt cannot fix knowledge the model does not have. So the check stays with the learner: open the paper's page and look for "Retracted".</dd>
 </dl>
@@ -145,7 +145,7 @@ Memo: [paste the text here]</div>
 <footer class="src">
 <h2 data-n="Sources">Sources</h2>
 <ul class="small">
-  <li>Population: <a href="https://www.singstat.gov.sg/find-data/explore-data-themes/population/population-and-population-structure/latest-news-data">SingStat</a> and <a href="https://www.strategygroup.gov.sg/files/population_in_brief_2025.pdf">Population in Brief 2025</a>.</li>
+  <li>Population: <a href="https://www.singstat.gov.sg/find-data/explore-data-themes/population/population-and-population-structure/latest-news-data">SingStat</a> and <a href="https://www.population.gov.sg/population-in-brief-2025-key-trends/">Population in Brief 2025</a>.</li>
   <li>Papers on Crossref: <a href="https://doi.org/10.1073/pnas.2422633122">Bastani et al. 2025</a>, <a href="https://doi.org/10.1111/bjet.13544">Fan et al. 2025</a>, <a href="https://doi.org/10.1016/j.chb.2024.108386">Stadler, Bannert and Sailer 2024</a>, <a href="https://doi.org/10.1057/s41599-025-04787-y">Wang and Fan 2025</a>, and the <a href="https://doi.org/10.1057/s41599-026-07310-z">retraction note</a>.</li>
   <li>AVERAGEIF: <a href="https://support.google.com/docs/answer/3256529">Google Docs Editors Help</a>.</li>
 </ul>

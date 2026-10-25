@@ -28,7 +28,7 @@
   <li>Sorting the leaderboard. The reveal shows games in file order.</li>
   <li>One small gap: the <code>key</code> on each GameCard. React warns about it in the console the moment the starter runs.</li>
 </ul>
-<p>I kept <code>takeBack</code> whole. It sits right under <code>vote</code> and does the opposite. That is the pattern students need, so TODO 2 becomes read, copy and change, not a blank line. It also follows the Predict, Run, Investigate, Modify, Make steps that the module's starter guide uses.</p>
+<p>I kept <code>takeBack</code> whole. It sits right under <code>vote</code> and does the opposite. That is the pattern students need. So TODO 2 is read, copy and change, not a blank line. It also follows the Predict, Run, Investigate, Modify, Make steps that the module's starter guide uses.</p>
 <pre><code>function vote(id) {
   if (tokensLeft === 0 || !canVote) return
   // TODO 2 (finish the idea): add 1 to this game's votes in myVotes.
@@ -41,12 +41,12 @@ function takeBack(id) {
   setMyVotes({ ...myVotes, [id]: myVotes[id] - 1 })
   beep('back', sound)
 }</code></pre>
-<p>The beep stays in on purpose. A button that makes a sound but changes nothing tells a player "your click arrived, the game ignored it". Students hear the bug before they read the code.</p>
+<p>The beep stays in on purpose. A button that beeps but changes nothing tells a player something. It says "your click arrived, the game ignored it". Students hear the bug before they read the code.</p>
 </div>
 
 <h2 id="card">Task card: finish the vote board</h2>
 <article class="taskcard">
-<p><strong>Goal:</strong> a vote board where each player spends 3 tokens, and the reveal puts the winner on top.</p>
+<p><strong>Goal:</strong> a vote board where each player spends 3 tokens. The reveal puts the winner on top.</p>
 <p><strong>Work in pairs.</strong> One drives, one navigates. Swap at every step.</p>
 
 <h2>Step 0. Predict, then run</h2>
@@ -61,7 +61,7 @@ function takeBack(id) {
 <details><summary>Hint 2</summary><p>Copy the <code>setMyVotes</code> line from <code>takeBack</code>. Change the minus to a plus. If the game has no votes yet, <code>myVotes[id]</code> is undefined, so use <code>(myVotes[id] || 0) + 1</code>.</p></details>
 
 <h2>Step 3. Make it yours</h2>
-<p>Open <code>games.json</code>. Change two games to games from your class, with a title, team, genre, colour and a one-line pitch. Keep each <code>id</code> different. Test: vote for your game.</p>
+<p>Open <code>games.json</code>. Change two games to games from your class. Give each a title, team, genre, colour and one-line pitch. Keep each <code>id</code> different. Test: vote for your game.</p>
 <details><summary>Hint 3</summary><p>Copy a whole game, from <code>{</code> to <code>}</code>, with the comma after it. If the board shows an error about JSON, look for a missing comma or quote.</p></details>
 
 <h2>Stretch. <span class="todo">TODO 3</span> Make it new</h2>
@@ -73,7 +73,7 @@ function takeBack(id) {
 
 <div class="noprint">
 <h2 id="tested">Tested on a colleague</h2>
-<p>I gave the starter and card to a colleague for 10 minutes and said nothing, as the module's starter guide suggests. Like the class on the main page, this colleague is made up.</p>
+<p>I gave the starter and card to a colleague for 10 minutes and said nothing. The module's starter guide suggests that. Like the class on the main page, this colleague is made up.</p>
 <ul class="tight">
   <li>Step 0: she guessed +1 would add a star. It beeped and did nothing, and she laughed. Good.</li>
   <li>TODO 1 took 1 minute. The warning names GameList, so she went straight there.</li>
@@ -83,5 +83,11 @@ function takeBack(id) {
 </ul>
 </div>
 </main>
+<script>
+// Print the hints too: open every hint before printing.
+addEventListener('beforeprint', function () {
+  document.querySelectorAll('details').forEach(function (d) { d.open = true; });
+});
+</script>
 </body>
 </html>

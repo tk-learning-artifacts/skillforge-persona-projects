@@ -12,7 +12,7 @@
 <main>
 <span class="stamp">Case file: web foundations</span>
 <h1>Code Breakers HQ</h1>
-<p class="lede">A 3-page website for my secret codes holiday camp. Campers turn a Caesar wheel, flash Morse code on a lamp, then finish a starter page with their own decoder button.</p>
+<p class="lede">A 3-page website for my secret codes holiday camp. Campers turn a Caesar wheel and flash Morse code on a lamp. Then they finish a starter page with their own decoder button.</p>
 <p>I'm Sofia. I run holiday camps for mixed-age groups. My camps are short, so every idea becomes a game or a challenge. Code Breakers is three mornings for 20 campers aged 8 to 12. This is my end project for the Web Foundations module.</p>
 <p class="small">My camp, campers and colleague are made up, like me. The site, the codes and the WAVE fixes are real.</p>
 
@@ -59,21 +59,21 @@
 
 <h3>How it meets the brief</h3>
 <ul class="tight">
-  <li><strong>At least 2 linked pages.</strong> There are 3. The same nav bar sits at the top of each page. The current page is marked with <code>aria-current="page"</code>, so it shows dark and screen readers say "current page".</li>
-  <li><strong>A flexbox layout that works on phones.</strong> The header, the mission cards, the letter strip and the Morse chart all use <code>display: flex</code> with <code>flex-wrap: wrap</code>. Each mission card has <code>flex: 1 1 240px</code>. On a laptop the three cards share a row. On a 360 px phone there is room for one, so they stack. I needed no media query, because wrapping does the work.</li>
+  <li><strong>At least 2 linked pages.</strong> There are 3. The same nav bar sits at the top of each page. The current page is marked with <code>aria-current="page"</code>. It shows dark, and screen readers say "current page".</li>
+  <li><strong>A flexbox layout that works on phones.</strong> Four parts use <code>display: flex</code> with <code>flex-wrap: wrap</code>. They are the header, the mission cards, the letter strip and the Morse chart. Each mission card has <code>flex: 1 1 240px</code>. On a laptop the three cards share a row. On a 360 px phone there is room for one, so they stack. I needed no media query, because wrapping does the work.</li>
   <li><strong>1 JavaScript feature.</strong> The Caesar wheel. It uses <code>querySelector</code> to find the box and buttons, and <code>addEventListener</code> for clicks and typing. It writes the answer with <code>textContent</code>. It also draws the wheel in SVG and turns the inner ring. The Morse lamp is a bonus.</li>
 </ul>
 
 <h3>Why this editor, and who publishes</h3>
-<p>I first planned to use CodePen. Then I read its terms of service. They say its services are not for anyone under 18. So campers use the <a href="https://editor.raspberrypi.org/">Raspberry Pi Code Editor</a>. It runs in the browser and needs no account. It also runs JavaScript in HTML projects, and has an Add file button for a <code>.js</code> file.</p>
-<p>GitHub accounts are for ages 13 and up. Most of my campers are younger, so I publish the site, and they don't publish anything. Their pages stay in the editor and in a download.</p>
+<p>I first planned to use CodePen. Then I read its terms of service. They say its services are not for anyone under 18. So campers use the <a href="https://editor.raspberrypi.org/">Raspberry Pi Code Editor</a>. It runs in the browser and needs no account. It runs JavaScript in HTML projects. It has an Add file button for a <code>.js</code> file.</p>
+<p>GitHub accounts are for ages 13 and up. Most of my campers are younger. So I publish the site, and they publish nothing. Their pages stay in the editor and in a download.</p>
 
 <h2 id="wave">2. WAVE before and after</h2>
 <p>I ran my first draft past WAVE's rules. Two pages had 14 errors and 7 contrast errors between them. I kept that draft online, unchanged, so you can check it yourself:</p>
 <ul class="tight">
   <li>First draft: <a href="before/index.html">HQ</a> and <a href="before/caesar.html">Caesar wheel</a>.</li>
   <li>Run WAVE on the live draft: <a href="https://wave.webaim.org/report#/https://tk-learning-artifacts.github.io/skillforge-persona-projects/web-foundations/sofia/before/index.html">HQ draft in WAVE</a>, <a href="https://wave.webaim.org/report#/https://tk-learning-artifacts.github.io/skillforge-persona-projects/web-foundations/sofia/before/caesar.html">Caesar draft in WAVE</a>.</li>
-  <li>Run WAVE on the fixed site: <a href="https://wave.webaim.org/report#/https://tk-learning-artifacts.github.io/skillforge-persona-projects/web-foundations/sofia/site/caesar.html">Caesar wheel in WAVE</a>.</li>
+  <li>Run WAVE on the fixed site: <a href="https://wave.webaim.org/report#/https://tk-learning-artifacts.github.io/skillforge-persona-projects/web-foundations/sofia/site/index.html">HQ in WAVE</a>, <a href="https://wave.webaim.org/report#/https://tk-learning-artifacts.github.io/skillforge-persona-projects/web-foundations/sofia/site/caesar.html">Caesar wheel in WAVE</a>, <a href="https://wave.webaim.org/report#/https://tk-learning-artifacts.github.io/skillforge-persona-projects/web-foundations/sofia/site/morse.html">Morse lab in WAVE</a>.</li>
 </ul>
 <p class="note">These panels are redrawn, not screenshots. An AI made this project and could not open the WAVE extension. Each panel lists what WAVE's published error rules find in that file. The counts were checked in Chrome. WAVE's own count may differ a little, so use the links above and compare. That makes a good class task too.</p>
 
@@ -128,12 +128,12 @@
 <h3>What I fixed, and who it helps</h3>
 <ol class="fix">
   <li><strong>Language missing (2).</strong> I added <code>lang="en"</code> to the html tag. A screen reader now reads the page in an English voice.</li>
-  <li><strong>Linked image missing alternative text (2).</strong> The logo was a picture link with no words. Now the link holds the words "Code Breakers HQ", and the icon is hidden from screen readers. A blind camper hears where the link goes.</li>
+  <li><strong>Linked image missing alternative text (2).</strong> The logo was a picture link with no words. Now the link holds the words "Code Breakers HQ". The icon is hidden from screen readers. A blind camper hears where the link goes.</li>
   <li><strong>Missing alternative text (3).</strong> The mission badges had no alt. They only repeat the card title, so they now have an empty <code>alt=""</code>. Screen readers skip them instead of reading a file name.</li>
   <li><strong>Empty link (1).</strong> A bare arrow linked to the Caesar page. Each card now ends with a link in words: "Open the Caesar wheel". Keyboard users can tell where each link goes.</li>
   <li><strong>Empty heading (1).</strong> Mission 3 had a blank heading I forgot to fill. It now says "Build your agent page".</li>
-  <li><strong>Missing form label (3).</strong> The message box had no label. The Hide and Reveal radio buttons had words beside them, but not tied to them. Now each has a <code>label</code>, and the radios sit in a <code>fieldset</code> with the legend "I want to". Bonus: tapping the word now picks the radio. Small fingers love that.</li>
-  <li><strong>Empty button (2).</strong> The shift buttons held only an icon. Now they show − and +, with <code>aria-label</code> "Shift down by one" and "Shift up by one".</li>
+  <li><strong>Missing form label (3).</strong> The message box had no label. The Hide and Reveal radio buttons had words beside them, but not tied to them. Now each has a <code>label</code>. The radios sit in a <code>fieldset</code> with the legend "I want to". Bonus: tapping the word now picks the radio. Small fingers love that.</li>
+  <li><strong>Empty button (2).</strong> The shift buttons held only an icon. Now they show − and +. They have <code>aria-label</code> "Shift down by one" and "Shift up by one".</li>
   <li><strong>Very low contrast (7).</strong> My yellow stamps were 1.59 to 1 on white. WAVE wants at least 4.5 to 1 for normal text. They are red now, at 7.19 to 1. The grey footer, tip and result text were about 2.1 to 1. They now use dark ink. The dark mode colours pass too.</li>
 </ol>
 
@@ -143,14 +143,14 @@
   <li>Every link and button shows a thick red outline when it has focus.</li>
   <li>On the wheel: Tab to − and +, then Space. The arrow keys move between Hide and Reveal.</li>
   <li>The "Show the answer" boxes open with Enter.</li>
-  <li>In the Morse lab, Stop is one Tab after Flash it, so you can stop the lamp fast.</li>
+  <li>In the Morse lab, Stop is one Tab after Flash it. You can stop the lamp fast.</li>
 </ul>
 
 <h2 id="starter">3. Starter project and task card</h2>
-<p>Mission 3 at camp: every pair finishes a half-made agent page. It has 3 TODOs, one per language. When all 3 are done, the page shows a list of gadgets and a row of badges. A Decode button cracks a secret message.</p>
+<p>Mission 3 at camp: every pair finishes a half-made agent page. It has 3 TODOs, one per language. Then the page shows a list of gadgets and a row of badges. A Decode button cracks a secret message.</p>
 <ul class="pages">
-  <li><a href="starter.html">The starter</a><br>The 3 files with copy buttons, how campers load them, my 90-minute plan and the answer key.</li>
-  <li><a href="starter/index.html">Run the starter</a><br>See it as campers first see it: badges in a column and a message nobody can read.</li>
+  <li><a href="starter.html">The starter</a><br>The 3 files with copy buttons and how campers load them. Also my 90-minute plan and the answer key.</li>
+  <li><a href="starter/index.html">Run the starter</a><br>See what campers first see: badges in a column and a message nobody can read.</li>
   <li><a href="card.html">The task card</a><br>One A4 page. Rookie and Agent hints for each TODO, a bug checklist and Mastermind challenges.</li>
 </ul>
 <p>Mixed ages are the hard part of camp. An 8-year-old and a 12-year-old sit at the same laptop. So the card has the same 3 TODOs for everyone, with two kinds of hint. Rookie hints give the exact code. Agent hints name the idea. Mastermind challenges are for the pair who finishes in 10 minutes and starts to wander.</p>
@@ -164,7 +164,7 @@
 </ul>
 
 <h2 id="change">What I'd change</h2>
-<p>Campers can't publish their own pages. GitHub needs them to be 13, and a Raspberry Pi account needs a parent's permission under 13. So the "publish it" part of the brief is mine, not theirs. At the showcase, their pages run from downloads. I'd love a safe way for an 8-year-old to share a live link with their family.</p>
+<p>Campers can't publish their own pages. GitHub needs them to be 13. A Raspberry Pi account needs a parent's permission under 13. So the "publish it" part of the brief is mine, not theirs. At the showcase, their pages run from downloads. I'd love a safe way for an 8-year-old to share a live link with family.</p>
 <p>The site also asks a lot of reading for an 8-year-old. Next camp I'd add picture steps to the missions. And the wheel's result box announces every letter you type to a screen reader. That gets chatty. I'd announce it only when you pause.</p>
 
 <h2 id="sources">Sources</h2>
@@ -175,7 +175,7 @@
   <li>JavaScript support for HTML projects, version 0.20.0, November 2023: <a href="https://github.com/RaspberryPiFoundation/editor-ui/blob/main/CHANGELOG.md">Code Editor changelog</a>.</li>
   <li>Under 13s need a parent or guardian's permission for an account: <a href="https://www.raspberrypi.org/privacy/child-friendly/">Raspberry Pi Foundation child-friendly privacy notice</a>.</li>
   <li>GitHub accounts are for ages 13 and up: <a href="https://docs.github.com/en/site-policy/github-terms/github-terms-of-service">GitHub Terms of Service</a>.</li>
-  <li>Caesar's shift of three, from Suetonius: <a href="https://www.britannica.com/topic/Caesar-cipher">Britannica, Caesar cipher</a>.</li>
+  <li>Caesar's shift of three, from Suetonius: <a href="https://www.britannica.com/technology/Caesar-cipher">Britannica, Caesar cipher</a>.</li>
   <li>Morse code letters and timing: <a href="https://www.itu.int/rec/R-REC-M.1677-1-200910-I/">ITU-R M.1677-1, International Morse code</a>.</li>
   <li>The first telegraph message, 24 May 1844: <a href="https://www.loc.gov/item/today-in-history/may-24/">Library of Congress, Today in History</a>.</li>
   <li>Publishing with GitHub Pages: <a href="https://docs.github.com/en/pages/quickstart">GitHub Pages quickstart</a>.</li>

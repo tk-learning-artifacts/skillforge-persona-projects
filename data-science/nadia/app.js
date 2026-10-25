@@ -5,7 +5,7 @@ const GROUPS = [
   { name: 'Car, taxi or private-hire car', pri: [53506, 21.8], sec: [22520, 13.0] },
   { name: 'Public bus', pri: [38560, 15.7], sec: [64080, 36.9] },
   { name: 'School bus or van', pri: [33842, 13.8], sec: [4061, 2.3] },
-  { name: 'MRT or LRT, with or without a bus', pri: [13811, 5.6], sec: [56712, 32.6] },
+  { name: 'MRT, LRT or mixed trips', pri: [13811, 5.6], sec: [56712, 32.6] },
   { name: 'Other ways', pri: [4381, 1.8], sec: [1402, 0.8] }
 ];
 const NS = 'http://www.w3.org/2000/svg';

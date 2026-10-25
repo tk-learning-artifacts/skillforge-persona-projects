@@ -21,7 +21,7 @@
   <button type="button" id="short-toggle" aria-pressed="false">Short version</button>
 </div>
 <h1>Cleaned data and change notes</h1>
-<div class="short"><p>The raw census file, the clean table I made from it, and 8 notes on what I changed.</p></div>
+<div class="short"><p>Here is the raw census file and my clean table. Then come 8 notes on what I changed.</p></div>
 
 <h2>Download</h2>
 <ul class="tight">
@@ -37,30 +37,30 @@
 <ol class="tight">
   <li><strong>Kept the raw file.</strong> I downloaded it from data.gov.sg on 24 October 2026. It sits in data/raw, unchanged.</li>
   <li><strong>Watched for a comma inside a label.</strong> One way of travel is "Combination of Rail (MRT/LRT) and/or Public Bus, with Other Modes". The comma sits inside quote marks. Google Sheets reads it right. Splitting the lines on commas by hand breaks that row.</li>
-  <li><strong>Kept only the Total columns.</strong> My question is not about boys and girls, so I dropped the Males and Females columns.</li>
-  <li><strong>Kept only Primary and Secondary.</strong> My P6 class is about to move from one to the other. I dropped the other six levels.</li>
+  <li><strong>Kept only the Total columns.</strong> My question is not about boys and girls. So I dropped the Males and Females columns.</li>
+  <li><strong>Kept only Primary and Secondary.</strong> My P6 class is about to move from one to the other. I dropped the other five levels.</li>
   <li><strong>Merged 11 ways of travel into 6 groups.</strong> Groups under 1% are hard to see and add reading load. The table below shows where each one went.</li>
-  <li><strong>Checked that the groups add up.</strong> Primary comes to 245,456 and secondary to 173,710, the same as the census totals. Then I worked out each group as a percent of its level, to 1 decimal place.</li>
+  <li><strong>Checked that the groups add up.</strong> Primary comes to 245,456 and secondary to 173,710. Both match the census totals. Then I made each group a percent of its level, to 1 decimal place.</li>
   <li><strong>Checked against the census report.</strong> Two numbers match. 43.0% of pre-primary and primary pupils needed no transport. 36.9% of secondary pupils took a public bus only. One is 0.1 points off. I get 22.1% by car, taxi or private-hire car, and the report says 22.0%. I could not find why. It is small, so I kept going.</li>
   <li><strong>Did not mix in the travel-time table.</strong> It counts 704,383 students, not 715,209. Its footnote says it leaves out students studying from home. It also does not split primary from secondary. So I quote the report's median travel times instead: 15 minutes for pre-primary and primary, 30 minutes for secondary.</li>
 </ol>
 
 <h2>Where each census group went</h2>
-<div class="scroll"><table>
+<div class="scroll"><table class="stack">
   <thead><tr><th>Census label</th><th>My group</th><th class="num">Primary</th><th class="num">Secondary</th></tr></thead>
   <tbody>
-    <tr><td>No Transport Required</td><td>No transport needed</td><td class="num">101,356</td><td class="num">24,935</td></tr>
-    <tr><td>Car Only</td><td>Car, taxi or private-hire car</td><td class="num">51,709</td><td class="num">21,531</td></tr>
-    <tr><td>Taxi/Private Hire Car Only</td><td>Car, taxi or private-hire car</td><td class="num">1,797</td><td class="num">989</td></tr>
-    <tr><td>Public Bus Only</td><td>Public bus</td><td class="num">38,560</td><td class="num">64,080</td></tr>
-    <tr><td>Private Chartered Bus/Van Only</td><td>School bus or van</td><td class="num">33,842</td><td class="num">4,061</td></tr>
-    <tr><td>Rail (MRT/LRT) Only</td><td>MRT or LRT, with or without a bus</td><td class="num">3,960</td><td class="num">13,238</td></tr>
-    <tr><td>Rail (MRT/LRT) &amp; Public Bus Only</td><td>MRT or LRT, with or without a bus</td><td class="num">7,333</td><td class="num">40,809</td></tr>
-    <tr><td>Combination of Rail (MRT/LRT) and/or Public Bus, with Other Modes</td><td>MRT or LRT, with or without a bus</td><td class="num">2,518</td><td class="num">2,665</td></tr>
-    <tr><td>Lorry/Pickup Only</td><td>Other ways</td><td class="num">542</td><td class="num">242</td></tr>
-    <tr><td>Motorcycle/Scooter Only</td><td>Other ways</td><td class="num">561</td><td class="num">228</td></tr>
-    <tr><td>Others</td><td>Other ways</td><td class="num">3,278</td><td class="num">932</td></tr>
-    <tr><th>Total</th><th></th><th class="num">245,456</th><th class="num">173,710</th></tr>
+    <tr><td data-label="Census label">No Transport Required</td><td data-label="My group">No transport needed</td><td class="num" data-label="Primary">101,356</td><td class="num" data-label="Secondary">24,935</td></tr>
+    <tr><td data-label="Census label">Car Only</td><td data-label="My group">Car, taxi or private-hire car</td><td class="num" data-label="Primary">51,709</td><td class="num" data-label="Secondary">21,531</td></tr>
+    <tr><td data-label="Census label">Taxi/Private Hire Car Only</td><td data-label="My group">Car, taxi or private-hire car</td><td class="num" data-label="Primary">1,797</td><td class="num" data-label="Secondary">989</td></tr>
+    <tr><td data-label="Census label">Public Bus Only</td><td data-label="My group">Public bus</td><td class="num" data-label="Primary">38,560</td><td class="num" data-label="Secondary">64,080</td></tr>
+    <tr><td data-label="Census label">Private Chartered Bus/Van Only</td><td data-label="My group">School bus or van</td><td class="num" data-label="Primary">33,842</td><td class="num" data-label="Secondary">4,061</td></tr>
+    <tr><td data-label="Census label">Rail (MRT/LRT) Only</td><td data-label="My group">MRT, LRT or mixed trips</td><td class="num" data-label="Primary">3,960</td><td class="num" data-label="Secondary">13,238</td></tr>
+    <tr><td data-label="Census label">Rail (MRT/LRT) &amp; Public Bus Only</td><td data-label="My group">MRT, LRT or mixed trips</td><td class="num" data-label="Primary">7,333</td><td class="num" data-label="Secondary">40,809</td></tr>
+    <tr><td data-label="Census label">Combination of Rail (MRT/LRT) and/or Public Bus, with Other Modes</td><td data-label="My group">MRT, LRT or mixed trips</td><td class="num" data-label="Primary">2,518</td><td class="num" data-label="Secondary">2,665</td></tr>
+    <tr><td data-label="Census label">Lorry/Pickup Only</td><td data-label="My group">Other ways</td><td class="num" data-label="Primary">542</td><td class="num" data-label="Secondary">242</td></tr>
+    <tr><td data-label="Census label">Motorcycle/Scooter Only</td><td data-label="My group">Other ways</td><td class="num" data-label="Primary">561</td><td class="num" data-label="Secondary">228</td></tr>
+    <tr><td data-label="Census label">Others</td><td data-label="My group">Other ways</td><td class="num" data-label="Primary">3,278</td><td class="num" data-label="Secondary">932</td></tr>
+    <tr><th>Total</th><th data-label="My group"></th><th class="num" data-label="Primary">245,456</th><th class="num" data-label="Secondary">173,710</th></tr>
   </tbody>
 </table></div>
 <p class="small long">"Private Chartered Bus/Van" is the census name. In school, we call it the school bus.</p>
@@ -73,17 +73,17 @@
     <tr><td>Primary</td><td>Car, taxi or private-hire car</td><td class="num">53,506</td><td class="num">21.8</td></tr>
     <tr><td>Primary</td><td>Public bus</td><td class="num">38,560</td><td class="num">15.7</td></tr>
     <tr><td>Primary</td><td>School bus or van</td><td class="num">33,842</td><td class="num">13.8</td></tr>
-    <tr><td>Primary</td><td>MRT or LRT, with or without a bus</td><td class="num">13,811</td><td class="num">5.6</td></tr>
+    <tr><td>Primary</td><td>MRT, LRT or mixed trips</td><td class="num">13,811</td><td class="num">5.6</td></tr>
     <tr><td>Primary</td><td>Other ways</td><td class="num">4,381</td><td class="num">1.8</td></tr>
     <tr><td>Secondary</td><td>No transport needed</td><td class="num">24,935</td><td class="num">14.4</td></tr>
     <tr><td>Secondary</td><td>Car, taxi or private-hire car</td><td class="num">22,520</td><td class="num">13.0</td></tr>
     <tr><td>Secondary</td><td>Public bus</td><td class="num">64,080</td><td class="num">36.9</td></tr>
     <tr><td>Secondary</td><td>School bus or van</td><td class="num">4,061</td><td class="num">2.3</td></tr>
-    <tr><td>Secondary</td><td>MRT or LRT, with or without a bus</td><td class="num">56,712</td><td class="num">32.6</td></tr>
+    <tr><td>Secondary</td><td>MRT, LRT or mixed trips</td><td class="num">56,712</td><td class="num">32.6</td></tr>
     <tr><td>Secondary</td><td>Other ways</td><td class="num">1,402</td><td class="num">0.8</td></tr>
   </tbody>
 </table></div>
-<p class="long">This is "tidy" data: one row for each level and group, one column for each thing measured. It is longer than the raw file but easier to chart and to check.</p>
+<p class="long">This is "tidy" data. Each row is one level and group. Each column is one thing measured. It is longer than the raw file but easier to chart and to check.</p>
 
 <h2>Sources and licence</h2>
 <ul class="tight small">
